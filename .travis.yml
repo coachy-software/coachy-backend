@@ -5,5 +5,7 @@ notifications:
 jdk:
 - oraclejdk8
 
+before_install:
+  - chmod +x mvnw
 script:
-- mvn install
+- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
