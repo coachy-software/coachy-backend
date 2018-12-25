@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import java.util.Set;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -11,6 +12,7 @@ class UserBuilder implements Buildable<User> {
   String email;
   String avatar;
   AccountType accountType;
+  Set<String> roles;
 
   public UserBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
@@ -39,6 +41,11 @@ class UserBuilder implements Buildable<User> {
 
   public UserBuilder withAccountType(AccountType accountType) {
     this.accountType = accountType;
+    return this;
+  }
+
+  public UserBuilder withRoles(Set<String> roles) {
+    this.roles = roles;
     return this;
   }
 

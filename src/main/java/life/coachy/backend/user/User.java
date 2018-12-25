@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import java.util.Set;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -15,6 +16,7 @@ class User implements IdentifiableEntity<ObjectId> {
   private String email;
   private String avatar;
   private AccountType accountType;
+  private Set<String> roles;
 
   User(UserBuilder userBuilder) {
     this.identifier = userBuilder.identifier;
@@ -23,6 +25,7 @@ class User implements IdentifiableEntity<ObjectId> {
     this.email = userBuilder.email;
     this.avatar = userBuilder.avatar;
     this.accountType = userBuilder.accountType;
+    this.roles = userBuilder.roles;
   }
 
   @Override
@@ -68,6 +71,14 @@ class User implements IdentifiableEntity<ObjectId> {
 
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  public Set<String> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(Set<String> roles) {
+    this.roles = roles;
   }
 
 }
