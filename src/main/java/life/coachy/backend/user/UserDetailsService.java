@@ -4,19 +4,24 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@DependsOn("passwordEncoder")
 class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserDetailsService(UserRepository userRepository) {
+  UserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -28,7 +33,9 @@ class UserDetailsService implements org.springframework.security.core.userdetail
     }
 
     User user = optionalUser.get();
-    return new UserDetails(user, username, user.getPassword(), this.mapRolesToGrantedAuthority(user.getRoles())); // Password provider
+    String encodedPassword = this.passwordEncoder.encode(user.getPassword());
+
+    return new UserDetails(user, username, encodedPassword, this.mapRolesToGrantedAuthority(user.getRoles()));
   }
 
   private Set<? extends GrantedAuthority> mapRolesToGrantedAuthority(Set<String> roles) {
@@ -38,3 +45,4 @@ class UserDetailsService implements org.springframework.security.core.userdetail
   }
 
 }
+
