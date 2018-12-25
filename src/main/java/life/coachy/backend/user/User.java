@@ -2,11 +2,13 @@ package life.coachy.backend.user;
 
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 class User implements IdentifiableEntity<ObjectId> {
 
+  @Id
   private final ObjectId identifier;
   private String username;
   private String password;
