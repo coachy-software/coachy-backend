@@ -3,3 +3,14 @@ spring:
     mongodb:
       uri: mongodb://127.0.0.1:27017
       database: coachy
+
+logging:
+  level:
+    org:
+      springframework: WARN
+      mongodb: WARN
+      xnio: WARN
+    io:
+      undertow: WARN
+    life:
+      coachy: WARN
