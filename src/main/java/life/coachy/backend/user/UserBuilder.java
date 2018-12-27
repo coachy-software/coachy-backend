@@ -4,7 +4,7 @@ import java.util.Set;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
-class UserBuilder implements Buildable<User> {
+public class UserBuilder implements Buildable<User> {
 
   ObjectId identifier;
   String username;
