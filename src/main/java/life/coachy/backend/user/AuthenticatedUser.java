@@ -11,6 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @Target(ElementType.PARAMETER)
 @AuthenticationPrincipal(expression = "#this instanceof T(String) ? null : user")
 @Documented
-@interface AuthenticatedUser {
+public @interface AuthenticatedUser {
 
 }
