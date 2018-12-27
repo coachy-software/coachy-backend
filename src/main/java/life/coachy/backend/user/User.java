@@ -6,17 +6,20 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document("users")
 class User implements IdentifiableEntity<ObjectId> {
 
   @Id
-  private final ObjectId identifier;
+  private ObjectId identifier;
   private String username;
   private String password;
   private String email;
   private String avatar;
   private AccountType accountType;
   private Set<String> roles;
+
+  User() {
+  }
 
   User(UserBuilder userBuilder) {
     this.identifier = userBuilder.identifier;
@@ -79,6 +82,19 @@ class User implements IdentifiableEntity<ObjectId> {
 
   public void setRoles(Set<String> roles) {
     this.roles = roles;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "identifier=" + this.identifier +
+        ", username='" + this.username + '\'' +
+        ", password='" + this.password + '\'' +
+        ", email='" + this.email + '\'' +
+        ", avatar='" + this.avatar + '\'' +
+        ", accountType=" + this.accountType +
+        ", roles=" + this.roles +
+        '}';
   }
 
 }
