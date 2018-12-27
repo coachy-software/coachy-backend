@@ -3,9 +3,11 @@ language: java
 notifications:
   email: false
 jdk:
-- oraclejdk8
+  - oraclejdk8
 
+services:
+  - mongodb
 before_install:
   - chmod +x gradlew
 script:
-- ./gradlew test jacocoTestReport coveralls
+  - ./gradlew test jacocoTestReport coveralls
