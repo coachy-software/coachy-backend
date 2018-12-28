@@ -3,7 +3,7 @@ package life.coachy.backend.user;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 
-public class UserDetails extends org.springframework.security.core.userdetails.User {
+class UserDetails extends org.springframework.security.core.userdetails.User {
 
   private final User user;
 

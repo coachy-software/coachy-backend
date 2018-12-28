@@ -1,8 +1,9 @@
 package life.coachy.backend.authentication;
 
 import com.google.common.collect.Sets;
-import life.coachy.backend.user.User;
-import life.coachy.backend.user.UserBuilder;
+import com.mongodb.BasicDBObject;
+import java.util.HashMap;
+import java.util.Map;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -35,22 +36,24 @@ public class AuthenticationControllerIntegrationTest {
 
   private MockMvc mockMvc;
 
-  private User user;
+  private BasicDBObject user;
 
   @Before
   public void setUp() throws Exception {
     this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticationController).build();
-    this.user = new UserBuilder()
-        .withUsername("KzKX]9d>#s;7>.r{SQp-]M)s~_S")
-        .withPassword(this.passwordEncoder.encode("test"))
-        .withRoles(Sets.newHashSet("USER", "ADMIN"))
-        .build();
+    Map<String, Object> userDetails = new HashMap<String, Object>() {{
+      this.put("username", "KzKX]9d>#s;7>.r{SQp-]M)s~_S");
+      this.put("password", AuthenticationControllerIntegrationTest.this.passwordEncoder.encode("test"));
+      this.put("roles", Sets.newHashSet("USER", "ADMIN"));
+    }};
+
+    this.user = new BasicDBObject(userDetails);
   }
 
   @After
   public void tearDown() throws Exception {
     if (this.user != null) {
-      this.mongoTemplate.remove(this.user);
+      this.mongoTemplate.remove(this.user, "users");
     }
   }
 
@@ -58,14 +61,15 @@ public class AuthenticationControllerIntegrationTest {
   public void authenticationTest() throws Exception {
     String jsonContent = "{\"username\": \"KzKX]9d>#s;7>.r{SQp-]M)s~_S\",\"password\": \"test\"}";
 
-    this.mongoTemplate.insert(this.user);
+    this.mongoTemplate.insert(this.user, "users");
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate")
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonContent))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
-        .andExpect(jsonPath("$.roles[0]", Matchers.is("USER")))
-        .andExpect(jsonPath("$.roles[1]", Matchers.is("ADMIN")));
+        .andExpect(jsonPath("$.user.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
+        .andDo(result -> System.out.println(result.getResponse().getContentAsString()))
+        .andExpect(jsonPath("$.user.roles[0]", Matchers.is("USER")))
+        .andExpect(jsonPath("$.user.roles[1]", Matchers.is("ADMIN")));
   }
 
 }

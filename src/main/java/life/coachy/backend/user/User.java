@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("users")
-public class User implements IdentifiableEntity<ObjectId> {
+class User implements IdentifiableEntity<ObjectId> {
 
   @Id
   private ObjectId identifier;

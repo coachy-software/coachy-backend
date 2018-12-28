@@ -1,4 +1,4 @@
-package life.coachy.backend.user;
+package life.coachy.backend.util.security;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
