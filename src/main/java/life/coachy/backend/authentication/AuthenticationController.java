@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("api/authenticate")
-class AuthenticateController {
+class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
 
   @Autowired
-  public AuthenticateController(AuthenticationManager authenticationManager) {
+  public AuthenticationController(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
 

@@ -22,13 +22,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AuthenticateControllerIntegrationTest {
+public class AuthenticationControllerIntegrationTest {
 
   @Autowired
   private MongoTemplate mongoTemplate;
 
   @Autowired
-  private AuthenticateController authenticateController;
+  private AuthenticationController authenticationController;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -39,7 +39,7 @@ public class AuthenticateControllerIntegrationTest {
 
   @Before
   public void setUp() throws Exception {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticateController).build();
+    this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticationController).build();
     this.user = new UserBuilder()
         .withUsername("KzKX]9d>#s;7>.r{SQp-]M)s~_S")
         .withPassword(this.passwordEncoder.encode("test"))
