@@ -66,10 +66,8 @@ public class AuthenticationControllerIntegrationTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonContent))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.user.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
-        .andDo(result -> System.out.println(result.getResponse().getContentAsString()))
-        .andExpect(jsonPath("$.user.roles[0]", Matchers.is("USER")))
-        .andExpect(jsonPath("$.user.roles[1]", Matchers.is("ADMIN")));
+        .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
+        .andExpect(jsonPath("$.password", Matchers.is("test")));
   }
 
 }
