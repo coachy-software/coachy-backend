@@ -1,7 +1,7 @@
 package life.coachy.backend.authentication;
 
 import javax.validation.Valid;
-import life.coachy.backend.user.UserLoginDto;
+import life.coachy.backend.user.UserAuthenticationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ class AuthenticationController {
   }
 
   @PostMapping
-  public ResponseEntity<UserLoginDto> authenticate(@RequestBody @Valid UserLoginDto dto) {
+  public ResponseEntity<UserAuthenticationDto> authenticate(@RequestBody @Valid UserAuthenticationDto dto) {
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
         dto.getUsername(),
         dto.getPassword()

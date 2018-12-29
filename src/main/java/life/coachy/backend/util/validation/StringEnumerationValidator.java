@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-class StringEnumerationValidator implements ConstraintValidator<StringEnumeration, String> {
+public class StringEnumerationValidator implements ConstraintValidator<StringEnumeration, String> {
 
   private Set<Object> availableEnumNames;
 

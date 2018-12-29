@@ -28,5 +28,4 @@ public class UserFacade {
     return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto));
   }
 
-
 }
