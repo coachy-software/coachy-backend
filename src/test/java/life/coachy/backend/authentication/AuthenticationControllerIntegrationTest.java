@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
+import life.coachy.backend.user.UserAuthenticationDto;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -59,12 +60,12 @@ public class AuthenticationControllerIntegrationTest {
 
   @Test
   public void authenticationTest() throws Exception {
-    String jsonContent = "{\"username\": \"KzKX]9d>#s;7>.r{SQp-]M)s~_S\",\"password\": \"test\"}";
+    UserAuthenticationDto dto = new UserAuthenticationDto("KzKX]9d>#s;7>.r{SQp-]M)s~_S", "test");
 
     this.mongoTemplate.insert(this.user, "users");
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(jsonContent))
+        .content(dto.toJson().getBytes()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
         .andExpect(jsonPath("$.password", Matchers.is("test")));
