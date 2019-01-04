@@ -2,7 +2,7 @@ package life.coachy.backend.user;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.AbstractDto;
 
 public class UserAuthenticationDto extends AbstractDto<User> {
 
@@ -29,7 +29,7 @@ public class UserAuthenticationDto extends AbstractDto<User> {
   }
 
   @Override
-  protected User toEntity() {
+  public User toEntity() {
     return new UserBuilder()
         .withUsername(this.username)
         .withPassword(this.password)

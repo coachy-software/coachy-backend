@@ -1,5 +1,7 @@
 package life.coachy.backend.user;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
@@ -10,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 class User implements IdentifiableEntity<ObjectId> {
 
   @Id
+  @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId identifier;
   private String username;
   private String password;

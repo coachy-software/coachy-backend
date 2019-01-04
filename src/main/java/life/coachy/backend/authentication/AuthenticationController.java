@@ -2,12 +2,14 @@ package life.coachy.backend.authentication;
 
 import javax.validation.Valid;
 import life.coachy.backend.user.UserAuthenticationDto;
+import life.coachy.backend.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,18 +27,23 @@ class AuthenticationController {
   }
 
   @PostMapping
-  public ResponseEntity<UserAuthenticationDto> authenticate(@RequestBody @Valid UserAuthenticationDto dto) {
+  public ResponseEntity<?> authenticate(@RequestBody @Valid UserAuthenticationDto dto, BindingResult result) {
+    if (result.hasErrors()) {
+      return RequestUtil.errorResponse(result);
+    }
+
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
         dto.getUsername(),
         dto.getPassword()
     );
+
     Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
     if (authentication == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    return ResponseEntity.ok(dto);
+    return ResponseEntity.ok(dto.toEntity());
   }
 
 }

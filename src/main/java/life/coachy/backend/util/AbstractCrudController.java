@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, ID, C extends AbstractDto<T>> {
 
   private static final String SPEL_EXPRESSION = "(isAuthenticated() && principal.user.identifier.equals(#id)) || hasAuthority('ADMIN')";
-  private static final BeanUtilsBean BEAN_UTILS_BEAN = new NullAwareBeanUtilsBean();
   private final CrudOperationsService<T, ID> service;
 
   protected AbstractCrudController(CrudOperationsService<T, ID> service) {
@@ -63,16 +61,17 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
 
   @PreAuthorize(SPEL_EXPRESSION)
   @PatchMapping("/{id}")
-  protected ResponseEntity<C> partialUpdate(@RequestBody @Valid C dto, @PathVariable ID id)
-      throws InvocationTargetException, IllegalAccessException {
+  protected ResponseEntity<C> partialUpdate(@RequestBody C dto, @PathVariable ID id)
+      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     Optional<T> optionalEntity = this.service.findById(id);
-    T entity = dto.toEntity();
+    T originEntity = dto.toEntity();
 
     if (!optionalEntity.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
-    BEAN_UTILS_BEAN.copyProperties(optionalEntity.get(), entity);
+    BeanUtil.copyNonNullProperties(optionalEntity.get(), originEntity);
+
     this.service.save(optionalEntity.get());
     return ResponseEntity.noContent().build();
   }
@@ -91,7 +90,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
   private ResponseEntity<?> createEntity(C dto, BindingResult result) {
     T entity = dto.toEntity();
 
-    if (this.service.findById(entity.getIdentifier()).isPresent()) {
+    if (this.service.findByName(dto.getName()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 

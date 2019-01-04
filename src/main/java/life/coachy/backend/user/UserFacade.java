@@ -18,14 +18,14 @@ public class UserFacade {
     this.userRegistrationService = userRegistrationService;
   }
 
-  public ResponseEntity<UserRegistrationDto> register(UserRegistrationDto dto) {
-    Optional<User> user = this.userService.findUserByUsername(dto.getUsername());
+  public ResponseEntity<?> register(UserRegistrationDto dto) {
+    Optional<User> user = this.userService.findByName(dto.getUsername());
 
     if (user.isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto));
+    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto).toEntity());
   }
 
 }

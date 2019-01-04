@@ -3,7 +3,7 @@ package life.coachy.backend.user;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.AbstractDto;
 import life.coachy.backend.util.validation.Match;
 import life.coachy.backend.util.validation.StringEnumeration;
 import org.hibernate.validator.constraints.Length;
@@ -66,7 +66,7 @@ public class UserRegistrationDto extends AbstractDto<User> {
   }
 
   @Override
-  protected User toEntity() {
+  public User toEntity() {
     return new UserBuilder()
         .withUsername(this.username)
         .withPassword(this.password)

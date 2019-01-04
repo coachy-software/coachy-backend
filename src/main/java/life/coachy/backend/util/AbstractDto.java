@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class AbstractDto<T extends IdentifiableEntity<?>> {
 
+  public String getName() {
+    throw new UnsupportedOperationException();
+  }
+
   public T toEntity() {
     throw new UnsupportedOperationException();
   }
