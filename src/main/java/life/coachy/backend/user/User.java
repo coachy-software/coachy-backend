@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
@@ -15,6 +16,7 @@ class User implements IdentifiableEntity<ObjectId> {
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId identifier;
   private String username;
+  @JsonIgnore
   private String password;
   private String email;
   private String avatar;
