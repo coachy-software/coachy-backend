@@ -67,8 +67,7 @@ public class AuthenticationControllerIntegrationTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(dto.toJson().getBytes()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")))
-        .andExpect(jsonPath("$.password", Matchers.is("test")));
+        .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")));
   }
 
 }
