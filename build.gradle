@@ -50,4 +50,5 @@ dependencies {
   testImplementation('org.springframework.boot:spring-boot-starter-test')
   testImplementation('org.springframework.security:spring-security-test')
   testImplementation('org.junit.jupiter:junit-jupiter-engine:5.4.0-M1')
+  testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0')
 }
