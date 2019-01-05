@@ -1,6 +1,9 @@
 package life.coachy.backend.util;
 
-import java.lang.reflect.InvocationTargetException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -25,26 +28,50 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     this.service = service;
   }
 
+  @ApiOperation("Displays all entities")
   @GetMapping
   protected ResponseEntity<List<T>> readAll() {
     return ResponseEntity.ok(this.service.findAll());
   }
 
+
+  @ApiOperation("Displays specified entity by it's identifier")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "Entity could not be found"),
+      @ApiResponse(code = 200, message = "Entity found and displayed")
+  })
   @GetMapping("/{id}")
-  public ResponseEntity<T> read(@PathVariable ID id) {
+  public ResponseEntity<T> read(@PathVariable @ApiParam("Entity identifier") ID id) {
     return this.service.findById(id)
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
+  @ApiOperation("Creates entity")
+  @ApiResponses({
+      @ApiResponse(code = 409, message = "Entity already exists"),
+      @ApiResponse(code = 400, message = "Validation error occurred"),
+      @ApiResponse(code = 201, message = "Entity created")
+  })
   @PostMapping
-  protected ResponseEntity<?> create(@RequestBody @Valid C dto, BindingResult result) {
+  protected ResponseEntity<?> create(
+      @RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
+      BindingResult result) {
     return this.createEntity(dto, result);
   }
 
+  @ApiOperation("Updates entity")
+  @ApiResponses({
+      @ApiResponse(code = 201, message = "Entity created"),
+      @ApiResponse(code = 400, message = "Validation error occured"),
+      @ApiResponse(code = 204, message = "Entity updated")
+  })
   @PreAuthorize(SPEL_EXPRESSION)
   @PutMapping("/{id}")
-  protected ResponseEntity<?> update(@RequestBody @Valid C dto, @PathVariable ID id, BindingResult result) {
+  protected ResponseEntity<?> update(
+      @RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
+      @PathVariable @ApiParam("Entity identifier") ID id,
+      BindingResult result) {
     T entity = dto.toEntity();
 
     if (!this.service.findById(id).isPresent()) {
@@ -59,10 +86,16 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
+  @ApiOperation("Partial updates entity")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "Entity could not be found"),
+      @ApiResponse(code = 204, message = "Entity updated")
+  })
   @PreAuthorize(SPEL_EXPRESSION)
   @PatchMapping("/{id}")
-  protected ResponseEntity<C> partialUpdate(@RequestBody C dto, @PathVariable ID id)
-      throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+  protected ResponseEntity<C> partialUpdate(
+      @RequestBody @ApiParam("Entity data transfer object") C dto,
+      @PathVariable @ApiParam("Entity identifier") ID id) {
     Optional<T> optionalEntity = this.service.findById(id);
     T originEntity = dto.toEntity();
 
@@ -76,9 +109,14 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     return ResponseEntity.noContent().build();
   }
 
+  @ApiOperation("Deletes entity")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "Entity could not be found"),
+      @ApiResponse(code = 204, message = "Entity deleted")
+  })
   @PreAuthorize(SPEL_EXPRESSION)
   @DeleteMapping("/{id}")
-  protected ResponseEntity<T> remove(@PathVariable ID id) {
+  protected ResponseEntity<T> remove(@PathVariable @ApiParam("Entity identifier") ID id) {
     if (!this.service.existsById(id)) {
       return ResponseEntity.notFound().build();
     }

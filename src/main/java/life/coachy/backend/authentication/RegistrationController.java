@@ -1,5 +1,8 @@
 package life.coachy.backend.authentication;
 
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.user.UserRegistrationDto;
@@ -23,8 +26,15 @@ class RegistrationController {
     this.userFacade = userFacade;
   }
 
+  @ApiResponses({
+      @ApiResponse(code = 400, message = "Validation error occured"),
+      @ApiResponse(code = 409, message = "User already exists"),
+      @ApiResponse(code = 201, message = "User created")
+  })
   @PostMapping
-  public ResponseEntity<?> register(@RequestBody @Valid UserRegistrationDto dto, BindingResult result) {
+  public ResponseEntity<?> register(
+      @RequestBody @Valid @ApiParam("User data transfer object") UserRegistrationDto dto,
+      BindingResult result) {
     if (result.hasErrors()) {
       return RequestUtil.errorResponse(result);
     }

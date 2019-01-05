@@ -1,5 +1,8 @@
 package life.coachy.backend.authentication;
 
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserAuthenticationDto;
 import life.coachy.backend.util.RequestUtil;
@@ -26,8 +29,15 @@ class AuthenticationController {
     this.authenticationManager = authenticationManager;
   }
 
+  @ApiResponses({
+      @ApiResponse(code = 400, message = "Validation error occured"),
+      @ApiResponse(code = 401, message = "Bad credentials"),
+      @ApiResponse(code = 200, message = "User logged in")
+  })
   @PostMapping
-  public ResponseEntity<?> authenticate(@RequestBody @Valid UserAuthenticationDto dto, BindingResult result) {
+  public ResponseEntity<?> authenticate(
+      @RequestBody @Valid @ApiParam("User data transfer object") UserAuthenticationDto dto,
+      BindingResult result) {
     if (result.hasErrors()) {
       return RequestUtil.errorResponse(result);
     }
