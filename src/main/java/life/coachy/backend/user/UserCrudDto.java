@@ -21,6 +21,16 @@ public class UserCrudDto extends AbstractDto<User> {
   @NotEmpty @NotNull @URL
   private String avatar;
 
+  public UserCrudDto(String username, String password, String email, String avatar) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.avatar = avatar;
+  }
+
+  public UserCrudDto() {
+  }
+
   public String getUsername() {
     return this.username;
   }
