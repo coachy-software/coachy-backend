@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TestRepository extends MongoRepository<TestEntity, ObjectId> {
 
-  Optional<TestEntity> findByName(String name);
+  Optional<TestEntity> findByUsername(String username);
 
 }

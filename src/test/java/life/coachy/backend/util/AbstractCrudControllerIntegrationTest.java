@@ -58,7 +58,7 @@ public class AbstractCrudControllerIntegrationTest {
   private MockMvc mockMvc;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
         .apply(SecurityMockMvcConfigurers.springSecurity())
         .build();
@@ -71,8 +71,8 @@ public class AbstractCrudControllerIntegrationTest {
 
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/tests"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].name", Matchers.is("testEntity1125")))
-        .andExpect(jsonPath("$[1].name", Matchers.is("testEntity1126")));
+        .andExpect(jsonPath("$[0].username", Matchers.is("testEntity1125")))
+        .andExpect(jsonPath("$[1].username", Matchers.is("testEntity1126")));
   }
 
   @Test
@@ -87,7 +87,7 @@ public class AbstractCrudControllerIntegrationTest {
     this.repository.save(new TestEntity(id, "testEntity1127", "something"));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/tests/{id}", id.toHexString()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.name", Matchers.is("testEntity1127")))
+        .andExpect(jsonPath("$.username", Matchers.is("testEntity1127")))
         .andExpect(jsonPath("$.identifier", Matchers.is(id.toHexString())));
   }
 
@@ -98,13 +98,13 @@ public class AbstractCrudControllerIntegrationTest {
         .content(testDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.name", Matchers.is("testEntity1128")));
+        .andExpect(jsonPath("$.username", Matchers.is("testEntity1128")));
   }
 
   @Test
   public void createShouldReturn409WhenAlreadyExists() throws Exception {
     TestDto testDto = new TestDto("testEntity1129", "something");
-    this.repository.save(testDto.toEntity());
+    this.repository.save(new TestEntity(ObjectId.get(), "testEntity1129", "something"));
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/tests")
         .content(testDto.toJson().getBytes())
@@ -140,13 +140,13 @@ public class AbstractCrudControllerIntegrationTest {
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
 
-    Query query = Query.query(Criteria.where("name").is(testDto.getName()));
+    Query query = Query.query(Criteria.where("username").is(testDto.getUsername()));
     TestEntity databaseEntity = this.mongoTemplate.findOne(query, TestEntity.class);
 
     assertAll(
         () -> assertNotNull(databaseEntity),
         () -> assertNotEquals(databaseEntity, testEntity),
-        () -> assertEquals(username + "_EDITED", databaseEntity.getName())
+        () -> assertEquals(username + "_EDITED", databaseEntity.getUsername())
     );
   }
 
@@ -166,13 +166,13 @@ public class AbstractCrudControllerIntegrationTest {
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated());
 
-    Query query = Query.query(Criteria.where("name").is(testDto.getName()));
+    Query query = Query.query(Criteria.where("username").is(testDto.getUsername()));
     TestEntity databaseEntity = this.mongoTemplate.findOne(query, TestEntity.class);
 
     assertAll(
         () -> assertNotNull(databaseEntity),
         () -> assertNotEquals(databaseEntity, testEntity),
-        () -> assertEquals(testDto.getName(), databaseEntity.getName())
+        () -> assertEquals(testDto.getUsername(), databaseEntity.getUsername())
     );
   }
 
@@ -229,14 +229,14 @@ public class AbstractCrudControllerIntegrationTest {
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
 
-    Query query = Query.query(Criteria.where("name").is(username));
+    Query query = Query.query(Criteria.where("username").is(username));
     TestEntity databaseEntity = this.mongoTemplate.findOne(query, TestEntity.class);
 
     assertAll(
         () -> assertNotNull(databaseEntity),
         () -> assertNotNull(databaseEntity.getSomething()),
         () -> assertEquals(databaseEntity.getSomething(), "something_EDITED"),
-        () -> assertEquals(databaseEntity.getName(), username)
+        () -> assertEquals(databaseEntity.getUsername(), username)
     );
   }
 
@@ -281,7 +281,7 @@ public class AbstractCrudControllerIntegrationTest {
 
     this.mongoTemplate.insert(new TestEntity(id, username, "something"));
 
-    Query query = Query.query(Criteria.where("name").is(username));
+    Query query = Query.query(Criteria.where("username").is(username));
     assertNotNull(this.mongoTemplate.findOne(query, TestEntity.class));
 
     this.setUpUser(id, username, password);

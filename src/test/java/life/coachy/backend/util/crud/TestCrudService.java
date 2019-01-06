@@ -19,7 +19,7 @@ public class TestCrudService implements CrudOperationsService<TestEntity, Object
 
   @Override
   public Optional<TestEntity> findByName(String name) {
-    return this.testRepository.findByName(name);
+    return this.testRepository.findByUsername(name);
   }
 
   @Override

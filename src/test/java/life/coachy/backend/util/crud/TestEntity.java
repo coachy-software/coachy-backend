@@ -13,21 +13,16 @@ public class TestEntity implements IdentifiableEntity<ObjectId> {
   @Id
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId identifier;
-  private String name;
+  private String username;
   private String something;
 
-  public TestEntity(ObjectId identifier, String name, String something) {
+  public TestEntity(ObjectId identifier, String username, String something) {
     this.identifier = identifier;
-    this.name = name;
+    this.username = username;
     this.something = something;
   }
 
-  public TestEntity(String name, String something) {
-    this.name = name;
-    this.something = something;
-  }
-
-  public TestEntity() {
+  public TestEntity() { // JACKSON
   }
 
   @Override
@@ -35,8 +30,8 @@ public class TestEntity implements IdentifiableEntity<ObjectId> {
     return this.identifier;
   }
 
-  public String getName() {
-    return this.name;
+  public String getUsername() {
+    return this.username;
   }
 
   public String getSomething() {
@@ -47,8 +42,8 @@ public class TestEntity implements IdentifiableEntity<ObjectId> {
     this.identifier = identifier;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public void setSomething(String something) {
@@ -59,7 +54,7 @@ public class TestEntity implements IdentifiableEntity<ObjectId> {
   public String toString() {
     return "TestEntity{" +
         "identifier=" + this.identifier +
-        ", name='" + this.name + '\'' +
+        ", username='" + this.username + '\'' +
         ", something='" + this.something + '\'' +
         '}';
   }

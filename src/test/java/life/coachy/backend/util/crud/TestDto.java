@@ -1,47 +1,47 @@
 package life.coachy.backend.util.crud;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import life.coachy.backend.util.AbstractDto;
 
 public class TestDto extends AbstractDto<TestEntity> {
 
   @NotEmpty
-  @JsonProperty
-  private String name;
+  private String username;
 
   @NotEmpty
   private String something;
 
-  public TestDto(String name, String something) {
-    this.name = name;
+  public TestDto(String username, String something) {
+    this.username = username;
     this.something = something;
   }
 
-  public TestDto() {
+  public TestDto() { // JACKSON
   }
 
-  @JsonGetter("name")
-  @Override
-  public String getName() {
-    return this.name;
+  public String getUsername() {
+    return this.username;
   }
 
   public String getSomething() {
     return this.something;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public void setSomething(String something) {
     this.something = something;
   }
 
+  @Override
+  public String getName() {
+    return this.username;
+  }
+
   public TestEntity toEntity() {
-    return new TestEntity(this.name, this.something);
+    return new TestEntity(null, this.username, this.something);
   }
 
 }
