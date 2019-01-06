@@ -1,7 +1,10 @@
 package life.coachy.backend.util;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
+import java.beans.FeatureDescriptor;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -10,21 +13,24 @@ public final class BeanUtil {
   private BeanUtil() {
   }
 
-  public static <T> T copyNonNullProperties(T destination, T origin) {
-    if (origin == null || destination == null || destination.getClass() != origin.getClass()) {
-      return null;
+  public static <T> void copyNonNullProperties(T source, T target) {
+    if (source == null || target == null) {
+      return;
     }
 
-    BeanWrapper destinationWrapper = new BeanWrapperImpl(destination);
-    BeanWrapper originWrapper = new BeanWrapperImpl(origin);
+    BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
+  }
 
-    for (Field property : destination.getClass().getDeclaredFields()) {
-      Object providedObject = originWrapper.getPropertyValue(property.getName());
-      if (providedObject != null && !(providedObject instanceof Collection<?>)) {
-        destinationWrapper.setPropertyValue(property.getName(), providedObject);
-      }
-    }
-    return destination;
+  private static <T> String[] getNullPropertyNames(T source) {
+    final BeanWrapper src = new BeanWrapperImpl(source);
+    java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+    Set<String> emptyNames = Arrays.stream(pds)
+        .filter(propertyDescriptor -> src.getPropertyValue(propertyDescriptor.getName()) == null)
+        .map(FeatureDescriptor::getName)
+        .collect(Collectors.toSet());
+    String[] result = new String[emptyNames.size()];
+    return emptyNames.toArray(result);
   }
 
 }

@@ -82,7 +82,8 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return RequestUtil.errorResponse(result);
     }
 
-    this.service.save(BeanUtil.copyNonNullProperties(entity.get(), dto.toEntity()));
+    BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get());
+    this.service.save(entity.get());
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
@@ -102,7 +103,8 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.notFound().build();
     }
 
-    this.service.save(BeanUtil.copyNonNullProperties(optionalEntity.get(), dto.toEntity()));
+    BeanUtil.copyNonNullProperties(dto.toEntity(), optionalEntity.get());
+    this.service.save(optionalEntity.get());
     return ResponseEntity.noContent().build();
   }
 
