@@ -10,6 +10,7 @@ public class TestDto extends AbstractDto<TestEntity> {
   @NotEmpty
   @JsonProperty
   private String name;
+
   @NotEmpty
   private String something;
 
@@ -21,7 +22,7 @@ public class TestDto extends AbstractDto<TestEntity> {
   public TestDto() {
   }
 
-  @JsonGetter
+  @JsonGetter("name")
   @Override
   public String getName() {
     return this.name;

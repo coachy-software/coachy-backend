@@ -12,6 +12,6 @@ before_install:
 install:
   - ./gradlew compileJava
 script:
-  - ./gradlew test jacocoTestReport coveralls
+  - ./gradlew test jacocoTestReport coveralls --stacktrace
 after_success:
   - ./gradlew coveralls
