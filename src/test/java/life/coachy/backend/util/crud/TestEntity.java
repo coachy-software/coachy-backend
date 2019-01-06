@@ -58,9 +58,9 @@ public class TestEntity implements IdentifiableEntity<ObjectId> {
   @Override
   public String toString() {
     return "TestEntity{" +
-        "identifier=" + identifier +
-        ", name='" + name + '\'' +
-        ", something='" + something + '\'' +
+        "identifier=" + this.identifier +
+        ", name='" + this.name + '\'' +
+        ", something='" + this.something + '\'' +
         '}';
   }
 

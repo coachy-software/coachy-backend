@@ -1,5 +1,6 @@
 package life.coachy.backend.util.crud;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import life.coachy.backend.util.AbstractDto;
@@ -20,6 +21,7 @@ public class TestDto extends AbstractDto<TestEntity> {
   public TestDto() {
   }
 
+  @JsonGetter
   @Override
   public String getName() {
     return this.name;
