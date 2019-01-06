@@ -33,16 +33,16 @@ import org.hibernate.validator.constraints.URL;
 
 public class UserCrudDto extends AbstractDto<User> {
 
-  @NotEmpty @NotNull @Length(min = 3, max = 32, message = "Username must be at least 3 and up to 32 characters long.")
+  @NotEmpty(message = "{username.notEmpty}") @NotNull(message = "{username.notNull}") @Length(min = 3, max = 32, message = "{username.length}")
   private String username;
 
-  @NotEmpty @NotNull @Length(min = 6, message = "Password must be at least 6 characters long.")
+  @NotEmpty(message = "{password.notEmpty}") @NotNull(message = "{password.notNull}") @Length(min = 6, message = "{password.length}")
   private String password;
 
-  @NotEmpty @NotNull @Email(message = "Must be a well-formed email address")
+  @NotEmpty(message = "{email.notEmpty}") @NotNull(message = "{email.notNull}") @Email(message = "{email.format}")
   private String email;
 
-  @NotEmpty @NotNull @URL
+  @NotEmpty(message = "{avatar.notEmpty}") @NotNull(message = "{avatar.notNull}") @URL(message = "{avatar.format}")
   private String avatar;
 
   public UserCrudDto(String username, String password, String email, String avatar) {

@@ -22,20 +22,33 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend.util;
+package life.coachy.backend;
 
-import life.coachy.backend.error.ErrorDto;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-public final class RequestUtil {
+@Configuration
+class BackendConfiguration {
 
-  private RequestUtil() {
+  @Bean
+  public MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
+    messageSource.setBasename("classpath:messages");
+    messageSource.setDefaultEncoding("UTF-8");
+
+    return messageSource;
   }
 
-  public static ResponseEntity<?> errorResponse(BindingResult result) {
-    return ResponseEntity.badRequest().body(new ErrorDto(400, result.getAllErrors().get(0).getDefaultMessage()));
+  @Bean
+  public LocalValidatorFactoryBean localValidatorFactoryBean() {
+    LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
+    factoryBean.setValidationMessageSource(this.messageSource());
+
+    return factoryBean;
   }
 
 }

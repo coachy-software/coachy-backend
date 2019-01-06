@@ -29,14 +29,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserAuthenticationDto;
-import life.coachy.backend.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,7 +63,7 @@ class AuthenticationController {
       @RequestBody @Valid @ApiParam("User data transfer object") UserAuthenticationDto dto,
       BindingResult result) {
     if (result.hasErrors()) {
-      return RequestUtil.errorResponse(result);
+      return ResponseEntity.badRequest().build();
     }
 
     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

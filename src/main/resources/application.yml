@@ -12,11 +12,13 @@ spring:
 logging:
   level:
     org:
-      springframework: WARN
+      springframework: ERROR
       mongodb: WARN
       xnio: WARN
     life:
       coachy: WARN
-
+    io:
+      undertow: WARN
+    springfox: WARN
 server:
   port: 3000

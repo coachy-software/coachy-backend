@@ -33,23 +33,23 @@ import life.coachy.backend.util.validation.StringEnumeration;
 import org.hibernate.validator.constraints.Length;
 
 @Match.List({
-    @Match(first = "password", second = "matchingPassword", message = "Confirm password doesn`t match."),
-    @Match(first = "email", second = "matchingEmail", message = "Confirm email doesn`t match.")
+    @Match(first = "password", second = "matchingPassword", message = "{match.password}"),
+    @Match(first = "email", second = "matchingEmail", message = "{match.email")
 })
 public class UserRegistrationDto extends AbstractDto<User> {
 
-  @NotEmpty @NotNull @Length(min = 3, max = 32, message = "Username must be at least 3 and up to 32 characters long.")
+  @NotEmpty(message = "{username.notEmpty}") @NotNull(message = "{username.notNull}") @Length(min = 3, max = 32, message = "{username.length}")
   private String username;
 
-  @NotEmpty @NotNull @Length(min = 6, message = "Password must be at least 6 characters long.")
+  @NotEmpty(message = "{password.notEmpty}") @NotNull(message = "{password.notNull}") @Length(min = 6, message = "{password.length}")
   private String password;
   private String matchingPassword;
 
-  @NotEmpty @NotNull @Email(message = "Must be a well-formed email address")
+  @NotEmpty(message = "{email.notEmpty}") @NotNull(message = "{email.notNull}") @Email(message = "{email.format}")
   private String email;
   private String matchingEmail;
 
-  @NotEmpty @NotNull @StringEnumeration(enumClass = AccountType.class, message = "Value doesn't match any account type")
+  @NotEmpty(message = "{accountType.notEmpty}") @NotNull(message = "{accountType.notNull}") @StringEnumeration(enumClass = AccountType.class, message = "{match.accountType}")
   private String accountType;
 
   public UserRegistrationDto(String username, String password, String matchingPassword, String email,

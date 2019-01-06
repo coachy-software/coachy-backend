@@ -30,10 +30,10 @@ import life.coachy.backend.util.AbstractDto;
 
 public class UserAuthenticationDto extends AbstractDto<User> {
 
-  @NotNull @NotEmpty
+  @NotNull(message = "{username.notNull}") @NotEmpty(message = "{username.notEmpty}")
   private String username;
 
-  @NotNull @NotEmpty
+  @NotNull(message = "{password.notNull}") @NotEmpty(message = "{password.notEmpty}")
   private String password;
 
   public UserAuthenticationDto(String username, String password) {

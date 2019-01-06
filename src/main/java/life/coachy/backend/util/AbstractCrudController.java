@@ -103,7 +103,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     }
 
     if (result.hasErrors()) {
-      return RequestUtil.errorResponse(result);
+      return ResponseEntity.badRequest().build();
     }
 
     BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get());
@@ -156,7 +156,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     }
 
     if (result.hasErrors()) {
-      return RequestUtil.errorResponse(result);
+      return ResponseEntity.badRequest().build();
     }
 
     return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(entity));
