@@ -72,9 +72,9 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
       @PathVariable @ApiParam("Entity identifier") ID id,
       BindingResult result) {
-    T entity = dto.toEntity();
+    Optional<T> entity = this.service.findById(id);
 
-    if (!this.service.findById(id).isPresent()) {
+    if (!entity.isPresent()) {
       return this.createEntity(dto, result);
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return RequestUtil.errorResponse(result);
     }
 
-    this.service.save(entity);
+    this.service.save(BeanUtil.copyNonNullProperties(entity.get(), dto.toEntity()));
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
@@ -97,15 +97,12 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @RequestBody @ApiParam("Entity data transfer object") C dto,
       @PathVariable @ApiParam("Entity identifier") ID id) {
     Optional<T> optionalEntity = this.service.findById(id);
-    T originEntity = dto.toEntity();
 
     if (!optionalEntity.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
-    BeanUtil.copyNonNullProperties(optionalEntity.get(), originEntity);
-
-    this.service.save(optionalEntity.get());
+    this.service.save(BeanUtil.copyNonNullProperties(optionalEntity.get(), dto.toEntity()));
     return ResponseEntity.noContent().build();
   }
 

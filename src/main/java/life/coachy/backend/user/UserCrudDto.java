@@ -1,6 +1,5 @@
 package life.coachy.backend.user;
 
-import java.util.Collections;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -50,7 +49,6 @@ public class UserCrudDto extends AbstractDto<User> {
         .withPassword(this.password)
         .withEmail(this.email)
         .withAvatar(this.avatar)
-        .withRoles(Collections.emptySet())
         .build();
   }
 
