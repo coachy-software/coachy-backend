@@ -63,7 +63,8 @@ class ErrorController implements org.springframework.boot.web.servlet.error.Erro
 
       return new ErrorDto(400, errors.stream()
           .map(fieldError -> this.messageSource.getMessage(fieldError, Locale.getDefault()))
-          .findFirst().get());
+          .findFirst()
+          .get());
     }
 
     return new ErrorDto(response.getStatus(), errorAttributes.get("error").toString());
