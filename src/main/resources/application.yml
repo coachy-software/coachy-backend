@@ -12,7 +12,7 @@ spring:
 logging:
   level:
     org:
-      springframework: ERROR
+      springframework: WARN
       mongodb: WARN
       xnio: WARN
     life:

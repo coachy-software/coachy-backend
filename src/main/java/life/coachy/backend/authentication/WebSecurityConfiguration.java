@@ -57,7 +57,7 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
         .antMatchers("/").permitAll()
-        .and().httpBasic()
+        .and().httpBasic().realmName("Coachy")
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().csrf().disable();
   }
