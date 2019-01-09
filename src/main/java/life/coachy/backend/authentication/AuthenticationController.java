@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserAuthenticationDto;
+import life.coachy.backend.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,10 +48,12 @@ import org.springframework.web.bind.annotation.RestController;
 class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
+  private final UserFacade userFacade;
 
   @Autowired
-  public AuthenticationController(AuthenticationManager authenticationManager) {
+  public AuthenticationController(AuthenticationManager authenticationManager, UserFacade userFacade) {
     this.authenticationManager = authenticationManager;
+    this.userFacade = userFacade;
   }
 
   @ApiResponses({
@@ -78,7 +81,7 @@ class AuthenticationController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    return ResponseEntity.ok(dto.toEntity());
+    return ResponseEntity.ok(this.userFacade.show(dto.getUsername()));
   }
 
 }

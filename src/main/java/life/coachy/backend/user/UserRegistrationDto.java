@@ -32,10 +32,7 @@ import life.coachy.backend.util.validation.Match;
 import life.coachy.backend.util.validation.StringEnumeration;
 import org.hibernate.validator.constraints.Length;
 
-@Match.List({
-    @Match(first = "password", second = "matchingPassword", message = "{match.password}"),
-    @Match(first = "email", second = "matchingEmail", message = "{match.email")
-})
+@Match(first = "password", second = "matchingPassword", message = "{match.password}")
 public class UserRegistrationDto extends AbstractDto<User> {
 
   @NotEmpty(message = "{username.notEmpty}") @NotNull(message = "{username.notNull}") @Length(min = 3, max = 32, message = "{username.length}")
@@ -47,7 +44,6 @@ public class UserRegistrationDto extends AbstractDto<User> {
 
   @NotEmpty(message = "{email.notEmpty}") @NotNull(message = "{email.notNull}") @Email(message = "{email.format}")
   private String email;
-  private String matchingEmail;
 
   @NotEmpty(message = "{accountType.notEmpty}") @NotNull(message = "{accountType.notNull}") @StringEnumeration(enumClass = AccountType.class, message = "{match.accountType}")
   private String accountType;
@@ -58,7 +54,6 @@ public class UserRegistrationDto extends AbstractDto<User> {
     this.password = password;
     this.matchingPassword = matchingPassword;
     this.email = email;
-    this.matchingEmail = matchingEmail;
     this.accountType = accountType;
   }
 
@@ -79,10 +74,6 @@ public class UserRegistrationDto extends AbstractDto<User> {
 
   public String getEmail() {
     return this.email;
-  }
-
-  public String getMatchingEmail() {
-    return this.matchingEmail;
   }
 
   public AccountType getAccountType() {

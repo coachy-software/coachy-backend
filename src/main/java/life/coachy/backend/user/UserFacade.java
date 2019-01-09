@@ -52,4 +52,8 @@ public class UserFacade {
     return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto).toEntity());
   }
 
+  public User show(String username) {
+    return this.userService.findByName(username).orElse(null);
+  }
+
 }
