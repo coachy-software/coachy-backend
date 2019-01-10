@@ -22,18 +22,25 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend.user;
+package life.coachy.backend.user.password;
 
-import java.util.Optional;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-interface UserRepository extends MongoRepository<User, ObjectId> {
+public class PasswordResetTokenDto {
 
-  Optional<User> findByUsername(String username);
+  @NotNull(message = "{password.notNull}") @NotEmpty(message = "{password.notEmpty}")
+  private String newPassword;
 
-  Optional<User> findByEmail(String email);
+  public PasswordResetTokenDto(String newPassword) {
+    this.newPassword = newPassword;
+  }
 
-  boolean existsByEmail(String email);
+  public PasswordResetTokenDto() { // JACKSON
+  }
+
+  public String getNewPassword() {
+    return this.newPassword;
+  }
 
 }

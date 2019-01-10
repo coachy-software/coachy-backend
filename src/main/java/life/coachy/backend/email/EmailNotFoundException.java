@@ -22,18 +22,12 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend.user;
+package life.coachy.backend.email;
 
-import java.util.Optional;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-interface UserRepository extends MongoRepository<User, ObjectId> {
-
-  Optional<User> findByUsername(String username);
-
-  Optional<User> findByEmail(String email);
-
-  boolean existsByEmail(String email);
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class EmailNotFoundException extends RuntimeException {
 
 }

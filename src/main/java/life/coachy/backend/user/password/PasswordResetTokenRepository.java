@@ -22,18 +22,15 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend.user;
+package life.coachy.backend.user.password;
 
 import java.util.Optional;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-interface UserRepository extends MongoRepository<User, ObjectId> {
+@Repository
+interface PasswordResetTokenRepository extends MongoRepository<PasswordResetToken, String> {
 
-  Optional<User> findByUsername(String username);
-
-  Optional<User> findByEmail(String email);
-
-  boolean existsByEmail(String email);
+  Optional<PasswordResetToken> findByToken(String token);
 
 }

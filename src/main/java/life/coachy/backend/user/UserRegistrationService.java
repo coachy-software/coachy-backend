@@ -44,7 +44,7 @@ class UserRegistrationService {
   UserRegistrationDto saveDto(UserRegistrationDto dto) {
     User user = dto.toEntity();
 
-    user.setRoles(Sets.newHashSet("ADMIN"));
+    user.setRoles(Sets.newHashSet("USER"));
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
     this.userRepository.save(user);

@@ -75,4 +75,17 @@ class UserService implements CrudOperationsService<User, ObjectId> {
     return this.userRepository.existsById(objectId);
   }
 
+  public boolean existsByEmail(String email) {
+    return this.userRepository.existsByEmail(email);
+  }
+
+  public Optional<User> findByEmail(String email) {
+    return this.userRepository.findByEmail(email);
+  }
+
+  public User savePassword(User user, String password) {
+    user.setPassword(this.passwordEncoder.encode(password));
+    return this.save(user);
+  }
+
 }
