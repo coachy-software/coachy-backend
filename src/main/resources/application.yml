@@ -8,6 +8,15 @@ spring:
     mongodb:
       uri: mongodb://127.0.0.1:27017
       database: coachy
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: <username>
+    password: <password>
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
 
 logging:
   level:

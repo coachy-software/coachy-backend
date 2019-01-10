@@ -22,19 +22,21 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend;
+package life.coachy.backend.email;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.SimpleMailMessage;
 
-@EnableAsync
-@SpringBootApplication
-class BackendApplication {
+@Configuration
+class EmailTemplate {
 
-  public static void main(String[] args) {
-    SpringApplication.run(BackendApplication.class, args);
+  @Bean
+  public SimpleMailMessage templateSimpleMessage() {
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setText("Coachy 2019 | \n%s\n");
+    
+    return message;
   }
 
 }
-

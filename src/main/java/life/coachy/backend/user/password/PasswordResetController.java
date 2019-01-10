@@ -25,8 +25,9 @@
 package life.coachy.backend.user.password;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import life.coachy.backend.email.EmailFacade;
 import life.coachy.backend.user.UserFacade;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +42,19 @@ import org.springframework.web.bind.annotation.RestController;
 class PasswordResetController {
 
   private final UserFacade userFacade;
+  private final EmailFacade emailService;
   private final PasswordResetTokenRepository repository;
 
   @Autowired
-  public PasswordResetController(UserFacade userFacade, PasswordResetTokenRepository repository) {
+  public PasswordResetController(UserFacade userFacade, EmailFacade emailFacade,
+      PasswordResetTokenRepository repository) {
     this.userFacade = userFacade;
+    this.emailService = emailFacade;
     this.repository = repository;
   }
 
   @PostMapping("/api/create-token")
-  public ResponseEntity<PasswordResetToken> createToken(@RequestParam String email) {
+  public ResponseEntity<PasswordResetTokenDto> createToken(@RequestParam String email) throws MessagingException {
     if (!this.userFacade.exists(email)) {
       return ResponseEntity.notFound().build();
     }
@@ -59,12 +63,18 @@ class PasswordResetController {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    PasswordResetToken token = new PasswordResetToken(email, RandomString.make(10));
-    return ResponseEntity.ok(this.repository.save(token));
+    PasswordResetToken token = new PasswordResetToken(email, RandomString.make(32));
+    this.repository.save(token);
+
+    String resetLink = "http://localhost:3000/api/reset-password?token=" + token.getToken();
+    this.emailService.sendResetPasswordEmail(email, resetLink);
+
+    return ResponseEntity.noContent().build();
   }
 
   @PostMapping("/api/reset-password")
-  public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestBody @Valid PasswordResetTokenDto dto) {
+  public ResponseEntity<PasswordResetTokenDto> resetPassword(@RequestParam String token,
+      @RequestBody @Valid PasswordResetTokenDto dto) {
     Optional<PasswordResetToken> passwordResetToken = this.repository.findByToken(token);
 
     if (!passwordResetToken.isPresent()) {

@@ -22,19 +22,28 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend;
+package life.coachy.backend.email;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-@EnableAsync
-@SpringBootApplication
-class BackendApplication {
+@Service
+class EmailCreationService {
 
-  public static void main(String[] args) {
-    SpringApplication.run(BackendApplication.class, args);
+  private final TemplateEngine templateEngine;
+
+  @Autowired
+  public EmailCreationService(TemplateEngine templateEngine) {
+    this.templateEngine = templateEngine;
+  }
+
+  public String createResetPasswordTemplateAsString(String link) {
+    Context context = new Context();
+    context.setVariable("link", link);
+
+    return this.templateEngine.process("reset-password-email.html", context);
   }
 
 }
-
