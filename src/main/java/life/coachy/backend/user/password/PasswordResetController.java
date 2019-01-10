@@ -31,6 +31,7 @@ import life.coachy.backend.email.EmailFacade;
 import life.coachy.backend.user.UserFacade;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,9 @@ class PasswordResetController {
   private final UserFacade userFacade;
   private final EmailFacade emailService;
   private final PasswordResetTokenRepository repository;
+
+  @Value("${frontend.uri}")
+  private String resetLink;
 
   @Autowired
   public PasswordResetController(UserFacade userFacade, EmailFacade emailFacade,
@@ -66,9 +70,7 @@ class PasswordResetController {
     PasswordResetToken token = new PasswordResetToken(email, RandomString.make(32));
     this.repository.save(token);
 
-    String resetLink = "http://localhost:3000/api/reset-password?token=" + token.getToken();
-    this.emailService.sendResetPasswordEmail(email, resetLink);
-
+    this.emailService.sendResetPasswordEmail(email, this.resetLink + "reset-password?token=" + token.getToken());
     return ResponseEntity.noContent().build();
   }
 

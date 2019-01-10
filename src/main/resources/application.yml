@@ -31,3 +31,5 @@ logging:
     springfox: WARN
 server:
   port: 3000
+frontend:
+  uri: http://localhost:8080/#/
