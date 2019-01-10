@@ -143,8 +143,7 @@ public class AbstractCrudControllerIntegrationTest {
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/tests")
         .content(testDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.message", Matchers.is("must not be empty")));
+        .andExpect(status().isBadRequest());
   }
 
   @Test
