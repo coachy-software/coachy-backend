@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,8 +58,8 @@ class PasswordResetController {
     this.repository = repository;
   }
 
-  @PostMapping("/api/create-token")
-  public ResponseEntity<PasswordResetTokenDto> createToken(@RequestParam String email) throws MessagingException {
+  @PostMapping("/api/create-token/{email}")
+  public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable String email) throws MessagingException {
     if (!this.userFacade.exists(email)) {
       return ResponseEntity.notFound().build();
     }
@@ -74,8 +75,8 @@ class PasswordResetController {
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping("/api/reset-password")
-  public ResponseEntity<PasswordResetTokenDto> resetPassword(@RequestParam String token,
+  @PostMapping("/api/reset-password/{token}")
+  public ResponseEntity<PasswordResetTokenDto> resetPassword(@PathVariable String token,
       @RequestBody @Valid PasswordResetTokenDto dto) {
     Optional<PasswordResetToken> passwordResetToken = this.repository.findByToken(token);
 

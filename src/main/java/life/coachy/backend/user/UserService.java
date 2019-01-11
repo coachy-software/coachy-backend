@@ -85,7 +85,7 @@ class UserService implements CrudOperationsService<User, ObjectId> {
 
   public User savePassword(User user, String password) {
     user.setPassword(this.passwordEncoder.encode(password));
-    return this.save(user);
+    return this.userRepository.save(user);
   }
 
 }
