@@ -25,6 +25,7 @@
 package life.coachy.backend.user.password;
 
 import java.util.Date;
+import life.coachy.backend.util.IdentifiableEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -32,7 +33,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("password-tokens")
-class PasswordResetToken {
+class PasswordResetToken implements IdentifiableEntity<String> {
 
   @Id
   private String email;
@@ -46,6 +47,11 @@ class PasswordResetToken {
   PasswordResetToken(String email, String token) {
     this.email = email;
     this.token = token;
+  }
+
+  @Override
+  public String getIdentifier() {
+    return this.email;
   }
 
   public String getEmail() {

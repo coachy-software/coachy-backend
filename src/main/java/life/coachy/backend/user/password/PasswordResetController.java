@@ -25,7 +25,6 @@
 package life.coachy.backend.user.password;
 
 import java.util.Optional;
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import life.coachy.backend.email.EmailFacade;
 import life.coachy.backend.user.UserFacade;
@@ -57,8 +56,8 @@ class PasswordResetController {
     this.repository = repository;
   }
 
-  @PostMapping("/api/create-token/{email}")
-  public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable String email) throws MessagingException {
+  @PostMapping("/api/create-token/{email:.+}")
+  public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable String email) {
     if (!this.userFacade.exists(email)) {
       return ResponseEntity.notFound().build();
     }
