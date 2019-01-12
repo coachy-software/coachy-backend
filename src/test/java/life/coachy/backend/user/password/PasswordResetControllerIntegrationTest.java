@@ -146,7 +146,7 @@ public class PasswordResetControllerIntegrationTest {
         .content(passwordResetTokenDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound());
-  }
+}
 
   @After
   public void tearDown() throws Exception {

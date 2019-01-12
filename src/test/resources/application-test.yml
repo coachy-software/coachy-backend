@@ -1,7 +1,3 @@
-profiles:
-  active: test
-
 spring:
-  mail:
-    host: localhost
-    port: 25
+  profiles:
+    active: test
