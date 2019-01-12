@@ -26,21 +26,29 @@ package life.coachy.backend.user.password;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.util.validation.Match;
 
+@Match(first = "password", second = "matchingPassword", message = "{match.password}")
 public class PasswordResetTokenDto {
 
   @NotNull(message = "{password.notNull}") @NotEmpty(message = "{password.notEmpty}")
-  private String newPassword;
+  private String password;
+  private String confirmPassword;
 
-  public PasswordResetTokenDto(String newPassword) {
-    this.newPassword = newPassword;
+  public PasswordResetTokenDto(String password, String confirmPassword) {
+    this.password = password;
+    this.confirmPassword = confirmPassword;
   }
 
   public PasswordResetTokenDto() { // JACKSON
   }
 
-  public String getNewPassword() {
-    return this.newPassword;
+  public String getPassword() {
+    return this.password;
+  }
+
+  public String getConfirmPassword() {
+    return this.confirmPassword;
   }
 
 }

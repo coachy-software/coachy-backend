@@ -84,7 +84,7 @@ class PasswordResetController {
     }
 
     String email = passwordResetToken.get().getEmail();
-    this.userFacade.resetPassword(email, dto.getNewPassword());
+    this.userFacade.resetPassword(email, dto.getPassword());
     this.repository.deleteById(email);
 
     return ResponseEntity.noContent().build();
