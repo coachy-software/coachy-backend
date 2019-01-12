@@ -28,9 +28,11 @@ import com.google.common.collect.Sets;
 import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
+import life.coachy.backend.email.SmtpServerRule;
 import life.coachy.backend.user.UserFacade;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -48,9 +51,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PasswordResetControllerIntegrationTest {
+
+  @Rule
+  public SmtpServerRule smtpServerRule = new SmtpServerRule(2525);
 
   @Autowired
   private PasswordResetController passwordResetController;

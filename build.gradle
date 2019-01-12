@@ -73,6 +73,7 @@ dependencies {
   implementation('org.springframework.boot:spring-boot-starter-mail:2.1.1.RELEASE')
   implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
 
+  testImplementation('com.icegreen:greenmail:1.5.5')
   testImplementation('org.springframework.boot:spring-boot-starter-test')
   testImplementation('org.springframework.security:spring-security-test')
   testImplementation('org.junit.jupiter:junit-jupiter-engine:5.4.0-M1')
