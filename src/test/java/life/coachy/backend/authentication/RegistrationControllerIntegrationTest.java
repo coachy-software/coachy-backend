@@ -69,7 +69,7 @@ public class RegistrationControllerIntegrationTest {
   @Test
   public void registrationShouldReturn409WhenUserAlreadyExists() throws Exception {
     Map<String, Object> userDetails = new HashMap<String, Object>() {{
-      this.put("username", "KzKX]9d>#s;7>.r{SQp-]M)s~_S");
+      this.put("username", "test918238901802301");
       this.put("password", RegistrationControllerIntegrationTest.this.passwordEncoder.encode("test"));
       this.put("roles", Sets.newHashSet("USER", "ADMIN"));
     }};
@@ -77,7 +77,7 @@ public class RegistrationControllerIntegrationTest {
     this.user = new BasicDBObject(userDetails);
     this.mongoTemplate.insert(this.user, "users");
 
-    UserRegistrationDto dto = new UserRegistrationDto("KzKX]9d>#s;7>.r{SQp-]M)s~_S", "test123",
+    UserRegistrationDto dto = new UserRegistrationDto("test918238901802301", "test123",
         "test123", "test@coachy.life", "test@coachy.life", "COACH");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")

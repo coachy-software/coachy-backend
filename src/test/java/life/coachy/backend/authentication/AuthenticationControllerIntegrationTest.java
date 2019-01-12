@@ -67,8 +67,8 @@ public class AuthenticationControllerIntegrationTest {
   public void setUp() throws Exception {
     this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticationController).build();
     Map<String, Object> userDetails = new HashMap<String, Object>() {{
-      this.put("username", "KzKX]9d>#s;7>.r{SQp-]M)s~_S");
-      this.put("password", AuthenticationControllerIntegrationTest.this.passwordEncoder.encode("test"));
+      this.put("username", "test10010101001");
+      this.put("password", AuthenticationControllerIntegrationTest.this.passwordEncoder.encode("test123$"));
       this.put("roles", Sets.newHashSet("USER", "ADMIN"));
     }};
 
@@ -84,14 +84,14 @@ public class AuthenticationControllerIntegrationTest {
 
   @Test
   public void authenticationTest() throws Exception {
-    UserAuthenticationDto dto = new UserAuthenticationDto("KzKX]9d>#s;7>.r{SQp-]M)s~_S", "test");
+    UserAuthenticationDto dto = new UserAuthenticationDto("test10010101001", "test123$");
 
     this.mongoTemplate.insert(this.user, "users");
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate")
         .contentType(MediaType.APPLICATION_JSON)
         .content(dto.toJson().getBytes()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.username", Matchers.is("KzKX]9d>#s;7>.r{SQp-]M)s~_S")));
+        .andExpect(jsonPath("$.username", Matchers.is("test10010101001")));
   }
 
 }

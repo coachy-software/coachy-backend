@@ -58,7 +58,7 @@ public class RegistrationControllerTest {
 
   @Test
   public void registrationShouldReturnOkWhenValid() throws Exception {
-    UserRegistrationDto dto = new UserRegistrationDto("VF#8&uYA;N{z&mT", "test123",
+    UserRegistrationDto dto = new UserRegistrationDto("test012939043943", "test123",
         "test123", "test@coachy.life", "test@coachy.life", "CHARGE");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
@@ -69,7 +69,7 @@ public class RegistrationControllerTest {
 
   @Test
   public void registrationShouldReturn400WhenValidationError() throws Exception {
-    UserRegistrationDto dto = new UserRegistrationDto("VF#8&uYA;N{z&mT", "test",
+    UserRegistrationDto dto = new UserRegistrationDto("test0129390439432", "test",
         "test123", "test@coachy.life", "test@coachy.life", "CHARGE");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
