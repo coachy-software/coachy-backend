@@ -26,13 +26,17 @@ package life.coachy.backend.user;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import life.coachy.backend.BackendConstants;
 import life.coachy.backend.util.AbstractDto;
 
 public class UserAuthenticationDto extends AbstractDto<User> {
 
+  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE_AND_SPECIAL_CHARS, message = "{username.pattern}")
   @NotNull(message = "{username.notNull}") @NotEmpty(message = "{username.notEmpty}")
   private String username;
 
+  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{password.pattern}")
   @NotNull(message = "{password.notNull}") @NotEmpty(message = "{password.notEmpty}")
   private String password;
 
