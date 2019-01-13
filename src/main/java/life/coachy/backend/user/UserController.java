@@ -58,7 +58,8 @@ class UserController extends AbstractCrudController<User, ObjectId, UserCrudDto>
   }
 
   @Override
-  protected ResponseEntity<?> update(@Valid @RequestBody UserCrudDto dto, @PathVariable ObjectId id,
+  @Valid
+  protected ResponseEntity<?> update(@RequestBody UserCrudDto dto, @PathVariable ObjectId id,
       BindingResult result) {
     if (this.userService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
