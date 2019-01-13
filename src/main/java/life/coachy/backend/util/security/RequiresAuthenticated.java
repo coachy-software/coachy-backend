@@ -22,29 +22,17 @@
  * SOFTWARE.
  */
 
-package life.coachy.backend.user;
+package life.coachy.backend.util.security;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.springframework.security.access.prepost.PreAuthorize;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@RunWith(SpringRunner.class)
-public class UserAuthenticationDtoTest {
-
-  @Test
-  public void toEntityTest() {
-    UserAuthenticationDto dto = new UserAuthenticationDto("testUsername", "testPassword");
-
-    assertEquals(dto.toEntity().toString(), "User{"
-        + "identifier=null, "
-        + "username='testUsername', "
-        + "password='testPassword', "
-        + "email='null', "
-        + "avatar='null', "
-        + "accountType=null, "
-        + "roles=null}");
-  }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@PreAuthorize("isAuthenticated()")
+public @interface RequiresAuthenticated {
 
 }
