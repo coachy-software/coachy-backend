@@ -24,10 +24,17 @@
 
 package life.coachy.backend.user;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.google.common.collect.Sets;
+import life.coachy.backend.util.crud.TestDto;
+import life.coachy.backend.util.crud.TestEntity;
+import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -36,6 +43,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -98,6 +108,47 @@ public class UserControllerIntegrationTest {
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test1234")))
         .andExpect(status().isUnauthorized());
   }
+
+  @Test
+  public void updateShouldReturn409WhenEmailAlreadyExits() throws Exception {
+    User user = new UserBuilder()
+        .withUsername("test12312313")
+        .withAccountType(AccountType.COACH)
+        .withPassword("test123")
+        .withRoles(Sets.newHashSet("ADMIN"))
+        .withEmail("test@email.com")
+        .build();
+
+    this.userService.save(user);
+    UserCrudDto dto = new UserCrudDto("test6534635", "test123", "test@email.com", "http://www.coachy.life/");
+
+    this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test123")))
+        .andExpect(status().isConflict());
+  }
+
+  @Test
+  public void partialUpdateShouldReturn409WhenEmailAlreadyExits() throws Exception {
+    User user = new UserBuilder()
+        .withUsername("test12312313")
+        .withAccountType(AccountType.COACH)
+        .withPassword("test123")
+        .withRoles(Sets.newHashSet("ADMIN"))
+        .withEmail("test@email.com")
+        .build();
+
+    this.userService.save(user);
+    UserCrudDto dto = new UserCrudDto(null, null, "test@email.com", null);
+
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test123")))
+        .andExpect(status().isConflict());
+  }
+
 
   @After
   public void tearDown() throws Exception {
