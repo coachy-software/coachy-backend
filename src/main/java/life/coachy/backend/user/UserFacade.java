@@ -45,8 +45,7 @@ public class UserFacade {
 
   public ResponseEntity<?> register(UserRegistrationDto dto) {
     Optional<User> user = this.userService.findByName(dto.getUsername());
-
-    if (user.isPresent()) {
+    if (user.isPresent() || this.userService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 

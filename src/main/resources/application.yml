@@ -20,7 +20,7 @@ spring:
 logging:
   level:
     org:
-      springframework: WARN
+      springframework: ERROR
       mongodb: WARN
       xnio: WARN
     life:

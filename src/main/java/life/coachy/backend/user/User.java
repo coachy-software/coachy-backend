@@ -47,9 +47,6 @@ class User implements IdentifiableEntity<ObjectId> {
   private AccountType accountType;
   private Set<String> roles;
 
-  User() {
-  }
-
   User(UserBuilder userBuilder) {
     this.identifier = userBuilder.identifier;
     this.username = userBuilder.username;
@@ -58,6 +55,9 @@ class User implements IdentifiableEntity<ObjectId> {
     this.avatar = userBuilder.avatar;
     this.accountType = userBuilder.accountType;
     this.roles = userBuilder.roles;
+  }
+
+  User() {
   }
 
   @Override
