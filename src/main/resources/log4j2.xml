@@ -32,6 +32,7 @@
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="[%d{dd.MM.YYYY HH:mm:ss.SSS}][%t/%-5p] %msg%n"/>
+      <RegexFilter regex=".*(Failed to perform cleanup of multipart items)." onMatch="DENY" onMismatch="ACCEPT"/>
     </Console>
   </Appenders>
   <Loggers>
