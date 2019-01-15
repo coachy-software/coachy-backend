@@ -37,6 +37,7 @@ import life.coachy.backend.util.FilenameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,15 +61,15 @@ class UploadController {
 
   @ApiOperation("Uploades and then stores files")
   @ApiResponses({
-      @ApiResponse(code = 400, message = "Extension not allowed"),
+      @ApiResponse(code = 415, message = "Extension not allowed"),
       @ApiResponse(code = 200, message = "File uploaded and stored")
   })
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Map<String, String>> upload(
       @RequestPart @ApiParam("File to upload") MultipartFile file,
-      @RequestPart @ApiParam("Directory path to store uploading file") String target) throws IOException {
+      @RequestParam @ApiParam("Directory path to store uploading file") String target) throws IOException {
     if (!Arrays.asList("jpg", "png", "jpeg").contains(FilenameUtil.getExtension(file.getOriginalFilename()))) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
     }
 
     return ResponseEntity.ok(Collections.singletonMap("fileUrl", this.uploadService.store(file, target)));
