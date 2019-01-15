@@ -24,6 +24,10 @@
 
 package life.coachy.backend.user.password;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
 import javax.validation.Valid;
 import life.coachy.backend.email.EmailFacade;
@@ -56,8 +60,14 @@ class PasswordResetController {
     this.repository = repository;
   }
 
+  @ApiOperation("Creates token that need be used to reset password")
+  @ApiResponses({
+      @ApiResponse(code = 400, message = "Email cannot be found"),
+      @ApiResponse(code = 409, message = "Token already craeted"),
+      @ApiResponse(code = 204, message = "Token created")
+  })
   @PostMapping("/api/create-token/{email:.+}")
-  public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable String email) {
+  public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable @ApiParam("Requester's email") String email) {
     if (!this.userFacade.exists(email)) {
       return ResponseEntity.notFound().build();
     }
@@ -73,9 +83,15 @@ class PasswordResetController {
     return ResponseEntity.noContent().build();
   }
 
+  @ApiOperation("Resets password")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "Token is invalid or has expired"),
+      @ApiResponse(code = 204, message = "Password reset")
+  })
   @PostMapping("/api/reset-password/{token}")
-  public ResponseEntity<PasswordResetTokenDto> resetPassword(@PathVariable String token,
-      @RequestBody @Valid PasswordResetTokenDto dto) {
+  public ResponseEntity<PasswordResetTokenDto> resetPassword(
+      @PathVariable @ApiParam("Reset-password token") String token,
+      @RequestBody @Valid @ApiParam("Password reset data transfer object") PasswordResetTokenDto dto) {
     Optional<PasswordResetToken> passwordResetToken = this.repository.findByToken(token);
 
     if (!passwordResetToken.isPresent()) {
