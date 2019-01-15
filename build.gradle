@@ -24,7 +24,7 @@
 
 buildscript {
   ext {
-    springBootVersion = '2.1.1.RELEASE'
+    springBootVersion = '2.1.2.RELEASE'
   }
   repositories {
     mavenCentral()
@@ -64,6 +64,7 @@ dependencies {
   implementation('org.springframework.boot:spring-boot-starter-web') {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
   }
+
   implementation('org.springframework.boot:spring-boot-starter-undertow')
   implementation('io.springfox:springfox-swagger2:2.9.2')
   implementation('io.springfox:springfox-swagger-ui:2.9.2')
