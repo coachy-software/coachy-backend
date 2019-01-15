@@ -31,12 +31,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 class UploadService {
@@ -48,14 +50,19 @@ class UploadService {
     Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + targetDirectory);
     Files.createDirectories(targetDirectoryPath);
 
-    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    String token = RandomString.make(32);
+    String fileName = StringUtils.cleanPath(token + file.getOriginalFilename());
     Path path = targetDirectoryPath.resolve(fileName);
 
     InputStream inputStream = file.getInputStream();
     Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
     inputStream.close();
 
-    return fileName;
+    return ServletUriComponentsBuilder.fromCurrentRequestUri()
+        .queryParam("target", targetDirectory)
+        .queryParam("file", fileName)
+        .toUriString();
+
   }
 
   Resource loadAsResource(String fileName, String targetDirectory) throws MalformedURLException {

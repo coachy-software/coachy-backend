@@ -24,8 +24,14 @@
 
 package life.coachy.backend.upload;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import life.coachy.backend.util.FilenameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,17 +58,31 @@ class UploadController {
     this.uploadService = uploadService;
   }
 
+  @ApiOperation("Uploades and then stores files")
+  @ApiResponses({
+      @ApiResponse(code = 400, message = "Extension not allowed"),
+      @ApiResponse(code = 200, message = "File uploaded and stored")
+  })
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<String> upload(@RequestPart MultipartFile file, @RequestPart String target) throws IOException {
+  public ResponseEntity<Map<String, String>> upload(
+      @RequestPart @ApiParam("File to upload") MultipartFile file,
+      @RequestPart @ApiParam("Directory path to store uploading file") String target) throws IOException {
     if (!Arrays.asList("jpg", "png", "jpeg").contains(FilenameUtil.getExtension(file.getOriginalFilename()))) {
       return ResponseEntity.badRequest().build();
     }
 
-    return ResponseEntity.ok(this.uploadService.store(file, target));
+    return ResponseEntity.ok(Collections.singletonMap("fileUrl", this.uploadService.store(file, target)));
   }
 
+  @ApiOperation("Displays specified file")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "File cannot be found"),
+      @ApiResponse(code = 200, message = "File found and displayed")
+  })
   @GetMapping
-  public ResponseEntity<Resource> download(@RequestParam String file, @RequestParam String target,
+  public ResponseEntity<Resource> download(
+      @RequestParam @ApiParam("File to display") String file,
+      @RequestParam @ApiParam("Directory path where file is stored") String target,
       HttpServletRequest request) throws IOException {
     Resource resource = this.uploadService.loadAsResource(file, target);
     String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
