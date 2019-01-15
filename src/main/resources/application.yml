@@ -16,11 +16,14 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      file-size-threshold: 3KB
 logging:
   level:
     org:
-      springframework: ERROR
+      springframework: WARN
       mongodb: WARN
       xnio: WARN
     life:
