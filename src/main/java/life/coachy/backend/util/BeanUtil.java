@@ -46,14 +46,15 @@ public final class BeanUtil {
   }
 
   private static <T> String[] getNullPropertyNames(T source) {
-    final BeanWrapper src = new BeanWrapperImpl(source);
-    java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+    BeanWrapper src = new BeanWrapperImpl(source);
+    java.beans.PropertyDescriptor[] propertyDescriptors = src.getPropertyDescriptors();
 
-    Set<String> emptyNames = Arrays.stream(pds)
+    Set<String> emptyNames = Arrays.stream(propertyDescriptors)
         .filter(propertyDescriptor -> src.getPropertyValue(propertyDescriptor.getName()) == null)
         .map(FeatureDescriptor::getName)
         .collect(Collectors.toSet());
     String[] result = new String[emptyNames.size()];
+
     return emptyNames.toArray(result);
   }
 

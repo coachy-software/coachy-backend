@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tests")
-public class TestEntityController extends AbstractCrudController<TestEntity, ObjectId, TestDto> {
+public class TestEntityController extends AbstractCrudController<TestEntity, ObjectId, TestDto, TestDto> {
 
   protected TestEntityController(@Autowired TestCrudService service) {
     super(service);

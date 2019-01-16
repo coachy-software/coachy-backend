@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/users")
 @RestController
-class UserController extends AbstractCrudController<User, ObjectId, UserCrudDto> {
+class UserController extends AbstractCrudController<User, ObjectId, UserCrudDto, UserRegistrationDto> {
 
   private final UserService userService;
 
@@ -67,6 +67,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserCrudDto>
 
     return super.update(dto, id, result);
   }
+
 
   @Override
   protected ResponseEntity<UserCrudDto> partialUpdate(@RequestBody UserCrudDto dto, @PathVariable ObjectId id) {

@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, ID, C extends AbstractDto<T>> {
+public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, ID, U extends AbstractDto<T>, C extends AbstractDto<T>> {
 
   private static final String SPEL_EXPRESSION = "(isAuthenticated() && principal.user.identifier.equals(#id)) || hasAuthority('ADMIN')";
   private final CrudOperationsService<T, ID> service;
@@ -93,7 +93,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
   @PreAuthorize(SPEL_EXPRESSION)
   @PutMapping("/{id}")
   protected ResponseEntity<?> update(
-      @RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
+      @RequestBody @Valid @ApiParam("Entity data transfer object") U dto,
       @PathVariable @ApiParam("Entity identifier") ID id,
       BindingResult result) {
     Optional<T> entity = this.service.findById(id);
@@ -118,8 +118,8 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
   })
   @PreAuthorize(SPEL_EXPRESSION)
   @PatchMapping("/{id}")
-  protected ResponseEntity<C> partialUpdate(
-      @RequestBody @ApiParam("Entity data transfer object") C dto,
+  protected ResponseEntity<U> partialUpdate(
+      @RequestBody @ApiParam("Entity data transfer object") U dto,
       @PathVariable @ApiParam("Entity identifier") ID id) {
     Optional<T> optionalEntity = this.service.findById(id);
 
@@ -148,7 +148,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     return ResponseEntity.noContent().build();
   }
 
-  private ResponseEntity<?> createEntity(C dto, BindingResult result) {
+  private <X extends AbstractDto<T>> ResponseEntity<?> createEntity(X dto, BindingResult result) {
     T entity = dto.toEntity();
 
     if (this.service.findByName(dto.getName()).isPresent()) {

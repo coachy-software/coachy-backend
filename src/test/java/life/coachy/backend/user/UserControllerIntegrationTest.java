@@ -51,9 +51,6 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserControllerIntegrationTest {
 
   @Autowired
-  private UserController userController;
-
-  @Autowired
   private WebApplicationContext applicationContext;
 
   @Autowired
