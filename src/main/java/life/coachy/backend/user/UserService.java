@@ -54,6 +54,10 @@ class UserService implements CrudOperationsService<User, ObjectId> {
     return this.userRepository.findById(objectId);
   }
 
+  Optional<User> findByEmail(String email) {
+    return this.userRepository.findByEmail(email);
+  }
+
   @Override
   public List<User> findAll() {
     return this.userRepository.findAll();
@@ -61,7 +65,11 @@ class UserService implements CrudOperationsService<User, ObjectId> {
 
   @Override
   public <S extends User> S save(S entity) {
-    entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
+    String databasePassword = this.findByName(entity.getUsername()).get().getPassword();
+    if (!entity.getPassword().equals(databasePassword)) {
+      this.passwordEncoder.encode(entity.getPassword());
+    }
+
     return this.userRepository.save(entity);
   }
 
@@ -75,15 +83,11 @@ class UserService implements CrudOperationsService<User, ObjectId> {
     return this.userRepository.existsById(objectId);
   }
 
-  public boolean existsByEmail(String email) {
+  boolean existsByEmail(String email) {
     return this.userRepository.existsByEmail(email);
   }
 
-  public Optional<User> findByEmail(String email) {
-    return this.userRepository.findByEmail(email);
-  }
-
-  public User savePassword(User user, String password) {
+  User savePassword(User user, String password) {
     user.setPassword(this.passwordEncoder.encode(password));
     return this.userRepository.save(user);
   }

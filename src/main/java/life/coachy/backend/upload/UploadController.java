@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import life.coachy.backend.util.FilenameUtil;
+import life.coachy.backend.util.security.RequiresAuthenticated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -65,6 +66,7 @@ class UploadController {
       @ApiResponse(code = 200, message = "File uploaded and stored")
   })
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  @RequiresAuthenticated
   public ResponseEntity<Map<String, String>> upload(
       @RequestPart @ApiParam("File to upload") MultipartFile file,
       @RequestParam @ApiParam("Directory path to store uploading file") String target) throws IOException {
@@ -81,6 +83,7 @@ class UploadController {
       @ApiResponse(code = 200, message = "File found and displayed")
   })
   @GetMapping
+  @RequiresAuthenticated
   public ResponseEntity<Resource> download(
       @RequestParam @ApiParam("File to display") String file,
       @RequestParam @ApiParam("Directory path where file is stored") String target,
