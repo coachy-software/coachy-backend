@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
+import life.coachy.backend.util.validation.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,8 +55,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @ApiResponse(code = 201, message = "Entity created")
   })
   @PostMapping
-  protected ResponseEntity<?> create(
-      @RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
+  protected ResponseEntity<?> create(@RequestBody @Valid @ApiParam("Entity data transfer object") C dto,
       BindingResult result) {
     return this.createEntity(dto, result);
   }
@@ -79,7 +79,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     }
 
     if (result.hasErrors()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
     BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get());
@@ -125,14 +125,14 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
   }
 
   private <X extends AbstractDto<T>> ResponseEntity<?> createEntity(X dto, BindingResult result) {
+    if (result.hasErrors()) {
+      return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
+    }
+
     T entity = dto.toEntity();
 
     if (this.service.findByName(dto.getName()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-
-    if (result.hasErrors()) {
-      return ResponseEntity.badRequest().build();
     }
 
     return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(entity));

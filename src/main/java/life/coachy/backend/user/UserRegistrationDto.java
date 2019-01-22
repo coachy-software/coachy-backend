@@ -10,22 +10,22 @@ import life.coachy.backend.util.validation.Match;
 import life.coachy.backend.util.validation.StringEnumeration;
 import org.hibernate.validator.constraints.Length;
 
-@Match(first = "password", second = "matchingPassword", message = "{match.password}")
+@Match(first = "password", second = "matchingPassword", message = "{match}")
 public class UserRegistrationDto extends AbstractDto<User> {
 
-  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE_AND_SPECIAL_CHARS, message = "{username.pattern}")
-  @NotEmpty(message = "{username.notEmpty}") @NotNull(message = "{username.notNull}") @Length(min = 3, max = 32, message = "{username.length}")
+  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE_AND_SPECIAL_CHARS, message = "{pattern}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 3, max = 32, message = "{length}")
   private String username;
 
-  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{password.pattern}")
-  @NotEmpty(message = "{password.notEmpty}") @NotNull(message = "{password.notNull}") @Length(min = 6, message = "{password.length}")
+  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{pattern}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 6, message = "{length}")
   private String password;
   private String matchingPassword;
 
-  @NotEmpty(message = "{email.notEmpty}") @NotNull(message = "{email.notNull}") @Email(message = "{email.format}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Email(message = "{pattern}")
   private String email;
 
-  @NotEmpty(message = "{accountType.notEmpty}") @NotNull(message = "{accountType.notNull}") @StringEnumeration(enumClass = AccountType.class, message = "{match.accountType}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @StringEnumeration(enumClass = AccountType.class, message = "{match}")
   private String accountType;
 
   public UserRegistrationDto(String username, String password, String matchingPassword, String email,
@@ -58,6 +58,11 @@ public class UserRegistrationDto extends AbstractDto<User> {
 
   public AccountType getAccountType() {
     return AccountType.valueOf(this.accountType);
+  }
+
+  @Override
+  public String getName() {
+    return this.username;
   }
 
   @Override

@@ -5,10 +5,10 @@ import javax.validation.constraints.NotNull;
 import life.coachy.backend.util.AbstractDto;
 import life.coachy.backend.util.validation.Match;
 
-@Match(first = "password", second = "confirmPassword", message = "{match.password}")
+@Match(first = "password", second = "confirmPassword", message = "{match}")
 public class PasswordResetTokenDto extends AbstractDto<PasswordResetToken> {
 
-  @NotNull(message = "{password.notNull}") @NotEmpty(message = "{password.notEmpty}")
+  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String password;
   private String confirmPassword;
 

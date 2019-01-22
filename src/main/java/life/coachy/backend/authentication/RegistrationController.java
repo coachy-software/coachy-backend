@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.user.UserRegistrationDto;
+import life.coachy.backend.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -35,7 +36,7 @@ class RegistrationController {
       @RequestBody @Valid @ApiParam("User data transfer object") UserRegistrationDto dto,
       BindingResult result) {
     if (result.hasErrors()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
     return this.userFacade.register(dto);

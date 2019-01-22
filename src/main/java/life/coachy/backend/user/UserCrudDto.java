@@ -11,17 +11,17 @@ import org.hibernate.validator.constraints.URL;
 
 public class UserCrudDto extends AbstractDto<User> {
 
-  @NotEmpty(message = "{displayName.notEmpty}") @NotNull(message = "{displayName.notNull}") @Length(min = 3, max = 32, message = "{displayName.length}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 3, max = 32, message = "{length}")
   private String displayName;
 
-  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{password.pattern}")
-  @NotEmpty(message = "{password.notEmpty}") @NotNull(message = "{password.notNull}") @Length(min = 6, message = "{password.length}")
+  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{pattern}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 6, message = "{length}")
   private String password;
 
-  @NotEmpty(message = "{email.notEmpty}") @NotNull(message = "{email.notNull}") @Email(message = "{email.format}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Email(message = "{pattern}")
   private String email;
 
-  @NotEmpty(message = "{avatar.notEmpty}") @NotNull(message = "{avatar.notNull}") @URL(message = "{avatar.format}")
+  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @URL(message = "{pattern}")
   private String avatar;
 
   public UserCrudDto(String displayName, String password, String email, String avatar) {
