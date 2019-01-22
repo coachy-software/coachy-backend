@@ -32,6 +32,7 @@ class UserBuilder implements Buildable<User> {
 
   ObjectId identifier;
   String username;
+  String displayName;
   String password;
   String email;
   String avatar;
@@ -45,6 +46,11 @@ class UserBuilder implements Buildable<User> {
 
   public UserBuilder withUsername(String username) {
     this.username = username;
+    return this;
+  }
+
+  public UserBuilder withDisplayName(String displayName) {
+    this.displayName = displayName;
     return this;
   }
 

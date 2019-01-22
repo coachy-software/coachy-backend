@@ -35,9 +35,8 @@ import org.hibernate.validator.constraints.URL;
 
 public class UserCrudDto extends AbstractDto<User> {
 
-  @Pattern(regexp = BackendConstants.REGEX_NO_SPACE_AND_SPECIAL_CHARS, message = "{username.pattern}")
-  @NotEmpty(message = "{username.notEmpty}") @NotNull(message = "{username.notNull}") @Length(min = 3, max = 32, message = "{username.length}")
-  private String username;
+  @NotEmpty(message = "{displayName.notEmpty}") @NotNull(message = "{displayName.notNull}") @Length(min = 3, max = 32, message = "{displayName.length}")
+  private String displayName;
 
   @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{password.pattern}")
   @NotEmpty(message = "{password.notEmpty}") @NotNull(message = "{password.notNull}") @Length(min = 6, message = "{password.length}")
@@ -49,8 +48,8 @@ public class UserCrudDto extends AbstractDto<User> {
   @NotEmpty(message = "{avatar.notEmpty}") @NotNull(message = "{avatar.notNull}") @URL(message = "{avatar.format}")
   private String avatar;
 
-  public UserCrudDto(String username, String password, String email, String avatar) {
-    this.username = username;
+  public UserCrudDto(String displayName, String password, String email, String avatar) {
+    this.displayName = displayName;
     this.password = password;
     this.email = email;
     this.avatar = avatar;
@@ -59,8 +58,8 @@ public class UserCrudDto extends AbstractDto<User> {
   public UserCrudDto() {
   }
 
-  public String getUsername() {
-    return this.username;
+  public String getDisplayName() {
+    return this.displayName;
   }
 
   public String getPassword() {
@@ -76,14 +75,9 @@ public class UserCrudDto extends AbstractDto<User> {
   }
 
   @Override
-  public String getName() {
-    return this.username;
-  }
-
-  @Override
   public User toEntity() {
     return new UserBuilder()
-        .withUsername(this.username)
+        .withDisplayName(this.displayName)
         .withPassword(this.password)
         .withEmail(this.email)
         .withAvatar(this.avatar)

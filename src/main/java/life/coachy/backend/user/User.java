@@ -51,6 +51,7 @@ class User implements IdentifiableEntity<ObjectId> {
   User(UserBuilder userBuilder) {
     this.identifier = userBuilder.identifier;
     this.username = userBuilder.username;
+    this.displayName = userBuilder.displayName;
     this.password = userBuilder.password;
     this.email = userBuilder.email;
     this.avatar = userBuilder.avatar;

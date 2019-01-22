@@ -39,8 +39,8 @@ public class UserCrudDtoTest {
 
     assertEquals(dto.toEntity().toString(), "User{"
         + "identifier=null, "
-        + "username='testUsername', "
-        + "displayName='null', "
+        + "username='null', "
+        + "displayName='testUsername', "
         + "password='test123', "
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
