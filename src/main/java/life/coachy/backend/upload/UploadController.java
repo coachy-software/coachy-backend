@@ -59,7 +59,6 @@ class UploadController {
       @ApiResponse(code = 200, message = "File found and displayed")
   })
   @GetMapping
-  @RequiresAuthenticated
   public ResponseEntity<Resource> download(
       @RequestParam @ApiParam("File to display") String file,
       @RequestParam @ApiParam("Directory path where file is stored") String target,
