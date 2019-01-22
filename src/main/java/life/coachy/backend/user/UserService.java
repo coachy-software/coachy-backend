@@ -65,8 +65,8 @@ class UserService implements CrudOperationsService<User, ObjectId> {
 
   @Override
   public <S extends User> S save(S entity) {
-    String databasePassword = this.findByName(entity.getUsername()).get().getPassword();
-    if (!entity.getPassword().equals(databasePassword)) {
+    Optional<User> databaseUser = this.findByName(entity.getUsername());
+    if (databaseUser.isPresent() && !entity.getPassword().equals(databaseUser.get().getPassword())) {
       this.passwordEncoder.encode(entity.getPassword());
     }
 

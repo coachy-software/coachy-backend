@@ -77,7 +77,7 @@ public class UserControllerIntegrationTest {
         .withRoles(Sets.newHashSet("ADMIN"))
         .build();
 
-    this.userService.save(user);
+    this.userService.savePassword(user, user.getPassword());
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users/me")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test123")))
         .andExpect(status().isOk())
@@ -92,7 +92,7 @@ public class UserControllerIntegrationTest {
         .withPassword("test123")
         .build();
 
-    this.userService.save(user);
+    this.userService.savePassword(user, user.getPassword());
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users/me")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test1234")))
         .andExpect(status().isUnauthorized());
@@ -108,7 +108,7 @@ public class UserControllerIntegrationTest {
         .withEmail("test@email.com")
         .build();
 
-    this.userService.save(user);
+    this.userService.savePassword(user, user.getPassword());
     UserCrudDto dto = new UserCrudDto("test6534635", "test123", "test@email.com", "http://www.coachy.life/");
 
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
@@ -128,7 +128,7 @@ public class UserControllerIntegrationTest {
         .withEmail("test@email.com")
         .build();
 
-    this.userService.save(user);
+    this.userService.savePassword(user, user.getPassword());
     UserCrudDto dto = new UserCrudDto(null, null, "test@email.com", null);
 
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())

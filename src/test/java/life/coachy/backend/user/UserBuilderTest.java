@@ -68,6 +68,7 @@ public class UserBuilderTest {
   public void toStringTest() {
     String userString = "User{identifier=" + IDENTIFIER.toHexString() + ", "
         + "username='(kybb3@Q[fxX;fX7EW5%/^FJJbR#EW', "
+        + "displayName='null', "
         + "password='test', "
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/some_avatar.jpg', "

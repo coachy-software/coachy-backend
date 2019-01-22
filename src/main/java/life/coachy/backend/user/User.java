@@ -40,6 +40,7 @@ class User implements IdentifiableEntity<ObjectId> {
   @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId identifier;
   private String username;
+  private String displayName;
   @JsonIgnore
   private String password;
   private String email;
@@ -113,11 +114,20 @@ class User implements IdentifiableEntity<ObjectId> {
     this.roles = roles;
   }
 
+  public String getDisplayName() {
+    return this.displayName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
   @Override
   public String toString() {
     return "User{" +
         "identifier=" + this.identifier +
         ", username='" + this.username + '\'' +
+        ", displayName='" + this.displayName + '\'' +
         ", password='" + this.password + '\'' +
         ", email='" + this.email + '\'' +
         ", avatar='" + this.avatar + '\'' +

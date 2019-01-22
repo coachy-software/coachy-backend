@@ -41,6 +41,7 @@ public class UserRegistrationDtoTest {
     assertEquals(dto.toEntity().toString(), "User{"
         + "identifier=null, "
         + "username='testUsername', "
+        + "displayName='null', "
         + "password='testPassword', "
         + "email='test@coachy.life', "
         + "avatar='null', "
