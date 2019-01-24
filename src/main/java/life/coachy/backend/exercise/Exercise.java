@@ -15,13 +15,15 @@ class Exercise implements IdentifiableEntity<ObjectId> {
   private int sets;
   private int reps;
   private int miniSets;
-//  private ExerciseTemplate template;
+  private ExerciseTemplate template;
 
   Exercise(ExerciseBuilder builder) {
+    this.identifier = builder.identifier;
     this.name = builder.name;
     this.sets = builder.sets;
     this.reps = builder.reps;
     this.miniSets = builder.miniSets;
+    this.template = builder.template;
   }
 
   public String getName() {
@@ -56,9 +58,29 @@ class Exercise implements IdentifiableEntity<ObjectId> {
     this.miniSets = miniSets;
   }
 
+  public ExerciseTemplate getTemplate() {
+    return this.template;
+  }
+
+  public void setTemplate(ExerciseTemplate template) {
+    this.template = template;
+  }
+
   @Override
   public ObjectId getIdentifier() {
     return this.identifier;
+  }
+
+  @Override
+  public String toString() {
+    return "Exercise{" +
+        "identifier=" + this.identifier +
+        ", name='" + this.name + '\'' +
+        ", sets=" + this.sets +
+        ", reps=" + this.reps +
+        ", miniSets=" + this.miniSets +
+        ", template=" + this.template +
+        '}';
   }
 
 }
