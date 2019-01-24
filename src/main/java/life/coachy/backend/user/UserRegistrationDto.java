@@ -14,18 +14,26 @@ import org.hibernate.validator.constraints.Length;
 public class UserRegistrationDto extends AbstractDto<User> {
 
   @Pattern(regexp = BackendConstants.REGEX_NO_SPACE_AND_SPECIAL_CHARS, message = "{pattern}")
-  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 3, max = 32, message = "{length}")
+  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @Length(min = 3, max = 32, message = "{length}")
   private String username;
 
   @Pattern(regexp = BackendConstants.REGEX_NO_SPACE, message = "{pattern}")
-  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Length(min = 6, message = "{length}")
+  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @Length(min = 6, message = "{length}")
   private String password;
   private String matchingPassword;
 
-  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @Email(message = "{pattern}")
+  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @Email(message = "{pattern}")
   private String email;
 
-  @NotEmpty(message = "{notEmpty}") @NotNull(message = "{notNull}") @StringEnumeration(enumClass = AccountType.class, message = "{match}")
+  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @StringEnumeration(enumClass = AccountType.class, message = "{match}")
   private String accountType;
 
   public UserRegistrationDto(String username, String password, String matchingPassword, String email,
@@ -61,7 +69,7 @@ public class UserRegistrationDto extends AbstractDto<User> {
   }
 
   @Override
-  public String getName() {
+  public String getEntityName() {
     return this.username;
   }
 

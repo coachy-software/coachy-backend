@@ -26,6 +26,9 @@ class Exercise implements IdentifiableEntity<ObjectId> {
     this.template = builder.template;
   }
 
+  Exercise() {
+  }
+
   public String getName() {
     return this.name;
   }

@@ -131,7 +131,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
 
     T entity = dto.toEntity();
 
-    if (this.service.findByName(dto.getName()).isPresent()) {
+    if (this.service.findByName(dto.getEntityName()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 

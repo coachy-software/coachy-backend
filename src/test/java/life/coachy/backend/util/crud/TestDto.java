@@ -36,7 +36,7 @@ public class TestDto extends AbstractDto<TestEntity> {
   }
 
   @Override
-  public String getName() {
+  public String getEntityName() {
     return this.username;
   }
 

@@ -42,6 +42,7 @@ class EmailConfiguration {
 
 @Configuration
 class WebMvcConfiguration implements WebMvcConfigurer {
+
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/api/**")
@@ -49,4 +50,5 @@ class WebMvcConfiguration implements WebMvcConfigurer {
         .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")
         .allowedHeaders("Authorization", "Cache-Control", "Content-Type");
   }
+
 }

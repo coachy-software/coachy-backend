@@ -27,6 +27,9 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
     this.verified = builder.verified;
   }
 
+  ExerciseTemplate() {
+  }
+
   public String getName() {
     return this.name;
   }

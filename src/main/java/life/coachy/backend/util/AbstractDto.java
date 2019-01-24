@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public abstract class AbstractDto<T extends IdentifiableEntity<?>> {
 
   @JsonIgnore
-  public String getName() {
+  public String getEntityName() {
     throw new UnsupportedOperationException();
   }
 

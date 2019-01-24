@@ -7,16 +7,19 @@ import life.coachy.backend.util.AbstractDto;
 
 public class ExerciseTemplateUpdateDto extends AbstractDto<ExerciseTemplate> {
 
-  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @NotEmpty(message = "{notEmpty}")
   private String name;
-  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @NotEmpty(message = "{notEmpty}")
   private List<String> exampleImages;
-  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @NotEmpty(message = "{notEmpty}")
   private String briefDescription;
-  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
   private boolean verified;
 
-  public String getName() {
+  public String getEntityName() {
     return this.name;
   }
 
