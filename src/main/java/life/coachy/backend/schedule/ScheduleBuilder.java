@@ -14,7 +14,6 @@ class ScheduleBuilder implements Buildable<Schedule> {
   UserDto creator;
   Date createdAt;
   Date updatedAt;
-  long version;
   boolean active;
   List<ScheduleDayDto> trainingDays;
 
@@ -40,11 +39,6 @@ class ScheduleBuilder implements Buildable<Schedule> {
 
   ScheduleBuilder withUpdatedAt(Date updatedAt) {
     this.updatedAt = updatedAt;
-    return this;
-  }
-
-  ScheduleBuilder withVersion(long version) {
-    this.version = version;
     return this;
   }
 

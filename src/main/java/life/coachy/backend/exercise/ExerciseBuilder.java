@@ -5,39 +5,39 @@ import org.bson.types.ObjectId;
 
 class ExerciseBuilder implements Buildable<Exercise> {
 
-  ObjectId identifier;
+  ObjectId identifier = ObjectId.get();
   String name;
   int sets;
   int reps;
   int miniSets;
   ExerciseTemplate template;
 
-  public ExerciseBuilder withIdentifier(ObjectId identifier) {
+  ExerciseBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;
   }
 
-  public ExerciseBuilder withName(String name) {
+  ExerciseBuilder withName(String name) {
     this.name = name;
     return this;
   }
 
-  public ExerciseBuilder withSets(int sets) {
+  ExerciseBuilder withSets(int sets) {
     this.sets = sets;
     return this;
   }
 
-  public ExerciseBuilder withReps(int reps) {
+  ExerciseBuilder withReps(int reps) {
     this.reps = reps;
     return this;
   }
 
-  public ExerciseBuilder withMiniSets(int miniSets) {
+  ExerciseBuilder withMiniSets(int miniSets) {
     this.miniSets = miniSets;
     return this;
   }
 
-  public ExerciseBuilder withTemplate(ExerciseTemplate template) {
+  ExerciseBuilder withTemplate(ExerciseTemplate template) {
     this.template = template;
     return this;
   }

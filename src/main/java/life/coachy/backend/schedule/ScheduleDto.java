@@ -14,7 +14,6 @@ public class ScheduleDto extends AbstractDto<Schedule> {
   private UserDto creator;
   private Date createdAt;
   private Date updatedAt;
-  private long version;
   private boolean active;
   private List<ScheduleDayDto> trainingDays;
 
@@ -41,10 +40,6 @@ public class ScheduleDto extends AbstractDto<Schedule> {
     return this.updatedAt;
   }
 
-  public long getVersion() {
-    return this.version;
-  }
-
   public boolean isActive() {
     return this.active;
   }
@@ -66,7 +61,6 @@ public class ScheduleDto extends AbstractDto<Schedule> {
         .withCreator(this.creator)
         .withCreatedAt(this.createdAt)
         .withUpdatedAt(this.updatedAt)
-        .withVersion(this.version)
         .isActive(this.active)
         .withTrainingDays(this.trainingDays)
         .build();

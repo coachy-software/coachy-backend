@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 
 class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
 
-  ObjectId identifier;
+  ObjectId identifier = ObjectId.get();
   String name;
   List<String> exampleImages;
   String briefDescription;
@@ -17,22 +17,22 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
     return this;
   }
 
-  public ExerciseTemplateBuilder withName(String name) {
+  ExerciseTemplateBuilder withName(String name) {
     this.name = name;
     return this;
   }
 
-  public ExerciseTemplateBuilder withExampleImages(List<String> exampleImages) {
+  ExerciseTemplateBuilder withExampleImages(List<String> exampleImages) {
     this.exampleImages = exampleImages;
     return this;
   }
 
-  public ExerciseTemplateBuilder withBriefDescription(String briefDescription) {
+  ExerciseTemplateBuilder withBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
     return this;
   }
 
-  public ExerciseTemplateBuilder withVerified(boolean verified) {
+  ExerciseTemplateBuilder withVerified(boolean verified) {
     this.verified = verified;
     return this;
   }

@@ -11,22 +11,22 @@ class ScheduleDayBuilder implements Buildable<ScheduleDay> {
   List<ExerciseDto> exercises;
   boolean trainingDay;
 
-  public ScheduleDayBuilder withName(String name) {
+  ScheduleDayBuilder withName(String name) {
     this.name = name;
     return this;
   }
 
-  public ScheduleDayBuilder withMusclesPart(String musclesPart) {
+  ScheduleDayBuilder withMusclesPart(String musclesPart) {
     this.musclesPart = musclesPart;
     return this;
   }
 
-  public ScheduleDayBuilder withExercises(List<ExerciseDto> exercises) {
+  ScheduleDayBuilder withExercises(List<ExerciseDto> exercises) {
     this.exercises = exercises;
     return this;
   }
 
-  public ScheduleDayBuilder isTrainingDay(boolean trainingDay) {
+  ScheduleDayBuilder isTrainingDay(boolean trainingDay) {
     this.trainingDay = trainingDay;
     return this;
   }

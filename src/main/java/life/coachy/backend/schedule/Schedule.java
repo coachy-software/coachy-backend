@@ -12,7 +12,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-// TODO expireAt
 class Schedule implements IdentifiableEntity<ObjectId> {
 
   @Id
@@ -24,7 +23,6 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   private Date createdAt;
   @LastModifiedDate
   private Date updatedAt;
-  private long version; // todo
   private boolean active;
   private List<ScheduleDayDto> trainingDays;
 
@@ -34,7 +32,6 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.creator = builder.creator;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
-    this.version = builder.version;
     this.active = builder.active;
     this.trainingDays = builder.trainingDays;
   }
@@ -72,14 +69,6 @@ class Schedule implements IdentifiableEntity<ObjectId> {
 
   public void setUpdatedAt(Date updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  public long getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
   }
 
   public boolean isActive() {
