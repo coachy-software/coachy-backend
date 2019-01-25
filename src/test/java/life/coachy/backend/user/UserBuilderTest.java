@@ -49,7 +49,8 @@ public class UserBuilderTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/some_avatar.jpg', "
         + "accountType=COACH, "
-        + "roles=[USER, ADMIN]}";
+        + "roles=[USER, ADMIN], "
+        + "schedules=null}";
 
     assertNotNull(USER.toString());
     assertEquals(userString, USER.toString());

@@ -21,7 +21,8 @@ public class UserCrudDtoTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
         + "accountType=null, "
-        + "roles=null}");
+        + "roles=null, "
+        + "schedules=null}");
   }
 
 }
