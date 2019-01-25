@@ -1,4 +1,4 @@
-package life.coachy.backend.exercise;
+package life.coachy.backend.exercise.template;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

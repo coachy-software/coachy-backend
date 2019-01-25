@@ -15,6 +15,15 @@ public class ScheduleUpdateDto extends AbstractDto<Schedule> {
   @NotNull(message = "{notNull}")
   private List<ScheduleDayDto> days;
 
+  ScheduleUpdateDto(String name, boolean active, List<ScheduleDayDto> days) {
+    this.name = name;
+    this.active = active;
+    this.days = days;
+  }
+
+  ScheduleUpdateDto() {
+  }
+
   public String getName() {
     return this.name;
   }

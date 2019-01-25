@@ -26,6 +26,17 @@ public class ScheduleDto extends AbstractDto<Schedule> {
   ScheduleDto() {
   }
 
+  ScheduleDto(ObjectId identifier, String name, UserDto creator, Date createdAt, Date updatedAt, boolean active,
+      List<ScheduleDayDto> days) {
+    this.identifier = identifier;
+    this.name = name;
+    this.creator = creator;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.active = active;
+    this.days = days;
+  }
+
   public ObjectId getIdentifier() {
     return this.identifier;
   }
@@ -62,6 +73,7 @@ public class ScheduleDto extends AbstractDto<Schedule> {
   @Override
   public Schedule toEntity() {
     return new ScheduleBuilder()
+        .withIdentifier(this.identifier)
         .withName(this.name)
         .withCreator(this.creator)
         .withCreatedAt(this.createdAt)

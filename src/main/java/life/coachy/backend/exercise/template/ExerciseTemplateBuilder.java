@@ -1,4 +1,4 @@
-package life.coachy.backend.exercise;
+package life.coachy.backend.exercise.template;
 
 import java.util.List;
 import life.coachy.backend.util.Buildable;

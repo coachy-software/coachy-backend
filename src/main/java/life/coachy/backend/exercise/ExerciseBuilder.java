@@ -1,5 +1,6 @@
 package life.coachy.backend.exercise;
 
+import life.coachy.backend.exercise.template.ExerciseTemplateDto;
 import life.coachy.backend.util.Buildable;
 
 class ExerciseBuilder implements Buildable<Exercise> {
@@ -8,7 +9,7 @@ class ExerciseBuilder implements Buildable<Exercise> {
   int sets;
   int reps;
   int miniSets;
-  ExerciseTemplate template;
+  ExerciseTemplateDto template;
 
   ExerciseBuilder withName(String name) {
     this.name = name;
@@ -30,7 +31,7 @@ class ExerciseBuilder implements Buildable<Exercise> {
     return this;
   }
 
-  ExerciseBuilder withTemplate(ExerciseTemplate template) {
+  ExerciseBuilder withTemplate(ExerciseTemplateDto template) {
     this.template = template;
     return this;
   }

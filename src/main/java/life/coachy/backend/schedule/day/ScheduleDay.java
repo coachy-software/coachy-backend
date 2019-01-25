@@ -57,4 +57,14 @@ class ScheduleDay implements IdentifiableEntity<String> {
     this.trainingDay = trainingDay;
   }
 
+  @Override
+  public String toString() {
+    return "ScheduleDay{" +
+        "name='" + this.name + '\'' +
+        ", musclesPart='" + this.musclesPart + '\'' +
+        ", exercises=" + this.exercises +
+        ", trainingDay=" + this.trainingDay +
+        '}';
+  }
+
 }

@@ -92,4 +92,17 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     return this.identifier;
   }
 
+  @Override
+  public String toString() {
+    return "Schedule{" +
+        "identifier=" + this.identifier +
+        ", name='" + this.name + '\'' +
+        ", creator=" + this.creator +
+        ", createdAt=" + this.createdAt +
+        ", updatedAt=" + this.updatedAt +
+        ", active=" + this.active +
+        ", days=" + this.days +
+        '}';
+  }
+
 }

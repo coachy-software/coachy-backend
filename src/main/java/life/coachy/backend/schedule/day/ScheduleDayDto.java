@@ -16,6 +16,16 @@ public class ScheduleDayDto extends AbstractDto<ScheduleDay> {
   private List<ExerciseDto> exercises;
   private boolean trainingDay;
 
+  public ScheduleDayDto(String name, String musclesPart, List<ExerciseDto> exercises, boolean trainingDay) {
+    this.name = name;
+    this.musclesPart = musclesPart;
+    this.exercises = exercises;
+    this.trainingDay = trainingDay;
+  }
+
+  public ScheduleDayDto() {
+  }
+
   @Override
   public String getEntityName() {
     return this.name;

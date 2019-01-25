@@ -1,4 +1,4 @@
-package life.coachy.backend.exercise;
+package life.coachy.backend.exercise.template;
 
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.validation.ValidationUtil;

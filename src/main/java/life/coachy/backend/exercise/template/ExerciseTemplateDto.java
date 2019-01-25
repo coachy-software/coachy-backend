@@ -1,12 +1,15 @@
-package life.coachy.backend.exercise;
+package life.coachy.backend.exercise.template;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.util.AbstractDto;
+import org.bson.types.ObjectId;
 
-public class ExerciseTemplateUpdateDto extends AbstractDto<ExerciseTemplate> {
+public class ExerciseTemplateDto extends AbstractDto<ExerciseTemplate> {
 
+  @NotNull(message = "{notNull}")
+  private ObjectId identifier;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
@@ -16,7 +19,22 @@ public class ExerciseTemplateUpdateDto extends AbstractDto<ExerciseTemplate> {
   @NotNull(message = "{notNull}")
   private boolean verified;
 
-  public String getEntityName() {
+  public ExerciseTemplateDto(ObjectId identifier, String name, List<String> exampleImages, String briefDescription, boolean verified) {
+    this.identifier = identifier;
+    this.name = name;
+    this.exampleImages = exampleImages;
+    this.briefDescription = briefDescription;
+    this.verified = verified;
+  }
+
+  public ExerciseTemplateDto() {
+  }
+
+  public ObjectId getIdentifier() {
+    return this.identifier;
+  }
+
+  public String getName() {
     return this.name;
   }
 
@@ -33,8 +51,14 @@ public class ExerciseTemplateUpdateDto extends AbstractDto<ExerciseTemplate> {
   }
 
   @Override
+  public String getEntityName() {
+    return this.name;
+  }
+
+  @Override
   public ExerciseTemplate toEntity() {
     return new ExerciseTemplateBuilder()
+        .withIdentifier(this.identifier)
         .withName(this.name)
         .withExampleImages(this.exampleImages)
         .withBriefDescription(this.briefDescription)

@@ -16,6 +16,23 @@ public class UserDto {
   private Set<String> roles;
   private Set<ScheduleDto> schedules;
 
+  public UserDto(ObjectId identifier, String username, String displayName, String password, String email,
+      String avatar, AccountType accountType, Set<String> roles,
+      Set<ScheduleDto> schedules) {
+    this.identifier = identifier;
+    this.username = username;
+    this.displayName = displayName;
+    this.password = password;
+    this.email = email;
+    this.avatar = avatar;
+    this.accountType = accountType;
+    this.roles = roles;
+    this.schedules = schedules;
+  }
+
+  public UserDto() {
+  }
+
   public ObjectId getIdentifier() {
     return this.identifier;
   }

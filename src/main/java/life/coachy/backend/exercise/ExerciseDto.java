@@ -2,6 +2,7 @@ package life.coachy.backend.exercise;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.exercise.template.ExerciseTemplateDto;
 import life.coachy.backend.util.AbstractDto;
 
 public class ExerciseDto extends AbstractDto<Exercise> {
@@ -13,7 +14,18 @@ public class ExerciseDto extends AbstractDto<Exercise> {
   @NotNull(message = "{notNull}")
   private int reps;
   private int miniSets;
-  private ExerciseTemplate template;
+  private ExerciseTemplateDto template;
+
+  public ExerciseDto(String name, int sets, int reps, int miniSets, ExerciseTemplateDto template) {
+    this.name = name;
+    this.sets = sets;
+    this.reps = reps;
+    this.miniSets = miniSets;
+    this.template = template;
+  }
+
+  public ExerciseDto() {
+  }
 
   public String getName() {
     return this.name;
@@ -31,7 +43,7 @@ public class ExerciseDto extends AbstractDto<Exercise> {
     return this.miniSets;
   }
 
-  public ExerciseTemplate getTemplate() {
+  public ExerciseTemplateDto getTemplate() {
     return this.template;
   }
 

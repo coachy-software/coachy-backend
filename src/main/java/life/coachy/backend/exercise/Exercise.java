@@ -1,6 +1,6 @@
 package life.coachy.backend.exercise;
 
-
+import life.coachy.backend.exercise.template.ExerciseTemplateDto;
 import life.coachy.backend.util.IdentifiableEntity;
 
 class Exercise implements IdentifiableEntity<String> {
@@ -9,7 +9,7 @@ class Exercise implements IdentifiableEntity<String> {
   private int sets;
   private int reps;
   private int miniSets;
-  private ExerciseTemplate template;
+  private ExerciseTemplateDto template;
 
   Exercise(ExerciseBuilder builder) {
     this.name = builder.name;
@@ -59,11 +59,11 @@ class Exercise implements IdentifiableEntity<String> {
     this.miniSets = miniSets;
   }
 
-  public ExerciseTemplate getTemplate() {
+  public ExerciseTemplateDto getTemplate() {
     return this.template;
   }
 
-  public void setTemplate(ExerciseTemplate template) {
+  public void setTemplate(ExerciseTemplateDto template) {
     this.template = template;
   }
 
