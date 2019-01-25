@@ -85,7 +85,7 @@ public class UserControllerIntegrationTest {
         .build();
 
     this.userService.savePassword(user, user.getPassword());
-    UserCrudDto dto = new UserCrudDto("test6534635", "test123", "test@email.com", "http://www.coachy.life/");
+    UserUpdateDto dto = new UserUpdateDto("test6534635", "test123", "test@email.com", "http://www.coachy.life/");
 
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())
@@ -105,7 +105,7 @@ public class UserControllerIntegrationTest {
         .build();
 
     this.userService.savePassword(user, user.getPassword());
-    UserCrudDto dto = new UserCrudDto(null, null, "test@email.com", null);
+    UserUpdateDto dto = new UserUpdateDto(null, null, "test@email.com", null);
 
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())

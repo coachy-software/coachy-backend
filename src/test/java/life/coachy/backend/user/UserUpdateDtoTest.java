@@ -7,13 +7,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class UserCrudDtoTest {
+public class UserUpdateDtoTest {
 
   @Test
   public void toEntityTest() {
-    UserCrudDto dto = new UserCrudDto("testUsername", "test123", "test@coachy.life", "http://coachy.life/test.png");
+    UserUpdateDto dto = new UserUpdateDto("testUsername", "test123", "test@coachy.life", "http://coachy.life/test.png");
 
-    assertEquals(dto.toEntity().toString(), "User{"
+    assertEquals("User{"
         + "identifier=null, "
         + "username='null', "
         + "displayName='testUsername', "
@@ -22,7 +22,7 @@ public class UserCrudDtoTest {
         + "avatar='http://coachy.life/test.png', "
         + "accountType=null, "
         + "roles=null, "
-        + "schedules=null}");
+        + "schedules=null}", dto.toEntity().toString());
   }
 
 }

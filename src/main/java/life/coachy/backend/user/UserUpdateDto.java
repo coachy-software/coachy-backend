@@ -11,7 +11,7 @@ import life.coachy.backend.util.AbstractDto;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-public class UserCrudDto extends AbstractDto<User> {
+public class UserUpdateDto extends AbstractDto<User> {
 
   @NotEmpty(message = "{notEmpty}")
   @NotNull(message = "{notNull}")
@@ -36,14 +36,14 @@ public class UserCrudDto extends AbstractDto<User> {
 
   private Set<ScheduleDto> schedules;
 
-  UserCrudDto(String displayName, String password, String email, String avatar) {
+  UserUpdateDto(String displayName, String password, String email, String avatar) {
     this.displayName = displayName;
     this.password = password;
     this.email = email;
     this.avatar = avatar;
   }
 
-  UserCrudDto() {
+  UserUpdateDto() {
   }
 
   public String getDisplayName() {

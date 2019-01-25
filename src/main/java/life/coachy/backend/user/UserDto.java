@@ -2,9 +2,10 @@ package life.coachy.backend.user;
 
 import java.util.Set;
 import life.coachy.backend.schedule.ScheduleDto;
+import life.coachy.backend.util.AbstractDto;
 import org.bson.types.ObjectId;
 
-public class UserDto {
+public class UserDto extends AbstractDto<User> {
 
   private ObjectId identifier;
   private String username;
@@ -67,6 +68,26 @@ public class UserDto {
 
   public Set<ScheduleDto> getSchedules() {
     return this.schedules;
+  }
+
+  @Override
+  public String getEntityName() {
+    return this.username;
+  }
+
+  @Override
+  public User toEntity() {
+    return new UserBuilder()
+        .withIdentifier(this.identifier)
+        .withUsername(this.username)
+        .withDisplayName(this.displayName)
+        .withPassword(this.password)
+        .withEmail(this.email)
+        .withAvatar(this.avatar)
+        .withAccountType(this.accountType)
+        .withRoles(this.roles)
+        .withSchedules(this.schedules)
+        .build();
   }
 
 }
