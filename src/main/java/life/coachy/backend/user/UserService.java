@@ -43,7 +43,7 @@ class UserService implements CrudOperationsService<User, ObjectId> {
   public <S extends User> S save(S entity) {
     Optional<User> databaseUser = this.findByName(entity.getUsername());
     if (databaseUser.isPresent() && !entity.getPassword().equals(databaseUser.get().getPassword())) {
-      this.passwordEncoder.encode(entity.getPassword());
+      entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
     }
 
     return this.userRepository.save(entity);

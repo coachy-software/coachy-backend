@@ -1,11 +1,16 @@
 package life.coachy.backend.exercise;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import life.coachy.backend.util.AbstractDto;
 
 public class ExerciseDto extends AbstractDto<Exercise> {
 
+  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
+  @NotNull(message = "{notNull}")
   private int sets;
+  @NotNull(message = "{notNull}")
   private int reps;
   private int miniSets;
   private ExerciseTemplate template;

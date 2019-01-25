@@ -40,17 +40,13 @@ class UserController extends AbstractCrudController<User, ObjectId, UserCrudDto,
 
   @Override
   protected ResponseEntity<?> update(@RequestBody UserCrudDto dto, @PathVariable ObjectId id, BindingResult result) {
-    this.smartValidator.validate(dto, result);
+    return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
+      if (this.userService.existsByEmail(dto.getEmail())) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      }
 
-    if (result.hasErrors()) {
-      return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
-    }
-
-    if (this.userService.existsByEmail(dto.getEmail())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-
-    return super.update(dto, id, result);
+      return super.update(dto, id, result);
+    });
   }
 
 
