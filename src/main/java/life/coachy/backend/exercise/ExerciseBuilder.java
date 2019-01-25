@@ -1,21 +1,14 @@
 package life.coachy.backend.exercise;
 
 import life.coachy.backend.util.Buildable;
-import org.bson.types.ObjectId;
 
 class ExerciseBuilder implements Buildable<Exercise> {
 
-  ObjectId identifier = ObjectId.get();
   String name;
   int sets;
   int reps;
   int miniSets;
   ExerciseTemplate template;
-
-  ExerciseBuilder withIdentifier(ObjectId identifier) {
-    this.identifier = identifier;
-    return this;
-  }
 
   ExerciseBuilder withName(String name) {
     this.name = name;

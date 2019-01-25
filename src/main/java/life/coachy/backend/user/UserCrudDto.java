@@ -1,10 +1,12 @@
 package life.coachy.backend.user;
 
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import life.coachy.backend.BackendConstants;
+import life.coachy.backend.schedule.ScheduleDto;
 import life.coachy.backend.util.AbstractDto;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
@@ -32,14 +34,16 @@ public class UserCrudDto extends AbstractDto<User> {
   @URL(message = "{pattern}")
   private String avatar;
 
-  public UserCrudDto(String displayName, String password, String email, String avatar) {
+  private Set<ScheduleDto> schedules;
+
+  UserCrudDto(String displayName, String password, String email, String avatar) {
     this.displayName = displayName;
     this.password = password;
     this.email = email;
     this.avatar = avatar;
   }
 
-  public UserCrudDto() {
+  UserCrudDto() {
   }
 
   public String getDisplayName() {
@@ -58,6 +62,10 @@ public class UserCrudDto extends AbstractDto<User> {
     return this.avatar;
   }
 
+  public Set<ScheduleDto> getSchedules() {
+    return this.schedules;
+  }
+
   @Override
   public User toEntity() {
     return new UserBuilder()
@@ -65,6 +73,7 @@ public class UserCrudDto extends AbstractDto<User> {
         .withPassword(this.password)
         .withEmail(this.email)
         .withAvatar(this.avatar)
+        .withSchedules(this.schedules)
         .build();
   }
 

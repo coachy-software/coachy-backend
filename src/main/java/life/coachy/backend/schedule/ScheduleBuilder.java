@@ -15,7 +15,7 @@ class ScheduleBuilder implements Buildable<Schedule> {
   Date createdAt;
   Date updatedAt;
   boolean active;
-  List<ScheduleDayDto> trainingDays;
+  List<ScheduleDayDto> days;
 
   ScheduleBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
@@ -47,8 +47,8 @@ class ScheduleBuilder implements Buildable<Schedule> {
     return this;
   }
 
-  ScheduleBuilder withTrainingDays(List<ScheduleDayDto> trainingDays) {
-    this.trainingDays = trainingDays;
+  ScheduleBuilder withDays(List<ScheduleDayDto> days) {
+    this.days = days;
     return this;
   }
 

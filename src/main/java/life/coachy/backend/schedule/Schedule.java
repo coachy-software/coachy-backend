@@ -24,7 +24,7 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   @LastModifiedDate
   private Date updatedAt;
   private boolean active;
-  private List<ScheduleDayDto> trainingDays;
+  private List<ScheduleDayDto> days;
 
   Schedule(ScheduleBuilder builder) {
     this.identifier = builder.identifier;
@@ -33,7 +33,7 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
     this.active = builder.active;
-    this.trainingDays = builder.trainingDays;
+    this.days = builder.days;
   }
 
   Schedule() {
@@ -79,12 +79,12 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.active = active;
   }
 
-  public List<ScheduleDayDto> getTrainingDays() {
-    return this.trainingDays;
+  public List<ScheduleDayDto> getDays() {
+    return this.days;
   }
 
-  public void setTrainingDays(List<ScheduleDayDto> trainingDays) {
-    this.trainingDays = trainingDays;
+  public void setDays(List<ScheduleDayDto> days) {
+    this.days = days;
   }
 
   @Override

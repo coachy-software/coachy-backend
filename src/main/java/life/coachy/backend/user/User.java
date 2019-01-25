@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
+import life.coachy.backend.schedule.ScheduleDto;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -23,16 +24,18 @@ class User implements IdentifiableEntity<ObjectId> {
   private String avatar;
   private AccountType accountType;
   private Set<String> roles;
+  private Set<ScheduleDto> schedules;
 
-  User(UserBuilder userBuilder) {
-    this.identifier = userBuilder.identifier;
-    this.username = userBuilder.username;
-    this.displayName = userBuilder.displayName;
-    this.password = userBuilder.password;
-    this.email = userBuilder.email;
-    this.avatar = userBuilder.avatar;
-    this.accountType = userBuilder.accountType;
-    this.roles = userBuilder.roles;
+  User(UserBuilder builder) {
+    this.identifier = builder.identifier;
+    this.username = builder.username;
+    this.displayName = builder.displayName;
+    this.password = builder.password;
+    this.email = builder.email;
+    this.avatar = builder.avatar;
+    this.accountType = builder.accountType;
+    this.roles = builder.roles;
+    this.schedules = builder.schedules;
   }
 
   User() {
@@ -99,6 +102,14 @@ class User implements IdentifiableEntity<ObjectId> {
     this.displayName = displayName;
   }
 
+  public Set<ScheduleDto> getSchedules() {
+    return this.schedules;
+  }
+
+  public void setSchedules(Set<ScheduleDto> schedules) {
+    this.schedules = schedules;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -110,6 +121,7 @@ class User implements IdentifiableEntity<ObjectId> {
         ", avatar='" + this.avatar + '\'' +
         ", accountType=" + this.accountType +
         ", roles=" + this.roles +
+        ", schedules=" + this.schedules +
         '}';
   }
 

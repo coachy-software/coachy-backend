@@ -15,7 +15,7 @@ public class ScheduleDto extends AbstractDto<Schedule> {
   private Date createdAt;
   private Date updatedAt;
   private boolean active;
-  private List<ScheduleDayDto> trainingDays;
+  private List<ScheduleDayDto> days;
 
   ScheduleDto() {
   }
@@ -44,8 +44,8 @@ public class ScheduleDto extends AbstractDto<Schedule> {
     return this.active;
   }
 
-  public List<ScheduleDayDto> getTrainingDays() {
-    return this.trainingDays;
+  public List<ScheduleDayDto> getDays() {
+    return this.days;
   }
 
   @Override
@@ -56,13 +56,12 @@ public class ScheduleDto extends AbstractDto<Schedule> {
   @Override
   public Schedule toEntity() {
     return new ScheduleBuilder()
-        .withIdentifier(this.identifier)
         .withName(this.name)
         .withCreator(this.creator)
         .withCreatedAt(this.createdAt)
         .withUpdatedAt(this.updatedAt)
         .isActive(this.active)
-        .withTrainingDays(this.trainingDays)
+        .withDays(this.days)
         .build();
   }
 

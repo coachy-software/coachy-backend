@@ -1,6 +1,7 @@
 package life.coachy.backend.user;
 
 import java.util.Set;
+import life.coachy.backend.schedule.ScheduleDto;
 import org.bson.types.ObjectId;
 
 public class UserDto {
@@ -13,6 +14,7 @@ public class UserDto {
   private String avatar;
   private AccountType accountType;
   private Set<String> roles;
+  private Set<ScheduleDto> schedules;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -44,6 +46,10 @@ public class UserDto {
 
   public Set<String> getRoles() {
     return this.roles;
+  }
+
+  public Set<ScheduleDto> getSchedules() {
+    return this.schedules;
   }
 
 }

@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 
 class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
 
-  ObjectId identifier = ObjectId.get();
+  ObjectId identifier;
   String name;
   List<String> exampleImages;
   String briefDescription;
