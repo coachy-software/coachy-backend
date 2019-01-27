@@ -21,8 +21,7 @@ public class UserUpdateDtoTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
         + "accountType=null, "
-        + "roles=null, "
-        + "schedules=null}", dto.toEntity().toString());
+        + "roles=null}", dto.toEntity().toString());
   }
 
 }

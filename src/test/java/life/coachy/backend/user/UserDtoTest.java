@@ -15,7 +15,7 @@ public class UserDtoTest {
   public void toEntityTest() {
     ObjectId id = ObjectId.get();
     UserDto dto = new UserDto(id, "testUsername", "test123", "passwordTest", "test@coachy.life",
-        "http://coachy.life/test.png", AccountType.CHARGE, Sets.newHashSet("ADMIN", "USER"), null);
+        "http://coachy.life/test.png", AccountType.CHARGE, Sets.newHashSet("ADMIN", "USER"));
 
     assertEquals("User{"
         + "identifier=" + id + ", "
@@ -25,8 +25,7 @@ public class UserDtoTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
         + "accountType=CHARGE, "
-        + "roles=[USER, ADMIN], "
-        + "schedules=null}", dto.toEntity().toString());
+        + "roles=[USER, ADMIN]}", dto.toEntity().toString());
   }
 
 }

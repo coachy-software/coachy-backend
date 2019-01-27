@@ -1,7 +1,6 @@
 package life.coachy.backend.user;
 
 import java.util.Set;
-import life.coachy.backend.schedule.ScheduleDto;
 import life.coachy.backend.util.AbstractDto;
 import org.bson.types.ObjectId;
 
@@ -15,11 +14,9 @@ public class UserDto extends AbstractDto<User> {
   private String avatar;
   private AccountType accountType;
   private Set<String> roles;
-  private Set<ScheduleDto> schedules;
 
   public UserDto(ObjectId identifier, String username, String displayName, String password, String email,
-      String avatar, AccountType accountType, Set<String> roles,
-      Set<ScheduleDto> schedules) {
+      String avatar, AccountType accountType, Set<String> roles) {
     this.identifier = identifier;
     this.username = username;
     this.displayName = displayName;
@@ -28,7 +25,6 @@ public class UserDto extends AbstractDto<User> {
     this.avatar = avatar;
     this.accountType = accountType;
     this.roles = roles;
-    this.schedules = schedules;
   }
 
   public UserDto() {
@@ -66,10 +62,6 @@ public class UserDto extends AbstractDto<User> {
     return this.roles;
   }
 
-  public Set<ScheduleDto> getSchedules() {
-    return this.schedules;
-  }
-
   @Override
   public String getEntityName() {
     return this.username;
@@ -86,7 +78,6 @@ public class UserDto extends AbstractDto<User> {
         .withAvatar(this.avatar)
         .withAccountType(this.accountType)
         .withRoles(this.roles)
-        .withSchedules(this.schedules)
         .build();
   }
 
