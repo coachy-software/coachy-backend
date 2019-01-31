@@ -8,8 +8,6 @@ spring:
     mongodb:
       uri: mongodb://127.0.0.1:27017
       database: coachy
-    elasticsearch:
-      cluster-nodes: "localhost:9300"
   mail:
     host: smtp.gmail.com
     port: 587

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/users")
 @RestController
-class UserController extends AbstractCrudController<User, String, UserUpdateDto, UserRegistrationDto> {
+class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDto, UserRegistrationDto> {
 
   private final UserService userService;
   private final SmartValidator smartValidator;
@@ -39,7 +39,7 @@ class UserController extends AbstractCrudController<User, String, UserUpdateDto,
   }
 
   @Override
-  protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable String id, BindingResult result) {
+  protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
       if (this.userService.existsByEmail(dto.getEmail())) {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -51,7 +51,7 @@ class UserController extends AbstractCrudController<User, String, UserUpdateDto,
 
 
   @Override
-  protected ResponseEntity<UserUpdateDto> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable String id) {
+  protected ResponseEntity<UserUpdateDto> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id) {
     if (this.userService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }

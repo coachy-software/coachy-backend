@@ -1,9 +1,10 @@
 package life.coachy.backend.user;
 
 import java.util.Optional;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-interface UserMongoRepository extends MongoRepository<User, String> {
+interface UserRepository extends MongoRepository<User, ObjectId> {
 
   Optional<User> findByUsername(String username);
 

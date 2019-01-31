@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 
 class UserBuilder implements Buildable<User> {
 
-  String identifier;
+  ObjectId identifier;
   String username;
   String displayName;
   String password;
@@ -15,7 +15,7 @@ class UserBuilder implements Buildable<User> {
   AccountType accountType;
   Set<String> roles;
 
-  public UserBuilder withIdentifier(String identifier) {
+  public UserBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;
   }

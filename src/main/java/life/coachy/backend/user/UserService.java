@@ -3,39 +3,40 @@ package life.coachy.backend.user;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-class UserService implements CrudOperationsService<User, String> {
+class UserService implements CrudOperationsService<User, ObjectId> {
 
-  private final UserMongoRepository userMongoRepository;
+  private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserService(UserMongoRepository userMongoRepository, PasswordEncoder passwordEncoder) {
-    this.userMongoRepository = userMongoRepository;
+  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }
 
   @Override
   public Optional<User> findByName(String name) {
-    return this.userMongoRepository.findByUsername(name);
+    return this.userRepository.findByUsername(name);
   }
 
   @Override
-  public Optional<User> findById(String id) {
-    return this.userMongoRepository.findById(id);
+  public Optional<User> findById(ObjectId objectId) {
+    return this.userRepository.findById(objectId);
   }
 
   Optional<User> findByEmail(String email) {
-    return this.userMongoRepository.findByEmail(email);
+    return this.userRepository.findByEmail(email);
   }
 
   @Override
   public List<User> findAll() {
-    return this.userMongoRepository.findAll();
+    return this.userRepository.findAll();
   }
 
   @Override
@@ -45,26 +46,26 @@ class UserService implements CrudOperationsService<User, String> {
       entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
     }
 
-    return this.userMongoRepository.save(entity);
+    return this.userRepository.save(entity);
   }
 
   @Override
-  public void deleteById(String id) {
-    this.userMongoRepository.deleteById(id);
+  public void deleteById(ObjectId objectId) {
+    this.userRepository.deleteById(objectId);
   }
 
   @Override
-  public boolean existsById(String id) {
-    return this.userMongoRepository.existsById(id);
+  public boolean existsById(ObjectId objectId) {
+    return this.userRepository.existsById(objectId);
   }
 
   boolean existsByEmail(String email) {
-    return this.userMongoRepository.existsByEmail(email);
+    return this.userRepository.existsByEmail(email);
   }
 
   User savePassword(User user, String password) {
     user.setPassword(this.passwordEncoder.encode(password));
-    return this.userMongoRepository.save(user);
+    return this.userRepository.save(user);
   }
 
 }

@@ -1,18 +1,20 @@
 package life.coachy.backend.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
 import life.coachy.backend.util.IdentifiableEntity;
-import org.mongojack.ObjectId;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(indexName = "coachy")
-class User implements IdentifiableEntity<String> {
+@Document("users")
+class User implements IdentifiableEntity<ObjectId> {
 
   @Id
-  @ObjectId
-  private String identifier;
+  @JsonSerialize(using = ToStringSerializer.class)
+  private ObjectId identifier;
   private String username;
   private String displayName;
   @JsonIgnore
@@ -37,7 +39,7 @@ class User implements IdentifiableEntity<String> {
   }
 
   @Override
-  public String getIdentifier() {
+  public ObjectId getIdentifier() {
     return this.identifier;
   }
 

@@ -2,12 +2,11 @@ package life.coachy.backend.user;
 
 import java.util.Set;
 import life.coachy.backend.util.AbstractDto;
-import org.mongojack.ObjectId;
+import org.bson.types.ObjectId;
 
 public class UserDto extends AbstractDto<User> {
 
-  @ObjectId
-  private String identifier;
+  private ObjectId identifier;
   private String username;
   private String displayName;
   private String password;
@@ -16,7 +15,7 @@ public class UserDto extends AbstractDto<User> {
   private AccountType accountType;
   private Set<String> roles;
 
-  public UserDto(String identifier, String username, String displayName, String password, String email,
+  public UserDto(ObjectId identifier, String username, String displayName, String password, String email,
       String avatar, AccountType accountType, Set<String> roles) {
     this.identifier = identifier;
     this.username = username;
@@ -31,7 +30,7 @@ public class UserDto extends AbstractDto<User> {
   public UserDto() {
   }
 
-  public String getIdentifier() {
+  public ObjectId getIdentifier() {
     return this.identifier;
   }
 
