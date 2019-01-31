@@ -11,32 +11,32 @@ import org.springframework.stereotype.Service;
 @Service
 class UserService implements CrudOperationsService<User, ObjectId> {
 
-  private final UserRepository userRepository;
+  private final UserMongoRepository userMongoRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
+  public UserService(UserMongoRepository userMongoRepository, PasswordEncoder passwordEncoder) {
+    this.userMongoRepository = userMongoRepository;
     this.passwordEncoder = passwordEncoder;
   }
 
   @Override
   public Optional<User> findByName(String name) {
-    return this.userRepository.findByUsername(name);
+    return this.userMongoRepository.findByUsername(name);
   }
 
   @Override
   public Optional<User> findById(ObjectId objectId) {
-    return this.userRepository.findById(objectId);
+    return this.userMongoRepository.findById(objectId);
   }
 
   Optional<User> findByEmail(String email) {
-    return this.userRepository.findByEmail(email);
+    return this.userMongoRepository.findByEmail(email);
   }
 
   @Override
   public List<User> findAll() {
-    return this.userRepository.findAll();
+    return this.userMongoRepository.findAll();
   }
 
   @Override
@@ -46,26 +46,26 @@ class UserService implements CrudOperationsService<User, ObjectId> {
       entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
     }
 
-    return this.userRepository.save(entity);
+    return this.userMongoRepository.save(entity);
   }
 
   @Override
   public void deleteById(ObjectId objectId) {
-    this.userRepository.deleteById(objectId);
+    this.userMongoRepository.deleteById(objectId);
   }
 
   @Override
   public boolean existsById(ObjectId objectId) {
-    return this.userRepository.existsById(objectId);
+    return this.userMongoRepository.existsById(objectId);
   }
 
   boolean existsByEmail(String email) {
-    return this.userRepository.existsByEmail(email);
+    return this.userMongoRepository.existsByEmail(email);
   }
 
   User savePassword(User user, String password) {
     user.setPassword(this.passwordEncoder.encode(password));
-    return this.userRepository.save(user);
+    return this.userMongoRepository.save(user);
   }
 
 }

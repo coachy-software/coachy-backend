@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-  private final UserRepository userRepository;
+  private final UserMongoRepository userMongoRepository;
 
   @Autowired
-  UserDetailsService(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  UserDetailsService(UserMongoRepository userMongoRepository) {
+    this.userMongoRepository = userMongoRepository;
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> optionalUser = this.userRepository.findByUsername(username);
+    Optional<User> optionalUser = this.userMongoRepository.findByUsername(username);
 
     if (!optionalUser.isPresent()) {
       throw new UsernameNotFoundException("Username not found!");

@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
-public class UserRepositoryIntegrationTest {
+public class UserMongoRepositoryIntegrationTest {
 
   @Autowired
   private MongoTemplate mongoTemplate;
 
   @Autowired
-  private UserRepository userRepository;
+  private UserMongoRepository userMongoRepository;
 
   @Test
   public void storedUserShouldReturnProperValues() {
@@ -36,7 +36,7 @@ public class UserRepositoryIntegrationTest {
         .build();
 
     this.mongoTemplate.insert(user);
-    Optional<User> mongoUser = this.userRepository.findByUsername("(nnu*SCA8=4{v::^Z_bagna]Gz(CUN");
+    Optional<User> mongoUser = this.userMongoRepository.findByUsername("(nnu*SCA8=4{v::^Z_bagna]Gz(CUN");
 
     this.mongoTemplate.remove(user);
 

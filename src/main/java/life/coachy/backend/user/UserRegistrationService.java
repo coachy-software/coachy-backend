@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 class UserRegistrationService {
 
-  private final UserRepository userRepository;
+  private final UserMongoRepository userMongoRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserRegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
+  public UserRegistrationService(UserMongoRepository userMongoRepository, PasswordEncoder passwordEncoder) {
+    this.userMongoRepository = userMongoRepository;
     this.passwordEncoder = passwordEncoder;
   }
 
@@ -23,7 +23,7 @@ class UserRegistrationService {
     user.setRoles(Sets.newHashSet("USER"));
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
-    this.userRepository.save(user);
+    this.userMongoRepository.save(user);
     return dto;
   }
 

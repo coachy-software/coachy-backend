@@ -49,7 +49,9 @@ dependencies {
   implementation('commons-beanutils:commons-beanutils:1.9.3')
   implementation('org.springframework.boot:spring-boot-starter-mail:2.1.1.RELEASE')
   implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-
+  implementation('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+  implementation('org.mongojack:mongojack:2.10.0')
+  
   testImplementation('com.icegreen:greenmail:1.5.5')
   testImplementation('org.springframework.boot:spring-boot-starter-test')
   testImplementation('org.springframework.security:spring-security-test')
