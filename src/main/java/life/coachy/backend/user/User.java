@@ -7,7 +7,7 @@ import org.mongojack.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "users")
+@Document(indexName = "coachy")
 class User implements IdentifiableEntity<String> {
 
   @Id
