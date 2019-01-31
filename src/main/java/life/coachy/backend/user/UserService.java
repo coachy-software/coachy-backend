@@ -3,13 +3,12 @@ package life.coachy.backend.user;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-class UserService implements CrudOperationsService<User, ObjectId> {
+class UserService implements CrudOperationsService<User, String> {
 
   private final UserMongoRepository userMongoRepository;
   private final PasswordEncoder passwordEncoder;
@@ -26,8 +25,8 @@ class UserService implements CrudOperationsService<User, ObjectId> {
   }
 
   @Override
-  public Optional<User> findById(ObjectId objectId) {
-    return this.userMongoRepository.findById(objectId);
+  public Optional<User> findById(String id) {
+    return this.userMongoRepository.findById(id);
   }
 
   Optional<User> findByEmail(String email) {
@@ -50,13 +49,13 @@ class UserService implements CrudOperationsService<User, ObjectId> {
   }
 
   @Override
-  public void deleteById(ObjectId objectId) {
-    this.userMongoRepository.deleteById(objectId);
+  public void deleteById(String id) {
+    this.userMongoRepository.deleteById(id);
   }
 
   @Override
-  public boolean existsById(ObjectId objectId) {
-    return this.userMongoRepository.existsById(objectId);
+  public boolean existsById(String id) {
+    return this.userMongoRepository.existsById(id);
   }
 
   boolean existsByEmail(String email) {
