@@ -1,10 +1,13 @@
 package life.coachy.backend.exercise.template;
 
+import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,6 +48,16 @@ class ExerciseTemplateCrudService implements CrudOperationsService<ExerciseTempl
   @Override
   public boolean existsById(ObjectId objectId) {
     return this.repository.existsById(objectId);
+  }
+
+  @Override
+  public List<ExerciseTemplate> findAll(Predicate predicate) {
+    return null;
+  }
+
+  @Override
+  public Page<ExerciseTemplate> findAll(Predicate predicate, Pageable pageable) {
+    return null;
   }
 
 }

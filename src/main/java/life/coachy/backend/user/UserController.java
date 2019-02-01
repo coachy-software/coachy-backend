@@ -1,5 +1,8 @@
 package life.coachy.backend.user;
 
+import com.querydsl.core.types.Predicate;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.security.AuthenticatedUser;
 import life.coachy.backend.util.security.RequiresAuthenticated;
@@ -7,6 +10,8 @@ import life.coachy.backend.util.validation.ValidationUtil;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -30,6 +35,14 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
     super(userService);
     this.userService = userService;
     this.smartValidator = smartValidator;
+  }
+
+  @ApiOperation("Displays all users")
+  @GetMapping
+  public ResponseEntity<Iterable<User>> readAll(
+      @ApiParam("QueryDSL") @QuerydslPredicate(root = User.class) Predicate predicate,
+      Pageable pageable) {
+    return ResponseEntity.ok(this.userService.findAll(predicate, pageable));
   }
 
   @RequiresAuthenticated

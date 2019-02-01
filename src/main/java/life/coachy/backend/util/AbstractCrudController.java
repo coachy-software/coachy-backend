@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import life.coachy.backend.util.validation.ValidationUtil;
@@ -28,13 +27,6 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
   protected AbstractCrudController(CrudOperationsService<T, ID> service) {
     this.service = service;
   }
-
-  @ApiOperation("Displays all entities")
-  @GetMapping
-  protected ResponseEntity<List<T>> readAll() {
-    return ResponseEntity.ok(this.service.findAll());
-  }
-
 
   @ApiOperation("Displays specified entity by it's identifier")
   @ApiResponses({

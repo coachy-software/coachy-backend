@@ -1,10 +1,14 @@
 package life.coachy.backend.user;
 
+import com.google.common.collect.Lists;
+import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +61,16 @@ class UserService implements CrudOperationsService<User, ObjectId> {
   @Override
   public boolean existsById(ObjectId objectId) {
     return this.userRepository.existsById(objectId);
+  }
+
+  @Override
+  public List<User> findAll(Predicate predicate) {
+    return Lists.newArrayList(this.userRepository.findAll(predicate));
+  }
+
+  @Override
+  public Page<User> findAll(Predicate predicate, Pageable pageable) {
+    return this.userRepository.findAll(predicate, pageable);
   }
 
   boolean existsByEmail(String email) {
