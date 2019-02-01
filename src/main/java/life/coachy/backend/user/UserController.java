@@ -40,7 +40,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   @ApiOperation("Displays all users")
   @GetMapping
   public ResponseEntity<Iterable<User>> readAll(
-      @ApiParam("QueryDSL") @QuerydslPredicate(root = User.class) Predicate predicate,
+      @ApiParam("QueryDSL") @QuerydslPredicate(root = User.class, bindings = UserQueryBinder.class) Predicate predicate,
       Pageable pageable) {
 
     boolean isPredicatePresent = !(predicate == null);
