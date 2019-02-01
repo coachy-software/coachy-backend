@@ -65,17 +65,6 @@ public class AbstractCrudControllerIntegrationTest {
   }
 
   @Test
-  public void readAllEntitiesTest() throws Exception {
-    this.repository.save(new TestEntity(ObjectId.get(), "testEntity1125", "something"));
-    this.repository.save(new TestEntity(ObjectId.get(), "testEntity1126", "something"));
-
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/tests"))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].username", Matchers.is("testEntity1125")))
-        .andExpect(jsonPath("$[1].username", Matchers.is("testEntity1126")));
-  }
-
-  @Test
   public void readShouldReturn404WhenDoesNotExists() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/tests/{id}", ObjectId.get()))
         .andExpect(status().isNotFound());

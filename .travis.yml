@@ -10,8 +10,8 @@ services:
 before_install:
   - chmod +x gradlew
 install:
-  - ./gradlew compileJava
+  - ./gradlew clean compileJava
 script:
-  - ./gradlew test jacocoTestReport coveralls --stacktrace
+  - ./gradlew clean jacocoTestReport coveralls --stacktrace
 after_success:
-  - ./gradlew coveralls
+  - ./gradlew clean coveralls
