@@ -42,7 +42,18 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   public ResponseEntity<Iterable<User>> readAll(
       @ApiParam("QueryDSL") @QuerydslPredicate(root = User.class) Predicate predicate,
       Pageable pageable) {
-    return ResponseEntity.ok(this.userService.findAll(predicate, pageable));
+
+    boolean isPredicatePresent = !(predicate == null);
+    boolean isPaginationPresent = pageable.toOptional().isPresent();
+    boolean isPagginationAndPredicatePresent = isPredicatePresent && isPaginationPresent;
+
+    if (isPagginationAndPredicatePresent) {
+      return ResponseEntity.ok(this.userService.findAll(predicate, pageable));
+    } else if (isPaginationPresent) {
+      return ResponseEntity.ok(this.userService.findAll(pageable));
+    } else {
+      return ResponseEntity.ok(this.userService.findAll());
+    }
   }
 
   @RequiresAuthenticated

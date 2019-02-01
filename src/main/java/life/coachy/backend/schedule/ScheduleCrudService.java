@@ -50,6 +50,8 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     return this.repository.existsById(objectId);
   }
 
+  // TODO
+
   @Override
   public List<Schedule> findAll(Predicate predicate) {
     return this.repository.findAll();
@@ -57,6 +59,11 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
 
   @Override
   public Page<Schedule> findAll(Predicate predicate, Pageable pageable) {
+    return null;
+  }
+
+  @Override
+  public Page<Schedule> findAll(Pageable pageable) {
     return null;
   }
 

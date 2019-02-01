@@ -22,6 +22,8 @@ public interface CrudOperationsService<T extends IdentifiableEntity<ID>, ID> {
 
   List<T> findAll(Predicate predicate);
 
+  Page<T> findAll(Pageable pageable);
+
   Page<T> findAll(Predicate predicate, Pageable pageable);
 
 }

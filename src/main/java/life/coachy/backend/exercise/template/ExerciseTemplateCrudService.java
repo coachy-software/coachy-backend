@@ -50,6 +50,8 @@ class ExerciseTemplateCrudService implements CrudOperationsService<ExerciseTempl
     return this.repository.existsById(objectId);
   }
 
+  // todo
+
   @Override
   public List<ExerciseTemplate> findAll(Predicate predicate) {
     return null;
@@ -57,6 +59,11 @@ class ExerciseTemplateCrudService implements CrudOperationsService<ExerciseTempl
 
   @Override
   public Page<ExerciseTemplate> findAll(Predicate predicate, Pageable pageable) {
+    return null;
+  }
+
+  @Override
+  public Page<ExerciseTemplate> findAll(Pageable pageable) {
     return null;
   }
 

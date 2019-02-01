@@ -73,6 +73,11 @@ class UserService implements CrudOperationsService<User, ObjectId> {
     return this.userRepository.findAll(predicate, pageable);
   }
 
+  @Override
+  public Page<User> findAll(Pageable pageable) {
+    return this.userRepository.findAll(pageable);
+  }
+
   boolean existsByEmail(String email) {
     return this.userRepository.existsByEmail(email);
   }
