@@ -16,6 +16,10 @@ buildscript {
 
 }
 
+plugins {
+  id 'net.ltgt.apt' version '0.8'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -57,6 +61,9 @@ dependencies {
 
   compileOnly('com.querydsl:querydsl-apt:4.1.4')
   compile('com.querydsl:querydsl-mongodb:4.1.4')
+
+  compile('org.mapstruct:mapstruct-jdk8:1.2.0.Final')
+  apt('org.mapstruct:mapstruct-processor:1.2.0.Final')
 
   testCompile('com.icegreen:greenmail:1.5.5')
   testCompile('org.springframework.boot:spring-boot-starter-test')
