@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/exercises")
 @RestController
-class ExerciseTemplateController extends AbstractCrudController<ExerciseTemplate, ObjectId,
-    ExerciseTemplateUpdateDto, ExerciseTemplateUpdateDto> {
+class ExerciseTemplateController extends AbstractCrudController<ExerciseTemplate, ObjectId, ExerciseTemplateUpdateDto,
+    ExerciseTemplateUpdateDto> {
 
   private static final String SPEL_EXPRESSION = "isAuthenticated() && hasAuthority('ADMIN')";
   private final SmartValidator smartValidator;

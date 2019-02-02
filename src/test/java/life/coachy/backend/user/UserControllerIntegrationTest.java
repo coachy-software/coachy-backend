@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.google.common.collect.Sets;
+import java.util.Arrays;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -114,6 +115,54 @@ public class UserControllerIntegrationTest {
         .andExpect(status().isConflict());
   }
 
+  @Test
+  public void searchTest() throws Exception {
+    UserBuilder builder = new UserBuilder()
+        .withUsername("testName123");
+
+    this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?username=testName1234"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
+        .andExpect(jsonPath("$.content[0].username", Matchers.is("testName1234")))
+        .andExpect(jsonPath("$.content[1].username").doesNotExist());
+  }
+
+  @Test
+  public void searchShouldReturnEmptyArrayWhenNoMatches() throws Exception {
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?name=testName1234"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content").isEmpty());
+  }
+
+  @Test
+  public void paginationPageSizeTest() throws Exception {
+    UserBuilder builder = new UserBuilder()
+        .withUsername("testName123");
+
+    this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=0&size=1"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
+        .andExpect(jsonPath("$.content[0].username", Matchers.is("testName123")))
+        .andExpect(jsonPath("$.content[1].username").doesNotExist());
+  }
+
+  @Test
+  public void paginationTest() throws Exception {
+    UserBuilder builder = new UserBuilder()
+        .withUsername("testName123");
+
+    this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=0&size=2"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
+        .andExpect(jsonPath("$.content[0].username", Matchers.is("testName123")))
+        .andExpect(jsonPath("$.content[1].username", Matchers.is("testName1234")));
+  }
 
   @After
   public void tearDown() throws Exception {

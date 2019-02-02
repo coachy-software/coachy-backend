@@ -50,8 +50,6 @@ public class TestCrudService implements CrudOperationsService<TestEntity, Object
     return this.testRepository.existsById(objectId);
   }
 
-  // todo
-
   @Override
   public List<TestEntity> findAll(Predicate predicate) {
     return null;

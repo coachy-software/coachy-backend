@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UploadControllerTest {
+public class UploadControllerIntegrationTest {
 
   @Value("classpath:upload/")
   private Path uploadDirectoryPath;
@@ -63,7 +63,7 @@ public class UploadControllerTest {
     Map<String, Object> dbObjectDetails = new HashMap<String, Object>() {{
       this.put("username", "test918238901802306");
       this.put("email", "test@email.com");
-      this.put("password", UploadControllerTest.this.passwordEncoder.encode("test123"));
+      this.put("password", UploadControllerIntegrationTest.this.passwordEncoder.encode("test123"));
       this.put("roles", Sets.newHashSet("USER", "ADMIN"));
     }};
 
