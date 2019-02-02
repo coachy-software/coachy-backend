@@ -41,13 +41,4 @@ public class ScheduleUpdateDto extends AbstractDto<Schedule> {
     return this.name;
   }
 
-  @Override
-  public Schedule toEntity() {
-    return new ScheduleBuilder()
-        .withName(this.name)
-        .isActive(this.active)
-        .withDays(this.days)
-        .build();
-  }
-
 }

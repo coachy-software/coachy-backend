@@ -18,12 +18,12 @@ class UserRegistrationService {
   }
 
   UserRegistrationDto saveDto(UserRegistrationDto dto) {
-    User user = dto.toEntity();
+//    User user = dto.toEntity();
 
-    user.setRoles(Sets.newHashSet("USER"));
-    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-
-    this.userRepository.save(user);
+//    user.setRoles(Sets.newHashSet("USER"));
+//    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+//
+//    this.userRepository.save(user); TODO
     return dto;
   }
 

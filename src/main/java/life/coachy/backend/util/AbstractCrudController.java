@@ -71,7 +71,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
-    BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get());
+//    BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get()); TODO
     this.service.save(entity.get());
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
@@ -91,7 +91,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.notFound().build();
     }
 
-    BeanUtil.copyNonNullProperties(dto.toEntity(), optionalEntity.get());
+//    BeanUtil.copyNonNullProperties(dto.toEntity(), optionalEntity.get()); TODO
     this.service.save(optionalEntity.get());
     return ResponseEntity.noContent().build();
   }
@@ -116,13 +116,14 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
-    T entity = dto.toEntity();
+//    T entity = dto.toEntity(); TODO
 
     if (this.service.findByName(dto.getEntityName()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(entity));
+//    return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(entity)); TODO
+    return null;
   }
 
 }

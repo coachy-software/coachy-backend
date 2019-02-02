@@ -67,18 +67,4 @@ public class UserDto extends AbstractDto<User> {
     return this.username;
   }
 
-  @Override
-  public User toEntity() {
-    return new UserBuilder()
-        .withIdentifier(this.identifier)
-        .withUsername(this.username)
-        .withDisplayName(this.displayName)
-        .withPassword(this.password)
-        .withEmail(this.email)
-        .withAvatar(this.avatar)
-        .withAccountType(this.accountType)
-        .withRoles(this.roles)
-        .build();
-  }
-
 }

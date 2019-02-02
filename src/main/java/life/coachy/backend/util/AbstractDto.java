@@ -11,10 +11,6 @@ public abstract class AbstractDto<T extends IdentifiableEntity<?>> {
     throw new UnsupportedOperationException();
   }
 
-  public T toEntity() {
-    throw new UnsupportedOperationException();
-  }
-
   public String toJson() {
     try {
       return new ObjectMapper().writer().writeValueAsString(this);

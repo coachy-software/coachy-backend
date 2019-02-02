@@ -12,12 +12,9 @@ buildscript {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2')
     classpath('gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10')
+    classpath('net.ltgt.gradle:gradle-apt-plugin:0.20')
   }
 
-}
-
-plugins {
-  id 'net.ltgt.apt' version '0.8'
 }
 
 apply plugin: 'java'
@@ -27,6 +24,8 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'jacoco'
 apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+apply plugin: "net.ltgt.apt"
+apply plugin: 'net.ltgt.apt-idea'
 
 group = 'life.coachy'
 version = '0.0.1-SNAPSHOT'
@@ -59,11 +58,11 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-mail:2.1.1.RELEASE')
   compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 
-  compileOnly('com.querydsl:querydsl-apt:4.1.4')
+  annotationProcessor('com.querydsl:querydsl-apt:4.1.4')
   compile('com.querydsl:querydsl-mongodb:4.1.4')
 
   compile('org.mapstruct:mapstruct-jdk8:1.2.0.Final')
-  apt('org.mapstruct:mapstruct-processor:1.2.0.Final')
+  annotationProcessor('org.mapstruct:mapstruct-processor:1.2.0.Final')
 
   testCompile('com.icegreen:greenmail:1.5.5')
   testCompile('org.springframework.boot:spring-boot-starter-test')
@@ -73,14 +72,6 @@ dependencies {
 }
 
 querydsl {
-  querydslSourcesDir = 'querydsl/generated/source/app/main'
+  querydslSourcesDir = 'build/generated/sources/annotationProcessor/java/main/'
   springDataMongo = true
-}
-
-sourceSets {
-  main {
-    java {
-      srcDir 'querydsl/generated/source/app/main'
-    }
-  }
 }

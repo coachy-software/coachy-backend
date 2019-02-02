@@ -55,15 +55,4 @@ public class ExerciseTemplateDto extends AbstractDto<ExerciseTemplate> {
     return this.name;
   }
 
-  @Override
-  public ExerciseTemplate toEntity() {
-    return new ExerciseTemplateBuilder()
-        .withIdentifier(this.identifier)
-        .withName(this.name)
-        .withExampleImages(this.exampleImages)
-        .withBriefDescription(this.briefDescription)
-        .withVerified(this.verified)
-        .build();
-  }
-
 }

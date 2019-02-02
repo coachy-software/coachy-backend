@@ -70,17 +70,4 @@ public class ScheduleDto extends AbstractDto<Schedule> {
     return this.name;
   }
 
-  @Override
-  public Schedule toEntity() {
-    return new ScheduleBuilder()
-        .withIdentifier(this.identifier)
-        .withName(this.name)
-        .withCreator(this.creator)
-        .withCreatedAt(this.createdAt)
-        .withUpdatedAt(this.updatedAt)
-        .isActive(this.active)
-        .withDays(this.days)
-        .build();
-  }
-
 }

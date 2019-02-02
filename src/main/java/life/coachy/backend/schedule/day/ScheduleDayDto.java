@@ -43,14 +43,4 @@ public class ScheduleDayDto extends AbstractDto<ScheduleDay> {
     return this.trainingDay;
   }
 
-  @Override
-  public ScheduleDay toEntity() {
-    return new ScheduleDayBuilder()
-        .withName(this.name)
-        .withMusclesPart(this.musclesPart)
-        .withExercises(this.exercises)
-        .isTrainingDay(this.trainingDay)
-        .build();
-  }
-
 }

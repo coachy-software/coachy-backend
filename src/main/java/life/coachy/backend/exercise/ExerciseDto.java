@@ -52,15 +52,4 @@ public class ExerciseDto extends AbstractDto<Exercise> {
     return this.name;
   }
 
-  @Override
-  public Exercise toEntity() {
-    return new ExerciseBuilder()
-        .withName(this.name)
-        .withSets(this.sets)
-        .withReps(this.reps)
-        .withMiniSets(this.miniSets)
-        .withTemplate(this.template)
-        .build();
-  }
-
 }

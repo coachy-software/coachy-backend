@@ -42,14 +42,4 @@ public class ExerciseTemplateUpdateDto extends AbstractDto<ExerciseTemplate> {
     return this.verified;
   }
 
-  @Override
-  public ExerciseTemplate toEntity() {
-    return new ExerciseTemplateBuilder()
-        .withName(this.name)
-        .withExampleImages(this.exampleImages)
-        .withBriefDescription(this.briefDescription)
-        .withVerified(this.verified)
-        .build();
-  }
-
 }

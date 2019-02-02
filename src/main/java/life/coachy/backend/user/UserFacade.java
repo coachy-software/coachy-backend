@@ -25,7 +25,8 @@ public class UserFacade {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto).toEntity());
+//    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto).toEntity()); TODO
+    return null;
   }
 
   public User show(String username) {

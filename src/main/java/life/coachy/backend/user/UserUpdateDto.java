@@ -58,14 +58,4 @@ public class UserUpdateDto extends AbstractDto<User> {
     return this.avatar;
   }
 
-  @Override
-  public User toEntity() {
-    return new UserBuilder()
-        .withDisplayName(this.displayName)
-        .withPassword(this.password)
-        .withEmail(this.email)
-        .withAvatar(this.avatar)
-        .build();
-  }
-
 }
