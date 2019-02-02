@@ -32,7 +32,7 @@ public class UserUpdateDto extends AbstractDto<User> {
   @URL(message = "{pattern}")
   private String avatar;
 
-  UserUpdateDto(String displayName, String password, String email, String avatar) {
+  public UserUpdateDto(String displayName, String password, String email, String avatar) {
     this.displayName = displayName;
     this.password = password;
     this.email = email;

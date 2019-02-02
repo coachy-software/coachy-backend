@@ -55,13 +55,13 @@ class ExerciseTemplateController extends AbstractCrudController<ExerciseTemplate
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
-  protected ResponseEntity<ExerciseTemplateUpdateDto> partialUpdate(ExerciseTemplateUpdateDto dto, ObjectId id) {
+  protected ResponseEntity<ExerciseTemplateUpdateDto> partialUpdate(@RequestBody ExerciseTemplateUpdateDto dto, @PathVariable ObjectId id) {
     return super.partialUpdate(dto, id);
   }
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
-  protected ResponseEntity<ExerciseTemplate> remove(ObjectId id) {
+  protected ResponseEntity<ExerciseTemplate> remove(@PathVariable ObjectId id) {
     return super.remove(id);
   }
 

@@ -205,6 +205,21 @@ public class UserControllerIntegrationTest {
         .andExpect(status().isForbidden());
   }
 
+  @Test
+  public void deleteShouldReturn403WhenDifferentUser() throws Exception {
+    UserBuilder userBuilder = new UserBuilder()
+        .withIdentifier(ObjectId.get())
+        .withUsername("testUsername")
+        .withPassword("password123")
+        .withRoles(Sets.newHashSet("USER"));
+
+    User user = new User(userBuilder);
+    this.userCrudService.savePassword(user, user.getPassword());
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/{id}", ObjectId.get())
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123")))
+        .andExpect(status().isForbidden());
+  }
+
   @After
   public void tearDown() throws Exception {
     this.mongoTemplate.dropCollection("users");

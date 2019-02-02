@@ -270,10 +270,4 @@ public class AbstractCrudControllerIntegrationTest {
     this.mongoTemplate.insert(new BasicDBObject(userDetails), "users");
   }
 
-  @After
-  public void tearDown() throws Exception {
-    this.mongoTemplate.dropCollection("tests");
-    this.mongoTemplate.dropCollection("users");
-  }
-
 }

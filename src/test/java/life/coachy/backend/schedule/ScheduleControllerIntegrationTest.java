@@ -3,7 +3,13 @@ package life.coachy.backend.schedule;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.common.collect.Sets;
+import com.mongodb.BasicDBObject;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import life.coachy.backend.schedule.day.ScheduleDayDto;
 import life.coachy.backend.user.UserDto;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
@@ -14,6 +20,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,12 +40,17 @@ public class ScheduleControllerIntegrationTest {
   @Autowired
   private WebApplicationContext webApplicationContext;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   private MockMvc mockMvc;
 
 
   @Before
   public void setUp() throws Exception {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
+        .apply(SecurityMockMvcConfigurers.springSecurity())
+        .build();
   }
 
   @Test
@@ -99,9 +114,56 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.content[1].name", Matchers.is("testName1234")));
   }
 
+  @Test
+  public void updateShouldReturn401WhenUnlogged() throws Exception {
+    ObjectId id = ObjectId.get();
+
+    UserDto userDto = new UserDto(ObjectId.get(), null, null, null, null, null, null, null);
+    Schedule schedule = new ScheduleBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(userDto)
+        .build();
+
+    this.mongoTemplate.insert(schedule, "schedules");
+    ScheduleUpdateDto dto = new ScheduleUpdateDto("testName", true, Collections.singletonList(new ScheduleDayDto()));
+
+    this.mockMvc.perform(MockMvcRequestBuilders.put("/api/schedules/{id}", ObjectId.get())
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  public void partialUpdateShouldReturn401WhenUnlogged() throws Exception {
+    ObjectId id = ObjectId.get();
+
+    UserDto userDto = new UserDto(ObjectId.get(), null, null, null, null, null, null, null);
+    Schedule schedule = new ScheduleBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(userDto)
+        .build();
+
+    this.mongoTemplate.insert(schedule, "schedules");
+    ScheduleUpdateDto dto = new ScheduleUpdateDto("testName", true, Collections.singletonList(new ScheduleDayDto()));
+
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/schedules/{id}", id)
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  public void deleteShouldReturn401WhenUnlogged() throws Exception {
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/schedules/{id}", ObjectId.get()))
+        .andExpect(status().isUnauthorized());
+  }
+
   @After
   public void tearDown() throws Exception {
     this.mongoTemplate.dropCollection("schedules");
+    this.mongoTemplate.dropCollection("users");
   }
 
 }
