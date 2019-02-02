@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDto, UserRegistrationDto> {
 
+  private static final String SPEL_EXPRESSION = "(isAuthenticated() && principal.user.identifier.equals(#id)) || hasAuthority('ADMIN')";
   private final UserCrudService userCrudService;
   private final SmartValidator smartValidator;
 
@@ -54,6 +56,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   }
 
   @Override
+  @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
       if (this.userCrudService.existsByEmail(dto.getEmail())) {
@@ -66,12 +69,18 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
 
 
   @Override
+  @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<UserUpdateDto> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id) {
     if (this.userCrudService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     return super.partialUpdate(dto, id);
+  }
+
+  @PreAuthorize(SPEL_EXPRESSION)
+  protected ResponseEntity<User> remove(@PathVariable ObjectId id) {
+    return super.remove(id);
   }
 
 }

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, ID, U extends AbstractDto<T>, C extends AbstractDto<T>> {
 
-  protected static final String SPEL_EXPRESSION = "(isAuthenticated() && principal.user.identifier.equals(#id)) || hasAuthority('ADMIN')";
   private final CrudOperationsService<T, ID> service;
 
   protected AbstractCrudController(CrudOperationsService<T, ID> service) {
@@ -58,7 +57,6 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @ApiResponse(code = 400, message = "Validation error occured"),
       @ApiResponse(code = 204, message = "Entity updated")
   })
-  @PreAuthorize(SPEL_EXPRESSION)
   @PutMapping("/{id}")
   protected ResponseEntity<?> update(
       @RequestBody @Valid @ApiParam("Entity data transfer object") U dto,
@@ -84,7 +82,6 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @ApiResponse(code = 404, message = "Entity could not be found"),
       @ApiResponse(code = 204, message = "Entity updated")
   })
-  @PreAuthorize(SPEL_EXPRESSION)
   @PatchMapping("/{id}")
   protected ResponseEntity<U> partialUpdate(
       @RequestBody @ApiParam("Entity data transfer object") U dto,
@@ -105,7 +102,6 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @ApiResponse(code = 404, message = "Entity could not be found"),
       @ApiResponse(code = 204, message = "Entity deleted")
   })
-  @PreAuthorize(SPEL_EXPRESSION)
   @DeleteMapping("/{id}")
   protected ResponseEntity<T> remove(@PathVariable @ApiParam("Entity identifier") ID id) {
     if (!this.service.existsById(id)) {
