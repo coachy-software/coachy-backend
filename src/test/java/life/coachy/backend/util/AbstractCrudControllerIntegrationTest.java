@@ -165,24 +165,6 @@ public class AbstractCrudControllerIntegrationTest {
   }
 
   @Test
-  public void updateShouldReturn403WhenDifferentUser() throws Exception {
-    ObjectId id = ObjectId.get();
-    String username = "testEntity30182u8038";
-    String password = "test123";
-
-    TestDto testDto = new TestDto(username + "_EDITED", "something");
-    TestEntity testEntity = new TestEntity(id, username, "something");
-    this.repository.save(testEntity);
-
-    this.setUpUser(ObjectId.get(), username, password);
-    this.mockMvc.perform(MockMvcRequestBuilders.put("/api/tests/{id}", id)
-        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password))
-        .content(testDto.toJson().getBytes())
-        .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isForbidden());
-  }
-
-  @Test
   public void updateShouldReturn400WhenValidationError() throws Exception {
     ObjectId id = ObjectId.get();
     String username = "testEntity30182u8038";
@@ -243,22 +225,6 @@ public class AbstractCrudControllerIntegrationTest {
         .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound());
-  }
-
-  @Test
-  public void partialUpdateShouldReturn403WhenDifferentUser() throws Exception {
-    ObjectId id = ObjectId.get();
-    String username = "testEntity3901903190";
-    String password = "test123";
-
-    TestDto dto = new TestDto(null, "something_EDITED");
-
-    this.setUpUser(ObjectId.get(), username, password);
-    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/tests/{id}", id)
-        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password))
-        .content(dto.toJson().getBytes())
-        .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isForbidden());
   }
 
   @Test

@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.google.common.collect.Sets;
 import java.util.Arrays;
+import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -162,6 +163,46 @@ public class UserControllerIntegrationTest {
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
         .andExpect(jsonPath("$.content[0].username", Matchers.is("testName123")))
         .andExpect(jsonPath("$.content[1].username", Matchers.is("testName1234")));
+  }
+
+  @Test
+  public void updateShouldReturn403WhenDifferentUser() throws Exception {
+    UserUpdateDto userDto = new UserUpdateDto("displayName_EDITED", "password123", "email@email.com",
+        "http://www.avatar.com/com.jpg");
+    UserBuilder userBuilder = new UserBuilder()
+        .withIdentifier(ObjectId.get())
+        .withUsername("testUsername")
+        .withPassword("password123")
+        .withRoles(Sets.newHashSet("USER"));
+
+    User user = new User(userBuilder);
+    this.userCrudService.savePassword(user, user.getPassword());
+
+    this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", ObjectId.get())
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(user.getUsername(), "password123"))
+        .content(userDto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void partialUpdateShouldReturn403WhenDifferentUser() throws Exception {
+    UserUpdateDto userDto = new UserUpdateDto("displayName_EDITED", "password123", "email@email.com",
+        "http://www.avatar.com/com.jpg");
+    UserBuilder userBuilder = new UserBuilder()
+        .withIdentifier(ObjectId.get())
+        .withUsername("testUsername")
+        .withPassword("password123")
+        .withRoles(Sets.newHashSet("USER"));
+
+    User user = new User(userBuilder);
+    this.userCrudService.savePassword(user, user.getPassword());
+
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", ObjectId.get())
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123"))
+        .content(userDto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
   }
 
   @After

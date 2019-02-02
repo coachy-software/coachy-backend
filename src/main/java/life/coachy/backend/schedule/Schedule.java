@@ -1,7 +1,6 @@
 package life.coachy.backend.schedule;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.util.List;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
@@ -13,11 +12,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@JsonSerialize(using = ScheduleSerializer.class)
 @Document("schedules")
 class Schedule implements IdentifiableEntity<ObjectId> {
 
   @Id
-  @JsonSerialize(using = ToStringSerializer.class)
   private ObjectId identifier;
   private String name;
   private UserDto creator;

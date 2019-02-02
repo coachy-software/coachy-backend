@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
+import life.coachy.backend.user.UserDto;
+import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -38,8 +40,12 @@ public class ScheduleControllerIntegrationTest {
 
   @Test
   public void searchTest() throws Exception {
+    // todo DTO IMPROVEMENTS!!!
+    UserDto userDto = new UserDto(ObjectId.get(), null, null, null, null, null, null, null);
+
     ScheduleBuilder builder = new ScheduleBuilder()
-        .withName("testName123");
+        .withName("testName123")
+        .withCreator(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
 
@@ -59,8 +65,12 @@ public class ScheduleControllerIntegrationTest {
 
   @Test
   public void paginationPageSizeTest() throws Exception {
+    // todo DTO IMPROVEMENTS!!!
+    UserDto userDto = new UserDto(ObjectId.get(), null, null, null, null, null, null, null);
+
     ScheduleBuilder builder = new ScheduleBuilder()
-        .withName("testName123");
+        .withName("testName123")
+        .withCreator(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
 
@@ -73,8 +83,12 @@ public class ScheduleControllerIntegrationTest {
 
   @Test
   public void paginationTest() throws Exception {
+    // todo DTO IMPROVEMENTS!!!
+    UserDto userDto = new UserDto(ObjectId.get(), null, null, null, null, null, null, null);
+
     ScheduleBuilder builder = new ScheduleBuilder()
-        .withName("testName123");
+        .withName("testName123")
+        .withCreator(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
 
