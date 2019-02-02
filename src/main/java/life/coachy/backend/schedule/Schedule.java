@@ -11,7 +11,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document("schedules")
 class Schedule implements IdentifiableEntity<ObjectId> {
 
   @Id

@@ -4,6 +4,7 @@ import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import life.coachy.backend.util.AbstractCrudController;
+import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.security.AuthenticatedUser;
 import life.coachy.backend.util.security.RequiresAuthenticated;
 import life.coachy.backend.util.validation.ValidationUtil;
@@ -26,36 +27,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDto, UserRegistrationDto> {
 
-  private final UserService userService;
+  private final UserCrudService userCrudService;
   private final SmartValidator smartValidator;
 
   @Autowired
-  protected UserController(UserService userService,
+  protected UserController(UserCrudService userCrudService,
       @Qualifier("localValidatorFactoryBean") SmartValidator smartValidator) {
-    super(userService);
-    this.userService = userService;
+    super(userCrudService);
+    this.userCrudService = userCrudService;
     this.smartValidator = smartValidator;
   }
 
   @ApiOperation("Displays all users")
   @GetMapping
-  public ResponseEntity<Iterable<User>> readAll(
+  public ResponseEntity<?> readAll(
       @ApiParam("QueryDSL") @QuerydslPredicate(root = User.class, bindings = UserQueryBinder.class) Predicate predicate,
       Pageable pageable) {
-
-    boolean isPredicatePresent = !(predicate == null);
-    boolean isPaginationPresent = pageable.toOptional().isPresent();
-    boolean isPagginationAndPredicatePresent = isPredicatePresent && isPaginationPresent;
-
-    if (isPagginationAndPredicatePresent) {
-      return ResponseEntity.ok(this.userService.findAll(predicate, pageable));
-    } else if (isPaginationPresent) {
-      return ResponseEntity.ok(this.userService.findAll(pageable));
-    } else {
-      return ResponseEntity.ok(this.userService.findAll());
-    }
+    return PredicateResponseFactory.obtainResponse(predicate, pageable, this.userCrudService);
   }
 
+  @ApiOperation("Displays current user info")
   @RequiresAuthenticated
   @GetMapping("/me")
   public ResponseEntity<User> me(@AuthenticatedUser User user) {
@@ -65,7 +56,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   @Override
   protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
-      if (this.userService.existsByEmail(dto.getEmail())) {
+      if (this.userCrudService.existsByEmail(dto.getEmail())) {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
       }
 
@@ -76,7 +67,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
 
   @Override
   protected ResponseEntity<UserUpdateDto> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id) {
-    if (this.userService.existsByEmail(dto.getEmail())) {
+    if (this.userCrudService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 

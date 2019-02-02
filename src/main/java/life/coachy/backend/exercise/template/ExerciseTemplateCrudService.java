@@ -1,5 +1,6 @@
 package life.coachy.backend.exercise.template;
 
+import com.google.common.collect.Lists;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
@@ -50,21 +51,19 @@ class ExerciseTemplateCrudService implements CrudOperationsService<ExerciseTempl
     return this.repository.existsById(objectId);
   }
 
-  // todo
-
   @Override
   public List<ExerciseTemplate> findAll(Predicate predicate) {
-    return null;
+    return Lists.newArrayList(this.repository.findAll(predicate));
   }
 
   @Override
   public Page<ExerciseTemplate> findAll(Predicate predicate, Pageable pageable) {
-    return null;
+    return this.repository.findAll(predicate, pageable);
   }
 
   @Override
   public Page<ExerciseTemplate> findAll(Pageable pageable) {
-    return null;
+    return this.repository.findAll(pageable);
   }
 
 }

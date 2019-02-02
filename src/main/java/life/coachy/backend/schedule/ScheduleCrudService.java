@@ -1,5 +1,6 @@
 package life.coachy.backend.schedule;
 
+import com.google.common.collect.Lists;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
@@ -50,21 +51,19 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     return this.repository.existsById(objectId);
   }
 
-  // TODO
-
   @Override
   public List<Schedule> findAll(Predicate predicate) {
-    return this.repository.findAll();
+    return Lists.newArrayList(this.repository.findAll(predicate));
   }
 
   @Override
   public Page<Schedule> findAll(Predicate predicate, Pageable pageable) {
-    return null;
+    return this.repository.findAll(predicate, pageable);
   }
 
   @Override
   public Page<Schedule> findAll(Pageable pageable) {
-    return null;
+    return this.repository.findAll(pageable);
   }
 
 }

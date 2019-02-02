@@ -10,18 +10,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserFacade {
 
-  private final UserService userService;
+  private final UserCrudService userCrudService;
   private final UserRegistrationService userRegistrationService;
 
   @Autowired
-  public UserFacade(UserService userService, UserRegistrationService userRegistrationService) {
-    this.userService = userService;
+  public UserFacade(UserCrudService userCrudService, UserRegistrationService userRegistrationService) {
+    this.userCrudService = userCrudService;
     this.userRegistrationService = userRegistrationService;
   }
 
   public ResponseEntity<?> register(UserRegistrationDto dto) {
-    Optional<User> user = this.userService.findByName(dto.getUsername());
-    if (user.isPresent() || this.userService.existsByEmail(dto.getEmail())) {
+    Optional<User> user = this.userCrudService.findByName(dto.getUsername());
+    if (user.isPresent() || this.userCrudService.existsByEmail(dto.getEmail())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
@@ -29,16 +29,16 @@ public class UserFacade {
   }
 
   public User show(String username) {
-    return this.userService.findByName(username).orElse(null);
+    return this.userCrudService.findByName(username).orElse(null);
   }
 
   public boolean exists(String email) {
-    return this.userService.existsByEmail(email);
+    return this.userCrudService.existsByEmail(email);
   }
 
   public User resetPassword(String email, String newPassword) {
-    return this.userService.findByEmail(email)
-        .map((user) -> this.userService.savePassword(user, newPassword))
+    return this.userCrudService.findByEmail(email)
+        .map((user) -> this.userCrudService.savePassword(user, newPassword))
         .orElseThrow(EmailNotFoundException::new);
   }
 

@@ -13,13 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-class UserService implements CrudOperationsService<User, ObjectId> {
+class UserCrudService implements CrudOperationsService<User, ObjectId> {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserCrudService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
   }
