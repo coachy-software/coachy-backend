@@ -54,12 +54,34 @@ public class RegistrationControllerIntegrationTest {
     this.mongoTemplate.insert(this.user, "users");
 
     UserRegistrationDto dto = new UserRegistrationDto("test918238901802301", "test123",
-        "test123", "test@coachy.life", "test@coachy.life", "COACH");
+        "test123", "test@coachy.life", "COACH");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
         .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isConflict());
+  }
+
+  @Test
+  public void registrationShouldReturnCreatedWhenValid() throws Exception {
+    UserRegistrationDto dto = new UserRegistrationDto("test0129390439432", "test123",
+        "test123", "test@coachy.life", "COACH");
+
+    this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated());
+  }
+
+  @Test
+  public void registrationShouldReturn400WhenValidationError() throws Exception {
+    UserRegistrationDto dto = new UserRegistrationDto("test0129390439432", "test",
+        "test123", "test@coachy.life", "COACH");
+
+    this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
   }
 
   @After

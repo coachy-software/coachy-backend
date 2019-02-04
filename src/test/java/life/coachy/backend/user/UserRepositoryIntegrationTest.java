@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -32,7 +33,7 @@ public class UserRepositoryIntegrationTest {
         .withAvatar("http://www.coachy.life/some_avatar.jpg")
         .withIdentifier(identifier)
         .withAccountType(AccountType.CHARGE)
-        .withRoles(Sets.newHashSet("ADMIN", "USER"))
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("ADMIN", "USER")))
         .build();
 
     this.mongoTemplate.insert(user);

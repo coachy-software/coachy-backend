@@ -25,20 +25,15 @@ public class UserFacade {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-//    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto).toEntity()); TODO
-    return null;
-  }
-
-  public User show(String username) {
-    return this.userCrudService.findByName(username).orElse(null);
+    return ResponseEntity.status(HttpStatus.CREATED).body(this.userRegistrationService.saveDto(dto));
   }
 
   public boolean exists(String email) {
     return this.userCrudService.existsByEmail(email);
   }
 
-  public User resetPassword(String email, String newPassword) {
-    return this.userCrudService.findByEmail(email)
+  public void resetPassword(String email, String newPassword) {
+    this.userCrudService.findByEmail(email)
         .map((user) -> this.userCrudService.savePassword(user, newPassword))
         .orElseThrow(EmailNotFoundException::new);
   }

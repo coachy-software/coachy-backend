@@ -26,6 +26,7 @@ logging:
       springframework: WARN
       mongodb: WARN
       xnio: WARN
+      apache: WARN
     life:
       coachy: WARN
     io:

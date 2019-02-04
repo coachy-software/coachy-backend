@@ -78,6 +78,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
     return super.partialUpdate(dto, id);
   }
 
+  @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<User> remove(@PathVariable ObjectId id) {
     return super.remove(id);

@@ -3,10 +3,10 @@ package life.coachy.backend.exercise.template;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.util.AbstractDto;
+import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
-public class ExerciseTemplateDto extends AbstractDto<ExerciseTemplate> {
+public class ExerciseTemplateDto extends AbstractDto {
 
   @NotNull(message = "{notNull}")
   private ObjectId identifier;

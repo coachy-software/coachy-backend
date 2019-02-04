@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
+import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.CrudOperationsService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,14 @@ class UserCrudService implements CrudOperationsService<User, ObjectId> {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final UserDtoMapperFactory mapperFactory;
 
   @Autowired
-  public UserCrudService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  public UserCrudService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+      UserDtoMapperFactory mapperFactory) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.mapperFactory = mapperFactory;
   }
 
   @Override
@@ -44,13 +48,13 @@ class UserCrudService implements CrudOperationsService<User, ObjectId> {
   }
 
   @Override
-  public <S extends User> S save(S entity) {
-    Optional<User> databaseUser = this.findByName(entity.getUsername());
-    if (databaseUser.isPresent() && !entity.getPassword().equals(databaseUser.get().getPassword())) {
-      entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
-    }
+  public User save(User entity) {
+    return this.saveEntity(entity);
+  }
 
-    return this.userRepository.save(entity);
+  @Override
+  public <S extends AbstractDto> User save(S dto) {
+    return this.saveEntity(this.mapperFactory.obtainEntity(dto));
   }
 
   @Override
@@ -85,6 +89,15 @@ class UserCrudService implements CrudOperationsService<User, ObjectId> {
   User savePassword(User user, String password) {
     user.setPassword(this.passwordEncoder.encode(password));
     return this.userRepository.save(user);
+  }
+
+  private User saveEntity(User entity) {
+    Optional<User> databaseUser = this.findByName(entity.getUsername());
+    if (databaseUser.isPresent() && !entity.getPassword().equals(databaseUser.get().getPassword())) {
+      entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
+    }
+
+    return this.userRepository.save(entity);
   }
 
 }

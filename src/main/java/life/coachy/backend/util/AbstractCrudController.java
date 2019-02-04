@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
 import javax.validation.Valid;
+import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.validation.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, ID, U extends AbstractDto<T>, C extends AbstractDto<T>> {
+public abstract class AbstractCrudController<
+    T extends IdentifiableEntity<ID>, ID,
+    U extends AbstractDto,
+    C extends AbstractDto> {
 
   private final CrudOperationsService<T, ID> service;
 
@@ -32,7 +36,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       @ApiResponse(code = 200, message = "Entity found and displayed")
   })
   @GetMapping("/{id}")
-  public ResponseEntity<T> read(@PathVariable @ApiParam("Entity identifier") ID id) {
+  protected ResponseEntity<T> read(@PathVariable @ApiParam("Entity identifier") ID id) {
     return this.service.findById(id)
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.notFound().build());
@@ -71,7 +75,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
-//    BeanUtil.copyNonNullProperties(dto.toEntity(), entity.get()); TODO
+    BeanUtil.copyNonNullProperties(dto, entity.get()); // TODO
     this.service.save(entity.get());
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
@@ -91,7 +95,7 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
       return ResponseEntity.notFound().build();
     }
 
-//    BeanUtil.copyNonNullProperties(dto.toEntity(), optionalEntity.get()); TODO
+    BeanUtil.copyNonNullProperties(dto, optionalEntity.get()); // TODO
     this.service.save(optionalEntity.get());
     return ResponseEntity.noContent().build();
   }
@@ -111,19 +115,16 @@ public abstract class AbstractCrudController<T extends IdentifiableEntity<ID>, I
     return ResponseEntity.noContent().build();
   }
 
-  private <X extends AbstractDto<T>> ResponseEntity<?> createEntity(X dto, BindingResult result) {
+  private <X extends AbstractDto> ResponseEntity<?> createEntity(X dto, BindingResult result) { // user improvements
     if (result.hasErrors()) {
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
-
-//    T entity = dto.toEntity(); TODO
 
     if (this.service.findByName(dto.getEntityName()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-//    return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(entity)); TODO
-    return null;
+    return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dto));
   }
 
 }

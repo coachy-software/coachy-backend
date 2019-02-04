@@ -5,11 +5,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import life.coachy.backend.BackendConstants;
-import life.coachy.backend.util.AbstractDto;
+import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.dto.DataTransferObject;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-public class UserUpdateDto extends AbstractDto<User> {
+@DataTransferObject(mapperClass = UserMapper.class, entityName = "User")
+public class UserUpdateDto extends AbstractDto {
+
+  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}")
+  @Length(min = 3, max = 32, message = "{length}")
+  private String username;
 
   @NotEmpty(message = "{notEmpty}")
   @NotNull(message = "{notNull}")
@@ -32,30 +39,60 @@ public class UserUpdateDto extends AbstractDto<User> {
   @URL(message = "{pattern}")
   private String avatar;
 
-  public UserUpdateDto(String displayName, String password, String email, String avatar) {
+  public UserUpdateDto(String username, String displayName, String password, String email, String avatar) {
+    this.username = username;
     this.displayName = displayName;
     this.password = password;
     this.email = email;
     this.avatar = avatar;
   }
 
-  UserUpdateDto() {
+  public UserUpdateDto() {
+  }
+
+  public String getUsername() {
+    return this.username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getDisplayName() {
     return this.displayName;
   }
 
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
   public String getPassword() {
     return this.password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public String getEmail() {
     return this.email;
   }
 
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
   public String getAvatar() {
     return this.avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
+  @Override
+  public String getEntityName() {
+    return this.username;
   }
 
 }

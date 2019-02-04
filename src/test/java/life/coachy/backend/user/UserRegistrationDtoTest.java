@@ -12,9 +12,9 @@ public class UserRegistrationDtoTest {
   @Test
   public void toEntityTest() {
     UserRegistrationDto dto = new UserRegistrationDto("testUsername", "testPassword", "testPassword",
-        "test@coachy.life", "test@coachy.life", "COACH");
+        "test@coachy.life", "COACH");
 
-    assertEquals(dto.toEntity().toString(), "User{"
+    assertEquals(UserMapper.INSTANCE.userRegistrationDtoToUser(dto).toString(), "User{"
         + "identifier=null, "
         + "username='testUsername', "
         + "displayName='null', "

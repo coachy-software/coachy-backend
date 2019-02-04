@@ -3,7 +3,7 @@ package life.coachy.backend.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.util.Set;
+import java.util.SortedSet;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -22,7 +22,7 @@ class User implements IdentifiableEntity<ObjectId> {
   private String email;
   private String avatar;
   private AccountType accountType;
-  private Set<String> roles;
+  private SortedSet<String> roles;
 
   User(UserBuilder builder) {
     this.identifier = builder.identifier;
@@ -41,6 +41,10 @@ class User implements IdentifiableEntity<ObjectId> {
   @Override
   public ObjectId getIdentifier() {
     return this.identifier;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
   }
 
   public String getUsername() {
@@ -83,11 +87,11 @@ class User implements IdentifiableEntity<ObjectId> {
     this.avatar = avatar;
   }
 
-  public Set<String> getRoles() {
+  public SortedSet<String> getRoles() {
     return this.roles;
   }
 
-  public void setRoles(Set<String> roles) {
+  public void setRoles(SortedSet<String> roles) {
     this.roles = roles;
   }
 

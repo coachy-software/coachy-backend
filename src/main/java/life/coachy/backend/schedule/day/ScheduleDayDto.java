@@ -4,9 +4,9 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.ExerciseDto;
-import life.coachy.backend.util.AbstractDto;
+import life.coachy.backend.util.dto.AbstractDto;
 
-public class ScheduleDayDto extends AbstractDto<ScheduleDay> {
+public class ScheduleDayDto extends AbstractDto {
 
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;

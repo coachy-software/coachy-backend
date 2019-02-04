@@ -6,10 +6,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import life.coachy.backend.user.UserDto;
-import life.coachy.backend.util.AbstractDto;
+import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
-public class ScheduleDto extends AbstractDto<Schedule> {
+public class ScheduleDto extends AbstractDto {
 
   private ObjectId identifier;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")

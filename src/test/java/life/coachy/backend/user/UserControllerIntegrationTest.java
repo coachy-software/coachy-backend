@@ -3,6 +3,7 @@ package life.coachy.backend.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
 import org.bson.types.ObjectId;
@@ -24,6 +25,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+
+// todo refactor this xd
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class UserControllerIntegrationTest {
@@ -52,7 +55,7 @@ public class UserControllerIntegrationTest {
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
-        .withRoles(Sets.newHashSet("ADMIN"))
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
         .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
@@ -82,12 +85,12 @@ public class UserControllerIntegrationTest {
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
-        .withRoles(Sets.newHashSet("ADMIN"))
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
         .withEmail("test@email.com")
         .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
-    UserUpdateDto dto = new UserUpdateDto("test6534635", "test123", "test@email.com", "http://www.coachy.life/");
+    UserUpdateDto dto = new UserUpdateDto("username", "123123123", "123123123", "test@email.com", "http://www.com.com");
 
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())
@@ -102,12 +105,12 @@ public class UserControllerIntegrationTest {
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
-        .withRoles(Sets.newHashSet("ADMIN"))
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
         .withEmail("test@email.com")
         .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
-    UserUpdateDto dto = new UserUpdateDto(null, null, "test@email.com", null);
+    UserUpdateDto dto = new UserUpdateDto("username", "123123123", "123123123", "test@email.com", "http://www.com.com");
 
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())
@@ -167,13 +170,13 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void updateShouldReturn403WhenDifferentUser() throws Exception {
-    UserUpdateDto userDto = new UserUpdateDto("displayName_EDITED", "password123", "email@email.com",
+    UserUpdateDto userDto = new UserUpdateDto("username", "displayName_EDITED", "password123", "email@email.com",
         "http://www.avatar.com/com.jpg");
     UserBuilder userBuilder = new UserBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
-        .withRoles(Sets.newHashSet("USER"));
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
     User user = new User(userBuilder);
     this.userCrudService.savePassword(user, user.getPassword());
@@ -187,18 +190,21 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void partialUpdateShouldReturn403WhenDifferentUser() throws Exception {
-    UserUpdateDto userDto = new UserUpdateDto("displayName_EDITED", "password123", "email@email.com",
+    UserUpdateDto userDto = new UserUpdateDto("username", "displayName_EDITED", "password123", "email@email.com",
         "http://www.avatar.com/com.jpg");
     UserBuilder userBuilder = new UserBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
-        .withRoles(Sets.newHashSet("USER"));
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
     User user = new User(userBuilder);
     this.userCrudService.savePassword(user, user.getPassword());
 
-    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", ObjectId.get())
+    User user2 = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
+    this.userCrudService.savePassword(user2, user2.getPassword());
+
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user2.getIdentifier())
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123"))
         .content(userDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
@@ -211,11 +217,15 @@ public class UserControllerIntegrationTest {
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
-        .withRoles(Sets.newHashSet("USER"));
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
     User user = new User(userBuilder);
     this.userCrudService.savePassword(user, user.getPassword());
-    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/{id}", ObjectId.get())
+
+    User user2 = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
+    this.userCrudService.savePassword(user2, user2.getPassword());
+
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/{id}", user2.getIdentifier())
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123")))
         .andExpect(status().isForbidden());
   }

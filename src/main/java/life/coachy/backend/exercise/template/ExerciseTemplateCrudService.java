@@ -5,6 +5,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
+import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,8 +38,14 @@ class ExerciseTemplateCrudService implements CrudOperationsService<ExerciseTempl
   }
 
   @Override
-  public <S extends ExerciseTemplate> S save(S entity) {
+  public ExerciseTemplate save(ExerciseTemplate entity) {
     return this.repository.save(entity);
+  }
+
+  @Override
+  public <S extends AbstractDto> ExerciseTemplate save(S dto) {
+//    return this.repository.save(); TODO
+    return null;
   }
 
   @Override

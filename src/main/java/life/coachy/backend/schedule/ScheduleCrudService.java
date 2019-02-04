@@ -5,6 +5,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.util.CrudOperationsService;
+import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,9 +37,14 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     return this.repository.findAll();
   }
 
-  @Override
-  public <S extends Schedule> S save(S entity) {
+  public Schedule save(Schedule entity) {
     return this.repository.save(entity);
+  }
+
+  @Override
+  public <S extends AbstractDto> Schedule save(S dto) {
+//     TODO
+    return null;
   }
 
   @Override

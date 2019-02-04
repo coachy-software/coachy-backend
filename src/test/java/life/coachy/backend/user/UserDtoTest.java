@@ -2,6 +2,7 @@ package life.coachy.backend.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class UserDtoTest {
   public void toEntityTest() {
     ObjectId id = ObjectId.get();
     UserDto dto = new UserDto(id, "testUsername", "test123", "passwordTest", "test@coachy.life",
-        "http://coachy.life/test.png", AccountType.CHARGE, Sets.newHashSet("ADMIN", "USER"));
+        "http://coachy.life/test.png", AccountType.CHARGE, Sets.newTreeSet(Lists.newArrayList("USER", "ADMIN")));
 
     assertEquals("User{"
         + "identifier=" + id + ", "
@@ -25,7 +26,7 @@ public class UserDtoTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
         + "accountType=CHARGE, "
-        + "roles=[USER, ADMIN]}", dto.toEntity().toString());
+        + "roles=[ADMIN, USER]}", UserMapper.INSTANCE.userDtoToUser(dto).toString());
   }
 
 }

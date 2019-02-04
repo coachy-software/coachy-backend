@@ -9,21 +9,22 @@ import org.reflections.Reflections;
 
 public abstract class AbstractDtoMapperFactory<C extends MapStructMapper> {
 
-  private static final Reflections REFLECTIONS = new Reflections();
+  private final Reflections reflections;
   private final C mapper;
 
-  protected AbstractDtoMapperFactory(C mapper) {
+  protected AbstractDtoMapperFactory(C mapper, Reflections reflections) {
     this.mapper = mapper;
+    this.reflections = reflections;
   }
 
   public <T extends IdentifiableEntity<?>, D extends AbstractDto> T obtainEntity(D dto) { // TODO validation
-    Set<Class<?>> annotatedTypes = REFLECTIONS.getTypesAnnotatedWith(DataTransferObject.class);
+    Set<Class<?>> annotatedTypes = this.reflections.getTypesAnnotatedWith(DataTransferObject.class, true);
 
     for (Class<?> clazz : annotatedTypes) {
       DataTransferObject dtoAnnotation = clazz.getAnnotation(DataTransferObject.class);
 
-      if (dtoAnnotation.mapperClass().equals(this.mapper.getClass())) {
-        if (dto.getClass().equals(clazz)) {
+      if (dtoAnnotation.mapperClass().getName().equals(this.mapper.getClass().getInterfaces()[0].getName())) {
+        if (dto.getClass().getName().equals(clazz.getName())) {
           String methodName = StringUtil.lowerCaseAt(0, dto.getClass().getSimpleName())
               + "To"
               + StringUtil.upperCaseAt(0, dtoAnnotation.entityName());
