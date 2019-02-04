@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserBuilderTest {
 
   private final static ObjectId IDENTIFIER = ObjectId.get();
-  private final static User USER = new UserBuilder()
+  private final static User USER = UserBuilder.createBuilder()
       .withIdentifier(IDENTIFIER)
       .withUsername("(kybb3@Q[fxX;fX7EW5%/^FJJbR#EW")
       .withPassword("test")

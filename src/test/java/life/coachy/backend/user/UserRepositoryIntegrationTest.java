@@ -26,7 +26,7 @@ public class UserRepositoryIntegrationTest {
   @Test
   public void storedUserShouldReturnProperValues() {
     ObjectId identifier = ObjectId.get();
-    User user = new UserBuilder()
+    User user = UserBuilder.createBuilder()
         .withUsername("(nnu*SCA8=4{v::^Z_bagna]Gz(CUN")
         .withPassword("test123")
         .withEmail("test@coachy.life")

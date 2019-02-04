@@ -4,7 +4,7 @@ import java.util.SortedSet;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
-class UserBuilder implements Buildable<User> {
+final class UserBuilder implements Buildable<User> {
 
   ObjectId identifier;
   String username;
@@ -14,6 +14,10 @@ class UserBuilder implements Buildable<User> {
   String avatar;
   AccountType accountType;
   SortedSet<String> roles;
+
+  private UserBuilder() {}
+
+  public static UserBuilder createBuilder() { return new UserBuilder(); }
 
   public UserBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
@@ -55,7 +59,6 @@ class UserBuilder implements Buildable<User> {
     return this;
   }
 
-  @Override
   public User build() {
     return new User(this);
   }

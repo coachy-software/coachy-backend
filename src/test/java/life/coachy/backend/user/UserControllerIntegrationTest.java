@@ -52,7 +52,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void authenticationTest() throws Exception {
-    User user = new UserBuilder()
+    User user = UserBuilder.createBuilder()
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
@@ -68,7 +68,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void authenticationShouldReturn401WhenBadCredentials() throws Exception {
-    User user = new UserBuilder()
+    User user = UserBuilder.createBuilder()
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
@@ -82,7 +82,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void updateShouldReturn409WhenEmailAlreadyExits() throws Exception {
-    User user = new UserBuilder()
+    User user = UserBuilder.createBuilder()
         .withUsername("testUsername")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
@@ -107,7 +107,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void partialUpdateShouldReturn409WhenEmailAlreadyExits() throws Exception {
-    User user = new UserBuilder()
+    User user = UserBuilder.createBuilder()
         .withUsername("test12312313")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
@@ -132,7 +132,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void searchTest() throws Exception {
-    UserBuilder builder = new UserBuilder()
+    UserBuilder builder = UserBuilder.createBuilder()
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
@@ -152,7 +152,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void paginationPageSizeTest() throws Exception {
-    UserBuilder builder = new UserBuilder()
+    UserBuilder builder = UserBuilder.createBuilder()
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
@@ -165,7 +165,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void paginationTest() throws Exception {
-    UserBuilder builder = new UserBuilder()
+    UserBuilder builder = UserBuilder.createBuilder()
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
@@ -185,7 +185,7 @@ public class UserControllerIntegrationTest {
         .withEmail("test@email.com")
         .withAvatar("http://www.com.com")
         .build();
-    UserBuilder userBuilder = new UserBuilder()
+    UserBuilder userBuilder = UserBuilder.createBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
@@ -210,7 +210,7 @@ public class UserControllerIntegrationTest {
         .withEmail("test@email.com")
         .withAvatar("http://www.com.com")
         .build();
-    UserBuilder userBuilder = new UserBuilder()
+    UserBuilder userBuilder = UserBuilder.createBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
@@ -231,7 +231,7 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void deleteShouldReturn403WhenDifferentUser() throws Exception {
-    UserBuilder userBuilder = new UserBuilder()
+    UserBuilder userBuilder = UserBuilder.createBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")

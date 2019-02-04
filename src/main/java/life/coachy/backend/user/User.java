@@ -35,8 +35,7 @@ class User implements IdentifiableEntity<ObjectId> {
     this.roles = builder.roles;
   }
 
-  User() {
-  }
+  User() {}
 
   @Override
   public ObjectId getIdentifier() {
