@@ -75,7 +75,7 @@ public abstract class AbstractCrudController<
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
     }
 
-    BeanUtil.copyNonNullProperties(dto, entity.get()); // TODO
+    BeanUtil.copyNonNullProperties(dto, entity.get());
     this.service.save(entity.get());
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
@@ -86,7 +86,7 @@ public abstract class AbstractCrudController<
       @ApiResponse(code = 204, message = "Entity updated")
   })
   @PatchMapping("/{id}")
-  protected ResponseEntity<U> partialUpdate(
+  protected ResponseEntity<?> partialUpdate(
       @RequestBody @ApiParam("Entity data transfer object") U dto,
       @PathVariable @ApiParam("Entity identifier") ID id) {
     Optional<T> optionalEntity = this.service.findById(id);
@@ -95,7 +95,7 @@ public abstract class AbstractCrudController<
       return ResponseEntity.notFound().build();
     }
 
-    BeanUtil.copyNonNullProperties(dto, optionalEntity.get()); // TODO
+    BeanUtil.copyNonNullProperties(dto, optionalEntity.get());
     this.service.save(optionalEntity.get());
     return ResponseEntity.noContent().build();
   }

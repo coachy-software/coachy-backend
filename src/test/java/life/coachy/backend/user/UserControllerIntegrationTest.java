@@ -131,6 +131,56 @@ public class UserControllerIntegrationTest {
   }
 
   @Test
+  public void updateShouldReturn409WhenUsernameExits() throws Exception {
+    User user = UserBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withAccountType(AccountType.COACH)
+        .withPassword("test123")
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
+        .withEmail("test@email.com")
+        .build();
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test2@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
+
+    this.userCrudService.savePassword(user, user.getPassword());
+    this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "test123")))
+        .andExpect(status().isConflict());
+  }
+
+  @Test
+  public void partialUpdateShouldReturn409WhenUsernameAlreadyExits() throws Exception {
+    User user = UserBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withAccountType(AccountType.COACH)
+        .withPassword("test123")
+        .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
+        .withEmail("test@email.com")
+        .build();
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test2@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
+
+    this.userCrudService.savePassword(user, user.getPassword());
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "test123")))
+        .andExpect(status().isConflict());
+  }
+
+  @Test
   public void searchTest() throws Exception {
     UserBuilder builder = UserBuilder.createBuilder()
         .withUsername("testName123");

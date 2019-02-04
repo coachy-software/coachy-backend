@@ -54,7 +54,7 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
-  protected ResponseEntity<ScheduleUpdateDto> partialUpdate(@RequestBody ScheduleUpdateDto dto,
+  protected ResponseEntity<?> partialUpdate(@RequestBody ScheduleUpdateDto dto,
       @PathVariable ObjectId id) {
     return super.partialUpdate(dto, id);
   }

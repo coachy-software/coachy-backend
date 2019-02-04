@@ -3,11 +3,14 @@ package life.coachy.backend.user;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.Optional;
+import java.util.function.Supplier;
 import life.coachy.backend.user.dto.UserRegistrationDto;
 import life.coachy.backend.user.dto.UserUpdateDto;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.security.AuthenticatedUser;
+import life.coachy.backend.util.security.RequiresAdmin;
 import life.coachy.backend.util.security.RequiresAuthenticated;
 import life.coachy.backend.util.validation.ValidationUtil;
 import org.bson.types.ObjectId;
@@ -58,32 +61,51 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   }
 
   @Override
+  @RequiresAdmin
+  protected ResponseEntity<?> create(@RequestBody UserRegistrationDto dto, BindingResult result) {
+    return ValidationUtil.validate(dto, this.smartValidator, result, () -> super.create(dto, result));
+  }
+
+  @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
-    return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
-      if (this.userCrudService.existsByEmail(dto.getEmail())) { // todo
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
-      }
-
-      return super.update(dto, id, result);
-    });
+    return ValidationUtil.validate(dto, this.smartValidator, result, () -> this.checkIfNotExist(id, dto, result));
   }
 
 
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
-  protected ResponseEntity<UserUpdateDto> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id) {
-    if (this.userCrudService.existsByEmail(dto.getEmail())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-
-    return super.partialUpdate(dto, id);
+  protected ResponseEntity<?> partialUpdate(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id) {
+    return this.checkIfNotExist(id, dto);
   }
 
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<User> remove(@PathVariable ObjectId id) {
     return super.remove(id);
+  }
+
+  private ResponseEntity<?> checkIfNotExist(ObjectId id, UserUpdateDto dto) {
+    return this.checkIfNotExist(id, dto, () -> super.partialUpdate(dto, id));
+  }
+
+  private ResponseEntity<?> checkIfNotExist(ObjectId id, UserUpdateDto dto, BindingResult result) {
+    return this.checkIfNotExist(id, dto, () -> super.update(dto, id, result));
+  }
+
+  private ResponseEntity<?> checkIfNotExist(ObjectId id, UserUpdateDto dto, Supplier<ResponseEntity<?>> supplier) {
+    Optional<User> optionalUser = this.userCrudService.findById(id);
+
+    if (optionalUser.isPresent()) {
+      String email = optionalUser.get().getEmail();
+      String username = optionalUser.get().getUsername();
+
+      if (email.equalsIgnoreCase(dto.getEmail()) || username.equalsIgnoreCase(dto.getUsername())) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+      }
+    }
+
+    return supplier.get();
   }
 
 }
