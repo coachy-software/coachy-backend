@@ -24,13 +24,9 @@ public class UserBuilderTest {
       .build();
 
   @Test
-  public void shouldReturnNotNullObject() {
-    assertNotNull(USER);
-  }
-
-  @Test
   public void userValuesShouldNotBeNull() {
     assertAll(
+        () -> assertNotNull(USER),
         () -> assertNotNull(USER.getUsername()),
         () -> assertNotNull(USER.getPassword()),
         () -> assertNotNull(USER.getAvatar()),

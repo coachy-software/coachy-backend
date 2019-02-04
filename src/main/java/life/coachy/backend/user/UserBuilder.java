@@ -59,6 +59,7 @@ final class UserBuilder implements Buildable<User> {
     return this;
   }
 
+  @Override
   public User build() {
     return new User(this);
   }
