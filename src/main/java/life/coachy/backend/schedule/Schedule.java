@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Date;
 import java.util.List;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
-import life.coachy.backend.user.UserDto;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;

@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
+import life.coachy.backend.user.dto.UserUpdateDto;
+import life.coachy.backend.user.dto.UserUpdateDtoBuilder;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -26,7 +28,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 
-// todo refactor this xd
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class UserControllerIntegrationTest {
@@ -82,20 +83,25 @@ public class UserControllerIntegrationTest {
   @Test
   public void updateShouldReturn409WhenEmailAlreadyExits() throws Exception {
     User user = new UserBuilder()
-        .withUsername("test12312313")
+        .withUsername("testUsername")
         .withAccountType(AccountType.COACH)
         .withPassword("test123")
         .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
         .withEmail("test@email.com")
         .build();
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
-    UserUpdateDto dto = new UserUpdateDto("username", "123123123", "123123123", "test@email.com", "http://www.com.com");
-
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON)
-        .with(SecurityMockMvcRequestPostProcessors.httpBasic("test12312313", "test123")))
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "test123")))
         .andExpect(status().isConflict());
   }
 
@@ -108,10 +114,15 @@ public class UserControllerIntegrationTest {
         .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")))
         .withEmail("test@email.com")
         .build();
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
-    UserUpdateDto dto = new UserUpdateDto("username", "123123123", "123123123", "test@email.com", "http://www.com.com");
-
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user.getIdentifier())
         .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON)
@@ -125,7 +136,6 @@ public class UserControllerIntegrationTest {
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
-
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?username=testName1234"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
@@ -146,7 +156,6 @@ public class UserControllerIntegrationTest {
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
-
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=0&size=1"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
@@ -160,7 +169,6 @@ public class UserControllerIntegrationTest {
         .withUsername("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withUsername("testName1234").build()));
-
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/users?page=0&size=2"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
@@ -170,8 +178,13 @@ public class UserControllerIntegrationTest {
 
   @Test
   public void updateShouldReturn403WhenDifferentUser() throws Exception {
-    UserUpdateDto userDto = new UserUpdateDto("username", "displayName_EDITED", "password123", "email@email.com",
-        "http://www.avatar.com/com.jpg");
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
     UserBuilder userBuilder = new UserBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
@@ -179,34 +192,39 @@ public class UserControllerIntegrationTest {
         .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
     User user = new User(userBuilder);
-    this.userCrudService.savePassword(user, user.getPassword());
 
+    this.userCrudService.savePassword(user, user.getPassword());
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/users/{id}", ObjectId.get())
         .with(SecurityMockMvcRequestPostProcessors.httpBasic(user.getUsername(), "password123"))
-        .content(userDto.toJson().getBytes())
+        .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isForbidden());
   }
 
   @Test
   public void partialUpdateShouldReturn403WhenDifferentUser() throws Exception {
-    UserUpdateDto userDto = new UserUpdateDto("username", "displayName_EDITED", "password123", "email@email.com",
-        "http://www.avatar.com/com.jpg");
+    UserUpdateDto dto = UserUpdateDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withDisplayName("testDisplayName")
+        .withPassword("testPassword")
+        .withEmail("test@email.com")
+        .withAvatar("http://www.com.com")
+        .build();
     UserBuilder userBuilder = new UserBuilder()
         .withIdentifier(ObjectId.get())
         .withUsername("testUsername")
         .withPassword("password123")
         .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
-    User user = new User(userBuilder);
+    User user = userBuilder.build();
+    User secondUser = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
+
     this.userCrudService.savePassword(user, user.getPassword());
+    this.userCrudService.savePassword(secondUser, secondUser.getPassword());
 
-    User user2 = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
-    this.userCrudService.savePassword(user2, user2.getPassword());
-
-    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", user2.getIdentifier())
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/users/{id}", secondUser.getIdentifier())
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123"))
-        .content(userDto.toJson().getBytes())
+        .content(dto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isForbidden());
   }
@@ -219,13 +237,13 @@ public class UserControllerIntegrationTest {
         .withPassword("password123")
         .withRoles(Sets.newTreeSet(Lists.newArrayList("USER")));
 
-    User user = new User(userBuilder);
+    User user = userBuilder.build();
+    User secondUser = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
+
     this.userCrudService.savePassword(user, user.getPassword());
+    this.userCrudService.savePassword(secondUser, secondUser.getPassword());
 
-    User user2 = userBuilder.withIdentifier(ObjectId.get()).withUsername("testUsername2").build();
-    this.userCrudService.savePassword(user2, user2.getPassword());
-
-    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/{id}", user2.getIdentifier())
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/{id}", secondUser.getIdentifier())
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "password123")))
         .andExpect(status().isForbidden());
   }

@@ -1,5 +1,8 @@
 package life.coachy.backend.user;
 
+import life.coachy.backend.user.dto.UserDto;
+import life.coachy.backend.user.dto.UserRegistrationDto;
+import life.coachy.backend.user.dto.UserUpdateDto;
 import life.coachy.backend.util.MapStructMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -4,7 +4,8 @@ import com.google.common.collect.Sets;
 import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
-import life.coachy.backend.user.UserRegistrationDto;
+import life.coachy.backend.user.dto.UserRegistrationDto;
+import life.coachy.backend.user.dto.UserRegistrationDtoBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,6 @@ public class RegistrationControllerIntegrationTest {
   private PasswordEncoder passwordEncoder;
 
   private MockMvc mockMvc;
-  private BasicDBObject user;
 
   @Before
   public void setUp() throws Exception {
@@ -45,16 +45,21 @@ public class RegistrationControllerIntegrationTest {
   @Test
   public void registrationShouldReturn409WhenUserAlreadyExists() throws Exception {
     Map<String, Object> userDetails = new HashMap<String, Object>() {{
-      this.put("username", "test918238901802301");
-      this.put("password", RegistrationControllerIntegrationTest.this.passwordEncoder.encode("test"));
-      this.put("roles", Sets.newHashSet("USER", "ADMIN"));
+      this.put("username", "testUsername");
+      this.put("password", RegistrationControllerIntegrationTest.this.passwordEncoder.encode("test123"));
+      this.put("roles", Sets.newHashSet("USER"));
     }};
 
-    this.user = new BasicDBObject(userDetails);
-    this.mongoTemplate.insert(this.user, "users");
+    BasicDBObject user = new BasicDBObject(userDetails);
+    this.mongoTemplate.insert(user, "users");
 
-    UserRegistrationDto dto = new UserRegistrationDto("test918238901802301", "test123",
-        "test123", "test@coachy.life", "COACH");
+    UserRegistrationDto dto = UserRegistrationDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withPassword("test123")
+        .withMatchingPassword("test123")
+        .withAccountType("COACH")
+        .withEmail("test@coachy.life")
+        .build();
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
         .content(dto.toJson().getBytes())
@@ -64,8 +69,13 @@ public class RegistrationControllerIntegrationTest {
 
   @Test
   public void registrationShouldReturnCreatedWhenValid() throws Exception {
-    UserRegistrationDto dto = new UserRegistrationDto("test0129390439432", "test123",
-        "test123", "test@coachy.life", "COACH");
+    UserRegistrationDto dto = UserRegistrationDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withPassword("test123")
+        .withMatchingPassword("test123")
+        .withAccountType("COACH")
+        .withEmail("test@coachy.life")
+        .build();
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
         .content(dto.toJson().getBytes())
@@ -75,8 +85,13 @@ public class RegistrationControllerIntegrationTest {
 
   @Test
   public void registrationShouldReturn400WhenValidationError() throws Exception {
-    UserRegistrationDto dto = new UserRegistrationDto("test0129390439432", "test",
-        "test123", "test@coachy.life", "COACH");
+    UserRegistrationDto dto = UserRegistrationDtoBuilder.createBuilder()
+        .withUsername("testUsername")
+        .withPassword("test123")
+        .withMatchingPassword("wrongPassword")
+        .withAccountType("COACH")
+        .withEmail("test@coachy.life")
+        .build();
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
         .content(dto.toJson().getBytes())
@@ -86,9 +101,7 @@ public class RegistrationControllerIntegrationTest {
 
   @After
   public void tearDown() throws Exception {
-    if (this.user != null) {
-      this.mongoTemplate.remove(this.user, "users");
-    }
+    this.mongoTemplate.dropCollection("users");
   }
 
 }

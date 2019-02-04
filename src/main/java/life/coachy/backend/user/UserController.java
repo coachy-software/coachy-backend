@@ -3,6 +3,8 @@ package life.coachy.backend.user;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import life.coachy.backend.user.dto.UserRegistrationDto;
+import life.coachy.backend.user.dto.UserUpdateDto;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.security.AuthenticatedUser;
@@ -59,7 +61,7 @@ class UserController extends AbstractCrudController<User, ObjectId, UserUpdateDt
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> update(@RequestBody UserUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> {
-      if (this.userCrudService.existsByEmail(dto.getEmail())) {
+      if (this.userCrudService.existsByEmail(dto.getEmail())) { // todo
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
       }
 

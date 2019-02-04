@@ -2,6 +2,8 @@ package life.coachy.backend.user;
 
 import com.google.common.collect.Sets;
 import java.util.Collections;
+import life.coachy.backend.user.dto.UserDtoMapperFactory;
+import life.coachy.backend.user.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

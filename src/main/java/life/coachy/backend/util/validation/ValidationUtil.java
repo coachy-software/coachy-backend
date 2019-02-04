@@ -18,7 +18,7 @@ public final class ValidationUtil {
     return new ErrorDto(400, errors.stream()
         .map(fieldError -> fieldError.getField() + "_" + fieldError.getDefaultMessage())
         .findFirst()
-        .get());
+        .orElse("n/a"));
   }
 
   public static <T> ResponseEntity<?> validate(T dto, SmartValidator smartValidator, BindingResult result,

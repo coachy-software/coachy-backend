@@ -2,6 +2,7 @@ package life.coachy.backend.user;
 
 import java.util.Optional;
 import life.coachy.backend.email.EmailNotFoundException;
+import life.coachy.backend.user.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

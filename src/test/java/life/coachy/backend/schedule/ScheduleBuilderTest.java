@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
-import life.coachy.backend.user.UserDto;
+import life.coachy.backend.user.dto.UserDto;
+import life.coachy.backend.user.dto.UserDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ public class ScheduleBuilderTest {
   private ObjectId id = ObjectId.get();
   private Date createDate = Date.from(Instant.now());
   private Date updateDate = Date.from(Instant.now());
-  private UserDto creator = new UserDto();
+  private UserDto creator = UserDtoBuilder.createBuilder().withIdentifier(this.id).build();
   private List<ScheduleDayDto> days = Collections.singletonList(new ScheduleDayDto());
 
   private Schedule schedule = new ScheduleBuilder()

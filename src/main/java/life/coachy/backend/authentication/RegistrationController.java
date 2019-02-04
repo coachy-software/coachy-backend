@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.user.UserFacade;
-import life.coachy.backend.user.UserRegistrationDto;
+import life.coachy.backend.user.dto.UserRegistrationDto;
 import life.coachy.backend.util.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

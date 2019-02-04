@@ -1,14 +1,14 @@
-package life.coachy.backend.user;
+package life.coachy.backend.user.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import life.coachy.backend.BackendConstants;
+import life.coachy.backend.user.UserMapper;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 import life.coachy.backend.util.validation.Match;
-import life.coachy.backend.util.validation.StringEnumeration;
 import org.hibernate.validator.constraints.Length;
 
 @DataTransferObject(mapperClass = UserMapper.class, entityName = "User")
@@ -35,58 +35,36 @@ public class UserRegistrationDto extends AbstractDto {
 
   @NotEmpty(message = "{notEmpty}")
   @NotNull(message = "{notNull}")
-  @StringEnumeration(enumClass = AccountType.class, message = "{match}")
   private String accountType;
 
-  public UserRegistrationDto(String username, String password, String matchingPassword, String email, String accountType) {
-    this.username = username;
-    this.password = password;
-    this.matchingPassword = matchingPassword;
-    this.email = email;
-    this.accountType = accountType;
+  UserRegistrationDto(UserRegistrationDtoBuilder builder) {
+    this.username = builder.username;
+    this.password = builder.password;
+    this.matchingPassword = builder.matchingPassword;
+    this.email = builder.email;
+    this.accountType = builder.accountType;
   }
 
-  public UserRegistrationDto() { // JACKSON
-  }
+  UserRegistrationDto() {}
 
   public String getUsername() {
     return this.username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   public String getPassword() {
     return this.password;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public String getMatchingPassword() {
     return this.matchingPassword;
-  }
-
-  public void setMatchingPassword(String matchingPassword) {
-    this.matchingPassword = matchingPassword;
   }
 
   public String getEmail() {
     return this.email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public String getAccountType() {
     return this.accountType;
-  }
-
-  public void setAccountType(String accountType) {
-    this.accountType = accountType;
   }
 
   @Override

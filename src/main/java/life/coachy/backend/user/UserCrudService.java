@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
+import life.coachy.backend.user.dto.UserDtoMapperFactory;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.CrudOperationsService;
 import org.bson.types.ObjectId;

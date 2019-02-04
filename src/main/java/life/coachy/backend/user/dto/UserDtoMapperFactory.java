@@ -1,11 +1,12 @@
-package life.coachy.backend.user;
+package life.coachy.backend.user.dto;
 
+import life.coachy.backend.user.UserMapper;
 import life.coachy.backend.util.dto.AbstractDtoMapperFactory;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserDtoMapperFactory extends AbstractDtoMapperFactory<UserMapper> {
+public class UserDtoMapperFactory extends AbstractDtoMapperFactory<UserMapper> {
 
   private final static Reflections REFLECTIONS = new Reflections("life.coachy.backend.user");
 

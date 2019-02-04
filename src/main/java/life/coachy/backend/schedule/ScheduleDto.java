@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
-import life.coachy.backend.user.UserDto;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
