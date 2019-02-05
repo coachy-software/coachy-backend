@@ -52,7 +52,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void searchTest() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    ScheduleBuilder builder = new ScheduleBuilder()
+    ScheduleBuilder builder = ScheduleBuilder.createBuilder()
         .withName("testName123")
         .withCreator(userDto);
 
@@ -74,7 +74,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void paginationPageSizeTest() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    ScheduleBuilder builder = new ScheduleBuilder().withName("testName123").withCreator(userDto);
+    ScheduleBuilder builder = ScheduleBuilder.createBuilder().withName("testName123").withCreator(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=1"))
@@ -87,7 +87,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void paginationTest() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    ScheduleBuilder builder = new ScheduleBuilder().withName("testName123").withCreator(userDto);
+    ScheduleBuilder builder = ScheduleBuilder.createBuilder().withName("testName123").withCreator(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=2"))
@@ -100,7 +100,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void updateShouldReturn401WhenUnlogged() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    Schedule schedule = new ScheduleBuilder()
+    Schedule schedule = ScheduleBuilder.createBuilder()
         .withIdentifier(ObjectId.get())
         .withName("testName123")
         .withCreator(userDto)
@@ -124,7 +124,7 @@ public class ScheduleControllerIntegrationTest {
     ObjectId id = ObjectId.get();
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
 
-    Schedule schedule = new ScheduleBuilder()
+    Schedule schedule = ScheduleBuilder.createBuilder()
         .withIdentifier(id)
         .withName("testName123")
         .withCreator(userDto)

@@ -23,7 +23,7 @@ public class ScheduleBuilderTest {
   private UserDto creator = UserDtoBuilder.createBuilder().withIdentifier(this.id).build();
   private List<ScheduleDayDto> days = Collections.singletonList(new ScheduleDayDto());
 
-  private Schedule schedule = new ScheduleBuilder()
+  private Schedule schedule = ScheduleBuilder.createBuilder()
       .withIdentifier(this.id)
       .withCreatedAt(this.createDate)
       .withUpdatedAt(this.updateDate)

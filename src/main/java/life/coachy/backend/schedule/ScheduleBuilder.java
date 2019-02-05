@@ -17,6 +17,12 @@ class ScheduleBuilder implements Buildable<Schedule> {
   boolean active;
   List<ScheduleDayDto> days;
 
+  private ScheduleBuilder() {}
+
+  public static ScheduleBuilder createBuilder() {
+    return new ScheduleBuilder();
+  }
+
   ScheduleBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;
