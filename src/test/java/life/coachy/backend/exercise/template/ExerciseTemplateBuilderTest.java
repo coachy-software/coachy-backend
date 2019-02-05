@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExerciseTemplateBuilderTest {
 
   private ObjectId objectId = ObjectId.get();
-  private ExerciseTemplate template = new ExerciseTemplateBuilder()
+  private ExerciseTemplate template = ExerciseTemplateBuilder.createBuilder()
       .withName("test123")
       .withBriefDescription("brief description")
       .withExampleImages(Arrays.asList("test1", "test2"))

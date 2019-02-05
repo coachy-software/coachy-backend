@@ -1,6 +1,6 @@
 package life.coachy.backend.exercise;
 
-import life.coachy.backend.exercise.template.ExerciseTemplateDto;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.IdentifiableEntity;
 
 class Exercise implements IdentifiableEntity<String> {

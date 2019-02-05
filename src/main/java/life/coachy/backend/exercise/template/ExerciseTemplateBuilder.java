@@ -12,6 +12,12 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
   String briefDescription;
   boolean verified;
 
+  private ExerciseTemplateBuilder() {}
+
+  public static ExerciseTemplateBuilder createBuilder() {
+    return new ExerciseTemplateBuilder();
+  }
+
   public ExerciseTemplateBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;

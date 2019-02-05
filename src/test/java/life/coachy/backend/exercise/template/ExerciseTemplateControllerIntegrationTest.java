@@ -6,6 +6,8 @@ import com.mongodb.BasicDBObject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateUpdateDto;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateUpdateDtoBuilder;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -52,7 +54,7 @@ public class ExerciseTemplateControllerIntegrationTest {
 
   @Test
   public void searchTest() throws Exception {
-    ExerciseTemplateBuilder builder = new ExerciseTemplateBuilder()
+    ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
         .withName("testName123")
@@ -75,7 +77,7 @@ public class ExerciseTemplateControllerIntegrationTest {
 
   @Test
   public void paginationPageSizeTest() throws Exception {
-    ExerciseTemplateBuilder builder = new ExerciseTemplateBuilder()
+    ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
         .withName("testName123")
@@ -91,7 +93,7 @@ public class ExerciseTemplateControllerIntegrationTest {
 
   @Test
   public void paginationTest() throws Exception {
-    ExerciseTemplateBuilder builder = new ExerciseTemplateBuilder()
+    ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
         .withName("testName123")
@@ -109,7 +111,7 @@ public class ExerciseTemplateControllerIntegrationTest {
   public void updateShouldReturn403WhenNotAdmin() throws Exception {
     ObjectId id = ObjectId.get();
 
-    ExerciseTemplate exerciseTemplate = new ExerciseTemplateBuilder()
+    ExerciseTemplate exerciseTemplate = ExerciseTemplateBuilder.createBuilder()
         .withIdentifier(id)
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
@@ -118,8 +120,12 @@ public class ExerciseTemplateControllerIntegrationTest {
         .build();
 
     this.mongoTemplate.insert(exerciseTemplate, "exercises");
-    ExerciseTemplateUpdateDto dto = new ExerciseTemplateUpdateDto("test123",
-        Lists.newArrayList("dadada", "dajkdak"), "brief", true);
+    ExerciseTemplateUpdateDto dto = ExerciseTemplateUpdateDtoBuilder.createBuilder()
+        .withName("test123")
+        .withExampleImages(Lists.newArrayList("dadada", "dajkdak"))
+        .withBriefDescription("brief")
+        .withVerified(true)
+        .build();
 
     this.setUpUser(ObjectId.get(), "testUser123", "password123");
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/exercises/{id}", id)
@@ -133,7 +139,7 @@ public class ExerciseTemplateControllerIntegrationTest {
   public void partialUpdateShouldReturn403WhenNotAdmin() throws Exception {
     ObjectId id = ObjectId.get();
 
-    ExerciseTemplate exerciseTemplate = new ExerciseTemplateBuilder()
+    ExerciseTemplate exerciseTemplate = ExerciseTemplateBuilder.createBuilder()
         .withIdentifier(id)
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
@@ -142,8 +148,12 @@ public class ExerciseTemplateControllerIntegrationTest {
         .build();
 
     this.mongoTemplate.insert(exerciseTemplate, "exercises");
-    ExerciseTemplateUpdateDto dto = new ExerciseTemplateUpdateDto("test123",
-        Lists.newArrayList("dadada", "dajkdak"), "brief", true);
+    ExerciseTemplateUpdateDto dto = ExerciseTemplateUpdateDtoBuilder.createBuilder()
+        .withName("test123")
+        .withExampleImages(Lists.newArrayList("dadada", "dajkdak"))
+        .withBriefDescription("brief")
+        .withVerified(true)
+        .build();
 
     this.setUpUser(ObjectId.get(), "testUser123", "password123");
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/exercises/{id}", id)

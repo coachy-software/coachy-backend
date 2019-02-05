@@ -67,6 +67,10 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
     return this.identifier;
   }
 
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
   @Override
   public String toString() {
     return "ExerciseTemplate{" +

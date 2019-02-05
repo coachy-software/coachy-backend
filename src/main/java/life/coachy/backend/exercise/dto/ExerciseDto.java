@@ -3,7 +3,7 @@ package life.coachy.backend.exercise.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.ExerciseMapper;
-import life.coachy.backend.exercise.template.ExerciseTemplateDto;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 

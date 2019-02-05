@@ -1,15 +1,15 @@
-package life.coachy.backend.exercise.template;
+package life.coachy.backend.exercise.template.dto;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.exercise.template.ExerciseTemplateMapper;
 import life.coachy.backend.util.dto.AbstractDto;
-import org.bson.types.ObjectId;
+import life.coachy.backend.util.dto.DataTransferObject;
 
-public class ExerciseTemplateDto extends AbstractDto {
+@DataTransferObject(mapperClass = ExerciseTemplateMapper.class, entityName = "ExerciseTemplate")
+public class ExerciseTemplateUpdateDto extends AbstractDto {
 
-  @NotNull(message = "{notNull}")
-  private ObjectId identifier;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
@@ -19,20 +19,14 @@ public class ExerciseTemplateDto extends AbstractDto {
   @NotNull(message = "{notNull}")
   private boolean verified;
 
-  public ExerciseTemplateDto(ObjectId identifier, String name, List<String> exampleImages, String briefDescription, boolean verified) {
-    this.identifier = identifier;
-    this.name = name;
-    this.exampleImages = exampleImages;
-    this.briefDescription = briefDescription;
-    this.verified = verified;
+  ExerciseTemplateUpdateDto(ExerciseTemplateUpdateDtoBuilder builder) {
+    this.name = builder.name;
+    this.exampleImages = builder.exampleImages;
+    this.briefDescription = builder.briefDescription;
+    this.verified = builder.verified;
   }
 
-  public ExerciseTemplateDto() {
-  }
-
-  public ObjectId getIdentifier() {
-    return this.identifier;
-  }
+  ExerciseTemplateUpdateDto() {}
 
   public String getName() {
     return this.name;

@@ -3,6 +3,7 @@ package life.coachy.backend.exercise.template;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateUpdateDto;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.validation.ValidationUtil;

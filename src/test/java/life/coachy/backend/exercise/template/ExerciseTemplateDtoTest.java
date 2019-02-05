@@ -1,27 +1,47 @@
 package life.coachy.backend.exercise.template;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.google.common.collect.Lists;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 public class ExerciseTemplateDtoTest {
 
-//  @Test todo
-//  public void toEntityTest() {
-//    ObjectId id = ObjectId.get();
-//    ExerciseTemplateDto dto = new ExerciseTemplateDto(id, "testName", Arrays.asList("test", "test2"),
-//        "Brief Description", true);
-//
-//    Assertions.assertEquals("ExerciseTemplate{"
-//        + "identifier=" + id + ", "
-//        + "name='testName', "
-//        + "exampleImages=[test, test2], "
-//        + "briefDescription='Brief Description', "
-//        + "verified=true}", dto.toEntity().toString());
-//  }
+  private ObjectId id = ObjectId.get();
+  private ExerciseTemplateDto dto = ExerciseTemplateDtoBuilder.createBuilder()
+      .withName("testName123")
+      .withBriefDescription("brief")
+      .withExampleImages(Lists.newArrayList("example1", "example2"))
+      .withIdentifier(this.id)
+      .withVerified(true)
+      .build();
+
+  @Test
+  public void toEntityTest() {
+    assertEquals("ExerciseTemplate{"
+            + "identifier=" + id + ", "
+            + "name='testName123', "
+            + "exampleImages=[example1, example2], "
+            + "briefDescription='brief', "
+            + "verified=true}",
+        String.valueOf(ExerciseTemplateMapper.INSTANCE.exerciseTemplateDtoToExerciseTemplate(this.dto)));
+  }
+
+  @Test
+  public void valuesShouldNotBeNull() {
+    assertAll(
+        () -> assertNotNull(this.dto),
+        () -> assertNotNull(this.dto.getName()),
+        () -> assertNotNull(this.dto.getBriefDescription()),
+        () -> assertNotNull(this.dto.getExampleImages()),
+        () -> assertNotNull(this.dto.getIdentifier())
+    );
+  }
 
 }

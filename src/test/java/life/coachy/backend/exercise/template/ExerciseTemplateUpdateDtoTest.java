@@ -1,25 +1,43 @@
 package life.coachy.backend.exercise.template;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
+
+import com.google.common.collect.Lists;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateUpdateDto;
+import life.coachy.backend.exercise.template.dto.ExerciseTemplateUpdateDtoBuilder;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 public class ExerciseTemplateUpdateDtoTest {
 
-//  @Test
-//  public void toEntityTest() {
-//    ExerciseTemplateUpdateDto dto = new ExerciseTemplateUpdateDto("testName", Arrays.asList("test", "test2"),
-//        "Brief Description", true);
-//
-//    Assertions.assertEquals("ExerciseTemplate{"
-//        + "identifier=null, "
-//        + "name='testName', "
-//        + "exampleImages=[test, test2], "
-//        + "briefDescription='Brief Description', "
-//        + "verified=true}", dto.toEntity().toString());
-//  }
+  private ExerciseTemplateUpdateDto dto = ExerciseTemplateUpdateDtoBuilder.createBuilder()
+      .withName("testName123")
+      .withBriefDescription("brief")
+      .withExampleImages(Lists.newArrayList("example1", "example2"))
+      .withVerified(true)
+      .build();
+
+  @Test
+  public void toEntityTest() {
+    assertEquals("ExerciseTemplate{"
+            + "identifier=null, "
+            + "name='testName123', "
+            + "exampleImages=[example1, example2], "
+            + "briefDescription='brief', "
+            + "verified=true}",
+        String.valueOf(ExerciseTemplateMapper.INSTANCE.exerciseTemplateUpdateDtoToExerciseTemplate(this.dto)));
+  }
+
+  @Test
+  public void valuesShouldNotBeNull() {
+    assertAll(
+        () -> assertNotNull(this.dto),
+        () -> assertNotNull(this.dto.getName()),
+        () -> assertNotNull(this.dto.getBriefDescription()),
+        () -> assertNotNull(this.dto.getExampleImages())
+    );
+  }
 
 }
