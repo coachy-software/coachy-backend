@@ -28,7 +28,7 @@ public class ScheduleDtoTest {
 
   @Test
   public void toEntityTest() {
-    Assertions.assertEquals("Schedule{"
+    assertEquals("Schedule{"
         + "identifier=" + this.id + ", "
         + "name='testName', "
         + "creator=null, "

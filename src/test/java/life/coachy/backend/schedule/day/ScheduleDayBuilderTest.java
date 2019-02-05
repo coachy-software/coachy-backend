@@ -2,7 +2,8 @@ package life.coachy.backend.schedule.day;
 
 import java.util.Collections;
 import java.util.List;
-import life.coachy.backend.exercise.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDtoBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -12,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 public class ScheduleDayBuilderTest {
 
-  private List<ExerciseDto> exercises = Collections.singletonList(new ExerciseDto());
-  private ScheduleDay scheduleDay = new ScheduleDayBuilder()
+  private List<ExerciseDto> exercises = Collections.singletonList(ExerciseDtoBuilder.createBuilder().build());
+  private ScheduleDay scheduleDay = ScheduleDayBuilder.createBuilder()
       .withName("test123")
       .withMusclesPart("test123")
       .withExercises(this.exercises)
@@ -39,7 +40,7 @@ public class ScheduleDayBuilderTest {
     assertEquals("ScheduleDay{"
         + "name='test123', "
         + "musclesPart='test123', "
-        + "exercises="+ this.exercises +", "
+        + "exercises=" + this.exercises + ", "
         + "trainingDay=true}", this.scheduleDay.toString());
   }
 

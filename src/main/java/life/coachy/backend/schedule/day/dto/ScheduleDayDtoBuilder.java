@@ -1,9 +1,10 @@
 package life.coachy.backend.schedule.day.dto;
 
 import java.util.List;
-import life.coachy.backend.exercise.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDto;
+import life.coachy.backend.util.Buildable;
 
-public final class ScheduleDayDtoBuilder {
+public final class ScheduleDayDtoBuilder implements Buildable<ScheduleDayDto> {
 
   String name;
   String musclesPart;
@@ -36,6 +37,7 @@ public final class ScheduleDayDtoBuilder {
     return this;
   }
 
+  @Override
   public ScheduleDayDto build() {
     return new ScheduleDayDto(this);
   }

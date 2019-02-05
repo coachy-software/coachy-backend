@@ -11,6 +11,12 @@ class ExerciseBuilder implements Buildable<Exercise> {
   int miniSets;
   ExerciseTemplateDto template;
 
+  private ExerciseBuilder() {}
+
+  public static ExerciseBuilder createBuilder() {
+    return new ExerciseBuilder();
+  }
+
   ExerciseBuilder withName(String name) {
     this.name = name;
     return this;

@@ -1,18 +1,40 @@
 package life.coachy.backend.exercise;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import life.coachy.backend.exercise.dto.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDtoBuilder;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 public class ExerciseDtoTest {
 
-//  @Test
-//  public void toEntityTest() {
-//    ExerciseDto dto = new ExerciseDto("testName", 3, 15, 4, null);
-//    Assertions.assertEquals("Exercise{name='testName', sets=3, reps=15, miniSets=4, template=null}",
-//        dto.toEntity().toString());
-//  }
+  private ExerciseDto dto = ExerciseDtoBuilder.createBuilder()
+      .withName("testName123")
+      .withSets(3)
+      .withReps(15)
+      .withMiniSets(4)
+      .withTemplate(null)
+      .build();
+
+  @Test
+  public void toEntityTest() {
+    assertEquals("Exercise{"
+            + "name='testName123', "
+            + "sets=3, "
+            + "reps=15, "
+            + "miniSets=4, "
+            + "template=null}", String.valueOf(ExerciseMapper.INSTANCE.exerciseDtoToExercise(this.dto)));
+  }
+
+  @Test
+  public void valuesShouldNotBeNull() {
+    assertAll(
+        () -> assertNotNull(this.dto),
+        () -> assertNotNull(this.dto.getName())
+    );
+  }
 
 }

@@ -1,10 +1,13 @@
-package life.coachy.backend.exercise;
+package life.coachy.backend.exercise.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.exercise.ExerciseMapper;
 import life.coachy.backend.exercise.template.ExerciseTemplateDto;
 import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.dto.DataTransferObject;
 
+@DataTransferObject(mapperClass = ExerciseMapper.class, entityName = "Exercise")
 public class ExerciseDto extends AbstractDto {
 
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
@@ -16,16 +19,15 @@ public class ExerciseDto extends AbstractDto {
   private int miniSets;
   private ExerciseTemplateDto template;
 
-  public ExerciseDto(String name, int sets, int reps, int miniSets, ExerciseTemplateDto template) {
-    this.name = name;
-    this.sets = sets;
-    this.reps = reps;
-    this.miniSets = miniSets;
-    this.template = template;
+  ExerciseDto(ExerciseDtoBuilder builder) {
+    this.name = builder.name;
+    this.sets = builder.sets;
+    this.reps = builder.reps;
+    this.miniSets = builder.miniSets;
+    this.template = builder.template;
   }
 
-  public ExerciseDto() {
-  }
+  ExerciseDto() {}
 
   public String getName() {
     return this.name;

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 public class ExerciseBuilderTest {
 
-  private Exercise exercise = new ExerciseBuilder()
+  private Exercise exercise = ExerciseBuilder.createBuilder()
       .withName("testName")
       .withReps(15)
       .withSets(3)

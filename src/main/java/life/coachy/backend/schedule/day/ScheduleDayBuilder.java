@@ -1,7 +1,7 @@
 package life.coachy.backend.schedule.day;
 
 import java.util.List;
-import life.coachy.backend.exercise.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDto;
 import life.coachy.backend.util.Buildable;
 
 class ScheduleDayBuilder implements Buildable<ScheduleDay> {
@@ -10,6 +10,12 @@ class ScheduleDayBuilder implements Buildable<ScheduleDay> {
   String musclesPart;
   List<ExerciseDto> exercises;
   boolean trainingDay;
+
+  private ScheduleDayBuilder() {}
+
+  public static ScheduleDayBuilder createBuilder() {
+    return new ScheduleDayBuilder();
+  }
 
   ScheduleDayBuilder withName(String name) {
     this.name = name;

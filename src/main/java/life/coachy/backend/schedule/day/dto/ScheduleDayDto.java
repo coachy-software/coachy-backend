@@ -3,7 +3,7 @@ package life.coachy.backend.schedule.day.dto;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.exercise.ExerciseDto;
+import life.coachy.backend.exercise.dto.ExerciseDto;
 import life.coachy.backend.schedule.day.ScheduleDayMapper;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
