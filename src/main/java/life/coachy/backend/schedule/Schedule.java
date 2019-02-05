@@ -40,6 +40,15 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   Schedule() {
   }
 
+  @Override
+  public ObjectId getIdentifier() {
+    return this.identifier;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
   public String getName() {
     return this.name;
   }
@@ -86,11 +95,6 @@ class Schedule implements IdentifiableEntity<ObjectId> {
 
   public void setDays(List<ScheduleDayDto> days) {
     this.days = days;
-  }
-
-  @Override
-  public ObjectId getIdentifier() {
-    return this.identifier;
   }
 
   @Override

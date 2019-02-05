@@ -1,11 +1,14 @@
-package life.coachy.backend.schedule;
+package life.coachy.backend.schedule.dto;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.schedule.ScheduleMapper;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.dto.DataTransferObject;
 
+@DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")
 public class ScheduleUpdateDto extends AbstractDto {
 
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
@@ -15,14 +18,13 @@ public class ScheduleUpdateDto extends AbstractDto {
   @NotNull(message = "{notNull}")
   private List<ScheduleDayDto> days;
 
-  ScheduleUpdateDto(String name, boolean active, List<ScheduleDayDto> days) {
-    this.name = name;
-    this.active = active;
-    this.days = days;
+  ScheduleUpdateDto(ScheduleUpdateDtoBuilder builder) {
+    this.name = builder.name;
+    this.active = builder.active;
+    this.days = builder.days;
   }
 
-  ScheduleUpdateDto() {
-  }
+  ScheduleUpdateDto() {}
 
   public String getName() {
     return this.name;

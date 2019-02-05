@@ -6,6 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.Collections;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
+import life.coachy.backend.schedule.dto.ScheduleDto;
+import life.coachy.backend.schedule.dto.ScheduleDtoBuilder;
+import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
+import life.coachy.backend.schedule.dto.ScheduleUpdateDtoBuilder;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.user.dto.UserDtoBuilder;
 import org.bson.types.ObjectId;
@@ -103,7 +107,11 @@ public class ScheduleControllerIntegrationTest {
         .build();
 
     this.mongoTemplate.insert(schedule, "schedules");
-    ScheduleUpdateDto dto = new ScheduleUpdateDto("testName", true, Collections.singletonList(new ScheduleDayDto()));
+    ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder()
+        .withName("testName")
+        .withActive(true)
+        .withDays(Collections.singletonList(new ScheduleDayDto()))
+        .build();
 
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/schedules/{id}", ObjectId.get())
         .content(dto.toJson().getBytes())
@@ -121,7 +129,11 @@ public class ScheduleControllerIntegrationTest {
         .withName("testName123")
         .withCreator(userDto)
         .build();
-    ScheduleUpdateDto dto = new ScheduleUpdateDto("testName", true, Collections.singletonList(new ScheduleDayDto()));
+    ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder()
+        .withName("testName")
+        .withActive(true)
+        .withDays(Collections.singletonList(new ScheduleDayDto()))
+        .build();
 
     this.mongoTemplate.insert(schedule, "schedules");
     this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/schedules/{id}", id)

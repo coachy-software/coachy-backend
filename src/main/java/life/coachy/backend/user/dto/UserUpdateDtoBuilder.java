@@ -12,7 +12,9 @@ public final class UserUpdateDtoBuilder implements Buildable<UserUpdateDto> {
 
   private UserUpdateDtoBuilder() {}
 
-  public static UserUpdateDtoBuilder createBuilder() { return new UserUpdateDtoBuilder(); }
+  public static UserUpdateDtoBuilder createBuilder() {
+    return new UserUpdateDtoBuilder();
+  }
 
   public UserUpdateDtoBuilder withUsername(String username) {
     this.username = username;

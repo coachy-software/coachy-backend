@@ -3,6 +3,8 @@ package life.coachy.backend.schedule;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import life.coachy.backend.schedule.dto.ScheduleDto;
+import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.validation.ValidationUtil;

@@ -12,7 +12,9 @@ public final class UserRegistrationDtoBuilder implements Buildable<UserRegistrat
 
   private UserRegistrationDtoBuilder() {}
 
-  public static UserRegistrationDtoBuilder createBuilder() { return new UserRegistrationDtoBuilder(); }
+  public static UserRegistrationDtoBuilder createBuilder() {
+    return new UserRegistrationDtoBuilder();
+  }
 
   public UserRegistrationDtoBuilder withUsername(String username) {
     this.username = username;

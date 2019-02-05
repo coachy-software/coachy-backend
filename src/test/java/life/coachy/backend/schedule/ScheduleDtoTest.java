@@ -2,30 +2,52 @@ package life.coachy.backend.schedule;
 
 import java.time.Instant;
 import java.util.Date;
+import life.coachy.backend.schedule.dto.ScheduleDto;
+import life.coachy.backend.schedule.dto.ScheduleDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.*;
+
+@RunWith(SpringRunner.class)
 public class ScheduleDtoTest {
 
-//  @Test
-//  public void toEntityTest() {
-//    ObjectId id = ObjectId.get();
-//    Date createDate = Date.from(Instant.now());
-//    Date updatedDate = Date.from(Instant.now());
-//    ScheduleDto dto = new ScheduleDto(id, "testName", null, createDate, updatedDate, true, null);
-//
-//    Assertions.assertEquals("Schedule{"
-//        + "identifier=" + id + ", "
-//        + "name='testName', "
-//        + "creator=null, "
-//        + "createdAt=" + createDate + ", "
-//        + "updatedAt=" + updatedDate + ", "
-//        + "active=true, "
-//        + "days=null}", dto.toEntity().toString());
-//  }
+  private ObjectId id = ObjectId.get();
+  private Date createDate = Date.from(Instant.now());
+  private Date updatedDate = Date.from(Instant.now());
+  private ScheduleDto dto = ScheduleDtoBuilder.createBuilder()
+      .withIdentifier(this.id)
+      .withName("testName")
+      .withCreatedAt(this.createDate)
+      .withUpdatedAt(this.updatedDate)
+      .withActive(true)
+      .build();
+
+  @Test
+  public void toEntityTest() {
+    Assertions.assertEquals("Schedule{"
+        + "identifier=" + this.id + ", "
+        + "name='testName', "
+        + "creator=null, "
+        + "createdAt=" + this.createDate + ", "
+        + "updatedAt=" + this.updatedDate + ", "
+        + "active=true, "
+        + "days=null}", String.valueOf(ScheduleMapper.INSTANCE.scheduleDtoToSchedule(this.dto)));
+  }
+
+  @Test
+  public void valuesShouldNotBeNull() {
+    assertAll(
+        () -> assertNotNull(this.dto),
+        () -> assertNotNull(this.dto.getIdentifier()),
+        () -> assertNotNull(this.dto.getName()),
+        () -> assertNotNull(this.dto.getCreatedAt()),
+        () -> assertNotNull(this.dto.getUpdatedAt()),
+        () -> assertTrue(this.dto.isActive())
+    );
+  }
 
 }

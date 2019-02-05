@@ -1,14 +1,17 @@
-package life.coachy.backend.schedule;
+package life.coachy.backend.schedule.dto;
 
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.schedule.ScheduleMapper;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
 
+@DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")
 public class ScheduleDto extends AbstractDto {
 
   private ObjectId identifier;
@@ -23,19 +26,17 @@ public class ScheduleDto extends AbstractDto {
   @NotNull(message = "{notNull}")
   private List<ScheduleDayDto> days;
 
-  ScheduleDto() {
+  ScheduleDto(ScheduleDtoBuilder builder) {
+    this.identifier = builder.identifier;
+    this.name = builder.name;
+    this.creator = builder.creator;
+    this.createdAt = builder.createdAt;
+    this.updatedAt = builder.updatedAt;
+    this.active = builder.active;
+    this.days = builder.days;
   }
 
-  ScheduleDto(ObjectId identifier, String name, UserDto creator, Date createdAt, Date updatedAt, boolean active,
-      List<ScheduleDayDto> days) {
-    this.identifier = identifier;
-    this.name = name;
-    this.creator = creator;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.active = active;
-    this.days = days;
-  }
+  ScheduleDto() {}
 
   public ObjectId getIdentifier() {
     return this.identifier;
