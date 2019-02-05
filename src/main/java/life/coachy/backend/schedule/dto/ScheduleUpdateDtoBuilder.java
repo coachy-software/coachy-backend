@@ -1,7 +1,7 @@
 package life.coachy.backend.schedule.dto;
 
 import java.util.List;
-import life.coachy.backend.schedule.day.ScheduleDayDto;
+import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.util.Buildable;
 
 public final class ScheduleUpdateDtoBuilder implements Buildable<ScheduleUpdateDto> {

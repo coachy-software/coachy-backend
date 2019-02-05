@@ -2,7 +2,7 @@ package life.coachy.backend.schedule.dto;
 
 import java.util.Date;
 import java.util.List;
-import life.coachy.backend.schedule.day.ScheduleDayDto;
+import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;

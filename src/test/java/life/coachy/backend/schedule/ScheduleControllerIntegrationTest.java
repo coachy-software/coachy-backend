@@ -5,9 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.Collections;
-import life.coachy.backend.schedule.day.ScheduleDayDto;
-import life.coachy.backend.schedule.dto.ScheduleDto;
-import life.coachy.backend.schedule.dto.ScheduleDtoBuilder;
+import life.coachy.backend.schedule.day.dto.ScheduleDayDtoBuilder;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDtoBuilder;
 import life.coachy.backend.user.dto.UserDto;
@@ -110,7 +108,7 @@ public class ScheduleControllerIntegrationTest {
     ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder()
         .withName("testName")
         .withActive(true)
-        .withDays(Collections.singletonList(new ScheduleDayDto()))
+        .withDays(Collections.singletonList(ScheduleDayDtoBuilder.createBuilder().build()))
         .build();
 
     this.mockMvc.perform(MockMvcRequestBuilders.put("/api/schedules/{id}", ObjectId.get())
@@ -132,7 +130,7 @@ public class ScheduleControllerIntegrationTest {
     ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder()
         .withName("testName")
         .withActive(true)
-        .withDays(Collections.singletonList(new ScheduleDayDto()))
+        .withDays(Collections.singletonList(ScheduleDayDtoBuilder.createBuilder().build()))
         .build();
 
     this.mongoTemplate.insert(schedule, "schedules");

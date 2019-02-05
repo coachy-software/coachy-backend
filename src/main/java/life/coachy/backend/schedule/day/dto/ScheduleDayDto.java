@@ -1,11 +1,14 @@
-package life.coachy.backend.schedule.day;
+package life.coachy.backend.schedule.day.dto;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.ExerciseDto;
+import life.coachy.backend.schedule.day.ScheduleDayMapper;
 import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.util.dto.DataTransferObject;
 
+@DataTransferObject(mapperClass = ScheduleDayMapper.class, entityName = "ScheduleDay")
 public class ScheduleDayDto extends AbstractDto {
 
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
@@ -16,18 +19,16 @@ public class ScheduleDayDto extends AbstractDto {
   private List<ExerciseDto> exercises;
   private boolean trainingDay;
 
-  public ScheduleDayDto(String name, String musclesPart, List<ExerciseDto> exercises, boolean trainingDay) {
-    this.name = name;
-    this.musclesPart = musclesPart;
-    this.exercises = exercises;
-    this.trainingDay = trainingDay;
+  ScheduleDayDto(ScheduleDayDtoBuilder builder) {
+    this.name = builder.name;
+    this.musclesPart = builder.musclesPart;
+    this.exercises = builder.exercises;
+    this.trainingDay = builder.trainingDay;
   }
 
-  public ScheduleDayDto() {
-  }
+  ScheduleDayDto() {}
 
-  @Override
-  public String getEntityName() {
+  public String getName() {
     return this.name;
   }
 
@@ -41,6 +42,11 @@ public class ScheduleDayDto extends AbstractDto {
 
   public boolean isTrainingDay() {
     return this.trainingDay;
+  }
+
+  @Override
+  public String getEntityName() {
+    return this.name;
   }
 
 }

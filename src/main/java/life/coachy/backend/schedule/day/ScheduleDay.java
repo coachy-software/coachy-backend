@@ -20,6 +20,8 @@ class ScheduleDay implements IdentifiableEntity<String> {
     this.trainingDay = builder.trainingDay;
   }
 
+  ScheduleDay() {}
+
   @Override
   public String getIdentifier() {
     return this.name;

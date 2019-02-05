@@ -3,7 +3,7 @@ package life.coachy.backend.schedule;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Date;
 import java.util.List;
-import life.coachy.backend.schedule.day.ScheduleDayDto;
+import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
