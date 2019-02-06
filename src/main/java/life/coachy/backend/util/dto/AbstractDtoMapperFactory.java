@@ -1,5 +1,6 @@
 package life.coachy.backend.util.dto;
 
+import com.google.common.base.Preconditions;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import life.coachy.backend.util.IdentifiableEntity;
@@ -17,7 +18,11 @@ public abstract class AbstractDtoMapperFactory<C extends MapStructMapper> {
     this.reflections = reflections;
   }
 
-  public <T extends IdentifiableEntity<?>, D extends AbstractDto> T obtainEntity(D dto) { // TODO validation
+  public <T extends IdentifiableEntity<?>, D extends AbstractDto> T obtainEntity(D dto) {
+    Preconditions.checkNotNull(this.mapper, "Map struct mapper cannot be null");
+    Preconditions.checkNotNull(this.reflections, "Reflections cannot be null");
+    Preconditions.checkNotNull(dto, "Dto cannot be null");
+
     Set<Class<?>> annotatedTypes = this.reflections.getTypesAnnotatedWith(DataTransferObject.class, true);
 
     for (Class<?> clazz : annotatedTypes) {

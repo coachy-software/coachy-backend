@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import life.coachy.backend.user.dto.UserDtoMapperFactory;
@@ -24,8 +25,9 @@ class UserRegistrationService {
   }
 
   UserRegistrationDto saveDto(UserRegistrationDto dto) {
-    User user = this.mapperFactory.obtainEntity(dto);
+    Preconditions.checkNotNull(dto, "User registration DTO cannot be null");
 
+    User user = this.mapperFactory.obtainEntity(dto);
     user.setRoles(Sets.newTreeSet(Collections.singletonList("USER")));
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 

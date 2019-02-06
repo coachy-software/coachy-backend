@@ -1,5 +1,6 @@
 package life.coachy.backend.email;
 
+import com.google.common.base.Preconditions;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ class EmailService {
 
   @Async
   public void sendMessage(String to, String subject, String text) throws MessagingException {
+    Preconditions.checkNotNull(to, "Recipient email address cannot be null");
+    Preconditions.checkNotNull(subject, "Subject cannot be null");
+    Preconditions.checkNotNull(text, "Email message content cannot be null!");
+
     MimeMessage mimeMessage = this.emailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 

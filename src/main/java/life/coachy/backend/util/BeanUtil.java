@@ -10,8 +10,7 @@ import org.springframework.beans.BeanWrapperImpl;
 
 public final class BeanUtil {
 
-  private BeanUtil() {
-  }
+  private BeanUtil() {}
 
   public static <T> void copyNonNullProperties(T source, T target) {
     if (source == null || target == null) {

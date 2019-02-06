@@ -1,5 +1,6 @@
 package life.coachy.backend.upload;
 
+import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -23,6 +24,9 @@ class UploadService {
   private Path uploadDirectoryPath;
 
   String store(MultipartFile file, String targetDirectory) throws IOException {
+    Preconditions.checkNotNull(file, "Multipart file cannot be null!");
+    Preconditions.checkNotNull(targetDirectory, "Target directory path cannot be null!");
+
     Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + targetDirectory);
     Files.createDirectories(targetDirectoryPath);
 
@@ -42,6 +46,9 @@ class UploadService {
   }
 
   Resource loadAsResource(String fileName, String targetDirectory) throws MalformedURLException {
+    Preconditions.checkNotNull(fileName, "File name cannot be null");
+    Preconditions.checkNotNull(targetDirectory, "Target directory path cannot be null");
+
     Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + targetDirectory);
     Path filePath = targetDirectoryPath.resolve(fileName).normalize();
     Resource resource = new UrlResource(filePath.toUri());

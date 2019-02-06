@@ -18,8 +18,7 @@ public class PasswordResetTokenDto extends AbstractDto {
     this.confirmPassword = confirmPassword;
   }
 
-  public PasswordResetTokenDto() { // JACKSON
-  }
+  PasswordResetTokenDto() {}
 
   public String getPassword() {
     return this.password;

@@ -1,6 +1,6 @@
 package life.coachy.backend.user;
 
-import java.util.Optional;
+import com.google.common.base.Preconditions;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,10 @@ class UserDetailsService implements org.springframework.security.core.userdetail
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> optionalUser = this.userRepository.findByUsername(username);
+    Preconditions.checkNotNull(username, "Username cannot be null");
 
-    if (!optionalUser.isPresent()) {
-      throw new UsernameNotFoundException("Username not found!");
-    }
-
-    User user = optionalUser.get();
+    User user = this.userRepository.findByUsername(username)
+        .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
 
     return new UserDetails(user, username, user.getPassword(), this.mapRolesToGrantedAuthority(user.getRoles()));
   }
