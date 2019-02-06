@@ -15,6 +15,7 @@ class ScheduleSerializer extends JsonSerializer<Schedule> {
     jsonGenerator.writeStringField("identifier", schedule.getIdentifier().toHexString());
     jsonGenerator.writeStringField("name", schedule.getName());
     jsonGenerator.writeStringField("creator", schedule.getCreator().getIdentifier().toHexString());
+    jsonGenerator.writeStringField("charge", schedule.getCharge().getIdentifier().toHexString());
     jsonGenerator.writeStringField("createdAt", schedule.getCreatedAt().toString());
     jsonGenerator.writeStringField("updatedAt", schedule.getUpdatedAt().toString());
     jsonGenerator.writeBooleanField("active", schedule.isActive());

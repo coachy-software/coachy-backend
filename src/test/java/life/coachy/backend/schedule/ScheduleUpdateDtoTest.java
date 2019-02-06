@@ -25,6 +25,7 @@ public class ScheduleUpdateDtoTest {
         + "identifier=null, "
         + "name='testName', "
         + "creator=null, "
+        + "charge=null, "
         + "createdAt=null, "
         + "updatedAt=null, "
         + "active=true, "

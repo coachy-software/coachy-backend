@@ -32,6 +32,7 @@ public class ScheduleDtoTest {
         + "identifier=" + this.id + ", "
         + "name='testName', "
         + "creator=null, "
+        + "charge=null, "
         + "createdAt=" + this.createDate + ", "
         + "updatedAt=" + this.updatedDate + ", "
         + "active=true, "

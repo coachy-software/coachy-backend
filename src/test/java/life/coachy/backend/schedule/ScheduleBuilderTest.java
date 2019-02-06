@@ -57,6 +57,7 @@ public class ScheduleBuilderTest {
         + "identifier=" + this.id + ", "
         + "name='testName', "
         + "creator=" + this.creator + ", "
+        + "charge=null, "
         + "createdAt=" + this.createDate + ", "
         + "updatedAt=" + this.updateDate + ", "
         + "active=false, "
