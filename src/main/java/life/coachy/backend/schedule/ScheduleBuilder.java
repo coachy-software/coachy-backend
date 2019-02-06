@@ -12,6 +12,7 @@ class ScheduleBuilder implements Buildable<Schedule> {
   ObjectId identifier;
   String name;
   UserDto creator;
+  UserDto charge;
   Date createdAt;
   Date updatedAt;
   boolean active;
@@ -35,6 +36,11 @@ class ScheduleBuilder implements Buildable<Schedule> {
 
   ScheduleBuilder withCreator(UserDto creator) {
     this.creator = creator;
+    return this;
+  }
+
+  ScheduleBuilder withCharge(UserDto charge) {
+    this.charge = charge;
     return this;
   }
 

@@ -32,6 +32,7 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.creator = builder.creator;
+    this.charge = builder.charge;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
     this.active = builder.active;

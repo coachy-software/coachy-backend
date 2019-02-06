@@ -52,7 +52,8 @@ public class ScheduleControllerIntegrationTest {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
     ScheduleBuilder builder = ScheduleBuilder.createBuilder()
         .withName("testName123")
-        .withCreator(userDto);
+        .withCreator(userDto)
+        .withCharge(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?name=testName1234"))
@@ -72,7 +73,10 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void paginationPageSizeTest() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    ScheduleBuilder builder = ScheduleBuilder.createBuilder().withName("testName123").withCreator(userDto);
+    ScheduleBuilder builder = ScheduleBuilder.createBuilder()
+        .withName("testName123")
+        .withCreator(userDto)
+        .withCharge(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=1"))
@@ -85,7 +89,10 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void paginationTest() throws Exception {
     UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(ObjectId.get()).build();
-    ScheduleBuilder builder = ScheduleBuilder.createBuilder().withName("testName123").withCreator(userDto);
+    ScheduleBuilder builder = ScheduleBuilder.createBuilder()
+        .withName("testName123")
+        .withCreator(userDto)
+        .withCharge(userDto);
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=2"))
