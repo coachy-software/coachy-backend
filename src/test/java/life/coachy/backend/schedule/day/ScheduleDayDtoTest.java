@@ -14,7 +14,7 @@ public class ScheduleDayDtoTest {
 
   private ScheduleDayDto dto = ScheduleDayDtoBuilder.createBuilder()
       .withName("testName")
-      .withExercises(null) // todo
+      .withExercises(null)
       .withMusclesPart("arms")
       .withTrainingDay(true)
       .build();
