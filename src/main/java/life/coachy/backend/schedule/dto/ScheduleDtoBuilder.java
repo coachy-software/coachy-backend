@@ -13,6 +13,7 @@ public final class ScheduleDtoBuilder implements Buildable<ScheduleDto> {
   String name;
   UserDto creator;
   UserDto charge;
+  String note;
   LocalDateTime createdAt;
   LocalDateTime updatedAt;
   boolean active;
@@ -41,6 +42,11 @@ public final class ScheduleDtoBuilder implements Buildable<ScheduleDto> {
 
   public ScheduleDtoBuilder withCharge(UserDto charge) {
     this.charge = charge;
+    return this;
+  }
+
+  public ScheduleDtoBuilder withNote(String note) {
+    this.note = note;
     return this;
   }
 

@@ -8,6 +8,7 @@ public final class ScheduleUpdateDtoBuilder implements Buildable<ScheduleUpdateD
 
   String name;
   boolean active;
+  String note;
   List<ScheduleDayDto> days;
 
   private ScheduleUpdateDtoBuilder() {}
@@ -23,6 +24,11 @@ public final class ScheduleUpdateDtoBuilder implements Buildable<ScheduleUpdateD
 
   public ScheduleUpdateDtoBuilder withActive(boolean active) {
     this.active = active;
+    return this;
+  }
+
+  public ScheduleUpdateDtoBuilder withNote(String note) {
+    this.note = note;
     return this;
   }
 

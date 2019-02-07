@@ -21,6 +21,7 @@ public class ScheduleDto extends AbstractDto {
   private UserDto creator;
   @NotNull(message = "{notNull}")
   private UserDto charge;
+  private String note;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private boolean active;
@@ -31,6 +32,7 @@ public class ScheduleDto extends AbstractDto {
     this.name = builder.name;
     this.creator = builder.creator;
     this.charge = builder.charge;
+    this.note = builder.note;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
     this.active = builder.active;
@@ -53,6 +55,10 @@ public class ScheduleDto extends AbstractDto {
 
   public UserDto getCharge() {
     return this.charge;
+  }
+
+  public String getNote() {
+    return this.note;
   }
 
   public LocalDateTime getCreatedAt() {

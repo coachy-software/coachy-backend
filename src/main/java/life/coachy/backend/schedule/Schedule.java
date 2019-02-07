@@ -21,6 +21,7 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   private String name;
   private UserDto creator;
   private UserDto charge;
+  private String note;
   @CreatedDate
   private LocalDateTime createdAt;
   @LastModifiedDate
@@ -33,6 +34,7 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.name = builder.name;
     this.creator = builder.creator;
     this.charge = builder.charge;
+    this.note = builder.note;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
     this.active = builder.active;
@@ -73,6 +75,14 @@ class Schedule implements IdentifiableEntity<ObjectId> {
 
   public void setCharge(UserDto charge) {
     this.charge = charge;
+  }
+
+  public String getNote() {
+    return this.note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
   }
 
   public LocalDateTime getCreatedAt() {
