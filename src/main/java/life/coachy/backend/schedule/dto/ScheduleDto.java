@@ -1,6 +1,6 @@
 package life.coachy.backend.schedule.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,12 +19,11 @@ public class ScheduleDto extends AbstractDto {
   private String name;
   @NotNull(message = "{notNull}")
   private UserDto creator;
+  @NotNull(message = "{notNull}")
   private UserDto charge;
-  private Date createdAt;
-  private Date updatedAt;
-  @NotNull(message = "{notNull}")
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
   private boolean active;
-  @NotNull(message = "{notNull}")
   private List<ScheduleDayDto> days;
 
   ScheduleDto(ScheduleDtoBuilder builder) {
@@ -56,11 +55,11 @@ public class ScheduleDto extends AbstractDto {
     return this.charge;
   }
 
-  public Date getCreatedAt() {
+  public LocalDateTime getCreatedAt() {
     return this.createdAt;
   }
 
-  public Date getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 

@@ -1,6 +1,6 @@
 package life.coachy.backend.schedule;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.user.dto.UserDto;
@@ -13,8 +13,8 @@ class ScheduleBuilder implements Buildable<Schedule> {
   String name;
   UserDto creator;
   UserDto charge;
-  Date createdAt;
-  Date updatedAt;
+  LocalDateTime createdAt;
+  LocalDateTime updatedAt;
   boolean active;
   List<ScheduleDayDto> days;
 
@@ -44,12 +44,12 @@ class ScheduleBuilder implements Buildable<Schedule> {
     return this;
   }
 
-  ScheduleBuilder withCreatedAt(Date createdAt) {
+  ScheduleBuilder withCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
 
-  ScheduleBuilder withUpdatedAt(Date updatedAt) {
+  ScheduleBuilder withUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }

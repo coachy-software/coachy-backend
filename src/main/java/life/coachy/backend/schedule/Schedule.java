@@ -1,7 +1,7 @@
 package life.coachy.backend.schedule;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.user.dto.UserDto;
@@ -22,9 +22,9 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   private UserDto creator;
   private UserDto charge;
   @CreatedDate
-  private Date createdAt;
+  private LocalDateTime createdAt;
   @LastModifiedDate
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
   private boolean active;
   private List<ScheduleDayDto> days;
 
@@ -75,19 +75,19 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.charge = charge;
   }
 
-  public Date getCreatedAt() {
+  public LocalDateTime getCreatedAt() {
     return this.createdAt;
   }
 
-  public void setCreatedAt(Date createdAt) {
+  public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public Date getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
-  public void setUpdatedAt(Date updatedAt) {
+  public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 
