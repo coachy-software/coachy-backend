@@ -21,8 +21,9 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   private ScheduleDtoMapperFactory mapperFactory;
 
   @Autowired
-  ScheduleCrudService(ScheduleRepository repository) {
+  ScheduleCrudService(ScheduleRepository repository, ScheduleDtoMapperFactory mapperFactory) {
     this.repository = repository;
+    this.mapperFactory = mapperFactory;
   }
 
   @Override

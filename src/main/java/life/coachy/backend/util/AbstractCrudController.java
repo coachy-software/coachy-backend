@@ -44,7 +44,6 @@ public abstract class AbstractCrudController<
 
   @ApiOperation("Creates entity")
   @ApiResponses({
-      @ApiResponse(code = 409, message = "Entity already exists"),
       @ApiResponse(code = 400, message = "Validation error occurred"),
       @ApiResponse(code = 201, message = "Entity created")
   })
@@ -115,13 +114,9 @@ public abstract class AbstractCrudController<
     return ResponseEntity.noContent().build();
   }
 
-  private <X extends AbstractDto> ResponseEntity<?> createEntity(X dto, BindingResult result) { // user improvements
+  private <X extends AbstractDto> ResponseEntity<?> createEntity(X dto, BindingResult result) {
     if (result.hasErrors()) {
       return ResponseEntity.badRequest().body(ValidationUtil.toDto(result.getFieldErrors()));
-    }
-
-    if (this.service.findByName(dto.getEntityName()).isPresent()) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(dto));

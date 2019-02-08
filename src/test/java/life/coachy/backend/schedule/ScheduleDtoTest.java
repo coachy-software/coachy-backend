@@ -1,12 +1,10 @@
 package life.coachy.backend.schedule;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
 import life.coachy.backend.schedule.dto.ScheduleDto;
 import life.coachy.backend.schedule.dto.ScheduleDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ScheduleDtoTest {
 
   private ObjectId id = ObjectId.get();
-  private Date createDate = Date.from(Instant.now());
-  private Date updatedDate = Date.from(Instant.now());
+  private LocalDateTime createDate = LocalDateTime.now();
+  private LocalDateTime updateDate = LocalDateTime.now();
   private ScheduleDto dto = ScheduleDtoBuilder.createBuilder()
       .withIdentifier(this.id)
       .withName("testName")
       .withCreatedAt(this.createDate)
-      .withUpdatedAt(this.updatedDate)
+      .withUpdatedAt(this.updateDate)
       .withActive(true)
       .build();
 
@@ -34,7 +32,7 @@ public class ScheduleDtoTest {
         + "creator=null, "
         + "charge=null, "
         + "createdAt=" + this.createDate + ", "
-        + "updatedAt=" + this.updatedDate + ", "
+        + "updatedAt=" + this.updateDate + ", "
         + "active=true, "
         + "days=null}", String.valueOf(ScheduleMapper.INSTANCE.scheduleDtoToSchedule(this.dto)));
   }

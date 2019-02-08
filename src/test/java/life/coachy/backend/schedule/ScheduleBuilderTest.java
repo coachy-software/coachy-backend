@@ -1,8 +1,7 @@
 package life.coachy.backend.schedule;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDtoBuilder;
@@ -19,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ScheduleBuilderTest {
 
   private ObjectId id = ObjectId.get();
-  private Date createDate = Date.from(Instant.now());
-  private Date updateDate = Date.from(Instant.now());
+  private LocalDateTime createDate = LocalDateTime.now();
+  private LocalDateTime updateDate = LocalDateTime.now();
   private UserDto creator = UserDtoBuilder.createBuilder().withIdentifier(this.id).build();
   private List<ScheduleDayDto> days = Collections.singletonList(ScheduleDayDtoBuilder.createBuilder().build());
 
