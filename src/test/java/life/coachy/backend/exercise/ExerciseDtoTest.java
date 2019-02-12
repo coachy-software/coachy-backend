@@ -22,11 +22,12 @@ public class ExerciseDtoTest {
   @Test
   public void toEntityTest() {
     assertEquals("Exercise{"
-            + "name='testName123', "
-            + "sets=3, "
-            + "reps=15, "
-            + "miniSets=4, "
-            + "template=null}", String.valueOf(ExerciseMapper.INSTANCE.exerciseDtoToExercise(this.dto)));
+        + "identifier=null, "
+        + "name='testName123', "
+        + "sets=3, "
+        + "reps=15, "
+        + "miniSets=4, "
+        + "template=null}", String.valueOf(ExerciseMapper.INSTANCE.exerciseDtoToExercise(this.dto)));
   }
 
   @Test

@@ -2,9 +2,11 @@ package life.coachy.backend.exercise.dto;
 
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.Buildable;
+import org.bson.types.ObjectId;
 
 public final class ExerciseDtoBuilder implements Buildable<ExerciseDto> {
 
+  ObjectId identifier;
   String name;
   int sets;
   int reps;
@@ -14,6 +16,11 @@ public final class ExerciseDtoBuilder implements Buildable<ExerciseDto> {
   private ExerciseDtoBuilder() {}
 
   public static ExerciseDtoBuilder createBuilder() { return new ExerciseDtoBuilder(); }
+
+  public ExerciseDtoBuilder withIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+    return this;
+  }
 
   public ExerciseDtoBuilder withName(String name) {
     this.name = name;

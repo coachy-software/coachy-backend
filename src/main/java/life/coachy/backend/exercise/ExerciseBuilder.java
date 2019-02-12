@@ -2,9 +2,11 @@ package life.coachy.backend.exercise;
 
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.Buildable;
+import org.bson.types.ObjectId;
 
 class ExerciseBuilder implements Buildable<Exercise> {
 
+  ObjectId identifier;
   String name;
   int sets;
   int reps;
@@ -15,6 +17,11 @@ class ExerciseBuilder implements Buildable<Exercise> {
 
   public static ExerciseBuilder createBuilder() {
     return new ExerciseBuilder();
+  }
+
+  ExerciseBuilder withIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+    return this;
   }
 
   ExerciseBuilder withName(String name) {

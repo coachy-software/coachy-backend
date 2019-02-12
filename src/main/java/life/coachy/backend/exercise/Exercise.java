@@ -1,10 +1,17 @@
 package life.coachy.backend.exercise;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.IdentifiableEntity;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
-class Exercise implements IdentifiableEntity<String> {
+class Exercise implements IdentifiableEntity<ObjectId> {
 
+  @Id
+  @JsonSerialize(using = ToStringSerializer.class)
+  private ObjectId identifier;
   private String name;
   private int sets;
   private int reps;
@@ -12,6 +19,7 @@ class Exercise implements IdentifiableEntity<String> {
   private ExerciseTemplateDto template;
 
   Exercise(ExerciseBuilder builder) {
+    this.identifier = builder.identifier;
     this.name = builder.name;
     this.sets = builder.sets;
     this.reps = builder.reps;
@@ -19,12 +27,11 @@ class Exercise implements IdentifiableEntity<String> {
     this.template = builder.template;
   }
 
-  Exercise() {
-  }
+  Exercise() {}
 
   @Override
-  public String getIdentifier() {
-    return this.name;
+  public ObjectId getIdentifier() {
+    return this.identifier;
   }
 
   public String getName() {
@@ -70,7 +77,8 @@ class Exercise implements IdentifiableEntity<String> {
   @Override
   public String toString() {
     return "Exercise{" +
-        "name='" + this.name + '\'' +
+        "identifier=" + this.identifier +
+        ", name='" + this.name + '\'' +
         ", sets=" + this.sets +
         ", reps=" + this.reps +
         ", miniSets=" + this.miniSets +

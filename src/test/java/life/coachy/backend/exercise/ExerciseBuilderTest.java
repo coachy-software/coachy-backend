@@ -26,7 +26,7 @@ public class ExerciseBuilderTest {
 
   @Test
   public void toStringTest() {
-    assertEquals("Exercise{name='testName', sets=3, reps=15, miniSets=4, template=null}", this.exercise.toString());
+    assertEquals("Exercise{identifier=null, name='testName', sets=3, reps=15, miniSets=4, template=null}", this.exercise.toString());
   }
 
 }

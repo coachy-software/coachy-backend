@@ -6,10 +6,12 @@ import life.coachy.backend.exercise.ExerciseMapper;
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
+import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = ExerciseMapper.class, entityName = "Exercise")
 public class ExerciseDto extends AbstractDto {
 
+  private ObjectId identifier;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
   @NotNull(message = "{notNull}")
@@ -20,6 +22,7 @@ public class ExerciseDto extends AbstractDto {
   private ExerciseTemplateDto template;
 
   ExerciseDto(ExerciseDtoBuilder builder) {
+    this.identifier = builder.identifier;
     this.name = builder.name;
     this.sets = builder.sets;
     this.reps = builder.reps;
@@ -28,6 +31,10 @@ public class ExerciseDto extends AbstractDto {
   }
 
   ExerciseDto() {}
+
+  public ObjectId getIdentifier() {
+    return this.identifier;
+  }
 
   public String getName() {
     return this.name;
