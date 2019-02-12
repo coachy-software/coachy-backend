@@ -12,9 +12,8 @@ buildscript {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2')
     classpath('gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10')
-    classpath('net.ltgt.gradle:gradle-apt-plugin:0.21') {
-      exclude group: 'org.google.guava', module: 'guava'
-    }
+    classpath('net.ltgt.gradle:gradle-apt-plugin:0.21')
+    classpath group: 'com.google.guava', name: 'guava', version: '18.0'
   }
 
 }
