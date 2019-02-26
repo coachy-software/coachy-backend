@@ -25,6 +25,8 @@ public interface ScheduleMapper extends MapStructMapper {
   @Mapping(target = "creator", source = "schedule.creator.identifier")
   ScheduleGlobalDto scheduleToScheduleGlobalDto(Schedule schedule);
 
+  Schedule scheduleGlobalDtoToSchedule(ScheduleGlobalDto dto);
+
   List<ScheduleGlobalDto> schedulesToScheduleGlobalDtos(List<Schedule> schedules);
 
   default Page<ScheduleGlobalDto> schedulesToScheduleGlobalDtos(Page<Schedule> schedules) {
