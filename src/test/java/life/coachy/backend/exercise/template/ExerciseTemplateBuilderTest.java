@@ -33,10 +33,11 @@ public class ExerciseTemplateBuilderTest {
   @Test
   public void toStringTest() {
     assertEquals("ExerciseTemplate{"
-        + "identifier=" + this.objectId + ", "
+        + "identifier=" + objectId + ", "
         + "name='test123', "
         + "exampleImages=[test1, test2], "
-        + "briefDescription='brief description'}", this.template.toString());
+        + "briefDescription='brief description', "
+        + "muscleGroup='null'}", this.template.toString());
   }
 
 }

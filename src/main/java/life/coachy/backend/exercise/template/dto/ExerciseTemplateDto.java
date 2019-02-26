@@ -19,12 +19,15 @@ public class ExerciseTemplateDto extends AbstractDto {
   private List<String> exampleImages;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String briefDescription;
+  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
+  private String muscleGroup;
 
   ExerciseTemplateDto(ExerciseTemplateDtoBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.exampleImages = builder.exampleImages;
     this.briefDescription = builder.briefDescription;
+    this.muscleGroup = builder.muscleGroup;
   }
 
   ExerciseTemplateDto() {}
@@ -43,6 +46,10 @@ public class ExerciseTemplateDto extends AbstractDto {
 
   public String getBriefDescription() {
     return this.briefDescription;
+  }
+
+  public String getMuscleGroup() {
+    return this.muscleGroup;
   }
 
   @Override

@@ -10,6 +10,7 @@ public final class ExerciseTemplateDtoBuilder implements Buildable<ExerciseTempl
   String name;
   List<String> exampleImages;
   String briefDescription;
+  String muscleGroup;
 
   private ExerciseTemplateDtoBuilder() {}
 
@@ -34,6 +35,11 @@ public final class ExerciseTemplateDtoBuilder implements Buildable<ExerciseTempl
 
   public ExerciseTemplateDtoBuilder withBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
+    return this;
+  }
+
+  public ExerciseTemplateDtoBuilder withMuscleGroup(String muscleGroup) {
+    this.muscleGroup = muscleGroup;
     return this;
   }
 

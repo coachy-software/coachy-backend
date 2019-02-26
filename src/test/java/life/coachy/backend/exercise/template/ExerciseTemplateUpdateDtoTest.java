@@ -24,7 +24,8 @@ public class ExerciseTemplateUpdateDtoTest {
             + "identifier=null, "
             + "name='testName123', "
             + "exampleImages=[example1, example2], "
-            + "briefDescription='brief'}",
+            + "briefDescription='brief', "
+            + "muscleGroup='null'}",
         String.valueOf(ExerciseTemplateMapper.INSTANCE.exerciseTemplateUpdateDtoToExerciseTemplate(this.dto)));
   }
 

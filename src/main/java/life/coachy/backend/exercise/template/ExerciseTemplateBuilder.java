@@ -10,6 +10,7 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
   String name;
   List<String> exampleImages;
   String briefDescription;
+  String muscleGroup;
 
   private ExerciseTemplateBuilder() {}
 
@@ -34,6 +35,11 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
 
   ExerciseTemplateBuilder withBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
+    return this;
+  }
+
+  ExerciseTemplateBuilder withMuscleGroup(String muscleGroup) {
+    this.muscleGroup = muscleGroup;
     return this;
   }
 

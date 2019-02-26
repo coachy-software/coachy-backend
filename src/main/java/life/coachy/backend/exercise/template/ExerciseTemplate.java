@@ -17,12 +17,14 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
   private String name;
   private List<String> exampleImages;
   private String briefDescription;
+  private String muscleGroup;
 
   ExerciseTemplate(ExerciseTemplateBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.exampleImages = builder.exampleImages;
     this.briefDescription = builder.briefDescription;
+    this.muscleGroup = builder.muscleGroup;
   }
 
   ExerciseTemplate() {}
@@ -51,6 +53,14 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
     this.briefDescription = briefDescription;
   }
 
+  public String getMuscleGroup() {
+    return this.muscleGroup;
+  }
+
+  public void setMuscleGroup(String muscleGroup) {
+    this.muscleGroup = muscleGroup;
+  }
+
   @Override
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -67,6 +77,7 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
         ", name='" + this.name + '\'' +
         ", exampleImages=" + this.exampleImages +
         ", briefDescription='" + this.briefDescription + '\'' +
+        ", muscleGroup='" + this.muscleGroup + '\'' +
         '}';
   }
 
