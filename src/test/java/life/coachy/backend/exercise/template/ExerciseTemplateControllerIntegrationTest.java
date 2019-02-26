@@ -57,8 +57,7 @@ public class ExerciseTemplateControllerIntegrationTest {
     ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
-        .withName("testName123")
-        .withVerified(true);
+        .withName("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/exercises?name=testName1234"))
@@ -80,8 +79,7 @@ public class ExerciseTemplateControllerIntegrationTest {
     ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
-        .withName("testName123")
-        .withVerified(true);
+        .withName("testName123");
 
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/exercises?page=0&size=1"))
@@ -96,8 +94,8 @@ public class ExerciseTemplateControllerIntegrationTest {
     ExerciseTemplateBuilder builder = ExerciseTemplateBuilder.createBuilder()
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
-        .withName("testName123")
-        .withVerified(true);
+        .withName("testName123");
+
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
 
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/exercises?page=0&size=2"))
@@ -116,7 +114,6 @@ public class ExerciseTemplateControllerIntegrationTest {
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
         .withName("testName123")
-        .withVerified(true)
         .build();
 
     this.mongoTemplate.insert(exerciseTemplate, "exercises");
@@ -124,7 +121,6 @@ public class ExerciseTemplateControllerIntegrationTest {
         .withName("test123")
         .withExampleImages(Lists.newArrayList("dadada", "dajkdak"))
         .withBriefDescription("brief")
-        .withVerified(true)
         .build();
 
     this.setUpUser(ObjectId.get(), "testUser123", "password123");
@@ -144,7 +140,6 @@ public class ExerciseTemplateControllerIntegrationTest {
         .withBriefDescription("brief")
         .withExampleImages(Lists.newArrayList("http://smh.com"))
         .withName("testName123")
-        .withVerified(true)
         .build();
 
     this.mongoTemplate.insert(exerciseTemplate, "exercises");
@@ -152,7 +147,6 @@ public class ExerciseTemplateControllerIntegrationTest {
         .withName("test123")
         .withExampleImages(Lists.newArrayList("dadada", "dajkdak"))
         .withBriefDescription("brief")
-        .withVerified(true)
         .build();
 
     this.setUpUser(ObjectId.get(), "testUser123", "password123");

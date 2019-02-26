@@ -17,7 +17,6 @@ public class ExerciseTemplateBuilderTest {
       .withBriefDescription("brief description")
       .withExampleImages(Arrays.asList("test1", "test2"))
       .withIdentifier(this.objectId)
-      .withVerified(true)
       .build();
 
   @Test
@@ -37,8 +36,7 @@ public class ExerciseTemplateBuilderTest {
         + "identifier=" + this.objectId + ", "
         + "name='test123', "
         + "exampleImages=[test1, test2], "
-        + "briefDescription='brief description', "
-        + "verified=true}", this.template.toString());
+        + "briefDescription='brief description'}", this.template.toString());
   }
 
 }

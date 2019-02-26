@@ -17,18 +17,15 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
   private String name;
   private List<String> exampleImages;
   private String briefDescription;
-  private boolean verified;
 
   ExerciseTemplate(ExerciseTemplateBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.exampleImages = builder.exampleImages;
     this.briefDescription = builder.briefDescription;
-    this.verified = builder.verified;
   }
 
-  ExerciseTemplate() {
-  }
+  ExerciseTemplate() {}
 
   public String getName() {
     return this.name;
@@ -54,14 +51,6 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
     this.briefDescription = briefDescription;
   }
 
-  public boolean isVerified() {
-    return this.verified;
-  }
-
-  public void setVerified(boolean verified) {
-    this.verified = verified;
-  }
-
   @Override
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -78,7 +67,6 @@ class ExerciseTemplate implements IdentifiableEntity<ObjectId> {
         ", name='" + this.name + '\'' +
         ", exampleImages=" + this.exampleImages +
         ", briefDescription='" + this.briefDescription + '\'' +
-        ", verified=" + this.verified +
         '}';
   }
 

@@ -19,15 +19,12 @@ public class ExerciseTemplateDto extends AbstractDto {
   private List<String> exampleImages;
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String briefDescription;
-  @NotNull(message = "{notNull}")
-  private boolean verified;
 
   ExerciseTemplateDto(ExerciseTemplateDtoBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.exampleImages = builder.exampleImages;
     this.briefDescription = builder.briefDescription;
-    this.verified = builder.verified;
   }
 
   ExerciseTemplateDto() {}
@@ -46,10 +43,6 @@ public class ExerciseTemplateDto extends AbstractDto {
 
   public String getBriefDescription() {
     return this.briefDescription;
-  }
-
-  public boolean isVerified() {
-    return this.verified;
   }
 
   @Override

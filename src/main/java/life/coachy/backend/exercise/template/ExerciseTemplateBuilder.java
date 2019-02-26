@@ -10,7 +10,6 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
   String name;
   List<String> exampleImages;
   String briefDescription;
-  boolean verified;
 
   private ExerciseTemplateBuilder() {}
 
@@ -35,11 +34,6 @@ class ExerciseTemplateBuilder implements Buildable<ExerciseTemplate> {
 
   ExerciseTemplateBuilder withBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
-    return this;
-  }
-
-  ExerciseTemplateBuilder withVerified(boolean verified) {
-    this.verified = verified;
     return this;
   }
 

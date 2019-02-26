@@ -19,7 +19,6 @@ public class ExerciseTemplateDtoTest {
       .withBriefDescription("brief")
       .withExampleImages(Lists.newArrayList("example1", "example2"))
       .withIdentifier(this.id)
-      .withVerified(true)
       .build();
 
   @Test
@@ -28,8 +27,7 @@ public class ExerciseTemplateDtoTest {
             + "identifier=" + id + ", "
             + "name='testName123', "
             + "exampleImages=[example1, example2], "
-            + "briefDescription='brief', "
-            + "verified=true}",
+            + "briefDescription='brief'}",
         String.valueOf(ExerciseTemplateMapper.INSTANCE.exerciseTemplateDtoToExerciseTemplate(this.dto)));
   }
 

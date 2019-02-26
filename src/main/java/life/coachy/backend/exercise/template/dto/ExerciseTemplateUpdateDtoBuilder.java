@@ -8,7 +8,6 @@ public final class ExerciseTemplateUpdateDtoBuilder implements Buildable<Exercis
   String name;
   List<String> exampleImages;
   String briefDescription;
-  boolean verified;
 
   private ExerciseTemplateUpdateDtoBuilder() {}
 
@@ -28,11 +27,6 @@ public final class ExerciseTemplateUpdateDtoBuilder implements Buildable<Exercis
 
   public ExerciseTemplateUpdateDtoBuilder withBriefDescription(String briefDescription) {
     this.briefDescription = briefDescription;
-    return this;
-  }
-
-  public ExerciseTemplateUpdateDtoBuilder withVerified(boolean verified) {
-    this.verified = verified;
     return this;
   }
 
