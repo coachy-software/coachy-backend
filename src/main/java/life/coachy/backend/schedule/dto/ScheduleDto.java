@@ -15,8 +15,7 @@ import org.bson.types.ObjectId;
 public class ScheduleDto extends AbstractDto {
 
   private ObjectId identifier;
-  @NotNull(message = "{notNull}")
-  @NotEmpty(message = "{notEmpty}")
+  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
   @NotNull(message = "{notNull}")
   private UserDto creator;
