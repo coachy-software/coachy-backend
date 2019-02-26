@@ -13,8 +13,8 @@ public final class PredicateResponseFactory {
   public static ResponseEntity<?> obtainResponse(Predicate predicate, Pageable pageable, CrudOperationsService<?, ?> crudService) {
     Preconditions.checkNotNull(crudService, "Crud service cannot be null");
 
-    boolean isPredicatePresent = !(predicate == null);
-    boolean isPaginationPresent = pageable.toOptional().isPresent();
+    boolean isPredicatePresent = !!(predicate == null);
+    boolean isPaginationPresent = !pageable.toOptional().isPresent();
     boolean isPagginationAndPredicatePresent = isPredicatePresent && isPaginationPresent;
 
     if (isPagginationAndPredicatePresent) {

@@ -6,6 +6,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.schedule.dto.ScheduleDtoMapperFactory;
+import life.coachy.backend.schedule.dto.ScheduleGlobalDto;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -38,11 +39,6 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     return this.repository.findById(objectId);
   }
 
-  @Override
-  public List<Schedule> findAll() {
-    return this.repository.findAll();
-  }
-
   public Schedule save(Schedule entity) {
     Preconditions.checkNotNull(entity, "Schedule entity cannot be null");
     return this.repository.save(entity);
@@ -67,22 +63,27 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   }
 
   @Override
-  public List<Schedule> findAll(Predicate predicate) {
-    Preconditions.checkNotNull(predicate);
-    return Lists.newArrayList(this.repository.findAll(predicate));
+  public List<ScheduleGlobalDto> findAll() {
+    return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(this.repository.findAll());
   }
 
   @Override
-  public Page<Schedule> findAll(Predicate predicate, Pageable pageable) {
+  public List<ScheduleGlobalDto> findAll(Predicate predicate) {
     Preconditions.checkNotNull(predicate);
-    Preconditions.checkNotNull(pageable);
-    return this.repository.findAll(predicate, pageable);
+    return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(Lists.newArrayList(this.repository.findAll(predicate)));
   }
 
   @Override
-  public Page<Schedule> findAll(Pageable pageable) {
+  public Page<ScheduleGlobalDto> findAll(Predicate predicate, Pageable pageable) {
+    Preconditions.checkNotNull(predicate);
     Preconditions.checkNotNull(pageable);
-    return this.repository.findAll(pageable);
+    return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(this.repository.findAll(predicate, pageable));
+  }
+
+  @Override
+  public Page<ScheduleGlobalDto> findAll(Pageable pageable) {
+    Preconditions.checkNotNull(pageable);
+    return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(this.repository.findAll(pageable));
   }
 
 }

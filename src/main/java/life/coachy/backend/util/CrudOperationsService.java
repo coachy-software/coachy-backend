@@ -13,7 +13,7 @@ public interface CrudOperationsService<T extends IdentifiableEntity<ID>, ID> {
 
   Optional<T> findById(ID id);
 
-  List<T> findAll();
+  <S> List<S> findAll();
 
   T save(T entity);
 
@@ -23,10 +23,10 @@ public interface CrudOperationsService<T extends IdentifiableEntity<ID>, ID> {
 
   boolean existsById(ID id);
 
-  List<T> findAll(Predicate predicate);
+  <S> List<S> findAll(Predicate predicate);
 
-  Page<T> findAll(Pageable pageable);
+  <S> Page<S> findAll(Pageable pageable);
 
-  Page<T> findAll(Predicate predicate, Pageable pageable);
+  <S> Page<S> findAll(Predicate predicate, Pageable pageable);
 
 }

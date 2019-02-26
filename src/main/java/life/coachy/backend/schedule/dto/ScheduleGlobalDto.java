@@ -1,65 +1,44 @@
 package life.coachy.backend.schedule.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
-import java.util.List;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import life.coachy.backend.schedule.ScheduleMapper;
-import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
-import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")
-public class ScheduleDto extends AbstractDto {
+public class ScheduleGlobalDto extends AbstractDto {
 
-  private ObjectId identifier;
-  @NotNull(message = "{notNull}")
-  @NotEmpty(message = "{notEmpty}")
   private String name;
-  @NotNull(message = "{notNull}")
-  private UserDto creator;
-  @NotNull(message = "{notNull}")
-  private UserDto charge;
-  private String note;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId creator;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId charge;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private boolean active;
-  private List<ScheduleDayDto> days;
 
-  ScheduleDto(ScheduleDtoBuilder builder) {
-    this.identifier = builder.identifier;
+  ScheduleGlobalDto(ScheduleGlobalDtoBuilder builder) {
     this.name = builder.name;
     this.creator = builder.creator;
     this.charge = builder.charge;
-    this.note = builder.note;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
     this.active = builder.active;
-    this.days = builder.days;
   }
 
-  ScheduleDto() {}
-
-  public ObjectId getIdentifier() {
-    return this.identifier;
-  }
+  public ScheduleGlobalDto() {}
 
   public String getName() {
     return this.name;
   }
 
-  public UserDto getCreator() {
+  public ObjectId getCreator() {
     return this.creator;
   }
 
-  public UserDto getCharge() {
+  public ObjectId getCharge() {
     return this.charge;
-  }
-
-  public String getNote() {
-    return this.note;
   }
 
   public LocalDateTime getCreatedAt() {
@@ -74,8 +53,28 @@ public class ScheduleDto extends AbstractDto {
     return this.active;
   }
 
-  public List<ScheduleDayDto> getDays() {
-    return this.days;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setCreator(ObjectId creator) {
+    this.creator = creator;
+  }
+
+  public void setCharge(ObjectId charge) {
+    this.charge = charge;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 
   @Override

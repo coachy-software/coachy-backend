@@ -29,7 +29,7 @@ public class UserDto extends AbstractDto {
     this.roles = builder.roles;
   }
 
-  UserDto() {}
+  public UserDto() {}
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -61,6 +61,38 @@ public class UserDto extends AbstractDto {
 
   public SortedSet<String> getRoles() {
     return this.roles;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
+  public void setAccountType(String accountType) {
+    this.accountType = accountType;
+  }
+
+  public void setRoles(SortedSet<String> roles) {
+    this.roles = roles;
   }
 
   @Override
