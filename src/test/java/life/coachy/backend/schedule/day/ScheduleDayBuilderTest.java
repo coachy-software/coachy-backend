@@ -16,7 +16,6 @@ public class ScheduleDayBuilderTest {
   private List<ExerciseDto> exercises = Collections.singletonList(ExerciseDtoBuilder.createBuilder().build());
   private ScheduleDay scheduleDay = ScheduleDayBuilder.createBuilder()
       .withName("test123")
-      .withMusclesPart("test123")
       .withExercises(this.exercises)
       .isTrainingDay(true)
       .build();
@@ -30,7 +29,6 @@ public class ScheduleDayBuilderTest {
   public void valuesShouldNotBeNull() {
     assertAll(
         () -> assertNotNull(this.scheduleDay.getName()),
-        () -> assertNotNull(this.scheduleDay.getMusclesPart()),
         () -> assertNotNull(this.scheduleDay.getExercises())
     );
   }
@@ -39,7 +37,6 @@ public class ScheduleDayBuilderTest {
   public void toStringTest() {
     assertEquals("ScheduleDay{"
         + "name='test123', "
-        + "musclesPart='test123', "
         + "exercises=" + this.exercises + ", "
         + "trainingDay=true}", this.scheduleDay.toString());
   }

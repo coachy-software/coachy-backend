@@ -10,7 +10,8 @@ import org.springframework.boot.jackson.JsonComponent;
 class ScheduleSerializer extends JsonSerializer<Schedule> {
 
   @Override
-  public void serialize(Schedule schedule, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException {
+  public void serialize(Schedule schedule, JsonGenerator jsonGenerator, SerializerProvider provider)
+      throws IOException {
     jsonGenerator.writeStartObject();
     jsonGenerator.writeStringField("identifier", schedule.getIdentifier().toHexString());
     jsonGenerator.writeStringField("name", schedule.getName());

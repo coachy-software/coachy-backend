@@ -13,15 +13,12 @@ public class ScheduleDayDto extends AbstractDto {
 
   @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
   private String name;
-  @NotNull(message = "{notNull}") @NotEmpty(message = "{notEmpty}")
-  private String musclesPart;
   @NotNull(message = "{notNull}")
   private List<ExerciseDto> exercises;
   private boolean trainingDay;
 
   ScheduleDayDto(ScheduleDayDtoBuilder builder) {
     this.name = builder.name;
-    this.musclesPart = builder.musclesPart;
     this.exercises = builder.exercises;
     this.trainingDay = builder.trainingDay;
   }
@@ -30,10 +27,6 @@ public class ScheduleDayDto extends AbstractDto {
 
   public String getName() {
     return this.name;
-  }
-
-  public String getMusclesPart() {
-    return this.musclesPart;
   }
 
   public List<ExerciseDto> getExercises() {

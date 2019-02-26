@@ -9,13 +9,11 @@ class ScheduleDay implements IdentifiableEntity<String> {
 
   @Id
   private String name;
-  private String musclesPart;
   private List<ExerciseDto> exercises;
   private boolean trainingDay;
 
   ScheduleDay(ScheduleDayBuilder builder) {
     this.name = builder.name;
-    this.musclesPart = builder.musclesPart;
     this.exercises = builder.exercises;
     this.trainingDay = builder.trainingDay;
   }
@@ -33,14 +31,6 @@ class ScheduleDay implements IdentifiableEntity<String> {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getMusclesPart() {
-    return this.musclesPart;
-  }
-
-  public void setMusclesPart(String musclesPart) {
-    this.musclesPart = musclesPart;
   }
 
   public List<ExerciseDto> getExercises() {
@@ -63,7 +53,6 @@ class ScheduleDay implements IdentifiableEntity<String> {
   public String toString() {
     return "ScheduleDay{" +
         "name='" + this.name + '\'' +
-        ", musclesPart='" + this.musclesPart + '\'' +
         ", exercises=" + this.exercises +
         ", trainingDay=" + this.trainingDay +
         '}';

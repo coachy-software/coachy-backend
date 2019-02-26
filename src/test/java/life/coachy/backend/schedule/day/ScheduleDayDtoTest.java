@@ -15,7 +15,6 @@ public class ScheduleDayDtoTest {
   private ScheduleDayDto dto = ScheduleDayDtoBuilder.createBuilder()
       .withName("testName")
       .withExercises(null)
-      .withMusclesPart("arms")
       .withTrainingDay(true)
       .build();
 
@@ -23,7 +22,6 @@ public class ScheduleDayDtoTest {
   public void toEntityTest() {
     Assertions.assertEquals("ScheduleDay{"
         + "name='testName', "
-        + "musclesPart='arms', "
         + "exercises=null, "
         + "trainingDay=true}", String.valueOf(ScheduleDayMapper.INSTANCE.scheduleDayDtoToScheduleDay(this.dto)));
   }
@@ -33,7 +31,6 @@ public class ScheduleDayDtoTest {
     assertAll(
         () -> assertNotNull(this.dto),
         () -> assertNotNull(this.dto.getName()),
-        () -> assertNotNull(this.dto.getMusclesPart()),
         () -> assertTrue(this.dto.isTrainingDay())
     );
   }

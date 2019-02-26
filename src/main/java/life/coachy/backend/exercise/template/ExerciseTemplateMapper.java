@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ExerciseTemplateMapper extends MapStructMapper {
 
   ExerciseTemplateMapper INSTANCE = Mappers.getMapper(ExerciseTemplateMapper.class);

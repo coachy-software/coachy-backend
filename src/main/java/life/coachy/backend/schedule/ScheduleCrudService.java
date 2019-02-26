@@ -70,7 +70,8 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   @Override
   public List<ScheduleGlobalDto> findAll(Predicate predicate) {
     Preconditions.checkNotNull(predicate);
-    return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(Lists.newArrayList(this.repository.findAll(predicate)));
+    return ScheduleMapper.INSTANCE
+        .schedulesToScheduleGlobalDtos(Lists.newArrayList(this.repository.findAll(predicate)));
   }
 
   @Override

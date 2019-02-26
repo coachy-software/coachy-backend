@@ -11,7 +11,7 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
-@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ScheduleMapper extends MapStructMapper {
 
   ScheduleMapper INSTANCE = Mappers.getMapper(ScheduleMapper.class);

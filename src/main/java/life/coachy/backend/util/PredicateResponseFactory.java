@@ -10,7 +10,8 @@ public final class PredicateResponseFactory {
   private PredicateResponseFactory() {
   }
 
-  public static ResponseEntity<?> obtainResponse(Predicate predicate, Pageable pageable, CrudOperationsService<?, ?> crudService) {
+  public static ResponseEntity<?> obtainResponse(Predicate predicate, Pageable pageable,
+      CrudOperationsService<?, ?> crudService) {
     Preconditions.checkNotNull(crudService, "Crud service cannot be null");
 
     boolean isPredicatePresent = !(predicate == null);

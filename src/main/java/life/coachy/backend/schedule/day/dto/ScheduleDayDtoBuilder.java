@@ -7,7 +7,6 @@ import life.coachy.backend.util.Buildable;
 public final class ScheduleDayDtoBuilder implements Buildable<ScheduleDayDto> {
 
   String name;
-  String musclesPart;
   List<ExerciseDto> exercises;
   boolean trainingDay;
 
@@ -19,11 +18,6 @@ public final class ScheduleDayDtoBuilder implements Buildable<ScheduleDayDto> {
 
   public ScheduleDayDtoBuilder withName(String name) {
     this.name = name;
-    return this;
-  }
-
-  public ScheduleDayDtoBuilder withMusclesPart(String musclesPart) {
-    this.musclesPart = musclesPart;
     return this;
   }
 
