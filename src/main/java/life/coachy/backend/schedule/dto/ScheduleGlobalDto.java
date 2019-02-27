@@ -6,15 +6,14 @@ import life.coachy.backend.schedule.ScheduleMapper;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
+import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")
 public class ScheduleGlobalDto extends AbstractDto {
 
   private String name;
-  @JsonIgnoreProperties({"username", "displayName", "password", "email", "avatar", "accountType", "roles"})
-  private UserDto creator;
-  @JsonIgnoreProperties({"username", "displayName", "password", "email", "avatar", "accountType", "roles"})
-  private UserDto charge;
+  private ObjectId creator;
+  private ObjectId charge;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private boolean active;
@@ -34,11 +33,11 @@ public class ScheduleGlobalDto extends AbstractDto {
     return this.name;
   }
 
-  public UserDto getCreator() {
+  public ObjectId getCreator() {
     return this.creator;
   }
 
-  public UserDto getCharge() {
+  public ObjectId getCharge() {
     return this.charge;
   }
 
@@ -58,11 +57,11 @@ public class ScheduleGlobalDto extends AbstractDto {
     this.name = name;
   }
 
-  public void setCreator(UserDto creator) {
+  public void setCreator(ObjectId creator) {
     this.creator = creator;
   }
 
-  public void setCharge(UserDto charge) {
+  public void setCharge(ObjectId charge) {
     this.charge = charge;
   }
 

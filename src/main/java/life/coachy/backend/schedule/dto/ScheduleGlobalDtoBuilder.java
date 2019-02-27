@@ -7,8 +7,8 @@ import org.bson.types.ObjectId;
 public final class ScheduleGlobalDtoBuilder {
 
   String name;
-  UserDto creator;
-  UserDto charge;
+  ObjectId creator;
+  ObjectId charge;
   LocalDateTime createdAt;
   LocalDateTime updatedAt;
   boolean active;
@@ -24,12 +24,12 @@ public final class ScheduleGlobalDtoBuilder {
     return this;
   }
 
-  public ScheduleGlobalDtoBuilder withCreator(UserDto creator) {
+  public ScheduleGlobalDtoBuilder withCreator(ObjectId creator) {
     this.creator = creator;
     return this;
   }
 
-  public ScheduleGlobalDtoBuilder withCharge(UserDto charge) {
+  public ScheduleGlobalDtoBuilder withCharge(ObjectId charge) {
     this.charge = charge;
     return this;
   }
