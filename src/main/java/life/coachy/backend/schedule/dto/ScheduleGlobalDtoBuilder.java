@@ -1,13 +1,14 @@
 package life.coachy.backend.schedule.dto;
 
 import java.time.LocalDateTime;
+import life.coachy.backend.user.dto.UserDto;
 import org.bson.types.ObjectId;
 
 public final class ScheduleGlobalDtoBuilder {
 
   String name;
-  ObjectId creator;
-  ObjectId charge;
+  UserDto creator;
+  UserDto charge;
   LocalDateTime createdAt;
   LocalDateTime updatedAt;
   boolean active;
@@ -23,12 +24,12 @@ public final class ScheduleGlobalDtoBuilder {
     return this;
   }
 
-  public ScheduleGlobalDtoBuilder withCreator(ObjectId creator) {
+  public ScheduleGlobalDtoBuilder withCreator(UserDto creator) {
     this.creator = creator;
     return this;
   }
 
-  public ScheduleGlobalDtoBuilder withCharge(ObjectId charge) {
+  public ScheduleGlobalDtoBuilder withCharge(UserDto charge) {
     this.charge = charge;
     return this;
   }
