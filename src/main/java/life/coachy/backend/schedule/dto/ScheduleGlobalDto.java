@@ -11,7 +11,7 @@ import life.coachy.backend.util.dto.DataTransferObject;
 public class ScheduleGlobalDto extends AbstractDto {
 
   private String name;
-  @JsonIgnoreProperties({"username", "displayName", "password", "email", "avatar", "accountType", "roles"}) // todo
+  @JsonIgnoreProperties({"username", "displayName", "password", "email", "avatar", "accountType", "roles"})
   private UserDto creator;
   @JsonIgnoreProperties({"username", "displayName", "password", "email", "avatar", "accountType", "roles"})
   private UserDto charge;
