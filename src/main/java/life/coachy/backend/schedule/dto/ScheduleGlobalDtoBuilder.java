@@ -1,11 +1,11 @@
 package life.coachy.backend.schedule.dto;
 
 import java.time.LocalDateTime;
-import life.coachy.backend.user.dto.UserDto;
 import org.bson.types.ObjectId;
 
 public final class ScheduleGlobalDtoBuilder {
 
+  ObjectId identifier;
   String name;
   ObjectId creator;
   ObjectId charge;
@@ -17,6 +17,11 @@ public final class ScheduleGlobalDtoBuilder {
 
   public static ScheduleGlobalDtoBuilder createBuilder() {
     return new ScheduleGlobalDtoBuilder();
+  }
+
+  public ScheduleGlobalDtoBuilder withIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+    return this;
   }
 
   public ScheduleGlobalDtoBuilder withName(String name) {

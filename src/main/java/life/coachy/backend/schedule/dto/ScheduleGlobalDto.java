@@ -1,9 +1,9 @@
 package life.coachy.backend.schedule.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import life.coachy.backend.schedule.ScheduleMapper;
-import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 @DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")
 public class ScheduleGlobalDto extends AbstractDto {
 
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   private String name;
   private ObjectId creator;
   private ObjectId charge;
@@ -19,6 +20,7 @@ public class ScheduleGlobalDto extends AbstractDto {
   private boolean active;
 
   ScheduleGlobalDto(ScheduleGlobalDtoBuilder builder) {
+    this.identifier = builder.identifier;
     this.name = builder.name;
     this.creator = builder.creator;
     this.charge = builder.charge;
@@ -28,6 +30,10 @@ public class ScheduleGlobalDto extends AbstractDto {
   }
 
   public ScheduleGlobalDto() {}
+
+  public ObjectId getIdentifier() {
+    return this.identifier;
+  }
 
   public String getName() {
     return this.name;
@@ -51,6 +57,10 @@ public class ScheduleGlobalDto extends AbstractDto {
 
   public boolean isActive() {
     return this.active;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
   }
 
   public void setName(String name) {
