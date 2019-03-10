@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import life.coachy.backend.email.EmailNotFoundException;
 import life.coachy.backend.user.dto.UserRegistrationDto;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,21 @@ public class UserFacade {
     }
 
     return !permissionsMap.values().contains(false);
+  }
+
+  public void addPermissions(String... permissions) {
+    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+    this.addPermissions(userPrincipal);
+  }
+
+  public void addPermissions(ObjectId identifier, String... permissions) {
+    this.addPermissions(this.userCrudService.findById(identifier).orElse(null), permissions);
+  }
+
+  public void addPermissions(User user, String... permissions) {
+    for (String permission : permissions) {
+      user.addPermission(permission);
+    }
   }
 
 }

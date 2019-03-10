@@ -113,6 +113,10 @@ class User implements IdentifiableEntity<ObjectId> {
     this.permissions = permissions;
   }
 
+  public void addPermission(String permission) {
+    this.permissions.add(permission);
+  }
+
   @Override
   public String toString() {
     return "User{" +
