@@ -3,6 +3,7 @@ package life.coachy.backend.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.Set;
 import java.util.SortedSet;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
@@ -23,6 +24,7 @@ class User implements IdentifiableEntity<ObjectId> {
   private String avatar;
   private AccountType accountType;
   private SortedSet<String> roles;
+  private Set<String> permissions;
 
   User(UserBuilder builder) {
     this.identifier = builder.identifier;
@@ -33,6 +35,7 @@ class User implements IdentifiableEntity<ObjectId> {
     this.avatar = builder.avatar;
     this.accountType = builder.accountType;
     this.roles = builder.roles;
+    this.permissions = builder.permissions;
   }
 
   User() {}
@@ -100,6 +103,14 @@ class User implements IdentifiableEntity<ObjectId> {
 
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
+  }
+
+  public Set<String> getPermissions() {
+    return this.permissions;
+  }
+
+  public void setPermissions(Set<String> permissions) {
+    this.permissions = permissions;
   }
 
   @Override

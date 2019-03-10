@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import java.util.Set;
 import java.util.SortedSet;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
@@ -14,6 +15,7 @@ final class UserBuilder implements Buildable<User> {
   String avatar;
   AccountType accountType;
   SortedSet<String> roles;
+  Set<String> permissions;
 
   private UserBuilder() {}
 
@@ -56,6 +58,11 @@ final class UserBuilder implements Buildable<User> {
 
   public UserBuilder withRoles(SortedSet<String> roles) {
     this.roles = roles;
+    return this;
+  }
+
+  public UserBuilder withPermissions(Set<String> permissions) {
+    this.permissions = permissions;
     return this;
   }
 

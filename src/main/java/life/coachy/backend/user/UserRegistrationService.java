@@ -3,6 +3,7 @@ package life.coachy.backend.user;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import java.util.Collections;
+import java.util.HashSet;
 import life.coachy.backend.user.dto.UserDtoMapperFactory;
 import life.coachy.backend.user.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,10 @@ class UserRegistrationService {
     Preconditions.checkNotNull(dto, "User registration DTO cannot be null");
 
     User user = this.mapperFactory.obtainEntity(dto);
+
     user.setRoles(Sets.newTreeSet(Collections.singletonList("USER")));
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+    user.setPermissions(new HashSet<>());
 
     this.userRepository.save(user);
     return dto;

@@ -1,11 +1,14 @@
 package life.coachy.backend.user;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import life.coachy.backend.email.EmailNotFoundException;
 import life.coachy.backend.user.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,6 +40,21 @@ public class UserFacade {
     this.userCrudService.findByEmail(email)
         .map((user) -> this.userCrudService.savePassword(user, newPassword))
         .orElseThrow(EmailNotFoundException::new);
+  }
+
+  public boolean hasPermission(String permission) {
+    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+    return userPrincipal.getPermissions().contains(permission);
+  }
+
+  public boolean hasPermissions(String... permissions) {
+    Map<String, Boolean> permissionsMap = new ConcurrentHashMap<>();
+
+    for (String permission : permissions) {
+      permissionsMap.putIfAbsent(permission, this.hasPermission(permission));
+    }
+
+    return !permissionsMap.values().contains(false);
   }
 
 }
