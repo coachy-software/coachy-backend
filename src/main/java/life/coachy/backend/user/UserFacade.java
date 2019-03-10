@@ -58,11 +58,6 @@ public class UserFacade {
     return !permissionsMap.values().contains(false);
   }
 
-  public void addPermissions(String... permissions) {
-    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-    this.addPermissions(userPrincipal);
-  }
-
   public void addPermissions(ObjectId identifier, String... permissions) {
     this.addPermissions(this.userCrudService.findById(identifier).orElse(null), permissions);
   }
@@ -71,6 +66,8 @@ public class UserFacade {
     for (String permission : permissions) {
       user.addPermission(permission);
     }
+
+    this.userCrudService.save(user);
   }
 
 }

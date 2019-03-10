@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.schedule.dto.ScheduleDtoMapperFactory;
 import life.coachy.backend.schedule.dto.ScheduleGlobalDto;
+import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -20,11 +21,13 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
 
   private ScheduleRepository repository;
   private ScheduleDtoMapperFactory mapperFactory;
+  private UserFacade userFacade;
 
   @Autowired
-  ScheduleCrudService(ScheduleRepository repository, ScheduleDtoMapperFactory mapperFactory) {
+  ScheduleCrudService(ScheduleRepository repository, ScheduleDtoMapperFactory mapperFactory, UserFacade userFacade) {
     this.repository = repository;
     this.mapperFactory = mapperFactory;
+    this.userFacade = userFacade;
   }
 
   @Override
@@ -47,7 +50,19 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   @Override
   public <S extends AbstractDto> Schedule save(S dto) {
     Preconditions.checkNotNull(dto, "Schedule DTO cannot be null");
-    return this.repository.save(this.mapperFactory.obtainEntity(dto));
+    Schedule schedule = this.repository.save(this.mapperFactory.obtainEntity(dto));
+
+    String[] chargePermissions = {"schedule." + schedule.getIdentifier() + ".read"};
+    String[] coachPermissions = {
+        "schedule." + schedule.getIdentifier() + ".read",
+        "schedule." + schedule.getIdentifier() + ".update",
+        "schedule." + schedule.getIdentifier() + ".delete"
+    };
+
+    this.userFacade.addPermissions(schedule.getCreator().getIdentifier(), coachPermissions);
+    this.userFacade.addPermissions(schedule.getCharge().getIdentifier(), chargePermissions);
+
+    return schedule;
   }
 
   @Override

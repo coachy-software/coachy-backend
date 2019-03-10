@@ -4,8 +4,8 @@ import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import life.coachy.backend.schedule.dto.ScheduleDto;
-import life.coachy.backend.schedule.dto.ScheduleGlobalDto;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
+import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.validation.ValidationUtil;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -29,15 +30,18 @@ import org.springframework.web.bind.annotation.RestController;
 class ScheduleController extends AbstractCrudController<Schedule, ObjectId, ScheduleUpdateDto, ScheduleDto> {
 
   private static final String SPEL_EXPRESSION = "isAuthenticated()";
+
   private final SmartValidator smartValidator;
   private final ScheduleCrudService service;
+  private final UserFacade userFacade;
 
   @Autowired
   protected ScheduleController(@Qualifier("localValidatorFactoryBean") SmartValidator smartValidator,
-      ScheduleCrudService service) {
+      ScheduleCrudService service, UserFacade userFacade) {
     super(service);
     this.smartValidator = smartValidator;
     this.service = service;
+    this.userFacade = userFacade;
   }
 
   @ApiOperation("Displays all schedules")
@@ -50,21 +54,42 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
+  protected ResponseEntity<Schedule> read(@PathVariable ObjectId id) {
+    if (!this.userFacade.hasPermission("schedule." + id + ".read")) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return super.read(id);
+  }
+
+  @PreAuthorize(SPEL_EXPRESSION)
+  @Override
   protected ResponseEntity<?> update(@RequestBody ScheduleUpdateDto dto, @PathVariable ObjectId id,
       BindingResult result) {
+    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> super.update(dto, id, result));
   }
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
-  protected ResponseEntity<?> partialUpdate(@RequestBody ScheduleUpdateDto dto,
-      @PathVariable ObjectId id) {
+  protected ResponseEntity<?> partialUpdate(@RequestBody ScheduleUpdateDto dto, @PathVariable ObjectId id) {
+    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return super.partialUpdate(dto, id);
   }
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
   protected ResponseEntity<Schedule> remove(@PathVariable ObjectId id) {
+    if (!this.userFacade.hasPermission("schedule." + id + ".delete")) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return super.remove(id);
   }
 
