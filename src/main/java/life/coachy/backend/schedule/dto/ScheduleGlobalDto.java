@@ -13,8 +13,8 @@ public class ScheduleGlobalDto extends AbstractDto {
 
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   private String name;
-  private ObjectId creator;
-  private ObjectId charge;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId creator;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId charge;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private boolean active;
