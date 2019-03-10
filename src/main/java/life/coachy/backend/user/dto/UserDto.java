@@ -1,5 +1,6 @@
 package life.coachy.backend.user.dto;
 
+import java.util.Set;
 import java.util.SortedSet;
 import life.coachy.backend.user.UserMapper;
 import life.coachy.backend.util.dto.AbstractDto;
@@ -17,6 +18,7 @@ public class UserDto extends AbstractDto {
   private String avatar;
   private String accountType;
   private SortedSet<String> roles;
+  private Set<String> permissions;
 
   UserDto(UserDtoBuilder builder) {
     this.identifier = builder.identifier;
@@ -27,6 +29,7 @@ public class UserDto extends AbstractDto {
     this.avatar = builder.avatar;
     this.accountType = builder.accountType;
     this.roles = builder.roles;
+    this.permissions = builder.permissions;
   }
 
   public UserDto() {}
@@ -63,6 +66,10 @@ public class UserDto extends AbstractDto {
     return this.roles;
   }
 
+  public Set<String> getPermissions() {
+    return this.permissions;
+  }
+
   public void setIdentifier(ObjectId identifier) {
     this.identifier = identifier;
   }
@@ -93,6 +100,10 @@ public class UserDto extends AbstractDto {
 
   public void setRoles(SortedSet<String> roles) {
     this.roles = roles;
+  }
+
+  public void setPermissions(Set<String> permissions) {
+    this.permissions = permissions;
   }
 
   @Override

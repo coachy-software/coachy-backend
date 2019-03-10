@@ -3,8 +3,14 @@ package life.coachy.backend.schedule;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.google.common.collect.Sets;
+import com.mongodb.BasicDBObject;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDtoBuilder;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDtoBuilder;
@@ -20,12 +26,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -36,6 +46,9 @@ public class ScheduleControllerIntegrationTest {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   private MockMvc mockMvc;
 
@@ -153,10 +166,162 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(status().isUnauthorized());
   }
 
+  @Test
+  public void readActionShouldReturnForbiddenIfHasNoPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule.wrong_permission.read"));
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules/{id}", id)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void readActionShouldReturnOkIfHasPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule." + id + ".read"));
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules/{id}", id)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void updateActionShouldReturnForbiddenIfHasNoPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder().withName("testName123").build();
+
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule.wrong_permission.read"));
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/schedules/{id}", id)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password))
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void updateActionShouldReturnNoContentIfHasPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    ScheduleUpdateDto dto = ScheduleUpdateDtoBuilder.createBuilder().withName("testName123").build();
+
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule." + id + ".update"));
+    this.mockMvc.perform(MockMvcRequestBuilders.patch("/api/schedules/{id}", id)
+        .content(dto.toJson().getBytes())
+        .contentType(MediaType.APPLICATION_JSON)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
+        .andExpect(status().isNoContent());
+  }
+
+  @Test
+  public void deleteActionShouldReturnForbiddenIfHasNoPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule.wrong_permission.read"));
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/schedules/{id}", id)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void deleteActionShouldReturnNoContentIfHasPermissions() throws Exception {
+    ObjectId id = ObjectId.get();
+    String username = "testUsername";
+    String password = "testPassword";
+
+    Schedule schedule = ScheduleBuilder.createBuilder()
+        .withIdentifier(id)
+        .withName("testName123")
+        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreatedAt(LocalDateTime.now())
+        .withUpdatedAt(LocalDateTime.now())
+        .build();
+    this.mongoTemplate.insert(schedule, "schedules");
+
+    this.setUpUser(id, username, password, Sets.newHashSet("schedule." + id + ".delete"));
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/schedules/{id}", id)
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
+        .andExpect(status().isNoContent());
+  }
+
   @After
   public void tearDown() throws Exception {
     this.mongoTemplate.dropCollection("schedules");
     this.mongoTemplate.dropCollection("users");
+  }
+
+  private void setUpUser(ObjectId id, String username, String password, Set<String> permissions) {
+    Map<String, Object> userDetails = new HashMap<String, Object>() {{
+      this.put("_id", id);
+      this.put("username", username);
+      this.put("password", ScheduleControllerIntegrationTest.this.passwordEncoder.encode(password));
+      this.put("roles", Sets.newHashSet("USER"));
+      this.put("permissions", permissions);
+    }};
+
+    this.mongoTemplate.insert(new BasicDBObject(userDetails), "users");
   }
 
 }

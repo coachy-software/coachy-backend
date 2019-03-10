@@ -1,5 +1,6 @@
 package life.coachy.backend.user.dto;
 
+import java.util.Set;
 import java.util.SortedSet;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
@@ -14,6 +15,7 @@ public final class UserDtoBuilder implements Buildable<UserDto> {
   String avatar;
   String accountType;
   SortedSet<String> roles;
+  Set<String> permissions;
 
   private UserDtoBuilder() {}
 
@@ -58,6 +60,11 @@ public final class UserDtoBuilder implements Buildable<UserDto> {
 
   public UserDtoBuilder withRoles(SortedSet<String> roles) {
     this.roles = roles;
+    return this;
+  }
+
+  public UserDtoBuilder withPermissions(Set<String> permissions) {
+    this.permissions = permissions;
     return this;
   }
 
