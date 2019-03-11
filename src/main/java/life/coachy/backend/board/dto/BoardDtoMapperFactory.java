@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardDtoMapperFactory extends AbstractDtoMapperFactory<BoardMapper> {
 
-  private final static Reflections REFLECTIONS = new Reflections("life.coachy.backend.user.dto");
+  private final static Reflections REFLECTIONS = new Reflections("life.coachy.backend.board.dto");
 
   public BoardDtoMapperFactory() {
     super(BoardMapper.INSTANCE, REFLECTIONS);

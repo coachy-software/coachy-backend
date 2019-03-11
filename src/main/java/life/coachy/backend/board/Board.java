@@ -2,6 +2,7 @@ package life.coachy.backend.board;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.IdentifiableEntity;
@@ -14,7 +15,7 @@ class Board implements IdentifiableEntity<ObjectId> {
 
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId identifier;
   private String name;
-  private LabelDto label;
+  private List<LabelDto> label;
   private UserDto owner;
 
   Board() {}
@@ -39,11 +40,11 @@ class Board implements IdentifiableEntity<ObjectId> {
     this.name = name;
   }
 
-  public LabelDto getLabel() {
+  public List<LabelDto> getLabel() {
     return this.label;
   }
 
-  public void setLabel(LabelDto label) {
+  public void setLabel(List<LabelDto> label) {
     this.label = label;
   }
 

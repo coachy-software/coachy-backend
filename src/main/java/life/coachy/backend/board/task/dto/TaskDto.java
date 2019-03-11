@@ -23,16 +23,32 @@ public class TaskDto extends AbstractDto {
     this.content = builder.content;
   }
 
+  public ObjectId getIdentifier() {
+    return this.identifier;
+  }
+
   public void setIdentifier(ObjectId identifier) {
     this.identifier = identifier;
+  }
+
+  public String getName() {
+    return this.name;
   }
 
   public void setName(String name) {
     this.name = name;
   }
 
+  public String getColor() {
+    return this.color;
+  }
+
   public void setColor(String color) {
     this.color = color;
+  }
+
+  public String getContent() {
+    return this.content;
   }
 
   public void setContent(String content) {

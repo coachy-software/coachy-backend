@@ -2,6 +2,7 @@ package life.coachy.backend.board.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
@@ -15,7 +16,7 @@ public class BoardDto extends AbstractDto {
 
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @NotNull private String name;
-  @NotNull private LabelDto label;
+  @NotNull private List<LabelDto> label;
   @NotNull private UserDto owner;
 
   BoardDto() {}
@@ -43,11 +44,11 @@ public class BoardDto extends AbstractDto {
     this.name = name;
   }
 
-  public LabelDto getLabel() {
+  public List<LabelDto> getLabel() {
     return this.label;
   }
 
-  public void setLabel(LabelDto label) {
+  public void setLabel(List<LabelDto> label) {
     this.label = label;
   }
 

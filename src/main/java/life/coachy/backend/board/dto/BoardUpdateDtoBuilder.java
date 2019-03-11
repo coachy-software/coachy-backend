@@ -1,5 +1,6 @@
 package life.coachy.backend.board.dto;
 
+import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.Buildable;
@@ -7,7 +8,7 @@ import life.coachy.backend.util.Buildable;
 public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
 
   String name;
-  LabelDto label;
+  List<LabelDto> label;
   UserDto owner;
 
   private BoardUpdateDtoBuilder() {}
@@ -21,7 +22,7 @@ public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
     return this;
   }
 
-  public BoardUpdateDtoBuilder withLabel(LabelDto label) {
+  public BoardUpdateDtoBuilder withLabel(List<LabelDto> label) {
     this.label = label;
     return this;
   }
