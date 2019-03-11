@@ -10,7 +10,7 @@ public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
 
   String name;
   List<LabelDto> label;
-  ObjectId owner;
+  UserDto owner;
 
   private BoardUpdateDtoBuilder() {}
 
@@ -28,7 +28,7 @@ public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
     return this;
   }
 
-  public BoardUpdateDtoBuilder withOwnerId(ObjectId owner) {
+  public BoardUpdateDtoBuilder withOwner(UserDto owner) {
     this.owner = owner;
     return this;
   }

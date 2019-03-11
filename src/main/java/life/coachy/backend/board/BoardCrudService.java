@@ -3,8 +3,6 @@ package life.coachy.backend.board;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import life.coachy.backend.board.dto.BoardDtoMapperFactory;
 import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.user.dto.UserDto;

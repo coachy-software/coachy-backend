@@ -4,23 +4,23 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
-import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = BoardMapper.class, entityName = "Board")
 public class BoardUpdateDto extends AbstractDto {
 
   @NotNull private String name;
   @NotNull private List<LabelDto> label;
-  @NotNull private ObjectId ownerId;
+  @NotNull private UserDto owner;
 
   BoardUpdateDto() {}
 
   BoardUpdateDto(BoardUpdateDtoBuilder builder) {
     this.name = builder.name;
     this.label = builder.label;
-    this.ownerId = builder.owner;
+    this.owner = builder.owner;
   }
 
   public String getName() {
@@ -39,12 +39,12 @@ public class BoardUpdateDto extends AbstractDto {
     this.label = label;
   }
 
-  public ObjectId getOwnerId() {
-    return this.ownerId;
+  public UserDto getOwner() {
+    return this.owner;
   }
 
-  public void setOwnerId(ObjectId ownerId) {
-    this.ownerId = ownerId;
+  public void setOwner(UserDto owner) {
+    this.owner = owner;
   }
 
   @Override

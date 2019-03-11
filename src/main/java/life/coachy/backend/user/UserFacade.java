@@ -44,8 +44,7 @@ public class UserFacade {
   }
 
   public boolean hasPermission(String permission) {
-    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-        .getUser();
+    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
     return userPrincipal.getPermissions().contains(permission);
   }
 
