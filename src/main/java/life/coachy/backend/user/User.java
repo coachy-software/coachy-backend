@@ -117,6 +117,10 @@ class User implements IdentifiableEntity<ObjectId> {
     this.permissions.add(permission);
   }
 
+  public void removePermission(String permission) {
+    this.permissions.remove(permission);
+  }
+
   @Override
   public String toString() {
     return "User{" +

@@ -8,6 +8,7 @@ import java.util.Optional;
 import life.coachy.backend.schedule.dto.ScheduleDtoMapperFactory;
 import life.coachy.backend.schedule.dto.ScheduleGlobalDto;
 import life.coachy.backend.user.UserFacade;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -68,6 +69,17 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   @Override
   public void deleteById(ObjectId objectId) {
     Preconditions.checkNotNull(objectId, "Schedule entity identifier cannot be null");
+
+    Schedule schedule = this.findById(objectId).get();
+    UserDto charge = schedule.getCharge();
+    UserDto creator = schedule.getCreator();
+
+    String[] chargePermissionsToRemove = this.getAndMapUserPermissions(charge, objectId);
+    String[] creatorPermissionsToRemove = this.getAndMapUserPermissions(creator, objectId);
+
+    this.userFacade.removePermissions(charge.getIdentifier(), chargePermissionsToRemove);
+    this.userFacade.removePermissions(creator.getIdentifier(), creatorPermissionsToRemove);
+
     this.repository.deleteById(objectId);
   }
 
@@ -100,6 +112,12 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   public Page<ScheduleGlobalDto> findAll(Pageable pageable) {
     Preconditions.checkNotNull(pageable);
     return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(this.repository.findAll(pageable));
+  }
+
+  private String[] getAndMapUserPermissions(UserDto user, ObjectId objectId) {
+    return user.getPermissions().stream()
+        .filter(permission -> permission.contains(objectId.toHexString()))
+        .toArray(String[]::new);
   }
 
 }

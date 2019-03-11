@@ -3,8 +3,11 @@ package life.coachy.backend.board;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import life.coachy.backend.board.dto.BoardDtoMapperFactory;
 import life.coachy.backend.user.UserFacade;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -58,12 +61,19 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
     };
 
     this.userFacade.addPermissions(board.getOwner().getIdentifier(), permissions);
-
     return board;
   }
 
   @Override
   public void deleteById(ObjectId objectId) {
+    Board board = this.findById(objectId).get();
+    UserDto owner = board.getOwner();
+
+    String[] permissionsToRemove = owner.getPermissions().stream()
+        .filter(permission -> permission.contains(objectId.toHexString()))
+        .toArray(String[]::new);
+
+    this.userFacade.removePermissions(owner.getIdentifier(), permissionsToRemove);
     this.boardRepository.deleteById(objectId);
   }
 

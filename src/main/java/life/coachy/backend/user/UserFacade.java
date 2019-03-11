@@ -44,7 +44,8 @@ public class UserFacade {
   }
 
   public boolean hasPermission(String permission) {
-    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+    User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .getUser();
     return userPrincipal.getPermissions().contains(permission);
   }
 
@@ -68,6 +69,18 @@ public class UserFacade {
     }
 
     this.userCrudService.save(user);
+  }
+
+  public void removePermissions(User user, String... permissions) {
+    for (String permission : permissions) {
+      user.removePermission(permission);
+    }
+
+    this.userCrudService.save(user);
+  }
+
+  public void removePermissions(ObjectId identifier, String... permissions) {
+    this.removePermissions(this.userCrudService.findById(identifier).orElse(null), permissions);
   }
 
 }
