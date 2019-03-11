@@ -4,6 +4,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.board.dto.BoardDtoMapperFactory;
+import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -17,11 +18,13 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
 
   private final BoardRepository boardRepository;
   private final BoardDtoMapperFactory mapperFactory;
+  private final UserFacade userFacade;
 
   @Autowired
-  public BoardCrudService(BoardRepository boardRepository, BoardDtoMapperFactory mapperFactory) {
+  public BoardCrudService(BoardRepository boardRepository, BoardDtoMapperFactory mapperFactory, UserFacade userFacade) {
     this.boardRepository = boardRepository;
     this.mapperFactory = mapperFactory;
+    this.userFacade = userFacade;
   }
 
   @Override
@@ -46,7 +49,17 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
 
   @Override
   public <S extends AbstractDto> Board save(S dto) {
-    return this.boardRepository.save(this.mapperFactory.obtainEntity(dto));
+    Board board = this.boardRepository.save(this.mapperFactory.obtainEntity(dto));
+
+    String[] permissions = {
+        "board." + board.getIdentifier() + ".read",
+        "board." + board.getIdentifier() + ".update",
+        "board." + board.getIdentifier() + ".delete"
+    };
+
+    this.userFacade.addPermissions(board.getOwner().getIdentifier(), permissions);
+
+    return board;
   }
 
   @Override

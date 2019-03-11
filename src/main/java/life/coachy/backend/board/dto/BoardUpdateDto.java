@@ -4,7 +4,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
