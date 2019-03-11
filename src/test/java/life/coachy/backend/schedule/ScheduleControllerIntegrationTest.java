@@ -300,11 +300,16 @@ public class ScheduleControllerIntegrationTest {
     String username = "testUsername";
     String password = "testPassword";
 
+    UserDto userDto = UserDtoBuilder.createBuilder()
+        .withIdentifier(id)
+        .withPermissions(Sets.newHashSet("schedule." + id + ".delete"))
+        .build();
+
     Schedule schedule = ScheduleBuilder.createBuilder()
         .withIdentifier(id)
         .withName("testName123")
-        .withCreator(UserDtoBuilder.createBuilder().withIdentifier(id).build())
-        .withCharge(UserDtoBuilder.createBuilder().withIdentifier(id).build())
+        .withCreator(userDto)
+        .withCharge(userDto)
         .withCreatedAt(LocalDateTime.now())
         .withUpdatedAt(LocalDateTime.now())
         .build();
