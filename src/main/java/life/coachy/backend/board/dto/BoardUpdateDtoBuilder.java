@@ -4,12 +4,13 @@ import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
 import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.Buildable;
+import org.bson.types.ObjectId;
 
 public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
 
   String name;
   List<LabelDto> label;
-  UserDto owner;
+  ObjectId owner;
 
   private BoardUpdateDtoBuilder() {}
 
@@ -27,7 +28,7 @@ public class BoardUpdateDtoBuilder implements Buildable<BoardUpdateDto> {
     return this;
   }
 
-  public BoardUpdateDtoBuilder withOwner(UserDto owner) {
+  public BoardUpdateDtoBuilder withOwnerId(ObjectId owner) {
     this.owner = owner;
     return this;
   }

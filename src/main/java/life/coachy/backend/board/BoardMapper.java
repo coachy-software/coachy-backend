@@ -4,6 +4,7 @@ import life.coachy.backend.board.dto.BoardDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
 import life.coachy.backend.util.MapStructMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -14,6 +15,7 @@ public interface BoardMapper extends MapStructMapper {
 
   Board boardDtoToBoard(BoardDto dto);
 
+  @Mapping(source = "dto.ownerId", target = "owner.identifier")
   Board boardUpdateDtoToBoard(BoardUpdateDto dto);
 
 }
