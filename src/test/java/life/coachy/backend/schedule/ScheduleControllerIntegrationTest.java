@@ -35,8 +35,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class ScheduleControllerIntegrationTest {
@@ -68,8 +66,11 @@ public class ScheduleControllerIntegrationTest {
         .withCreator(userDto)
         .withCharge(userDto);
 
+    this.setUpUser(ObjectId.get(), "testUsername", "testPassword", Sets.newHashSet());
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?name=testName1234"))
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?name=testName1234")
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "testPassword")))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
         .andExpect(jsonPath("$.content[0].name", Matchers.is("testName1234")))
@@ -78,7 +79,10 @@ public class ScheduleControllerIntegrationTest {
 
   @Test
   public void searchShouldReturnEmptyArrayWhenNoMatches() throws Exception {
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?name=testName1234"))
+    this.setUpUser(ObjectId.get(), "testUsername", "testPassword", Sets.newHashSet());
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?name=testName1234")
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "testPassword")))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content").isEmpty());
   }
@@ -91,8 +95,11 @@ public class ScheduleControllerIntegrationTest {
         .withCreator(userDto)
         .withCharge(userDto);
 
+    this.setUpUser(ObjectId.get(), "testUsername", "testPassword", Sets.newHashSet());
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=1"))
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=1")
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "testPassword")))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
         .andExpect(jsonPath("$.content[0].name", Matchers.is("testName123")))
@@ -107,8 +114,11 @@ public class ScheduleControllerIntegrationTest {
         .withCreator(userDto)
         .withCharge(userDto);
 
+    this.setUpUser(ObjectId.get(), "testUsername", "testPassword", Sets.newHashSet());
+
     this.mongoTemplate.insertAll(Arrays.asList(builder.build(), builder.withName("testName1234").build()));
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=2"))
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/schedules?page=0&size=2")
+        .with(SecurityMockMvcRequestPostProcessors.httpBasic("testUsername", "testPassword")))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.content", Matchers.not(Matchers.emptyArray())))
         .andExpect(jsonPath("$.content[0].name", Matchers.is("testName123")))
