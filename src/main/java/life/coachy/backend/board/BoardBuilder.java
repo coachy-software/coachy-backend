@@ -2,9 +2,10 @@ package life.coachy.backend.board;
 
 import life.coachy.backend.board.label.dto.LabelDto;
 import life.coachy.backend.user.dto.UserDto;
+import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
-final class BoardBuilder {
+final class BoardBuilder implements Buildable<Board> {
 
   ObjectId identifier;
   String name;
@@ -37,6 +38,7 @@ final class BoardBuilder {
     return this;
   }
 
+  @Override
   public Board build() {
     return new Board(this);
   }
