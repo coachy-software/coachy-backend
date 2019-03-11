@@ -44,6 +44,7 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
     this.userFacade = userFacade;
   }
 
+  @PreAuthorize(SPEL_EXPRESSION)
   @ApiOperation("Displays all schedules")
   @GetMapping
   public ResponseEntity<?> readAll(
