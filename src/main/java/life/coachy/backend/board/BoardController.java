@@ -38,6 +38,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
     this.userFacade = userFacade;
   }
 
+  @ApiOperation("Displays all boards")
   @RequiresAdmin
   @PreAuthorize(SPEL_EXPRESSION)
   @GetMapping
