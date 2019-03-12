@@ -1,6 +1,7 @@
 package life.coachy.backend.board;
 
 import io.swagger.annotations.ApiOperation;
+import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
 import life.coachy.backend.user.UserFacade;
 import life.coachy.backend.util.AbstractCrudController;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/boards")
 @RestController
-class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdateDto, BoardUpdateDto> {
+class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdateDto, BoardCreateDto> {
 
   private static final String SPEL_EXPRESSION = "isAuthenticated()";
 
@@ -57,7 +58,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
 
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
-  protected ResponseEntity<?> create(@RequestBody BoardUpdateDto dto, BindingResult result) {
+  protected ResponseEntity<?> create(@RequestBody BoardCreateDto dto, BindingResult result) {
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> super.create(dto, result));
   }
 
