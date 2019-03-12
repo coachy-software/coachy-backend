@@ -82,7 +82,7 @@ public class UserFacade {
   public void removePermissions(User user, String... permissions) {
     Preconditions.checkNotNull(user, "User cannnot be null");
     Preconditions.checkNotNull(permissions);
-    
+
     for (String permission : permissions) {
       user.removePermission(permission);
     }

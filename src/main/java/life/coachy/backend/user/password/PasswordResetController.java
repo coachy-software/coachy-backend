@@ -55,7 +55,7 @@ class PasswordResetController {
     PasswordResetToken token = new PasswordResetToken(email, RandomString.make(32));
     this.repository.save(token);
 
-    this.emailService.sendResetPasswordEmail(email, this.resetLink + "reset-password?token=" + token.getToken());
+    this.emailService.sendResetPasswordEmail(email, this.resetLink + "reset-password/" + token.getToken());
     return ResponseEntity.noContent().build();
   }
 
