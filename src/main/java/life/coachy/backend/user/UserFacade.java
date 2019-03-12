@@ -1,5 +1,6 @@
 package life.coachy.backend.user;
 
+import com.google.common.base.Preconditions;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,11 +45,16 @@ public class UserFacade {
   }
 
   public boolean hasPermission(String permission) {
+    Preconditions.checkNotNull(permission, "Permission cannot be null");
+    Preconditions.checkState(!permission.isEmpty(), "Permission cannot be empty");
+
     User userPrincipal = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
     return userPrincipal.getPermissions().contains(permission);
   }
 
   public boolean hasPermissions(String... permissions) {
+    Preconditions.checkNotNull(permissions, "Permissions cannot be null");
+
     Map<String, Boolean> permissionsMap = new ConcurrentHashMap<>();
 
     for (String permission : permissions) {
@@ -63,6 +69,9 @@ public class UserFacade {
   }
 
   public void addPermissions(User user, String... permissions) {
+    Preconditions.checkNotNull(user, "User cannnot be null");
+    Preconditions.checkNotNull(permissions);
+
     for (String permission : permissions) {
       user.addPermission(permission);
     }
@@ -71,6 +80,9 @@ public class UserFacade {
   }
 
   public void removePermissions(User user, String... permissions) {
+    Preconditions.checkNotNull(user, "User cannnot be null");
+    Preconditions.checkNotNull(permissions);
+    
     for (String permission : permissions) {
       user.removePermission(permission);
     }
