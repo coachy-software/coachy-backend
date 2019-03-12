@@ -32,6 +32,10 @@ class Board implements IdentifiableEntity<ObjectId> {
     return this.identifier;
   }
 
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
   public String getName() {
     return this.name;
   }

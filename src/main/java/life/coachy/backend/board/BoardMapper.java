@@ -1,5 +1,6 @@
 package life.coachy.backend.board;
 
+import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
 import life.coachy.backend.util.MapStructMapper;
@@ -15,5 +16,7 @@ public interface BoardMapper extends MapStructMapper {
   Board boardDtoToBoard(BoardDto dto);
 
   Board boardUpdateDtoToBoard(BoardUpdateDto dto);
+
+  Board boardCreateDtoToBoard(BoardCreateDto dto);
 
 }
