@@ -76,7 +76,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> partialUpdate(@RequestBody BoardUpdateDto dto, @PathVariable ObjectId id) {
-    String permission = "board." + id + ".read";
+    String permission = "board." + id + ".update";
     if (!this.userFacade.hasPermission(permission)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
