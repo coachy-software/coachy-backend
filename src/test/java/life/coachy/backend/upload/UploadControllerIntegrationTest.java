@@ -75,7 +75,7 @@ public class UploadControllerIntegrationTest {
   public void pngImageUploadTest() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.multipart("/api/uploads")
         .file(this.pngImageFile)
-        .param("target", "/tests")
+        .param("target", "tests")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().is(200));
   }
@@ -84,7 +84,7 @@ public class UploadControllerIntegrationTest {
   public void jpegImageUploadTest() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.multipart("/api/uploads")
         .file(this.jpegImageFile)
-        .param("target", "/tests")
+        .param("target", "tests")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().is(200));
   }
@@ -93,7 +93,7 @@ public class UploadControllerIntegrationTest {
   public void mp4ImageUploadTest() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.multipart("/api/uploads")
         .file(this.mp4ImageFile)
-        .param("target", "/tests")
+        .param("target", "tests")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().is(415));
   }
@@ -104,14 +104,14 @@ public class UploadControllerIntegrationTest {
 
     this.mockMvc.perform(MockMvcRequestBuilders.multipart("/api/uploads")
         .file(this.pngImageFile)
-        .param("target", "/tests")
+        .param("target", "tests")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andDo(result -> stringBuilder.append(result.getResponse().getContentAsString()))
         .andExpect(status().is(200));
 
     String fileUrl = new JSONObject(stringBuilder.toString()).get("fileUrl").toString();
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get(fileUrl.substring(fileUrl.lastIndexOf("/api")))
+    this.mockMvc.perform(MockMvcRequestBuilders.get(fileUrl.substring(fileUrl.lastIndexOf("/resources")))
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().isOk());
   }
@@ -122,21 +122,21 @@ public class UploadControllerIntegrationTest {
 
     this.mockMvc.perform(MockMvcRequestBuilders.multipart("/api/uploads")
         .file(this.jpegImageFile)
-        .param("target", "/tests")
+        .param("target", "tests")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andDo(result -> stringBuilder.append(result.getResponse().getContentAsString()))
         .andExpect(status().is(200));
 
     String fileUrl = new JSONObject(stringBuilder.toString()).get("fileUrl").toString();
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get(fileUrl.substring(fileUrl.lastIndexOf("/api")))
+    this.mockMvc.perform(MockMvcRequestBuilders.get(fileUrl.substring(fileUrl.lastIndexOf("/resources")))
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().isOk());
   }
 
   @Test
   public void shouldFailIfFileDoesNotExists() throws Exception {
-    this.mockMvc.perform(MockMvcRequestBuilders.get("/api/uploads/?file=doesntExists.png&target=/tests")
+    this.mockMvc.perform(MockMvcRequestBuilders.get("/resources/tests/doesntExists.png")
         .with(SecurityMockMvcRequestPostProcessors.httpBasic("test918238901802306", "test123")))
         .andExpect(status().isNotFound());
   }

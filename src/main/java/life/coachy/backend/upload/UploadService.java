@@ -1,6 +1,8 @@
 package life.coachy.backend.upload;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -27,7 +31,7 @@ class UploadService {
     Preconditions.checkNotNull(file, "Multipart file cannot be null!");
     Preconditions.checkNotNull(targetDirectory, "Target directory path cannot be null!");
 
-    Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + targetDirectory);
+    Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + File.separator + targetDirectory);
     Files.createDirectories(targetDirectoryPath);
 
     String token = RandomString.make(32);
@@ -38,18 +42,14 @@ class UploadService {
     Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
     inputStream.close();
 
-    return ServletUriComponentsBuilder.fromCurrentRequestUri()
-        .queryParam("target", targetDirectory)
-        .queryParam("file", fileName)
-        .toUriString();
-
+    return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString() + "/resources/" + targetDirectory + "/" + fileName;
   }
 
   Resource loadAsResource(String fileName, String targetDirectory) throws MalformedURLException {
     Preconditions.checkNotNull(fileName, "File name cannot be null");
     Preconditions.checkNotNull(targetDirectory, "Target directory path cannot be null");
 
-    Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + targetDirectory);
+    Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + File.separator + targetDirectory);
     Path filePath = targetDirectoryPath.resolve(fileName).normalize();
     Resource resource = new UrlResource(filePath.toUri());
 
