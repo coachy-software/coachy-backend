@@ -8,6 +8,7 @@ import life.coachy.backend.BackendConstants;
 import life.coachy.backend.user.UserMapper;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
@@ -40,12 +41,16 @@ public class UserUpdateDto extends AbstractDto {
   @URL(message = "{pattern}")
   private String avatar;
 
+  @NotNull(message = "{notNull}")
+  private ObjectId boardIdentifier;
+
   UserUpdateDto(UserUpdateDtoBuilder builder) {
     this.username = builder.username;
     this.displayName = builder.displayName;
     this.password = builder.password;
     this.email = builder.email;
     this.avatar = builder.avatar;
+    this.boardIdentifier = builder.boardIdentifier;
   }
 
   UserUpdateDto() {}
@@ -68,6 +73,10 @@ public class UserUpdateDto extends AbstractDto {
 
   public String getAvatar() {
     return this.avatar;
+  }
+
+  public ObjectId getBoardIdentifier() {
+    return this.boardIdentifier;
   }
 
   @Override

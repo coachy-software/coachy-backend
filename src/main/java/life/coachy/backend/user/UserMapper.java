@@ -21,4 +21,6 @@ public interface UserMapper extends MapStructMapper {
   @Mapping(target = "identifier", source = "dto.identifier")
   User userDtoToUser(UserDto dto);
 
+  UserDto userToUserDto(User user);
+
 }

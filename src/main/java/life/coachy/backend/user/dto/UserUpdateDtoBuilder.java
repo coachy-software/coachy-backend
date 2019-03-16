@@ -1,6 +1,7 @@
 package life.coachy.backend.user.dto;
 
 import life.coachy.backend.util.Buildable;
+import org.bson.types.ObjectId;
 
 public final class UserUpdateDtoBuilder implements Buildable<UserUpdateDto> {
 
@@ -9,6 +10,7 @@ public final class UserUpdateDtoBuilder implements Buildable<UserUpdateDto> {
   String password;
   String email;
   String avatar;
+  ObjectId boardIdentifier;
 
   private UserUpdateDtoBuilder() {}
 
@@ -38,6 +40,11 @@ public final class UserUpdateDtoBuilder implements Buildable<UserUpdateDto> {
 
   public UserUpdateDtoBuilder withAvatar(String avatar) {
     this.avatar = avatar;
+    return this;
+  }
+
+  public UserUpdateDtoBuilder withBoardIdentifier(ObjectId boardIdentifier) {
+    this.boardIdentifier = boardIdentifier;
     return this;
   }
 

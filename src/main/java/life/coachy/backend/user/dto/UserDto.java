@@ -19,6 +19,7 @@ public class UserDto extends AbstractDto {
   private String accountType;
   private SortedSet<String> roles;
   private Set<String> permissions;
+  private ObjectId boardIdentifier;
 
   UserDto(UserDtoBuilder builder) {
     this.identifier = builder.identifier;
@@ -30,6 +31,7 @@ public class UserDto extends AbstractDto {
     this.accountType = builder.accountType;
     this.roles = builder.roles;
     this.permissions = builder.permissions;
+    this.boardIdentifier = builder.boardIdentifier;
   }
 
   public UserDto() {}
@@ -104,6 +106,14 @@ public class UserDto extends AbstractDto {
 
   public void setPermissions(Set<String> permissions) {
     this.permissions = permissions;
+  }
+
+  public ObjectId getBoardIdentifier() {
+    return this.boardIdentifier;
+  }
+
+  public void setBoardIdentifier(ObjectId boardIdentifier) {
+    this.boardIdentifier = boardIdentifier;
   }
 
   @Override

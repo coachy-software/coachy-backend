@@ -16,6 +16,7 @@ public final class UserDtoBuilder implements Buildable<UserDto> {
   String accountType;
   SortedSet<String> roles;
   Set<String> permissions;
+  ObjectId boardIdentifier;
 
   private UserDtoBuilder() {}
 
@@ -65,6 +66,11 @@ public final class UserDtoBuilder implements Buildable<UserDto> {
 
   public UserDtoBuilder withPermissions(Set<String> permissions) {
     this.permissions = permissions;
+    return this;
+  }
+
+  public UserDtoBuilder withBoardIdentifier(ObjectId boardIdentifier) {
+    this.boardIdentifier = boardIdentifier;
     return this;
   }
 

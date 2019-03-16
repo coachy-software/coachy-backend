@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import java.util.HashSet;
-import life.coachy.backend.user.dto.UserDtoMapperFactory;
+import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.user.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,20 +15,18 @@ class UserRegistrationService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-  private final UserDtoMapperFactory mapperFactory;
 
   @Autowired
-  public UserRegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-      UserDtoMapperFactory mapperFactory) {
+  public UserRegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-    this.mapperFactory = mapperFactory;
   }
 
   UserRegistrationDto saveDto(UserRegistrationDto dto) {
     Preconditions.checkNotNull(dto, "User registration DTO cannot be null");
 
-    User user = this.mapperFactory.obtainEntity(dto);
+    User user = UserMapper.INSTANCE.userRegistrationDtoToUser(dto);
+    UserDto userDto = UserMapper.INSTANCE.userToUserDto(user);
 
     user.setRoles(Sets.newTreeSet(Collections.singletonList("USER")));
     user.setPassword(this.passwordEncoder.encode(user.getPassword()));

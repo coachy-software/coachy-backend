@@ -25,6 +25,7 @@ class User implements IdentifiableEntity<ObjectId> {
   private AccountType accountType;
   private SortedSet<String> roles;
   private Set<String> permissions;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardIdentifier;
 
   User(UserBuilder builder) {
     this.identifier = builder.identifier;
@@ -36,6 +37,7 @@ class User implements IdentifiableEntity<ObjectId> {
     this.accountType = builder.accountType;
     this.roles = builder.roles;
     this.permissions = builder.permissions;
+    this.boardIdentifier = builder.boardIdentifier;
   }
 
   User() {}
@@ -121,6 +123,14 @@ class User implements IdentifiableEntity<ObjectId> {
     this.permissions.remove(permission);
   }
 
+  public ObjectId getBoardIdentifier() {
+    return this.boardIdentifier;
+  }
+
+  public void setBoardIdentifier(ObjectId boardIdentifier) {
+    this.boardIdentifier = boardIdentifier;
+  }
+
   @Override
   public String toString() {
     return "User{" +
@@ -132,6 +142,8 @@ class User implements IdentifiableEntity<ObjectId> {
         ", avatar='" + this.avatar + '\'' +
         ", accountType=" + this.accountType +
         ", roles=" + this.roles +
+        ", permissions=" + this.permissions +
+        ", boardIdentifier=" + this.boardIdentifier +
         '}';
   }
 
