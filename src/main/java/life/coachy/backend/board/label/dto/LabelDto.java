@@ -1,15 +1,18 @@
 package life.coachy.backend.board.label.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.task.dto.TaskDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
 public class LabelDto extends AbstractDto {
 
-  private ObjectId identifier;
-  private String name;
-  private List<TaskDto> tasks;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
+  @NotNull private String name;
+  @NotNull private List<TaskDto> tasks;
 
   public LabelDto() {}
 

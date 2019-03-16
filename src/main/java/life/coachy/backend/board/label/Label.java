@@ -12,8 +12,8 @@ import org.springframework.data.annotation.Id;
 class Label implements IdentifiableEntity<ObjectId> {
 
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId identifier;
-  @NotNull private String name;
-  @NotNull private List<TaskDto> tasks;
+  private String name;
+  private List<TaskDto> tasks;
 
   Label() {}
 
