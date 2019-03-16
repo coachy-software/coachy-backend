@@ -94,4 +94,13 @@ public class UserFacade {
     this.removePermissions(this.userCrudService.findById(identifier).orElse(null), permissions);
   }
 
+  public void removePermissions(ObjectId userIdentifier, ObjectId targetIdentifier) {
+    User user = this.userCrudService.findById(userIdentifier).orElse(null); // todo
+    String[] permissionsToRemove = user.getPermissions().stream()
+        .filter(permission -> permission.contains(targetIdentifier.toHexString()))
+        .toArray(String[]::new);
+
+    this.removePermissions(user, permissionsToRemove);
+  }
+
 }

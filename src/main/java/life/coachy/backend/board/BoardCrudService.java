@@ -67,11 +67,7 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
     Board board = this.findById(objectId).get();
     UserDto owner = board.getOwner();
 
-    String[] permissionsToRemove = owner.getPermissions().stream()
-        .filter(permission -> permission.contains(objectId.toHexString()))
-        .toArray(String[]::new);
-
-    this.userFacade.removePermissions(owner.getIdentifier(), permissionsToRemove);
+    this.userFacade.removePermissions(owner.getIdentifier(), board.getIdentifier());
     this.boardRepository.deleteById(objectId);
   }
 

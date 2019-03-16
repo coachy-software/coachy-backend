@@ -74,11 +74,8 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     UserDto charge = schedule.getCharge();
     UserDto creator = schedule.getCreator();
 
-    String[] chargePermissionsToRemove = this.getAndMapUserPermissions(charge, objectId);
-    String[] creatorPermissionsToRemove = this.getAndMapUserPermissions(creator, objectId);
-
-    this.userFacade.removePermissions(charge.getIdentifier(), chargePermissionsToRemove);
-    this.userFacade.removePermissions(creator.getIdentifier(), creatorPermissionsToRemove);
+    this.userFacade.removePermissions(charge.getIdentifier(), schedule.getIdentifier());
+    this.userFacade.removePermissions(creator.getIdentifier(), schedule.getIdentifier());
 
     this.repository.deleteById(objectId);
   }
@@ -112,12 +109,6 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
   public Page<ScheduleGlobalDto> findAll(Pageable pageable) {
     Preconditions.checkNotNull(pageable);
     return ScheduleMapper.INSTANCE.schedulesToScheduleGlobalDtos(this.repository.findAll(pageable));
-  }
-
-  private String[] getAndMapUserPermissions(UserDto user, ObjectId objectId) {
-    return user.getPermissions().stream()
-        .filter(permission -> permission.contains(objectId.toHexString()))
-        .toArray(String[]::new);
   }
 
 }
