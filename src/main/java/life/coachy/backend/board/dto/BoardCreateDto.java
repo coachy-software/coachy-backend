@@ -1,23 +1,25 @@
 package life.coachy.backend.board.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
+import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = BoardMapper.class, entityName = "Board")
 public class BoardCreateDto extends AbstractDto {
 
   @NotNull private String name;
   @NotNull private List<LabelDto> labels;
-  @NotNull private UserDto owner;
+  @JsonSerialize(using = ToStringSerializer.class) @NotNull private ObjectId owner;
 
   BoardCreateDto() {}
 
-  public BoardCreateDto(String name, List<LabelDto> labels, UserDto owner) {
+  public BoardCreateDto(String name, List<LabelDto> labels, ObjectId owner) {
     this.name = name;
     this.labels = labels;
     this.owner = owner;
@@ -39,11 +41,11 @@ public class BoardCreateDto extends AbstractDto {
     this.labels = labels;
   }
 
-  public UserDto getOwner() {
+  public ObjectId getOwner() {
     return this.owner;
   }
 
-  public void setOwner(UserDto owner) {
+  public void setOwner(ObjectId owner) {
     this.owner = owner;
   }
 

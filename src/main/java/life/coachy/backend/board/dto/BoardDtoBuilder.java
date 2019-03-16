@@ -11,7 +11,7 @@ public final class BoardDtoBuilder implements Buildable<BoardDto> {
   ObjectId identifier;
   String name;
   List<LabelDto> label;
-  UserDto owner;
+  ObjectId owner;
 
   private BoardDtoBuilder() {}
 
@@ -34,7 +34,7 @@ public final class BoardDtoBuilder implements Buildable<BoardDto> {
     return this;
   }
 
-  public BoardDtoBuilder withOwner(UserDto owner) {
+  public BoardDtoBuilder withOwner(ObjectId owner) {
     this.owner = owner;
     return this;
   }

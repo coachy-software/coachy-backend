@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.user.dto.UserDto;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
@@ -17,7 +16,7 @@ public class BoardDto extends AbstractDto {
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @NotNull private String name;
   @NotNull private List<LabelDto> labels;
-  @NotNull private UserDto owner;
+  @JsonSerialize(using = ToStringSerializer.class) @NotNull private ObjectId owner;
 
   BoardDto() {}
 
@@ -52,11 +51,11 @@ public class BoardDto extends AbstractDto {
     this.labels = labels;
   }
 
-  public UserDto getOwner() {
+  public ObjectId getOwner() {
     return this.owner;
   }
 
-  public void setOwner(UserDto owner) {
+  public void setOwner(ObjectId owner) {
     this.owner = owner;
   }
 
