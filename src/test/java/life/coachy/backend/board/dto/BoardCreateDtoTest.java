@@ -38,7 +38,7 @@ public class BoardCreateDtoTest {
     assertEquals("Board{"
         + "identifier=null, "
         + "name='testName', "
-        + "label=" + this.labels + ", "
+        + "labels=" + this.labels + ", "
         + "owner=" + this.userDto + "}", String.valueOf(BoardMapper.INSTANCE.boardCreateDtoToBoard(this.dto)));
   }
 
@@ -47,7 +47,7 @@ public class BoardCreateDtoTest {
     assertAll(
         () -> assertNotNull(this.dto),
         () -> assertNotNull(this.dto.getName()),
-        () -> assertNotNull(this.dto.getLabel()),
+        () -> assertNotNull(this.dto.getLabels()),
         () -> assertNotNull(this.dto.getOwner())
     );
   }

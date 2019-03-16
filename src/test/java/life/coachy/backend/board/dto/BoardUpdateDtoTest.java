@@ -33,7 +33,7 @@ public class BoardUpdateDtoTest {
     assertEquals("Board{"
         + "identifier=null, "
         + "name='testName', "
-        + "label=" + this.labels + ", "
+        + "labels=" + this.labels + ", "
         + "owner=null}", String.valueOf(BoardMapper.INSTANCE.boardUpdateDtoToBoard(this.dto)));
   }
 

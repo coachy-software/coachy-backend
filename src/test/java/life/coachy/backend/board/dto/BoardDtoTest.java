@@ -41,7 +41,7 @@ public class BoardDtoTest {
     assertEquals("Board{"
         + "identifier=" + this.id.toHexString() + ", "
         + "name='testName', "
-        + "label=" + this.labels + ", "
+        + "labels=" + this.labels + ", "
         + "owner=" + this.userDto + "}", String.valueOf(BoardMapper.INSTANCE.boardDtoToBoard(this.dto)));
   }
 

@@ -34,7 +34,9 @@ public class UserRegistrationDtoTest {
         + "email='test@coachy.life', "
         + "avatar='null', "
         + "accountType=COACH, "
-        + "roles=null}", String.valueOf(UserMapper.INSTANCE.userRegistrationDtoToUser(this.dto)));
+        + "roles=null, "
+        + "permissions=null, "
+        + "boardIdentifier=null}", String.valueOf(UserMapper.INSTANCE.userRegistrationDtoToUser(this.dto)));
   }
 
   @Test

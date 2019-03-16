@@ -95,6 +95,7 @@ public class UserControllerIntegrationTest {
         .withPassword("testPassword")
         .withEmail("test@email.com")
         .withAvatar("http://www.com.com")
+        .withBoardIdentifier(ObjectId.get())
         .build();
 
     this.userCrudService.savePassword(user, user.getPassword());
@@ -145,6 +146,7 @@ public class UserControllerIntegrationTest {
         .withPassword("testPassword")
         .withEmail("test2@email.com")
         .withAvatar("http://www.com.com")
+        .withBoardIdentifier(ObjectId.get())
         .build();
 
     this.userCrudService.savePassword(user, user.getPassword());

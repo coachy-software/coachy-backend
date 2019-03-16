@@ -35,7 +35,9 @@ public class UserUpdateDtoTest {
         + "email='test@email.com', "
         + "avatar='http://www.com.com', "
         + "accountType=null, "
-        + "roles=null}", String.valueOf(UserMapper.INSTANCE.userUpdateDtoToUser(this.dto)));
+        + "roles=null, "
+        + "permissions=null, "
+        + "boardIdentifier=null}", String.valueOf(UserMapper.INSTANCE.userUpdateDtoToUser(this.dto)));
   }
 
   @Test

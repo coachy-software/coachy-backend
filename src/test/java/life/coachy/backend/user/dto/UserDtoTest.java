@@ -42,7 +42,9 @@ public class UserDtoTest {
         + "email='test@coachy.life', "
         + "avatar='http://coachy.life/test.png', "
         + "accountType=CHARGE, "
-        + "roles=[ADMIN, USER]}", String.valueOf(UserMapper.INSTANCE.userDtoToUser(this.dto)));
+        + "roles=[ADMIN, USER], "
+        + "permissions=null, "
+        + "boardIdentifier=null}", String.valueOf(UserMapper.INSTANCE.userDtoToUser(this.dto)));
   }
 
   @Test
