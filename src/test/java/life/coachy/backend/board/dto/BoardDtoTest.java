@@ -51,7 +51,7 @@ public class BoardDtoTest {
         () -> assertNotNull(this.dto),
         () -> assertNotNull(this.dto.getIdentifier()),
         () -> assertNotNull(this.dto.getName()),
-        () -> assertNotNull(this.dto.getLabel()),
+        () -> assertNotNull(this.dto.getLabels()),
         () -> assertNotNull(this.dto.getOwner())
     );
   }

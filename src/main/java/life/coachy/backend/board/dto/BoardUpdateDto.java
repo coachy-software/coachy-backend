@@ -11,13 +11,13 @@ import life.coachy.backend.util.dto.DataTransferObject;
 public class BoardUpdateDto extends AbstractDto {
 
   @NotNull private String name;
-  @NotNull private List<LabelDto> label;
+  @NotNull private List<LabelDto> labels;
 
   BoardUpdateDto() {}
 
-  public BoardUpdateDto(String name, List<LabelDto> label) {
+  public BoardUpdateDto(String name, List<LabelDto> labels) {
     this.name = name;
-    this.label = label;
+    this.labels = labels;
   }
 
   public String getName() {
@@ -28,12 +28,12 @@ public class BoardUpdateDto extends AbstractDto {
     this.name = name;
   }
 
-  public List<LabelDto> getLabel() {
-    return this.label;
+  public List<LabelDto> getLabels() {
+    return this.labels;
   }
 
-  public void setLabel(List<LabelDto> label) {
-    this.label = label;
+  public void setLabels(List<LabelDto> labels) {
+    this.labels = labels;
   }
 
   @Override

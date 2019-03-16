@@ -16,7 +16,7 @@ public class BoardDto extends AbstractDto {
 
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @NotNull private String name;
-  @NotNull private List<LabelDto> label;
+  @NotNull private List<LabelDto> labels;
   @NotNull private UserDto owner;
 
   BoardDto() {}
@@ -24,7 +24,7 @@ public class BoardDto extends AbstractDto {
   BoardDto(BoardDtoBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
-    this.label = builder.label;
+    this.labels = builder.label;
     this.owner = builder.owner;
   }
 
@@ -44,12 +44,12 @@ public class BoardDto extends AbstractDto {
     this.name = name;
   }
 
-  public List<LabelDto> getLabel() {
-    return this.label;
+  public List<LabelDto> getLabels() {
+    return this.labels;
   }
 
-  public void setLabel(List<LabelDto> label) {
-    this.label = label;
+  public void setLabels(List<LabelDto> labels) {
+    this.labels = labels;
   }
 
   public UserDto getOwner() {

@@ -15,7 +15,7 @@ class Board implements IdentifiableEntity<ObjectId> {
 
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId identifier;
   private String name;
-  private List<LabelDto> label;
+  private List<LabelDto> labels;
   private UserDto owner;
 
   Board() {}
@@ -23,7 +23,7 @@ class Board implements IdentifiableEntity<ObjectId> {
   Board(BoardBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
-    this.label = builder.label;
+    this.labels = builder.label;
     this.owner = builder.owner;
   }
 
@@ -44,12 +44,12 @@ class Board implements IdentifiableEntity<ObjectId> {
     this.name = name;
   }
 
-  public List<LabelDto> getLabel() {
-    return this.label;
+  public List<LabelDto> getLabels() {
+    return this.labels;
   }
 
-  public void setLabel(List<LabelDto> label) {
-    this.label = label;
+  public void setLabels(List<LabelDto> labels) {
+    this.labels = labels;
   }
 
   public UserDto getOwner() {
@@ -65,7 +65,7 @@ class Board implements IdentifiableEntity<ObjectId> {
     return "Board{" +
         "identifier=" + this.identifier +
         ", name='" + this.name + '\'' +
-        ", label=" + this.label +
+        ", labels=" + this.labels +
         ", owner=" + this.owner +
         '}';
   }

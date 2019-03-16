@@ -42,7 +42,7 @@ public class BoardUpdateDtoTest {
     assertAll(
         () -> assertNotNull(this.dto),
         () -> assertNotNull(this.dto.getName()),
-        () -> assertNotNull(this.dto.getLabel())
+        () -> assertNotNull(this.dto.getLabels())
     );
   }
 
