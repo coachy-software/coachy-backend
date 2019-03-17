@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-@AuthenticationPrincipal(expression = "#this instanceof T(String) ? null : user")
+@AuthenticationPrincipal(expression = "#this instanceof T(String) ? null : old_user")
 @Documented
 public @interface AuthenticatedUser {
 

@@ -6,12 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import life.coachy.backend.board.BoardMapper;
 import life.coachy.backend.board.label.dto.LabelDto;
 import life.coachy.backend.board.task.dto.TaskDto;
 import life.coachy.backend.board.task.dto.TaskDtoBuilder;
-import life.coachy.backend.user.dto.UserDto;
-import life.coachy.backend.user.dto.UserDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;

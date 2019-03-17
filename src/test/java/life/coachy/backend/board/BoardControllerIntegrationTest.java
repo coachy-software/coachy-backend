@@ -9,8 +9,6 @@ import java.util.Set;
 import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.user.dto.UserDto;
-import life.coachy.backend.user.dto.UserDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;

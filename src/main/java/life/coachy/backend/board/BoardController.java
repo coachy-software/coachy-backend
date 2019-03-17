@@ -3,7 +3,7 @@ package life.coachy.backend.board;
 import io.swagger.annotations.ApiOperation;
 import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
-import life.coachy.backend.user.UserFacade;
+import life.coachy.backend.old_user.UserFacade;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.security.RequiresAdmin;
 import life.coachy.backend.util.validation.ValidationUtil;
