@@ -29,26 +29,14 @@ public class BoardCreateDtoTest {
       .build()
   );
   private List<LabelDto> labels = Lists.newArrayList(new LabelDto(this.id, "testName", this.tasks));
-  private UserDto userDto = UserDtoBuilder.createBuilder().build();
-
-  private BoardCreateDto dto = new BoardCreateDto("testName", this.labels, this.userDto);
-
-  @Test
-  public void toEntityTest() {
-    assertEquals("Board{"
-        + "identifier=null, "
-        + "name='testName', "
-        + "labels=" + this.labels + ", "
-        + "owner=" + this.userDto + "}", String.valueOf(BoardMapper.INSTANCE.boardCreateDtoToBoard(this.dto)));
-  }
+  private BoardCreateDto dto = new BoardCreateDto("testName", this.labels, null);
 
   @Test
   public void valuesShouldNotBeNull() {
     assertAll(
         () -> assertNotNull(this.dto),
         () -> assertNotNull(this.dto.getName()),
-        () -> assertNotNull(this.dto.getLabels()),
-        () -> assertNotNull(this.dto.getOwner())
+        () -> assertNotNull(this.dto.getLabels())
     );
   }
 

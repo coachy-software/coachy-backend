@@ -91,8 +91,7 @@ public class BoardControllerIntegrationTest {
     String username = "testUsername";
     String password = "testPassword";
 
-    UserDto userDto = UserDtoBuilder.createBuilder().withIdentifier(id).withPermissions(Sets.newHashSet()).build();
-    BoardCreateDto dto = new BoardCreateDto("testName", Lists.newArrayList(new LabelDto()), userDto);
+    BoardCreateDto dto = new BoardCreateDto("testName", Lists.newArrayList(new LabelDto()), id);
 
     this.mongoTemplate.insert(BoardBuilder.createBuilder().withIdentifier(id).build(), "boards");
     this.setUpUser(id, username, password, Sets.newHashSet());
@@ -138,7 +137,7 @@ public class BoardControllerIntegrationTest {
     String username = "testUsername";
     String password = "testPassword";
 
-    BoardCreateDto dto = new BoardCreateDto("testNameEdited", Lists.newArrayList(new LabelDto()), new UserDto());
+    BoardCreateDto dto = new BoardCreateDto("testNameEdited", Lists.newArrayList(new LabelDto()), id);
     Board board = BoardBuilder.createBuilder().withIdentifier(id).withName("testName").build();
 
     this.mongoTemplate.insert(board, "boards");
