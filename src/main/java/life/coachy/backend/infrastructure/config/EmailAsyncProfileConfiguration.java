@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @Configuration
 @EnableAsync
-@Profile("!test")
+@Profile("!" + Profiles.TEST)
 class EmailAsyncProfileConfiguration {
 
 }
