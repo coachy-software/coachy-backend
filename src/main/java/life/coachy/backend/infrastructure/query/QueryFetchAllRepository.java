@@ -1,17 +1,18 @@
 package life.coachy.backend.infrastructure.query;
 
-import com.querydsl.core.types.Predicate;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.Repository;
 
 @NoRepositoryBean
-public interface QueryFetchAllRepository<E extends QueryDtoMarker> {
+public interface QueryFetchAllRepository<E extends QueryDtoMarker, ID extends Serializable> extends Repository<E, ID>, QuerydslPredicateExecutor<E> {
 
-  Set<E> findAll();
+  List<E> findAll();
 
-  Set<E> findAll(Predicate predicate, Pageable pageable);
-
-  Set<E> findAll(Pageable pageable);
+  Page<E> findAll(Pageable pageable);
 
 }
