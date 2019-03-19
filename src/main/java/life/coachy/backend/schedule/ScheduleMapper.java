@@ -16,13 +16,13 @@ public interface ScheduleMapper extends MapStructMapper {
 
   ScheduleMapper INSTANCE = Mappers.getMapper(ScheduleMapper.class);
 
-  @Mapping(target = "identifier", source = "dto.identifier")
+//  @Mapping(target = "identifier", source = "dto.identifier")
   Schedule scheduleDtoToSchedule(ScheduleDto dto);
 
   Schedule scheduleUpdateDtoToSchedule(ScheduleUpdateDto dto);
 
-  @Mapping(target = "creator", source = "schedule.creator.identifier")
-  @Mapping(target = "charge", source = "schedule.charge.identifier")
+//  @Mapping(target = "creator", source = "schedule.creator.identifier")
+//  @Mapping(target = "charge", source = "schedule.charge.identifier")
   ScheduleGlobalDto scheduleToScheduleGlobalDto(Schedule schedule);
 
   Schedule scheduleGlobalDtoToSchedule(ScheduleGlobalDto dto);

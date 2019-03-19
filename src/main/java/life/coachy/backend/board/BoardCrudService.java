@@ -4,8 +4,6 @@ import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.board.dto.BoardDtoMapperFactory;
-import life.coachy.backend.old_user.UserFacade;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -19,13 +17,13 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
 
   private final BoardRepository boardRepository;
   private final BoardDtoMapperFactory mapperFactory;
-  private final UserFacade userFacade;
+//  private final UserFacade userFacade;
 
   @Autowired
-  public BoardCrudService(BoardRepository boardRepository, BoardDtoMapperFactory mapperFactory, UserFacade userFacade) {
+  public BoardCrudService(BoardRepository boardRepository, BoardDtoMapperFactory mapperFactory) {
     this.boardRepository = boardRepository;
     this.mapperFactory = mapperFactory;
-    this.userFacade = userFacade;
+//    this.userFacade = userFacade;
   }
 
   @Override
@@ -58,16 +56,16 @@ class BoardCrudService implements CrudOperationsService<Board, ObjectId> {
         "board." + board.getIdentifier() + ".delete"
     };
 
-    this.userFacade.addPermissions(board.getOwner().getIdentifier(), permissions);
+//    this.userFacade.addPermissions(board.getOwner().getIdentifier(), permissions);
     return board;
   }
 
   @Override
   public void deleteById(ObjectId objectId) {
     Board board = this.findById(objectId).get();
-    UserDto owner = board.getOwner();
-
-    this.userFacade.removePermissions(owner.getIdentifier(), board.getIdentifier());
+//    UserDto owner = board.getOwner();
+//
+//    this.userFacade.removePermissions(owner.getIdentifier(), board.getIdentifier());
     this.boardRepository.deleteById(objectId);
   }
 

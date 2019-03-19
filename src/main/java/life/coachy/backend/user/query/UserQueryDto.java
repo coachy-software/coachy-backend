@@ -23,7 +23,7 @@ public class UserQueryDto implements QueryDtoMarker {
   private AccountTypeDto accountType;
   private Set<String> roles;
   private Set<String> permissions;
-  private ObjectId boardIdentifier;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardIdentifier;
 
   public ObjectId getIdentifier() {
     return this.identifier;

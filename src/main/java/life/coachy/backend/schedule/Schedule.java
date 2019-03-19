@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,8 +18,8 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   @Id
   private ObjectId identifier;
   private String name;
-  private UserDto creator;
-  private UserDto charge;
+//  private UserDto creator;
+//  private UserDto charge;
   private String note;
   @CreatedDate
   private LocalDateTime createdAt;
@@ -32,8 +31,8 @@ class Schedule implements IdentifiableEntity<ObjectId> {
   Schedule(ScheduleBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;
-    this.creator = builder.creator;
-    this.charge = builder.charge;
+//    this.creator = builder.creator;
+//    this.charge = builder.charge;
     this.note = builder.note;
     this.createdAt = builder.createdAt;
     this.updatedAt = builder.updatedAt;
@@ -61,21 +60,21 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     this.name = name;
   }
 
-  public UserDto getCreator() {
-    return this.creator;
-  }
-
-  public void setCreator(UserDto creator) {
-    this.creator = creator;
-  }
-
-  public UserDto getCharge() {
-    return this.charge;
-  }
-
-  public void setCharge(UserDto charge) {
-    this.charge = charge;
-  }
+//  public UserDto getCreator() {
+//    return this.creator;
+//  }
+//
+//  public void setCreator(UserDto creator) {
+//    this.creator = creator;
+//  }
+//
+//  public UserDto getCharge() {
+//    return this.charge;
+//  }
+//
+//  public void setCharge(UserDto charge) {
+//    this.charge = charge;
+//  }
 
   public String getNote() {
     return this.note;
@@ -122,8 +121,8 @@ class Schedule implements IdentifiableEntity<ObjectId> {
     return "Schedule{" +
         "identifier=" + this.identifier +
         ", name='" + this.name + '\'' +
-        ", creator=" + this.creator +
-        ", charge=" + this.charge +
+//        ", creator=" + this.creator +
+//        ", charge=" + this.charge +
         ", createdAt=" + this.createdAt +
         ", updatedAt=" + this.updatedAt +
         ", active=" + this.active +

@@ -3,7 +3,6 @@ package life.coachy.backend.board;
 import io.swagger.annotations.ApiOperation;
 import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
-import life.coachy.backend.old_user.UserFacade;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.security.RequiresAdmin;
 import life.coachy.backend.util.validation.ValidationUtil;
@@ -28,14 +27,14 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
 
   private final BoardCrudService service;
   private final SmartValidator smartValidator;
-  private final UserFacade userFacade;
+//  private final UserFacade userFacade;
 
   protected BoardController(@Qualifier("localValidatorFactoryBean") SmartValidator smartValidator,
-      BoardCrudService service, UserFacade userFacade) {
+      BoardCrudService service) {
     super(service);
     this.service = service;
     this.smartValidator = smartValidator;
-    this.userFacade = userFacade;
+//    this.userFacade = userFacade;
   }
 
   @ApiOperation("Displays all boards")
@@ -50,9 +49,9 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<Board> read(@PathVariable ObjectId id) {
     String permission = "board." + id + ".read";
-    if (!this.userFacade.hasPermission(permission)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+//    if (!this.userFacade.hasPermission(permission)) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
 
     return super.read(id);
   }
@@ -67,9 +66,9 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> update(@RequestBody BoardUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
     String permission = "board." + id + ".update";
-    if (!this.userFacade.hasPermission(permission)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+//    if (!this.userFacade.hasPermission(permission)) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
 
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> super.update(dto, id, result));
   }
@@ -78,10 +77,10 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> partialUpdate(@RequestBody BoardUpdateDto dto, @PathVariable ObjectId id) {
     String permission = "board." + id + ".update";
-    if (!this.userFacade.hasPermission(permission)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
-
+//    if (!this.userFacade.hasPermission(permission)) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
+//
     return super.partialUpdate(dto, id);
   }
 
@@ -89,9 +88,9 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<Board> remove(@PathVariable ObjectId id) {
     String permission = "board." + id + ".delete";
-    if (!this.userFacade.hasPermission(permission)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+//    if (!this.userFacade.hasPermission(permission)) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
 
     return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
   }

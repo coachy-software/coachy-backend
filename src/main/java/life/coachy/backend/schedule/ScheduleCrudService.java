@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import life.coachy.backend.schedule.dto.ScheduleDtoMapperFactory;
 import life.coachy.backend.schedule.dto.ScheduleGlobalDto;
-import life.coachy.backend.old_user.UserFacade;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.CrudOperationsService;
 import life.coachy.backend.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
@@ -22,13 +20,13 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
 
   private ScheduleRepository repository;
   private ScheduleDtoMapperFactory mapperFactory;
-  private UserFacade userFacade;
+//  private UserFacade userFacade;
 
   @Autowired
-  ScheduleCrudService(ScheduleRepository repository, ScheduleDtoMapperFactory mapperFactory, UserFacade userFacade) {
+  ScheduleCrudService(ScheduleRepository repository, ScheduleDtoMapperFactory mapperFactory) {
     this.repository = repository;
     this.mapperFactory = mapperFactory;
-    this.userFacade = userFacade;
+//    this.userFacade = userFacade;
   }
 
   @Override
@@ -60,8 +58,8 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
         "schedule." + schedule.getIdentifier() + ".delete"
     };
 
-    this.userFacade.addPermissions(schedule.getCreator().getIdentifier(), coachPermissions);
-    this.userFacade.addPermissions(schedule.getCharge().getIdentifier(), chargePermissions);
+//    this.userFacade.addPermissions(schedule.getCreator().getIdentifier(), coachPermissions);
+//    this.userFacade.addPermissions(schedule.getCharge().getIdentifier(), chargePermissions);
 
     return schedule;
   }
@@ -71,11 +69,11 @@ class ScheduleCrudService implements CrudOperationsService<Schedule, ObjectId> {
     Preconditions.checkNotNull(objectId, "Schedule entity identifier cannot be null");
 
     Schedule schedule = this.findById(objectId).get();
-    UserDto charge = schedule.getCharge();
-    UserDto creator = schedule.getCreator();
-
-    this.userFacade.removePermissions(charge.getIdentifier(), schedule.getIdentifier());
-    this.userFacade.removePermissions(creator.getIdentifier(), schedule.getIdentifier());
+//    UserDto charge = schedule.getCharge();
+//    UserDto creator = schedule.getCreator();
+//
+//    this.userFacade.removePermissions(charge.getIdentifier(), schedule.getIdentifier());
+//    this.userFacade.removePermissions(creator.getIdentifier(), schedule.getIdentifier());
 
     this.repository.deleteById(objectId);
   }

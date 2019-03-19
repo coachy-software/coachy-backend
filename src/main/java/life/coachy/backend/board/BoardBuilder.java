@@ -2,7 +2,6 @@ package life.coachy.backend.board;
 
 import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -11,7 +10,7 @@ final class BoardBuilder implements Buildable<Board> {
   ObjectId identifier;
   String name;
   List<LabelDto> label;
-  UserDto owner;
+//  UserDto owner;
 
   private BoardBuilder() {}
 
@@ -34,10 +33,10 @@ final class BoardBuilder implements Buildable<Board> {
     return this;
   }
 
-  public BoardBuilder withOwner(UserDto owner) {
-    this.owner = owner;
-    return this;
-  }
+//  public BoardBuilder withOwner(UserDto owner) {
+//    this.owner = owner;
+//    return this;
+//  }
 
   @Override
   public Board build() {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -16,7 +15,7 @@ class Board implements IdentifiableEntity<ObjectId> {
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId identifier;
   private String name;
   private List<LabelDto> labels;
-  private UserDto owner;
+//  private UserDto owner;
 
   Board() {}
 
@@ -24,7 +23,7 @@ class Board implements IdentifiableEntity<ObjectId> {
     this.identifier = builder.identifier;
     this.name = builder.name;
     this.labels = builder.label;
-    this.owner = builder.owner;
+//    this.owner = builder.owner;
   }
 
   @Override
@@ -52,13 +51,15 @@ class Board implements IdentifiableEntity<ObjectId> {
     this.labels = labels;
   }
 
-  public UserDto getOwner() {
-    return this.owner;
-  }
+//  public UserDto getOwner() {
+//    return this.owner;
+//  }
+//
+//  public void setOwner(UserDto owner) {
+//    this.owner = owner;
+//  }
 
-  public void setOwner(UserDto owner) {
-    this.owner = owner;
-  }
+  // todo
 
   @Override
   public String toString() {
@@ -66,7 +67,7 @@ class Board implements IdentifiableEntity<ObjectId> {
         "identifier=" + this.identifier +
         ", name='" + this.name + '\'' +
         ", labels=" + this.labels +
-        ", owner=" + this.owner +
+//        ", owner=" + this.owner +
         '}';
   }
 

@@ -6,8 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.Arrays;
-import life.coachy.backend.old_user.dto.UserUpdateDto;
-import life.coachy.backend.old_user.dto.UserUpdateDtoBuilder;
 import org.bson.types.ObjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;

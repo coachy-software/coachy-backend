@@ -5,7 +5,6 @@ import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
 import life.coachy.backend.email.SmtpServerRule;
-import life.coachy.backend.old_user.UserFacade;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

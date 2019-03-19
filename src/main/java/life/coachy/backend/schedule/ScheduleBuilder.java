@@ -3,7 +3,6 @@ package life.coachy.backend.schedule;
 import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
-import life.coachy.backend.old_user.dto.UserDto;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -11,8 +10,8 @@ class ScheduleBuilder implements Buildable<Schedule> {
 
   ObjectId identifier;
   String name;
-  UserDto creator;
-  UserDto charge;
+//  UserDto creator;
+//  UserDto charge;
   String note;
   LocalDateTime createdAt;
   LocalDateTime updatedAt;
@@ -35,15 +34,15 @@ class ScheduleBuilder implements Buildable<Schedule> {
     return this;
   }
 
-  ScheduleBuilder withCreator(UserDto creator) {
-    this.creator = creator;
-    return this;
-  }
-
-  ScheduleBuilder withCharge(UserDto charge) {
-    this.charge = charge;
-    return this;
-  }
+//  ScheduleBuilder withCreator(UserDto creator) {
+//    this.creator = creator;
+//    return this;
+//  }
+//
+//  ScheduleBuilder withCharge(UserDto charge) {
+//    this.charge = charge;
+//    return this;
+//  }
 
   ScheduleBuilder withNote(String note) {
     this.note = note;

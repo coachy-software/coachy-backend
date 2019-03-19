@@ -4,8 +4,6 @@ import com.google.common.collect.Sets;
 import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
-import life.coachy.backend.old_user.dto.UserRegistrationDto;
-import life.coachy.backend.old_user.dto.UserRegistrationDtoBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

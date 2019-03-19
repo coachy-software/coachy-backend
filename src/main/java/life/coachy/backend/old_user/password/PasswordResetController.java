@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
 import javax.validation.Valid;
 import life.coachy.backend.email.EmailFacade;
-import life.coachy.backend.old_user.UserFacade;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class PasswordResetController {
 
-  private final UserFacade userFacade;
+//  private final UserFacade userFacade;
   private final EmailFacade emailService;
   private final PasswordResetTokenRepository repository;
 
@@ -29,9 +28,9 @@ class PasswordResetController {
   private String resetLink;
 
   @Autowired
-  public PasswordResetController(UserFacade userFacade, EmailFacade emailFacade,
+  public PasswordResetController(EmailFacade emailFacade,
       PasswordResetTokenRepository repository) {
-    this.userFacade = userFacade;
+//    this.userFacade = userFacade;
     this.emailService = emailFacade;
     this.repository = repository;
   }
@@ -44,9 +43,9 @@ class PasswordResetController {
   })
   @PostMapping("/api/create-token/{email:.+}")
   public ResponseEntity<PasswordResetTokenDto> createToken(@PathVariable @ApiParam("Requester's email") String email) {
-    if (!this.userFacade.exists(email)) {
-      return ResponseEntity.notFound().build();
-    }
+//    if (!this.userFacade.exists(email)) {
+//      return ResponseEntity.notFound().build();
+//    }
 
     if (this.repository.findById(email).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -75,7 +74,7 @@ class PasswordResetController {
     }
 
     String email = passwordResetToken.get().getEmail();
-    this.userFacade.resetPassword(email, dto.getPassword());
+//    this.userFacade.resetPassword(email, dto.getPassword());
     this.repository.deleteById(email);
 
     return ResponseEntity.noContent().build();

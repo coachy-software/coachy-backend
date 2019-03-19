@@ -2,7 +2,6 @@ package life.coachy.backend.old_user.dto;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import life.coachy.backend.old_user.UserMapper;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;

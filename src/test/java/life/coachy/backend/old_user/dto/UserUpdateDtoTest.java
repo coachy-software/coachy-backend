@@ -1,7 +1,6 @@
 package life.coachy.backend.old_user.dto;
 
 
-import life.coachy.backend.old_user.UserMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

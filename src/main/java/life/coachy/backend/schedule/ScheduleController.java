@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import life.coachy.backend.schedule.dto.ScheduleDto;
 import life.coachy.backend.schedule.dto.ScheduleUpdateDto;
-import life.coachy.backend.old_user.UserFacade;
 import life.coachy.backend.util.AbstractCrudController;
 import life.coachy.backend.util.PredicateResponseFactory;
 import life.coachy.backend.util.validation.ValidationUtil;
@@ -33,15 +32,15 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
 
   private final SmartValidator smartValidator;
   private final ScheduleCrudService service;
-  private final UserFacade userFacade;
+//  private final UserFacade userFacade;
 
   @Autowired
   protected ScheduleController(@Qualifier("localValidatorFactoryBean") SmartValidator smartValidator,
-      ScheduleCrudService service, UserFacade userFacade) {
+      ScheduleCrudService service) {
     super(service);
     this.smartValidator = smartValidator;
     this.service = service;
-    this.userFacade = userFacade;
+//    this.userFacade = userFacade;
   }
 
   @PreAuthorize(SPEL_EXPRESSION)
@@ -56,9 +55,9 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
   protected ResponseEntity<Schedule> read(@PathVariable ObjectId id) {
-    if (!this.userFacade.hasPermission("schedule." + id + ".read")) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+//    if (!this.userFacade.hasPermission("schedule." + id + ".read")) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
 
     return super.read(id);
   }
@@ -67,19 +66,19 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
   @Override
   protected ResponseEntity<?> update(@RequestBody ScheduleUpdateDto dto, @PathVariable ObjectId id,
       BindingResult result) {
-    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
-
+//    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
+//
     return ValidationUtil.validate(dto, this.smartValidator, result, () -> super.update(dto, id, result));
   }
 
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
   protected ResponseEntity<?> partialUpdate(@RequestBody ScheduleUpdateDto dto, @PathVariable ObjectId id) {
-    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
+//    if (!this.userFacade.hasPermission("schedule." + id + ".update")) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
 
     return super.partialUpdate(dto, id);
   }
@@ -87,10 +86,10 @@ class ScheduleController extends AbstractCrudController<Schedule, ObjectId, Sche
   @PreAuthorize(SPEL_EXPRESSION)
   @Override
   protected ResponseEntity<Schedule> remove(@PathVariable ObjectId id) {
-    if (!this.userFacade.hasPermission("schedule." + id + ".delete")) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
-
+//    if (!this.userFacade.hasPermission("schedule." + id + ".delete")) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//    }
+//
     return super.remove(id);
   }
 

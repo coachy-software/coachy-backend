@@ -2,7 +2,7 @@ package life.coachy.backend.user.domain;
 
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 
-class UserFacade {
+public class UserFacade {
 
   private final UserOperationsService userOperationsService;
   private final UserCrudService userCrudService;

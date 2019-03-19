@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDtoBuilder;
-import life.coachy.backend.old_user.dto.UserDto;
-import life.coachy.backend.old_user.dto.UserDtoBuilder;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
