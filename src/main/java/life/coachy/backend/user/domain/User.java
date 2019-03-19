@@ -21,4 +21,23 @@ class User {
   private Set<String> permissions;
   private ObjectId boardIdentifier;
 
+  User(UserBuilder builder) {
+    this.identifier = builder.identifier;
+    this.username = builder.username;
+    this.displayName = builder.displayName;
+    this.password = builder.password;
+    this.email = builder.email;
+    this.avatar = builder.avatar;
+    this.accountType = builder.accountType;
+    this.roles = builder.roles;
+    this.permissions = builder.permissions;
+    this.boardIdentifier = builder.boardIdentifier;
+  }
+
+  User() {}
+
+  public static UserBuilder builder() {
+    return UserBuilder.create();
+  }
+
 }

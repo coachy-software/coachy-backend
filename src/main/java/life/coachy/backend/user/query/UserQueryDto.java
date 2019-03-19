@@ -2,6 +2,7 @@ package life.coachy.backend.user.query;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
@@ -16,9 +17,11 @@ public class UserQueryDto implements QueryDtoMarker {
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   private String username;
   private String displayName;
+  private String password;
   private String email;
   private String avatar;
   private AccountTypeDto accountType;
+  private Set<String> roles;
   private Set<String> permissions;
   private ObjectId boardIdentifier;
 
@@ -34,6 +37,10 @@ public class UserQueryDto implements QueryDtoMarker {
     return this.displayName;
   }
 
+  public String getPassword() {
+    return this.password;
+  }
+
   public String getEmail() {
     return this.email;
   }
@@ -47,7 +54,11 @@ public class UserQueryDto implements QueryDtoMarker {
   }
 
   public Set<String> getPermissions() {
-    return this.permissions;
+    return ImmutableSet.copyOf(this.permissions);
+  }
+
+  public Set<String> getRoles() {
+    return ImmutableSet.copyOf(this.roles);
   }
 
   public ObjectId getBoardIdentifier() {

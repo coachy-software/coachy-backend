@@ -1,7 +1,6 @@
-package life.coachy.backend.old_user;
+package life.coachy.backend.user.domain;
 
 import java.util.Set;
-import java.util.SortedSet;
 import life.coachy.backend.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -14,13 +13,13 @@ final class UserBuilder implements Buildable<User> {
   String email;
   String avatar;
   AccountType accountType;
-  SortedSet<String> roles;
+  Set<String> roles;
   Set<String> permissions;
   ObjectId boardIdentifier;
 
   private UserBuilder() {}
 
-  public static UserBuilder createBuilder() { return new UserBuilder(); }
+  public static UserBuilder create() { return new UserBuilder(); }
 
   public UserBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
@@ -57,7 +56,7 @@ final class UserBuilder implements Buildable<User> {
     return this;
   }
 
-  public UserBuilder withRoles(SortedSet<String> roles) {
+  public UserBuilder withRoles(Set<String> roles) {
     this.roles = roles;
     return this;
   }

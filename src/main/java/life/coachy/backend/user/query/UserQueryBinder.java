@@ -1,9 +1,8 @@
 package life.coachy.backend.user.query;
 
-import life.coachy.backend.old_user.QUser;
-import life.coachy.backend.util.AbstractQueryBinder;
+import life.coachy.backend.infrastructure.query.AbstractQueryBinder;
 
-class UserQueryBinder extends AbstractQueryBinder<QUser> {
+public class UserQueryBinder extends AbstractQueryBinder<QUserQueryDto> {
 
 }
 
