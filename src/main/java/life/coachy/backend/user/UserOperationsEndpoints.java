@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@ApiOperation("Unconventional POST operations")
 @RestController
 @RequestMapping("api/users")
 class UserOperationsEndpoints {

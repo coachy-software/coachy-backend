@@ -27,7 +27,7 @@ class UserCrudService {
     this.userRepository.deleteById(id);
   }
 
-  void convertAndSave(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
+  void convertPropertiesToMapAndSave(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
     this.userRepository.updateEntireEntity(id, OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {}));
   }
 

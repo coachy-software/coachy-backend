@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 interface UserUpdateRepositoryExtension {
 
@@ -16,9 +17,11 @@ interface UserUpdateRepositoryExtension {
 class UserUpdateRepositoryExtensionImpl implements UserUpdateRepositoryExtension {
 
   private final MongoTemplate mongoTemplate;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserUpdateRepositoryExtensionImpl(MongoTemplate mongoTemplate) {
+  UserUpdateRepositoryExtensionImpl(MongoTemplate mongoTemplate, PasswordEncoder passwordEncoder) {
     this.mongoTemplate = mongoTemplate;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -26,8 +29,13 @@ class UserUpdateRepositoryExtensionImpl implements UserUpdateRepositoryExtension
     Query query = new Query(Criteria.where("_id").is(id));
     Update update = new Update();
 
-    propertiesToUpdate.forEach(update::set);
-
+    propertiesToUpdate.forEach((key, value) -> {
+      if ("password".equals(key)) {
+        value = this.passwordEncoder.encode(String.valueOf(value));
+      }
+      update.set(key, value);
+    });
+    
     this.mongoTemplate.updateFirst(query, update, User.class);
   }
 

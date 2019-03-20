@@ -27,15 +27,17 @@ class UserOperationsService {
   }
 
   void checkIfUsernameAlreadyExists(ObjectId id, String username, Runnable runnable) {
-    Optional<UserQueryDto> queryDto = this.userQueryDtoRepository.findById(id);
-    boolean isUsernameEqualToPrincipalUsername = queryDto.isPresent() && username.equals(queryDto.get().getUsername());
+    this.checkIfExists(id, () -> {
+      Optional<UserQueryDto> queryDto = this.userQueryDtoRepository.findById(id);
+      boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.get().getUsername());
+      boolean isUsernameExists = this.userQueryDtoRepository.existsByUsername(username);
 
-    if (!queryDto.isPresent() || isUsernameEqualToPrincipalUsername) {
-      runnable.run();
-      return;
-    }
-
-    throw new UserAlreadyExistsException();
+      if (!isUsernameExists || isUsernameEqualToPrincipalUsername) {
+        runnable.run();
+        return;
+      }
+      throw new UserAlreadyExistsException();
+    });
   }
 
   void checkIfExists(ObjectId id, Runnable runnable) {

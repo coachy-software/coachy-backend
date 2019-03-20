@@ -21,7 +21,11 @@ public class UserFacade {
   }
 
   public void update(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
-    this.operationsService.checkIfUsernameAlreadyExists(id, dto.getUsername(), () -> this.crudService.convertAndSave(id, dto));
+    this.operationsService.checkIfUsernameAlreadyExists(id, dto.getUsername(), () -> this.crudService.convertPropertiesToMapAndSave(id, dto));
+  }
+
+  public void delete(ObjectId id) {
+    this.operationsService.checkIfExists(id, () -> this.crudService.delete(id));
   }
 
 }

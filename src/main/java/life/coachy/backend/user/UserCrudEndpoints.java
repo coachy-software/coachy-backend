@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@ApiOperation("Basic crud operations")
 @RestController
 @RequestMapping("api/users")
 class UserCrudEndpoints {
@@ -48,7 +50,7 @@ class UserCrudEndpoints {
     return ResponseEntity.ok(this.queryOperationsFactory.obtainOperation(predicate, pageable, this.repository));
   }
 
-  @ApiOperation("Displays specified user query data transfer object")
+  @ApiOperation("Displays specified user query data transfer object by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),
       @ApiResponse(code = 200, message = "Successfully displayed")
@@ -58,9 +60,26 @@ class UserCrudEndpoints {
     return ResponseEntity.ok(this.service.fetchOne(id));
   }
 
+  @ApiOperation("Updates entire user entity by identifier")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "User not found"),
+      @ApiResponse(code = 409, message = "User already exists"),
+      @ApiResponse(code = 204, message = "Successfully updated")
+  })
   @PutMapping("{id}")
   public ResponseEntity<UserQueryDto> update(@PathVariable ObjectId id, @RequestBody @Valid UserUpdateEntireEntityCommandDto dto) {
     this.facade.update(id, dto);
+    return ResponseEntity.noContent().build();
+  }
+
+  @ApiOperation("Deletes user by identifier")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "User not found"),
+      @ApiResponse(code = 204, message = "Successfully deleted")
+  })
+  @DeleteMapping("{id}")
+  public ResponseEntity<UserQueryDto> delete(@PathVariable ObjectId id) {
+    this.facade.delete(id);
     return ResponseEntity.noContent().build();
   }
 
