@@ -68,7 +68,7 @@ dependencies {
   testCompile('com.icegreen:greenmail:1.5.5')
   testCompile('org.springframework.boot:spring-boot-starter-test')
   testCompile('org.springframework.security:spring-security-test')
-  testCompile('org.junit.jupiter:junit-jupiter-engine:5.4.0-RC1')
+  testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.0-M1')
   testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0')
 }
 
