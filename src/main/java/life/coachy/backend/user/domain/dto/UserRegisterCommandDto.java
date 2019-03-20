@@ -1,6 +1,8 @@
 package life.coachy.backend.user.domain.dto;
 
-public class UserRegisterCommandDto {
+import life.coachy.backend.infrastructure.command.CommandDtoMarker;
+
+public class UserRegisterCommandDto implements CommandDtoMarker {
 
   private String email;
   private String username;

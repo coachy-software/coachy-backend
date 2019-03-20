@@ -11,4 +11,8 @@ public interface UserQueryDtoRepository extends QueryFetchAllRepository<UserQuer
 
   boolean existsByUsernameOrEmail(String username, String email);
 
+  boolean existsByIdentifier(ObjectId id);
+
+  boolean existsByUsername(String username);
+
 }

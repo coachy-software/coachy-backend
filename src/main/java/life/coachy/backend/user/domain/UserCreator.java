@@ -9,11 +9,11 @@ class UserCreator {
 
   private final PasswordEncoder passwordEncoder;
 
-  public UserCreator(PasswordEncoder passwordEncoder) {
+  UserCreator(PasswordEncoder passwordEncoder) {
     this.passwordEncoder = passwordEncoder;
   }
 
-  public User from(UserRegisterCommandDto dto) {
+  User from(UserRegisterCommandDto dto) {
     return User.builder()
         .withUsername(dto.getUsername())
         .withEmail(dto.getEmail())

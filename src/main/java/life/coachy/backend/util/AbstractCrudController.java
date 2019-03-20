@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import life.coachy.backend.util.dto.AbstractDto;
 import life.coachy.backend.util.validation.ValidationUtil;
+import org.apache.commons.beanutils.converters.BooleanConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

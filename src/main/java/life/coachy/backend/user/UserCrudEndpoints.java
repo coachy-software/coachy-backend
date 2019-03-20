@@ -8,7 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.user.domain.UserFacade;
-import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
+import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
 import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryDtoRepository;
@@ -17,17 +17,16 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("new_users")
+@RequestMapping("api/users")
 class UserCrudEndpoints {
 
   private final UserFacade facade;
@@ -59,16 +58,10 @@ class UserCrudEndpoints {
     return ResponseEntity.ok(this.service.fetchOne(id));
   }
 
-  @ApiOperation("Creates an user")
-  @ApiResponses({
-      @ApiResponse(code = 201, message = "Successfully created"),
-      @ApiResponse(code = 400, message = "Validation error"),
-      @ApiResponse(code = 409, message = "User with that email/username already exists")
-  })
-  @PostMapping
-  public ResponseEntity<UserRegisterCommandDto> create(@Valid @RequestBody UserRegisterCommandDto dto) {
-    this.facade.register(dto);
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+  @PutMapping("{id}")
+  public ResponseEntity<UserQueryDto> update(@PathVariable ObjectId id, @RequestBody @Valid UserUpdateEntireEntityCommandDto dto) {
+    this.facade.update(id, dto);
+    return ResponseEntity.noContent().build();
   }
 
 }
