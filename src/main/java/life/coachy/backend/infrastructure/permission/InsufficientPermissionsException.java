@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.FORBIDDEN, reason = "No permissions")
-class UnfulfilledPermissionsException extends RuntimeException {
+class InsufficientPermissionsException extends RuntimeException {
 
 }

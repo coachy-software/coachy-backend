@@ -1,4 +1,4 @@
-package life.coachy.backend.util.security;
+package life.coachy.backend.infrastructure.authentication;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-@AuthenticationPrincipal(expression = "#this instanceof T(String) ? null : old_user")
+@AuthenticationPrincipal(expression = "#this instanceof T(String) ? null : userQueryDto")
 @Documented
 public @interface AuthenticatedUser {
 

@@ -14,6 +14,10 @@ class UserDetails extends User {
     this.userQueryDto = userQueryDto;
   }
 
+  public UserQueryDto getUserQueryDto() {
+    return this.userQueryDto;
+  }
+
   @Override
   public String toString() {
     return this.userQueryDto.toString();

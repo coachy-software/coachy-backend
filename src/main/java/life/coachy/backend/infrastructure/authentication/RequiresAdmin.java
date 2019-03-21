@@ -1,4 +1,4 @@
-package life.coachy.backend.util.security;
+package life.coachy.backend.infrastructure.authentication;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package life.coachy.backend.util.security;
+package life.coachy.backend.infrastructure.authentication;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@PreAuthorize("isAuthenticated()")
-public @interface RequiresAuthenticated {
+@PreAuthorize("hasAuthority('USER')")
+public @interface RequiresUser {
 
 }

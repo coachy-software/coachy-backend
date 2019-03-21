@@ -4,12 +4,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
+import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
+import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +41,13 @@ class UserOperationsEndpoints {
   public ResponseEntity<UserRegisterCommandDto> create(@Valid @RequestBody UserRegisterCommandDto dto) {
     this.facade.register(dto);
     return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  @RequiresAuthenticated
+  @ApiOperation("Displays current user details")
+  @GetMapping("me")
+  public ResponseEntity<UserQueryDto> me(@AuthenticatedUser UserQueryDto userQueryDto) {
+    return ResponseEntity.ok(userQueryDto);
   }
 
 }

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
+import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
@@ -15,7 +16,6 @@ import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryDtoRepository;
 import life.coachy.backend.user.query.UserQueryService;
-import life.coachy.backend.util.security.RequiresAuthenticated;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +54,6 @@ class UserCrudEndpoints {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions({"user.2137.read", "user.{id}.read"})
   @ApiOperation("Displays specified user query data transfer object by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),
@@ -65,6 +64,8 @@ class UserCrudEndpoints {
     return ResponseEntity.ok(this.service.fetchOne(id));
   }
 
+  @RequiresAuthenticated
+  @RequiresPermissions("user.{id}.update")
   @ApiOperation("Updates entire user entity by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),
@@ -77,6 +78,8 @@ class UserCrudEndpoints {
     return ResponseEntity.noContent().build();
   }
 
+  @RequiresAuthenticated
+  @RequiresPermissions("user.{id}.update")
   @ApiOperation("Deletes user by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),

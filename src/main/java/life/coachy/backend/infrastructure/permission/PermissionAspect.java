@@ -20,21 +20,23 @@ class PermissionAspect {
 
   @Around("@annotation(RequiresPermissions)")
   public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-    String hexObjectId = "";
-    for (Object arg : joinPoint.getArgs()) {
-      if (arg.getClass().equals(ObjectId.class)) {
-        hexObjectId = String.valueOf(arg);
-      }
-    }
-
     List<Boolean> permissionsValues = Lists.newArrayList();
-    this.addPermissionsValues(joinPoint, permissionsValues, hexObjectId);
+    this.addPermissionsValues(joinPoint, permissionsValues, this.getHexObjectId(joinPoint));
 
     if (!permissionsValues.contains(false)) {
       return joinPoint.proceed();
     }
 
-    throw new UnfulfilledPermissionsException();
+    throw new InsufficientPermissionsException();
+  }
+
+  private String getHexObjectId(ProceedingJoinPoint joinPoint) {
+    for (Object arg : joinPoint.getArgs()) {
+      if (arg.getClass().equals(ObjectId.class)) {
+        return String.valueOf(arg);
+      }
+    }
+    return "";
   }
 
   private void addPermissionsValues(ProceedingJoinPoint joinPoint, List<Boolean> permissionsValues, String hexObjectId) {
