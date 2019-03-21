@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
+import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
@@ -13,6 +15,7 @@ import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryDtoRepository;
 import life.coachy.backend.user.query.UserQueryService;
+import life.coachy.backend.util.security.RequiresAuthenticated;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ApiOperation("Basic crud operations")
 @RestController
-@RequestMapping("api/users")
+@RequestMapping(ApiLayers.USERS)
 class UserCrudEndpoints {
 
   private final UserFacade facade;
@@ -50,6 +53,8 @@ class UserCrudEndpoints {
     return ResponseEntity.ok(this.queryOperationsFactory.obtainOperation(predicate, pageable, this.repository));
   }
 
+  @RequiresAuthenticated
+  @RequiresPermissions({"user.2137.read", "user.{id}.read"})
   @ApiOperation("Displays specified user query data transfer object by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),

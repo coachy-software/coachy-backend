@@ -65,4 +65,20 @@ public class UserQueryDto implements QueryDtoMarker {
     return this.boardIdentifier;
   }
 
+  @Override
+  public String toString() {
+    return "UserQueryDto{" +
+        "identifier=" + this.identifier +
+        ", username='" + this.username + '\'' +
+        ", displayName='" + this.displayName + '\'' +
+        ", password='" + this.password + '\'' +
+        ", email='" + this.email + '\'' +
+        ", avatar='" + this.avatar + '\'' +
+        ", accountType=" + this.accountType +
+        ", roles=" + this.roles +
+        ", permissions=" + this.permissions +
+        ", boardIdentifier=" + this.boardIdentifier +
+        '}';
+  }
+
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
+import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ApiOperation("Unconventional POST operations")
 @RestController
-@RequestMapping("api/users")
+@RequestMapping(ApiLayers.USERS)
 class UserOperationsEndpoints {
 
   private final UserFacade facade;
