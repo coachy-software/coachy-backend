@@ -1,6 +1,12 @@
 package life.coachy.backend.user.domain;
 
+import com.google.common.collect.Sets;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import life.coachy.backend.user.domain.exception.UserAlreadyExistsException;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
@@ -12,15 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 class UserOperationsService {
 
-  private final UserQueryDtoRepository userQueryDtoRepository;
+  private final UserQueryDtoRepository queryDtoRepository;
+  private final UserRepository repository;
 
   @Autowired
-  public UserOperationsService(UserQueryDtoRepository userQueryDtoRepository) {
-    this.userQueryDtoRepository = userQueryDtoRepository;
+  public UserOperationsService(UserQueryDtoRepository queryDtoRepository, UserRepository repository) {
+    this.queryDtoRepository = queryDtoRepository;
+    this.repository = repository;
   }
 
   void checkIfUsernameAndEmailAlreadyExists(String username, String email, Runnable runnable) {
-    if (this.userQueryDtoRepository.existsByUsernameOrEmail(username, email)) {
+    if (this.queryDtoRepository.existsByUsernameOrEmail(username, email)) {
       throw new UserAlreadyExistsException();
     }
     runnable.run();
@@ -28,9 +36,9 @@ class UserOperationsService {
 
   void checkIfUsernameAlreadyExists(ObjectId id, String username, Runnable runnable) {
     this.checkIfExists(id, () -> {
-      Optional<UserQueryDto> queryDto = this.userQueryDtoRepository.findById(id);
+      Optional<UserQueryDto> queryDto = this.queryDtoRepository.findById(id);
       boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.get().getUsername());
-      boolean isUsernameExists = this.userQueryDtoRepository.existsByUsername(username);
+      boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
 
       if (!isUsernameExists || isUsernameEqualToPrincipalUsername) {
         runnable.run();
@@ -41,10 +49,26 @@ class UserOperationsService {
   }
 
   void checkIfExists(ObjectId id, Runnable runnable) {
-    if (!this.userQueryDtoRepository.existsByIdentifier(id)) {
+    if (!this.queryDtoRepository.existsByIdentifier(id)) {
       throw new UserNotFoundException();
     }
     runnable.run();
+  }
+
+  void updatePermissions(ObjectId id, String... permissions) {
+    this.modifyPermissions(id, user -> Stream.of(user.getPermissions(), Sets.newHashSet(permissions))
+        .flatMap(Collection::stream)
+        .collect(Collectors.toSet()));
+  }
+
+  void removePermissions(ObjectId id, ObjectId permissionId) {
+    this.modifyPermissions(id, userQueryDto -> userQueryDto.getPermissions().stream()
+        .filter(permission -> !permission.contains(permissionId.toHexString()))
+        .collect(Collectors.toSet()));
+  }
+
+  private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
+    this.queryDtoRepository.findById(id).ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
   }
 
 }

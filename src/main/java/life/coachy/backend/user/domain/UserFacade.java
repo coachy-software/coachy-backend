@@ -28,4 +28,12 @@ public class UserFacade {
     this.operationsService.checkIfExists(id, () -> this.crudService.delete(id));
   }
 
+  public void givePermissions(ObjectId id, String... permissions) {
+    this.operationsService.updatePermissions(id, permissions);
+  }
+
+  public void nullifyPermissions(ObjectId id, ObjectId permissionId) {
+    this.operationsService.removePermissions(id, permissionId);
+  }
+
 }
