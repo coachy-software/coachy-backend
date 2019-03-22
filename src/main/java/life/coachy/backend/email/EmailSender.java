@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-class EmailService {
+@Component
+class EmailSender {
 
   private final JavaMailSender emailSender;
 
   @Autowired
-  public EmailService(JavaMailSender emailSender) {
+  public EmailSender(JavaMailSender emailSender) {
     this.emailSender = emailSender;
   }
 

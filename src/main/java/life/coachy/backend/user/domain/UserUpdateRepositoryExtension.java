@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 interface UserUpdateRepositoryExtension {
 
   void updateEntireEntity(ObjectId id, Map<String, Object> propertiesToUpdate);
-
   void updatePermissionsById(ObjectId id, Set<String> permissions);
+  void updatePasswordByEmail(String email, String newPassword);
 
 }
 
@@ -48,6 +48,14 @@ class UserUpdateRepositoryExtensionImpl implements UserUpdateRepositoryExtension
     Update update = new Update();
 
     update.set("permissions", permissions);
+    this.mongoTemplate.updateFirst(query, update, User.class);
+  }
+
+  public void updatePasswordByEmail(String email, String newPassword) {
+    Query query = new Query(Criteria.where("email").is(email));
+    Update update = new Update();
+
+    update.set("password", this.passwordEncoder.encode(newPassword));
     this.mongoTemplate.updateFirst(query, update, User.class);
   }
 

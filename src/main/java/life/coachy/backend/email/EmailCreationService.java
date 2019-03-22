@@ -15,7 +15,7 @@ class EmailCreationService {
     this.templateEngine = templateEngine;
   }
 
-  public String createResetPasswordTemplateAsString(String link) {
+  String createResetPasswordTemplateAsString(String link) {
     Context context = new Context();
     context.setVariable("link", link);
 

@@ -1,10 +1,12 @@
-package life.coachy.backend.old_user.password;
+package life.coachy.backend.password;
 
 import com.google.common.collect.Sets;
 import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
 import life.coachy.backend.email.SmtpServerRule;
+import life.coachy.backend.password.domain.PasswordResetToken;
+import life.coachy.backend.password.domain.dto.PasswordResetCommandDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -105,10 +107,10 @@ public class PasswordResetControllerIntegrationTest {
 
     Query query = Query.query(Criteria.where("_id").is(this.dbObject.get("email")));
     PasswordResetToken passwordResetToken = this.mongoTemplate.findOne(query, PasswordResetToken.class, "password-tokens");
-    PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto("newPassword", "newPassword");
+    PasswordResetCommandDto passwordResetCommandDto = new PasswordResetCommandDto("newPassword", "newPassword");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/reset-password/{token}", passwordResetToken.getToken())
-        .content(passwordResetTokenDto.toJson().getBytes())
+        .content(passwordResetCommandDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
 
@@ -122,10 +124,10 @@ public class PasswordResetControllerIntegrationTest {
 
   @Test
   public void resetPasswordShouldReturn404WhenTokenInvalid() throws Exception {
-    PasswordResetTokenDto passwordResetTokenDto = new PasswordResetTokenDto("newPassword", "newPassword");
+    PasswordResetCommandDto passwordResetCommandDto = new PasswordResetCommandDto("newPassword", "newPassword");
 
     this.mockMvc.perform(MockMvcRequestBuilders.post("/api/reset-password/{token}", "wrongToken")
-        .content(passwordResetTokenDto.toJson().getBytes())
+        .content(passwordResetCommandDto.toJson().getBytes())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound());
 }
