@@ -1,7 +1,7 @@
 package life.coachy.backend.password.domain;
 
 import java.util.Date;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 
 final class PasswordResetBuilder implements Buildable<PasswordReset> {
 

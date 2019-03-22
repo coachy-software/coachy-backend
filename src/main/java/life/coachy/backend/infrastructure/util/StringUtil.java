@@ -1,4 +1,4 @@
-package life.coachy.backend.util;
+package life.coachy.backend.infrastructure.util;
 
 import com.google.common.base.Preconditions;
 

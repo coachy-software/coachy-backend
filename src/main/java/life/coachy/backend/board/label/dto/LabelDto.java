@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.task.dto.TaskDto;
-import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.infrastructure.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
 public class LabelDto extends AbstractDto {

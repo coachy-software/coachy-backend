@@ -6,8 +6,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.schedule.ScheduleMapper;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
-import life.coachy.backend.util.dto.AbstractDto;
-import life.coachy.backend.util.dto.DataTransferObject;
+import life.coachy.backend.infrastructure.util.dto.AbstractDto;
+import life.coachy.backend.infrastructure.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = ScheduleMapper.class, entityName = "Schedule")

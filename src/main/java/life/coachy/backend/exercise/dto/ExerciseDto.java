@@ -4,8 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.ExerciseMapper;
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
-import life.coachy.backend.util.dto.AbstractDto;
-import life.coachy.backend.util.dto.DataTransferObject;
+import life.coachy.backend.infrastructure.util.dto.AbstractDto;
+import life.coachy.backend.infrastructure.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;
 
 @DataTransferObject(mapperClass = ExerciseMapper.class, entityName = "Exercise")

@@ -5,8 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.dto.ExerciseDto;
 import life.coachy.backend.schedule.day.ScheduleDayMapper;
-import life.coachy.backend.util.dto.AbstractDto;
-import life.coachy.backend.util.dto.DataTransferObject;
+import life.coachy.backend.infrastructure.util.dto.AbstractDto;
+import life.coachy.backend.infrastructure.util.dto.DataTransferObject;
 
 @DataTransferObject(mapperClass = ScheduleDayMapper.class, entityName = "ScheduleDay")
 public class ScheduleDayDto extends AbstractDto {

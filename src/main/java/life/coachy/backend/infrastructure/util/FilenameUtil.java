@@ -1,4 +1,4 @@
-package life.coachy.backend.util;
+package life.coachy.backend.infrastructure.util;
 
 /*
   @source https://github.com/apache/commons-io/blob/master/src/main/java/org/apache/commons/io/FilenameUtils.java

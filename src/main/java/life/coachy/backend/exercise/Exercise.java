@@ -3,7 +3,6 @@ package life.coachy.backend.exercise;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
-import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 

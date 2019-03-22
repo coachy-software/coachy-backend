@@ -1,6 +1,6 @@
 package life.coachy.backend.infrastructure.constants;
 
-public class RegexConstants {
+public final class RegexConstants {
 
   private RegexConstants() {}
 

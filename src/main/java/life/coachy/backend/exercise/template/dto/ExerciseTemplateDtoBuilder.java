@@ -1,7 +1,7 @@
 package life.coachy.backend.exercise.template.dto;
 
 import java.util.List;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 public final class ExerciseTemplateDtoBuilder implements Buildable<ExerciseTemplateDto> {

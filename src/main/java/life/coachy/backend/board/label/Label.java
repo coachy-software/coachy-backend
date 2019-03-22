@@ -3,9 +3,7 @@ package life.coachy.backend.board.label;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 import life.coachy.backend.board.task.dto.TaskDto;
-import life.coachy.backend.util.IdentifiableEntity;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 

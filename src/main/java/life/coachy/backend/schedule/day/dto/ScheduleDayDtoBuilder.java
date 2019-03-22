@@ -2,7 +2,7 @@ package life.coachy.backend.schedule.day.dto;
 
 import java.util.List;
 import life.coachy.backend.exercise.dto.ExerciseDto;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 
 public final class ScheduleDayDtoBuilder implements Buildable<ScheduleDayDto> {
 

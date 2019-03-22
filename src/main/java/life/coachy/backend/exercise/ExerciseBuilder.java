@@ -1,7 +1,7 @@
 package life.coachy.backend.exercise;
 
 import life.coachy.backend.exercise.template.dto.ExerciseTemplateDto;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 class ExerciseBuilder implements Buildable<Exercise> {

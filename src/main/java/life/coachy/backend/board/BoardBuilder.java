@@ -2,7 +2,7 @@ package life.coachy.backend.board;
 
 import java.util.List;
 import life.coachy.backend.board.label.dto.LabelDto;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 final class BoardBuilder implements Buildable<Board> {

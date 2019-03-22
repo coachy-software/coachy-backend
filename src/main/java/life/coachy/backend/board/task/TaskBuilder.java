@@ -1,6 +1,6 @@
 package life.coachy.backend.board.task;
 
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 final class TaskBuilder implements Buildable<Task> {

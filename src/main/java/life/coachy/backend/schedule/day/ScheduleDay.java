@@ -2,7 +2,6 @@ package life.coachy.backend.schedule.day;
 
 import java.util.List;
 import life.coachy.backend.exercise.dto.ExerciseDto;
-import life.coachy.backend.util.IdentifiableEntity;
 import org.springframework.data.annotation.Id;
 
 class ScheduleDay implements IdentifiableEntity<String> {

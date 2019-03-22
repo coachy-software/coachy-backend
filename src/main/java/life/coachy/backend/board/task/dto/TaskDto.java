@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import life.coachy.backend.util.dto.AbstractDto;
+import life.coachy.backend.infrastructure.util.dto.AbstractDto;
 import org.bson.types.ObjectId;
 
 public class TaskDto extends AbstractDto {

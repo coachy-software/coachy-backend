@@ -2,6 +2,7 @@ package life.coachy.backend.error;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+import life.coachy.backend.infrastructure.constants.ApiLayers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
 
-  private final static String ERROR_PATH = "/error";
   private final ErrorAttributes errorAttributes;
 
   @Autowired
@@ -21,10 +21,10 @@ class ErrorController implements org.springframework.boot.web.servlet.error.Erro
 
   @Override
   public String getErrorPath() {
-    return ERROR_PATH;
+    return ApiLayers.ERROR;
   }
 
-  @RequestMapping(value = ERROR_PATH) // For all HTTP methods
+  @RequestMapping(ApiLayers.ERROR) // For all HTTP methods
   public ErrorDto error(WebRequest webRequest, HttpServletResponse response) {
     Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);
     return new ErrorDto(response.getStatus(), errorAttributes.get("error").toString());

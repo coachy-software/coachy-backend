@@ -1,7 +1,7 @@
 package life.coachy.backend.user.domain;
 
 import java.util.Set;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 final class UserBuilder implements Buildable<User> {

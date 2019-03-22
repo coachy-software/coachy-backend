@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
-import life.coachy.backend.util.FilenameUtil;
+import life.coachy.backend.infrastructure.util.FilenameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

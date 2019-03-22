@@ -3,14 +3,12 @@ package life.coachy.backend.board;
 import life.coachy.backend.board.dto.BoardCreateDto;
 import life.coachy.backend.board.dto.BoardDto;
 import life.coachy.backend.board.dto.BoardUpdateDto;
-import life.coachy.backend.util.MapStructMapper;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface BoardMapper extends MapStructMapper {
+public interface BoardMapper {
 
   BoardMapper INSTANCE = Mappers.getMapper(BoardMapper.class);
 

@@ -1,4 +1,4 @@
-package life.coachy.backend.email;
+package life.coachy.backend.email.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

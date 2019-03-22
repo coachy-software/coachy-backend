@@ -1,4 +1,4 @@
-package life.coachy.backend.util.validation;
+package life.coachy.backend.infrastructure.validation;
 
 import java.lang.reflect.InvocationTargetException;
 import javax.validation.ConstraintValidator;

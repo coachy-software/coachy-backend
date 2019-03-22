@@ -1,7 +1,7 @@
 package life.coachy.backend.exercise.template.dto;
 
 import java.util.List;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 
 public final class ExerciseTemplateUpdateDtoBuilder implements Buildable<ExerciseTemplateUpdateDto> {
 

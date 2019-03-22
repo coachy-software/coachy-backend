@@ -3,7 +3,7 @@ package life.coachy.backend.schedule.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
-import life.coachy.backend.util.Buildable;
+import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
 public final class ScheduleDtoBuilder implements Buildable<ScheduleDto> {
