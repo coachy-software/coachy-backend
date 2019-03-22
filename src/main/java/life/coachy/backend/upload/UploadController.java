@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +44,8 @@ class UploadController {
   @PostMapping(value = "/api/uploads", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Map<String, String>> upload(
       @RequestPart @ApiParam("File to upload") MultipartFile file,
-      @RequestParam @ApiParam("Directory path to store uploading file") String target) throws IOException {
+      @RequestParam @ApiParam("Directory path to store uploading file") String target
+  ) throws IOException {
     if (!Arrays.asList("jpg", "png", "jpeg").contains(FilenameUtil.getExtension(file.getOriginalFilename()))) {
       return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
     }
@@ -66,18 +66,25 @@ class UploadController {
   public ResponseEntity<Resource> download(
       @PathVariable @ApiParam("File to display") String fileName,
       @PathVariable @ApiParam("Directory path where file is stored") String layerName,
-      HttpServletRequest request) throws IOException {
+      HttpServletRequest request
+  ) throws IOException {
     Resource resource = this.uploadService.loadAsResource(fileName, layerName);
+    String contentType = this.getContentType(request, resource);
+
+    return ResponseEntity.ok()
+        .contentType(MediaType.parseMediaType(contentType))
+        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+        .body(resource);
+  }
+
+  private String getContentType(HttpServletRequest request, Resource resource) throws IOException {
     String contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
 
     if (contentType == null) {
       contentType = "application/octet-stream";
     }
 
-    return ResponseEntity.ok()
-        .contentType(MediaType.parseMediaType(contentType))
-        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-        .body(resource);
+    return contentType;
   }
 
 }

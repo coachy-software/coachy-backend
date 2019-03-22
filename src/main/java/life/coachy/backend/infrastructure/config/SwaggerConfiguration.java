@@ -1,4 +1,4 @@
-package life.coachy.backend.swagger;
+package life.coachy.backend.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

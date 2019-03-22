@@ -1,7 +1,6 @@
 package life.coachy.backend.upload;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,8 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
+import life.coachy.backend.upload.exception.UploadedFileNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -34,13 +33,8 @@ class UploadService {
     Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + File.separator + targetDirectory);
     Files.createDirectories(targetDirectoryPath);
 
-    String token = RandomString.make(32);
-    String fileName = StringUtils.cleanPath(token + file.getOriginalFilename());
-    Path path = targetDirectoryPath.resolve(fileName);
-
-    InputStream inputStream = file.getInputStream();
-    Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
-    inputStream.close();
+    String fileName = StringUtils.cleanPath(RandomString.make(64) + file.getOriginalFilename());
+    this.copyTargetFile(file, targetDirectoryPath, fileName);
 
     return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString() + "/resources/" + targetDirectory + "/" + fileName;
   }
@@ -53,11 +47,18 @@ class UploadService {
     Path filePath = targetDirectoryPath.resolve(fileName).normalize();
     Resource resource = new UrlResource(filePath.toUri());
 
-    if (resource.exists()) {
-      return resource;
-    }
+    return this.orElseThrow(resource);
+  }
 
-    throw new UploadedFileNotFoundException();
+  private Resource orElseThrow(Resource resource) {
+    return Optional.of(resource).orElseThrow(UploadedFileNotFoundException::new);
+  }
+
+  private void copyTargetFile(MultipartFile file, Path targetDirectoryPath, String fileName) throws IOException {
+    Path path = targetDirectoryPath.resolve(fileName);
+    InputStream inputStream = file.getInputStream();
+    Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+    inputStream.close();
   }
 
 

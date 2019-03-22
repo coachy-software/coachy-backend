@@ -1,14 +1,18 @@
 package life.coachy.backend.user.domain.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
+import life.coachy.backend.util.validation.Match;
 
+@Match(first = "password", second = "matchingPassword")
 public class UserRegisterCommandDto implements CommandDtoMarker {
 
-  private String email;
-  private String username;
-  private String password;
-  private String matchingPassword;
-  private AccountTypeDto accountType;
+  @NotNull @NotEmpty private String email;
+  @NotNull @NotEmpty private String username;
+  @NotNull @NotEmpty private String password;
+  @NotNull @NotEmpty private String matchingPassword;
+  @NotNull private AccountTypeDto accountType;
 
   public String getEmail() {
     return this.email;

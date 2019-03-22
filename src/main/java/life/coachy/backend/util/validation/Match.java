@@ -8,20 +8,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-/**
- * Validation annotation to validate that 2 fields have the same value. An array of fields and their matching
- * confirmation fields can be supplied.
- *
- * Example, compare 1 pair of fields:
- *
- * @Match(first = "password", second = "confirmPassword", message = "The password fields must match")
- *
- * Example, compare more than 1 pair of fields:
- * @Match.List({
- * @Match(first = "password", second = "confirmPassword", message = "The password fields must match"),
- * @Match(first = "email", second = "confirmEmail", message = "The email fields must match")})
- */
-
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = MatchValidator.class)
@@ -34,21 +20,10 @@ public @interface Match {
 
   Class<? extends Payload>[] payload() default {};
 
-  /**
-   * @return The first field
-   */
   String first();
 
-  /**
-   * @return The second field
-   */
   String second();
 
-  /**
-   * Defines several <code>@FieldMatch</code> annotations on the same element
-   *
-   * @see Match
-   */
   @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
   @Retention(RetentionPolicy.RUNTIME)
   @Documented

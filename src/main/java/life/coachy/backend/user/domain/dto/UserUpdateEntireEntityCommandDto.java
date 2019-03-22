@@ -1,16 +1,18 @@
 package life.coachy.backend.user.domain.dto;
 
 import java.util.Set;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
 
 public class UserUpdateEntireEntityCommandDto implements CommandDtoMarker {
 
-  private String username;
-  private String displayName;
-  private String password;
-  private String email;
-  private String avatar;
-  private Set<String> permissions;
+  @NotNull @NotEmpty private String username;
+  @NotNull @NotEmpty private String displayName;
+  @NotNull @NotEmpty private String password;
+  @NotNull @NotEmpty private String email;
+  @NotNull @NotEmpty private String avatar;
+  @NotNull private Set<String> permissions;
 
   public String getUsername() {
     return this.username;

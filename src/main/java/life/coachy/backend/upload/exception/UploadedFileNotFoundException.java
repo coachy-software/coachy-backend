@@ -1,9 +1,9 @@
-package life.coachy.backend.upload;
+package life.coachy.backend.upload.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class UploadedFileNotFoundException extends RuntimeException {
+public class UploadedFileNotFoundException extends RuntimeException {
 
 }
