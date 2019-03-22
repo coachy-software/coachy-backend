@@ -29,11 +29,14 @@ public class UserFacade {
   }
 
   public void givePermissions(ObjectId id, String... permissions) {
-    this.operationsService.updatePermissions(id, permissions);
+    this.operationsService.addPermissions(id, permissions);
   }
 
   public void nullifyPermissions(ObjectId id, ObjectId permissionId) {
     this.operationsService.removePermissions(id, permissionId);
   }
 
+  public void resetPassword(String email, String newPassword) {
+    this.operationsService.resetPassword(email, newPassword);
+  }
 }

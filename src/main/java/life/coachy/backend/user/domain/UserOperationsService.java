@@ -37,6 +37,7 @@ class UserOperationsService {
   void checkIfUsernameAlreadyExists(ObjectId id, String username, Runnable runnable) {
     this.checkIfExists(id, () -> {
       Optional<UserQueryDto> queryDto = this.queryDtoRepository.findById(id);
+
       boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.get().getUsername());
       boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
 
@@ -55,7 +56,7 @@ class UserOperationsService {
     runnable.run();
   }
 
-  void updatePermissions(ObjectId id, String... permissions) {
+  void addPermissions(ObjectId id, String... permissions) {
     this.modifyPermissions(id, user -> Stream.of(user.getPermissions(), Sets.newHashSet(permissions))
         .flatMap(Collection::stream)
         .collect(Collectors.toSet()));
@@ -69,6 +70,13 @@ class UserOperationsService {
 
   private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
     this.queryDtoRepository.findById(id).ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
+  }
+
+  void resetPassword(String email, String newPassword) {
+    if (!this.queryDtoRepository.existsByEmail(email)) {
+      throw new UserNotFoundException();
+    }
+    this.repository.updatePasswordByEmail(email, newPassword);
   }
 
 }

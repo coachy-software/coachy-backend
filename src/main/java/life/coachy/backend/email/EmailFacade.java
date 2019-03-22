@@ -3,6 +3,7 @@ package life.coachy.backend.email;
 import java.util.Locale;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -10,22 +11,25 @@ import org.springframework.stereotype.Component;
 public class EmailFacade {
 
   private final EmailCreationService emailCreationService;
-  private final EmailService emailService;
+  private final EmailSender emailSender;
   private final MessageSource messageSource;
 
+  @Value("${frontend.uri}")
+  private String frontendUri;
+
   @Autowired
-  public EmailFacade(EmailCreationService emailCreationService, EmailService emailService,
-      MessageSource messageSource) {
+  public EmailFacade(EmailCreationService emailCreationService, EmailSender emailSender, MessageSource messageSource) {
     this.emailCreationService = emailCreationService;
-    this.emailService = emailService;
+    this.emailSender = emailSender;
     this.messageSource = messageSource;
   }
 
-  public void sendResetPasswordEmail(String to, String resetLink) {
+  public void sendResetPasswordEmail(String to, String token) {
     try {
-      String content = this.emailCreationService.createResetPasswordTemplateAsString(resetLink);
+      String link = this.frontendUri + "reset-password/" + token;
+      String content = this.emailCreationService.createResetPasswordTemplateAsString(link);
       String topic = this.messageSource.getMessage("email.passwordReset.topic", null, Locale.getDefault());
-      this.emailService.sendMessage(to, topic, content);
+      this.emailSender.sendMessage(to, topic, content);
     } catch (MessagingException e) {
       e.printStackTrace();
     }
