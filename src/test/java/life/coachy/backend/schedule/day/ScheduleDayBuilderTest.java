@@ -2,8 +2,8 @@ package life.coachy.backend.schedule.day;
 
 import java.util.Collections;
 import java.util.List;
-import life.coachy.backend.exercise.dto.ExerciseDto;
-import life.coachy.backend.exercise.dto.ExerciseDtoBuilder;
+import life.coachy.backend.old_exercise.dto.ExerciseDto;
+import life.coachy.backend.old_exercise.dto.ExerciseDtoBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;

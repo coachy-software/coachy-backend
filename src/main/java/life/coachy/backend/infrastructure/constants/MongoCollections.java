@@ -6,5 +6,6 @@ public final class MongoCollections {
 
   public static final String USERS = "users";
   public static final String TOKENS = "tokens";
+  public static final String EXERCISES = "exercises";
 
 }
