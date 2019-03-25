@@ -79,7 +79,7 @@ class UserCrudEndpoints {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions("user.{id}.update")
+  @RequiresPermissions("user.{id}.delete")
   @ApiOperation("Deletes user by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),

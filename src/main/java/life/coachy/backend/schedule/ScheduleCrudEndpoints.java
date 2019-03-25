@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
@@ -49,6 +50,7 @@ class ScheduleCrudEndpoints {
     return ResponseEntity.ok(this.queryOperationsFactory.obtainOperation(predicate, pageable, this.queryDtoRepository));
   }
 
+  @RequiresPermissions("schedule.{id}.read")
   @RequiresAuthenticated
   @ApiOperation("Displays specified schedule query data transfer object by identifier")
   @ApiResponses({
@@ -60,6 +62,7 @@ class ScheduleCrudEndpoints {
     return ResponseEntity.ok(this.facade.fetchOne(id));
   }
 
+  @RequiresPermissions("schedule.{id}.update")
   @RequiresAuthenticated
   @ApiOperation("Updates schedule by identifier")
   @ApiResponses({
@@ -72,6 +75,7 @@ class ScheduleCrudEndpoints {
     return ResponseEntity.noContent().build();
   }
 
+  @RequiresPermissions("schedule.{id}.delete")
   @RequiresAuthenticated
   @ApiOperation("Deletes schedule by identifier")
   @ApiResponses({
