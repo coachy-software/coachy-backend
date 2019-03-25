@@ -1,32 +1,32 @@
 package life.coachy.backend.schedule.day;
 
-import java.util.List;
-import life.coachy.backend.old_exercise.dto.ExerciseDto;
+import java.util.Set;
+import life.coachy.backend.exercise.domain.dto.ExerciseDto;
 import life.coachy.backend.infrastructure.util.Buildable;
 
-class ScheduleDayBuilder implements Buildable<ScheduleDay> {
+final class ScheduleDayBuilder implements Buildable<ScheduleDay> {
 
   String name;
-  List<ExerciseDto> exercises;
+  Set<ExerciseDto> exercises;
   boolean trainingDay;
 
   private ScheduleDayBuilder() {}
 
-  public static ScheduleDayBuilder createBuilder() {
+  public static ScheduleDayBuilder create() {
     return new ScheduleDayBuilder();
   }
 
-  ScheduleDayBuilder withName(String name) {
+  public ScheduleDayBuilder withName(String name) {
     this.name = name;
     return this;
   }
 
-  ScheduleDayBuilder withExercises(List<ExerciseDto> exercises) {
+  public ScheduleDayBuilder withExercises(Set<ExerciseDto> exercises) {
     this.exercises = exercises;
     return this;
   }
 
-  ScheduleDayBuilder isTrainingDay(boolean trainingDay) {
+  public ScheduleDayBuilder withTrainingDay(boolean trainingDay) {
     this.trainingDay = trainingDay;
     return this;
   }

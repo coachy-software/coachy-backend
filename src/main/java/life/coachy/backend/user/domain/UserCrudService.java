@@ -1,8 +1,6 @@
 package life.coachy.backend.user.domain;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
+import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
 import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 class UserCrudService {
 
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private final UserRepository userRepository;
+  private final PropertiesToMapConverter propertiesToMapConverter;
 
   @Autowired
-  public UserCrudService(UserRepository userRepository) {
+  public UserCrudService(UserRepository userRepository, PropertiesToMapConverter propertiesToMapConverter) {
     this.userRepository = userRepository;
+    this.propertiesToMapConverter = propertiesToMapConverter;
   }
 
   void save(User user) {
@@ -28,7 +27,7 @@ class UserCrudService {
   }
 
   void convertPropertiesToMapAndSave(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
-    this.userRepository.updateEntireEntity(id, OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {}));
+    this.userRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto));
   }
 
 }

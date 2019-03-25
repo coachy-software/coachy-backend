@@ -2,7 +2,7 @@ package life.coachy.backend.exercise.domain.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.old_exercise.template.dto.ExerciseTemplateDto;
+import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandDto;
 import org.bson.types.ObjectId;
 
 public class ExerciseDto {
@@ -12,18 +12,7 @@ public class ExerciseDto {
   @NotNull private int sets;
   @NotNull private int reps;
   private int miniSets;
-  private ExerciseTemplateDto template;
-
-  ExerciseDto(ExerciseDtoBuilder builder) {
-    this.identifier = builder.identifier;
-    this.name = builder.name;
-    this.sets = builder.sets;
-    this.reps = builder.reps;
-    this.miniSets = builder.miniSets;
-    this.template = builder.template;
-  }
-
-  ExerciseDto() {}
+  private ExerciseTemplateCommandDto template;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -45,7 +34,7 @@ public class ExerciseDto {
     return this.miniSets;
   }
 
-  public ExerciseTemplateDto getTemplate() {
+  public ExerciseTemplateCommandDto getTemplate() {
     return this.template;
   }
 
