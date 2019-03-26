@@ -12,11 +12,11 @@ public class ScheduleFacade {
     this.service = service;
   }
 
-  public void delete(ObjectId id) {
+  public void delete(ObjectId id) { // todo same here
     this.service.delete(id);
   }
 
-  public void update(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
+  public void update(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) { // todo check if exists
     this.service.convertPropertiesToMapAndSave(id, dto);
   }
 
