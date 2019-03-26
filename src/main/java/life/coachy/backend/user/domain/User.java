@@ -9,8 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(MongoCollections.USERS)
 class User {
 
-  @Id
-  private ObjectId identifier;
+  @Id private ObjectId identifier;
   private String username;
   private String displayName;
   private String password;

@@ -1,4 +1,4 @@
-package life.coachy.backend.board;
+package life.coachy.backend.old_board;
 
 import java.util.Optional;
 import org.bson.types.ObjectId;

@@ -1,11 +1,11 @@
-package life.coachy.backend.board.dto;
+package life.coachy.backend.old_board.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.board.BoardMapper;
-import life.coachy.backend.board.label.dto.LabelDto;
+import life.coachy.backend.old_board.BoardMapper;
+import life.coachy.backend.old_board.label.dto.LabelDto;
 import life.coachy.backend.infrastructure.util.dto.AbstractDto;
 import life.coachy.backend.infrastructure.util.dto.DataTransferObject;
 import org.bson.types.ObjectId;

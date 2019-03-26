@@ -1,7 +1,7 @@
 package life.coachy.backend.exercise.domain;
 
+import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandDto;
 import life.coachy.backend.infrastructure.util.Buildable;
-import life.coachy.backend.old_exercise.template.dto.ExerciseTemplateDto;
 import org.bson.types.ObjectId;
 
 final class ExerciseBuilder implements Buildable<Exercise> {
@@ -11,7 +11,7 @@ final class ExerciseBuilder implements Buildable<Exercise> {
   int sets;
   int reps;
   int miniSets;
-  ExerciseTemplateDto template;
+  ExerciseTemplateCommandDto template;
 
   private ExerciseBuilder() {}
 
@@ -44,7 +44,7 @@ final class ExerciseBuilder implements Buildable<Exercise> {
     return this;
   }
 
-  ExerciseBuilder withTemplate(ExerciseTemplateDto template) {
+  ExerciseBuilder withTemplate(ExerciseTemplateCommandDto template) {
     this.template = template;
     return this;
   }

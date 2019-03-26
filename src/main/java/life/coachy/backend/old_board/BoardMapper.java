@@ -1,8 +1,8 @@
-package life.coachy.backend.board;
+package life.coachy.backend.old_board;
 
-import life.coachy.backend.board.dto.BoardCreateDto;
-import life.coachy.backend.board.dto.BoardDto;
-import life.coachy.backend.board.dto.BoardUpdateDto;
+import life.coachy.backend.old_board.dto.BoardCreateDto;
+import life.coachy.backend.old_board.dto.BoardDto;
+import life.coachy.backend.old_board.dto.BoardUpdateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;

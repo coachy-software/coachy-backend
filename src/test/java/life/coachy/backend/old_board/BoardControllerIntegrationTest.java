@@ -1,4 +1,4 @@
-package life.coachy.backend.board;
+package life.coachy.backend.old_board;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -6,9 +6,9 @@ import com.mongodb.BasicDBObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import life.coachy.backend.board.dto.BoardCreateDto;
-import life.coachy.backend.board.dto.BoardUpdateDto;
-import life.coachy.backend.board.label.dto.LabelDto;
+import life.coachy.backend.old_board.dto.BoardCreateDto;
+import life.coachy.backend.old_board.dto.BoardUpdateDto;
+import life.coachy.backend.old_board.label.dto.LabelDto;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
@@ -61,7 +61,7 @@ public class BoardControllerIntegrationTest {
     String password = "testPassword";
 
     this.mongoTemplate.insert(BoardBuilder.createBuilder().withIdentifier(id).build(), "boards");
-    this.setUpUser(id, username, password, Sets.newHashSet("board." + id + ".read"));
+    this.setUpUser(id, username, password, Sets.newHashSet("old_board." + id + ".read"));
 
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/boards/{id}", id)
         .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
@@ -76,7 +76,7 @@ public class BoardControllerIntegrationTest {
     String password = "testPassword";
 
     this.mongoTemplate.insert(BoardBuilder.createBuilder().withIdentifier(id).build(), "boards");
-    this.setUpUser(ObjectId.get(), username, password, Sets.newHashSet("board." + id + ".wrong"));
+    this.setUpUser(ObjectId.get(), username, password, Sets.newHashSet("old_board." + id + ".wrong"));
 
     this.mockMvc.perform(MockMvcRequestBuilders.get("/api/boards/{id}", id)
         .with(SecurityMockMvcRequestPostProcessors.httpBasic(username, password)))
@@ -114,7 +114,7 @@ public class BoardControllerIntegrationTest {
     Board board = BoardBuilder.createBuilder().withIdentifier(id).withName("testName").build();
 
     this.mongoTemplate.insert(board, "boards");
-    this.setUpUser(ObjectId.get(), username, password, Sets.newHashSet("board." + id + ".update"));
+    this.setUpUser(ObjectId.get(), username, password, Sets.newHashSet("old_board." + id + ".update"));
 
     Query beforeQuery = Query.query(Criteria.where("name").is("testName"));
     Assertions.assertTrue(this.mongoTemplate.exists(beforeQuery, "boards"));

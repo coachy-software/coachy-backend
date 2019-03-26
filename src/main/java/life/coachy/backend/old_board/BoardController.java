@@ -1,8 +1,8 @@
-package life.coachy.backend.board;
+package life.coachy.backend.old_board;
 
 import io.swagger.annotations.ApiOperation;
-import life.coachy.backend.board.dto.BoardCreateDto;
-import life.coachy.backend.board.dto.BoardUpdateDto;
+import life.coachy.backend.old_board.dto.BoardCreateDto;
+import life.coachy.backend.old_board.dto.BoardUpdateDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAdmin;
 import life.coachy.backend.infrastructure.util.validation.ValidationUtil;
 import org.bson.types.ObjectId;
@@ -47,7 +47,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<Board> read(@PathVariable ObjectId id) {
-    String permission = "board." + id + ".read";
+    String permission = "old_board." + id + ".read";
 //    if (!this.userFacade.hasPermission(permission)) {
 //      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //    }
@@ -64,7 +64,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> update(@RequestBody BoardUpdateDto dto, @PathVariable ObjectId id, BindingResult result) {
-    String permission = "board." + id + ".update";
+    String permission = "old_board." + id + ".update";
 //    if (!this.userFacade.hasPermission(permission)) {
 //      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //    }
@@ -75,7 +75,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<?> partialUpdate(@RequestBody BoardUpdateDto dto, @PathVariable ObjectId id) {
-    String permission = "board." + id + ".update";
+    String permission = "old_board." + id + ".update";
 //    if (!this.userFacade.hasPermission(permission)) {
 //      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //    }
@@ -86,7 +86,7 @@ class BoardController extends AbstractCrudController<Board, ObjectId, BoardUpdat
   @Override
   @PreAuthorize(SPEL_EXPRESSION)
   protected ResponseEntity<Board> remove(@PathVariable ObjectId id) {
-    String permission = "board." + id + ".delete";
+    String permission = "old_board." + id + ".delete";
 //    if (!this.userFacade.hasPermission(permission)) {
 //      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //    }

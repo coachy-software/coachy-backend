@@ -1,7 +1,7 @@
-package life.coachy.backend.board.dto;
+package life.coachy.backend.old_board.dto;
 
 import java.util.List;
-import life.coachy.backend.board.label.dto.LabelDto;
+import life.coachy.backend.old_board.label.dto.LabelDto;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 

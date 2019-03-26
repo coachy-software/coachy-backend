@@ -2,7 +2,7 @@ package life.coachy.backend.exercise.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import life.coachy.backend.old_exercise.template.dto.ExerciseTemplateDto;
+import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
@@ -13,7 +13,7 @@ class Exercise {
   private int sets;
   private int reps;
   private int miniSets;
-  private ExerciseTemplateDto template;
+  private ExerciseTemplateCommandDto template;
 
   Exercise(ExerciseBuilder builder) {
     this.identifier = builder.identifier;

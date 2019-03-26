@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 @RestController
-class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
+class ErrorEndpoints implements org.springframework.boot.web.servlet.error.ErrorController {
 
   private final ErrorAttributes errorAttributes;
 
   @Autowired
-  ErrorController(ErrorAttributes errorAttributes) {
+  ErrorEndpoints(ErrorAttributes errorAttributes) {
     this.errorAttributes = errorAttributes;
   }
 
