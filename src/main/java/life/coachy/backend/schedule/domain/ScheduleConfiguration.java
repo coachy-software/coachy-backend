@@ -8,7 +8,8 @@ class ScheduleConfiguration {
 
   @Bean
   ScheduleFacade scheduleFacade(ScheduleService service) {
-    return new ScheduleFacade(service);
+    ScheduleCreator creator = new ScheduleCreator();
+    return new ScheduleFacade(service, creator);
   }
 
 }

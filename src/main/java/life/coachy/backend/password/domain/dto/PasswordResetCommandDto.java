@@ -2,11 +2,10 @@ package life.coachy.backend.password.domain.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import life.coachy.backend.infrastructure.util.dto.AbstractDto;
 import life.coachy.backend.infrastructure.validation.Match;
 
 @Match(first = "password", second = "confirmPassword")
-public class PasswordResetCommandDto extends AbstractDto {
+public class PasswordResetCommandDto {
 
   @NotNull @NotEmpty private String password;
   private String confirmPassword;
