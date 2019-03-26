@@ -6,4 +6,6 @@ import org.bson.types.ObjectId;
 
 public interface ScheduleQueryDtoRepository extends QueryFetchAllRepository<ScheduleQueryDto, ObjectId>, QueryFetchOneRepository<ScheduleQueryDto, ObjectId> {
 
+  boolean existsByIdentifier(ObjectId id);
+
 }

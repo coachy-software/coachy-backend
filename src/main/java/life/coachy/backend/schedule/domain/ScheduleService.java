@@ -23,16 +23,27 @@ class ScheduleService {
     this.scheduleRepository = scheduleRepository;
   }
 
+  void save(Schedule schedule) {
+    this.scheduleRepository.save(schedule);
+  }
+
   ScheduleQueryDto fetchOne(ObjectId id) {
     return this.queryDtoRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
   }
 
   void delete(ObjectId id) {
-    this.scheduleRepository.deleteById(id);
+    this.checkIfExists(id, () -> this.scheduleRepository.deleteById(id));
   }
 
   void convertPropertiesToMapAndSave(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
-    this.scheduleRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto));
+    this.checkIfExists(id, () -> this.scheduleRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto)));
+  }
+
+  private void checkIfExists(ObjectId id, Runnable runnable) {
+    if (!this.queryDtoRepository.existsByIdentifier(id)) {
+      throw new ScheduleNotFoundException();
+    }
+    runnable.run();
   }
 
 }
