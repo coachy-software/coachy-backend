@@ -28,7 +28,8 @@ class ExerciseTemplateEndpoints {
   private final ExerciseTemplateFacade facade;
 
   @Autowired
-  public ExerciseTemplateEndpoints(QueryOperationsFactory queryOperationsFactory, ExerciseTemplateQueryDtoRepository repository, ExerciseTemplateFacade facade) {
+  public ExerciseTemplateEndpoints(QueryOperationsFactory queryOperationsFactory, ExerciseTemplateQueryDtoRepository repository,
+      ExerciseTemplateFacade facade) {
     this.queryOperationsFactory = queryOperationsFactory;
     this.repository = repository;
     this.facade = facade;

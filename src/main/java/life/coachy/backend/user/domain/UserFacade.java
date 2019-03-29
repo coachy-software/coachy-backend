@@ -39,4 +39,5 @@ public class UserFacade {
   public void resetPassword(String email, String newPassword) {
     this.operationsService.resetPassword(email, newPassword);
   }
+
 }

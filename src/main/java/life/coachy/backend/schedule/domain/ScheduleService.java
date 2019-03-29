@@ -17,7 +17,8 @@ class ScheduleService {
   private final ScheduleRepository scheduleRepository;
 
   @Autowired
-  public ScheduleService(ScheduleQueryDtoRepository queryDtoRepository, PropertiesToMapConverter propertiesToMapConverter, ScheduleRepository scheduleRepository) {
+  public ScheduleService(ScheduleQueryDtoRepository queryDtoRepository, PropertiesToMapConverter propertiesToMapConverter,
+      ScheduleRepository scheduleRepository) {
     this.queryDtoRepository = queryDtoRepository;
     this.propertiesToMapConverter = propertiesToMapConverter;
     this.scheduleRepository = scheduleRepository;

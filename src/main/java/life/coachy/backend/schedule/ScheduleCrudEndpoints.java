@@ -83,7 +83,7 @@ class ScheduleCrudEndpoints {
       @ApiResponse(code = 204, message = "Successfully deleted")
   })
   @DeleteMapping("{id}")
-  public ResponseEntity<ScheduleQueryDto> delete(@PathVariable  @ApiParam("User's id") ObjectId id) {
+  public ResponseEntity<ScheduleQueryDto> delete(@PathVariable @ApiParam("User's id") ObjectId id) {
     this.facade.delete(id);
     return ResponseEntity.noContent().build();
   }

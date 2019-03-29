@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 class PasswordResetConfiguration {
 
   @Bean
-  PasswordResetFacade passwordResetFacade(UserFacade userFacade, EmailFacade emailFacade, PasswordResetService service, UserQueryDtoRepository userQueryDtoRepository) {
+  PasswordResetFacade passwordResetFacade(UserFacade userFacade, EmailFacade emailFacade, PasswordResetService service,
+      UserQueryDtoRepository userQueryDtoRepository) {
     return new PasswordResetFacade(userFacade, emailFacade, service, userQueryDtoRepository);
   }
 

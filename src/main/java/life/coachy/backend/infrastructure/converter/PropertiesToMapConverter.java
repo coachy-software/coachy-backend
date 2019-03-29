@@ -12,7 +12,8 @@ public class PropertiesToMapConverter {
   private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
   public Map<String, Object> convert(CommandDtoMarker dto) {
-    return OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {});
+    return OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {
+    });
   }
 
 }
