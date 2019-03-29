@@ -1,5 +1,6 @@
 package life.coachy.backend.user.domain
 
+import com.google.common.collect.Sets
 import groovy.transform.CompileStatic
 import life.coachy.backend.user.domain.dto.*
 
@@ -20,6 +21,7 @@ trait SampleUsers {
       .withEmail("yang160@gmail.com")
       .withAvatar("http://www.google.com/avatars/yang160.png")
       .withDisplayName("yang160")
+      .withPermissions(Sets.newHashSet())
       .build()
 
 }
