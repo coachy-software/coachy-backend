@@ -1,36 +1,128 @@
 package life.coachy.backend.user.domain
 
+import com.google.common.collect.Sets
+import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.user.domain.exception.UserAlreadyExistsException
+import life.coachy.backend.user.domain.exception.UserNotFoundException
+import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
 class UserFacadeSpec extends IntegrationSpec implements SampleUsers {
 
-  @Autowired
-  MongoTemplate mongoTemplate;
-
-  @Autowired
-  UserFacade userFacade;
+  @Autowired UserFacade userFacade
 
   def "method 'register' should register an user"() {
-    when: "user is trying to register with username `yang160`"
-      userFacade.register(sampleRegistrationUser);
-    then: "user saved to db"
-      Query query = Query.query(Criteria.where("username").is("yang160"));
-      this.mongoTemplate.exists(query, User.class);
+    when: "user tries to register with username `yang160`"
+      userFacade.register(sampleRegistrationUser)
+    then: "system saves user to db"
+      Query query = Query.query(Criteria.where("username").is("yang160"))
+      mongoTemplate.exists(query, User)
   }
 
-  def "length of Spock's and his friends' names"() {
-    expect:
-      name.size() == length
+  def "method 'register' should throw 'UserAlreadyExistsException' when email or username are already in use"() {
+    when: "two users try to register with username `yang160`"
+      userFacade.register(sampleRegistrationUser)
+      userFacade.register(sampleRegistrationUser)
+    then:
+      thrown(UserAlreadyExistsException)
+  }
 
-    where:
-      name     | length
-      "Spock"  | 5
-      "Kirk"   | 4
-      "Scotty" | 6
+  def "method 'update' should update an user"() {
+    given: "we have one user named 'yang160'"
+      ObjectId id = ObjectId.get();
+      setUpUser(id, "yang160", "password123", Collections.emptySet())
+    when: "user tries to update username"
+      userFacade.update(id, sampleUpdateUser)
+    then:
+      Query query = Query.query(Criteria.where("username").is("yang160_UPDATED"))
+      mongoTemplate.exists(query, User)
+  }
+
+  def "method 'update' should throw 'UserAlreadyExistsException' when username is already in use"() {
+    given: "we have one user named 'yang160'"
+      ObjectId id = ObjectId.get();
+      setUpUser(id, "yang160", "password123", Collections.emptySet())
+    and: "we have another user named 'yang160_UPDATED'"
+      setUpUser(ObjectId.get(), "yang160_UPDATED", "password123", Collections.emptySet())
+    when: "user tries to update username from 'yang160' to 'yang160_UPDATED'"
+      userFacade.update(id, sampleUpdateUser)
+    then:
+      thrown(UserAlreadyExistsException)
+  }
+
+  def "method 'update' should throw 'UserNotFoundException' when user not found"() {
+    when: "user tries to update username"
+      userFacade.update(ObjectId.get(), sampleUpdateUser)
+    then:
+      thrown(UserNotFoundException)
+  }
+
+  def "method 'delete' should delete an user"() {
+    given: "we have one user in system"
+      ObjectId id = ObjectId.get()
+      setUpUser(id, "yang160", "password123", Collections.emptySet())
+    when: "user tries to delete an account"
+      userFacade.delete(id)
+    then:
+      Query query = Query.query(Criteria.where("username").is("yang160"))
+      !mongoTemplate.exists(query, User)
+  }
+
+  def "method 'delete' should throw 'UserNotFoundException' when user not found"() {
+    when: "user tries to delete an account"
+      userFacade.delete(ObjectId.get())
+    then:
+      thrown(UserNotFoundException)
+  }
+
+  def "method 'givePermissions' should give user specified permissions"() {
+    given: "we have one user in system"
+      ObjectId id = ObjectId.get()
+      setUpUser(id, "yang160", "password123", Collections.emptySet())
+    when: "user tries to add some permissions"
+      userFacade.givePermissions(id, "user.${id}.read")
+    then:
+      Query query = Query.query(Criteria.where("username").is("yang160").and("permissions").regex("user.${id}.read"))
+      mongoTemplate.exists(query, User)
+  }
+
+  def "method 'nullifyPermissions' should take away specified permissions from user"() {
+    given: "we have one user with some permissions in system"
+      ObjectId id = ObjectId.get()
+      setUpUser(id, "yang160", "password123", Sets.newHashSet("user.${id}.read", "user.${id}.update"))
+    when: "user tries to remove permissions belong to #id"
+      userFacade.nullifyPermissions(id, id)
+    then:
+      Query query = Query.query(Criteria.where("username").is("yang160").and("permissions").size(0))
+      mongoTemplate.exists(query, User)
+  }
+
+  def "method 'resetPassword' should reset user's password"() {
+    given: "we have one user in system"
+      ObjectId id = ObjectId.get()
+      BasicDBObject basicDBObject = setUpUser(id, "yang160", "password123", "yang160@gmail.com", Collections.emptySet())
+    when: "user tries to reset it's password"
+      userFacade.resetPassword("yang160@gmail.com", "newPassword123")
+    then: "user must exists"
+      Query userExistsQuery = Query.query(Criteria.where("username").is("yang160"));
+      mongoTemplate.exists(userExistsQuery, User)
+    and: "password must be different"
+      Query passwordChangedQuery = Query.query(Criteria.where("username").is("yang160").and("password").is(basicDBObject.get("password")));
+      !mongoTemplate.exists(passwordChangedQuery, User)
+  }
+
+  def "method 'resetPassword' should throw 'UserNotFoundException' when specified email does not belong to any account"() {
+    when: "user tries to reset it's password"
+      userFacade.resetPassword("yang160@gmail.com", "newPassword123")
+    then:
+      thrown(UserNotFoundException)
+  }
+
+  void cleanup() {
+    this.mongoTemplate.dropCollection(User)
   }
 
 }

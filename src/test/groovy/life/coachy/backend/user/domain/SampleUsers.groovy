@@ -1,9 +1,7 @@
 package life.coachy.backend.user.domain
 
 import groovy.transform.CompileStatic
-import life.coachy.backend.user.domain.dto.AccountTypeDto
-import life.coachy.backend.user.domain.dto.UserRegisterCommandDto
-import life.coachy.backend.user.domain.dto.UserRegisterCommandDtoBuilder
+import life.coachy.backend.user.domain.dto.*
 
 @CompileStatic
 trait SampleUsers {
@@ -14,6 +12,14 @@ trait SampleUsers {
       .withAccountType(AccountTypeDto.CHARGE)
       .withEmail("yang160@gmail.com")
       .withMatchingPassword("yang160")
-      .build();
+      .build()
+
+  UserUpdateEntireEntityCommandDto sampleUpdateUser = UserUpdateEntireEntityCommandDtoBuilder.create()
+      .withUsername("yang160_UPDATED")
+      .withPassword("yang160")
+      .withEmail("yang160@gmail.com")
+      .withAvatar("http://www.google.com/avatars/yang160.png")
+      .withDisplayName("yang160")
+      .build()
 
 }
