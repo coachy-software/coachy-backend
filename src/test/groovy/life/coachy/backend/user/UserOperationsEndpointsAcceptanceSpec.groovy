@@ -1,15 +1,16 @@
 package life.coachy.backend.user
 
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.infrastructure.constants.MongoCollections
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import life.coachy.backend.user.domain.SampleUsers
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.is
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -28,11 +29,9 @@ class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements S
     then: "I have got registered"
       registerEndpoint.andExpect(status().isCreated())
     when: "I go to /api/users/me"
-      ResultActions detailsEndpoint = mockMvc.perform(get("/api/users/me").with(SecurityMockMvcRequestPostProcessors.httpBasic("yang160", "yang160")))
+      ResultActions detailsEndpoint = mockMvc.perform(get("/api/users/me").with(httpBasic("yang160", "yang160")))
     then: "I see details about my account"
-      detailsEndpoint
-          .andExpect(status().isOk())
-          .andExpect(jsonPath('$.username', is("yang160")))
+      detailsEndpoint.andExpect(status().isOk()).andExpect(jsonPath('$.username', is("yang160")))
   }
 
   def "negative register scenario"() {
@@ -44,6 +43,10 @@ class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements S
           .contentType(MediaType.APPLICATION_JSON))
     then:
       registerEndpoint.andExpect(status().isConflict())
+  }
+
+  void cleanup() {
+    mongoTemplate.dropCollection(MongoCollections.USERS)
   }
 
 }

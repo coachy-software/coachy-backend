@@ -3,6 +3,7 @@ package life.coachy.backend.base
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import groovy.transform.TypeChecked
+import life.coachy.backend.infrastructure.constants.MongoCollections
 import life.coachy.backend.infrastructure.constants.Profiles
 import org.bson.types.ObjectId
 import org.junit.Before
@@ -51,7 +52,7 @@ class IntegrationSpec extends Specification {
       }
     }
 
-    return this.mongoTemplate.insert(new BasicDBObject(userDetails), "users")
+    return this.mongoTemplate.insert(new BasicDBObject(userDetails), MongoCollections.USERS)
   }
 
 

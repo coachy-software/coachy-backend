@@ -2,6 +2,7 @@ package life.coachy.backend.user
 
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.infrastructure.constants.MongoCollections
 import org.bson.types.ObjectId
 import org.springframework.test.web.servlet.ResultActions
 
@@ -25,6 +26,10 @@ class UserCrudEndpointsIntegrationSpec extends IntegrationSpec {
               {"identifier": "${secondUser.get("_id")}", "username": "${secondUser.get("username")}", "password": "${secondUser.get("password")}"}
             ]
           """))
+  }
+
+  void cleanup() {
+    mongoTemplate.dropCollection(MongoCollections.USERS)
   }
 
 }
