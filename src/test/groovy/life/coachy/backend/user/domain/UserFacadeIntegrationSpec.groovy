@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
-class UserFacadeSpec extends IntegrationSpec implements SampleUsers {
+class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
 
   @Autowired UserFacade userFacade
 
