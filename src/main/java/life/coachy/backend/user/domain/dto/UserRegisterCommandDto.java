@@ -14,6 +14,8 @@ public class UserRegisterCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String matchingPassword;
   @NotNull private AccountTypeDto accountType;
 
+  UserRegisterCommandDto() {}
+
   UserRegisterCommandDto(UserRegisterCommandDtoBuilder builder) {
     this.email = builder.email;
     this.username = builder.username;

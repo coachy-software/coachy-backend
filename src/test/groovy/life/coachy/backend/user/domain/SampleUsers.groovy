@@ -10,9 +10,9 @@ trait SampleUsers {
   UserRegisterCommandDto sampleRegistrationUser = UserRegisterCommandDtoBuilder.create()
       .withUsername("yang160")
       .withPassword("yang160")
+      .withMatchingPassword("yang160")
       .withAccountType(AccountTypeDto.CHARGE)
       .withEmail("yang160@gmail.com")
-      .withMatchingPassword("yang160")
       .build()
 
   UserUpdateEntireEntityCommandDto sampleUpdateUser = UserUpdateEntireEntityCommandDtoBuilder.create()
