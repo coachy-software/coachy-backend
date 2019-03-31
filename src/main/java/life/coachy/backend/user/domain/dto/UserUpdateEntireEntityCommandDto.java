@@ -14,6 +14,8 @@ public class UserUpdateEntireEntityCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String avatar;
   @NotNull private Set<String> permissions;
 
+  UserUpdateEntireEntityCommandDto() {}
+
   UserUpdateEntireEntityCommandDto(UserUpdateEntireEntityCommandDtoBuilder builder) {
     this.username = builder.username;
     this.displayName = builder.displayName;

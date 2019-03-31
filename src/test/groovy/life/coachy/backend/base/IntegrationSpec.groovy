@@ -48,7 +48,7 @@ class IntegrationSpec extends Specification {
         this.put("password", IntegrationSpec.this.passwordEncoder.encode(password))
         this.put("email", email)
         this.put("roles", Sets.newHashSet("USER"))
-        this.put("permissions", permissions)
+        this.put("permissions", permissions.stream().map({ permission -> permission.toString() }).collect(java.util.stream.Collectors.toSet()))
       }
     }
 

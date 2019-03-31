@@ -26,7 +26,7 @@ class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements S
       ResultActions registerEndpoint = mockMvc.perform(post("/api/users/register")
           .content(objectToJsonConverter.convert(sampleRegistrationUser).getBytes())
           .contentType(MediaType.APPLICATION_JSON))
-    then: "I have got registered"
+    then: "I have been registered"
       registerEndpoint.andExpect(status().isCreated())
     when: "I go to /api/users/me"
       ResultActions detailsEndpoint = mockMvc.perform(get("/api/users/me").with(httpBasic("yang160", "yang160")))
