@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
+import java.util.stream.Collectors
+
 @TypeChecked
 @SpringBootTest
 @ActiveProfiles([Profiles.TEST])
@@ -48,7 +50,7 @@ class IntegrationSpec extends Specification {
         this.put("password", IntegrationSpec.this.passwordEncoder.encode(password))
         this.put("email", email)
         this.put("roles", Sets.newHashSet("USER"))
-        this.put("permissions", permissions.stream().map({ permission -> permission.toString() }).collect(java.util.stream.Collectors.toSet()))
+        this.put("permissions", permissions.stream().map({ permission -> permission.toString() }).collect(Collectors.toSet()))
       }
     }
 
