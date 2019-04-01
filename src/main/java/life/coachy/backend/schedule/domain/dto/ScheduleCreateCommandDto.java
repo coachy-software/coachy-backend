@@ -1,18 +1,20 @@
 package life.coachy.backend.schedule.domain.dto;
 
 import java.util.Set;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
 import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
 import org.bson.types.ObjectId;
 
 public class ScheduleCreateCommandDto implements CommandDtoMarker {
 
-  private String name;
-  private ObjectId creator;
-  private ObjectId charge;
-  private String note;
-  private boolean active;
-  private Set<ScheduleDayDto> days;
+  @NotNull @NotEmpty private String name;
+  @NotNull private ObjectId creator;
+  @NotNull private ObjectId charge;
+  @NotNull private String note;
+  @NotNull private boolean active;
+  @NotNull private Set<ScheduleDayDto> days;
 
   public String getName() {
     return this.name;

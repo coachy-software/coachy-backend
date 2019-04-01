@@ -6,11 +6,13 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
+import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
+import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
 import life.coachy.backend.schedule.query.ScheduleQueryBinder;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
@@ -41,6 +43,18 @@ class ScheduleCrudEndpoints {
     this.queryOperationsFactory = queryOperationsFactory;
     this.queryDtoRepository = queryDtoRepository;
     this.facade = facade;
+  }
+
+  @RequiresAuthenticated
+  @ApiOperation("Creates schedule")
+  @ApiResponses({
+      @ApiResponse(code = 400, message = "Validation error"),
+      @ApiResponse(code = 204, message = "Successfully created")
+  })
+  @PostMapping
+  public ResponseEntity<ScheduleQueryDto> create(@Valid @RequestBody ScheduleCreateCommandDto dto) {
+    this.facade.create(dto);
+    return ResponseEntity.noContent().build();
   }
 
   @RequiresAuthenticated
