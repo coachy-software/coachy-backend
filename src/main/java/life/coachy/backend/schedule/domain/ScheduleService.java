@@ -1,5 +1,7 @@
 package life.coachy.backend.schedule.domain;
 
+import java.util.Optional;
+import java.util.function.Consumer;
 import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
@@ -19,10 +21,9 @@ class ScheduleService {
   private final ScheduleRepository scheduleRepository;
 
   @Autowired
-  public ScheduleService(ScheduleQueryDtoRepository queryDtoRepository, PropertiesToMapConverter propertiesToMapConverter,
-      ScheduleRepository scheduleRepository) {
+  public ScheduleService(ScheduleQueryDtoRepository queryDtoRepository, PropertiesToMapConverter propertiesConverter, ScheduleRepository scheduleRepository) {
     this.queryDtoRepository = queryDtoRepository;
-    this.propertiesToMapConverter = propertiesToMapConverter;
+    this.propertiesToMapConverter = propertiesConverter;
     this.scheduleRepository = scheduleRepository;
   }
 
@@ -34,8 +35,12 @@ class ScheduleService {
     return this.queryDtoRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
   }
 
-  void delete(ObjectId id) {
-    this.checkIfExists(id, () -> this.scheduleRepository.deleteById(id));
+  void delete(UserFacade userFacade, ObjectId id) {
+    this.checkIfExists(id, (queryDto) -> {
+      this.scheduleRepository.deleteById(id);
+      userFacade.nullifyPermissions(queryDto.getCharge(), id);
+      userFacade.nullifyPermissions(queryDto.getCreator(), id);
+    });
   }
 
   void givePermissions(UserFacade userFacade, Schedule schedule, ScheduleCreateCommandDto dto) {
@@ -48,14 +53,15 @@ class ScheduleService {
   }
 
   void convertPropertiesToMapAndSave(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
-    this.checkIfExists(id, () -> this.scheduleRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto)));
+    this.checkIfExists(id, (queryDto) -> this.scheduleRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto)));
   }
 
-  private void checkIfExists(ObjectId id, Runnable runnable) {
-    if (!this.queryDtoRepository.existsByIdentifier(id)) {
+  private void checkIfExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {
+    Optional<ScheduleQueryDto> queryDto = this.queryDtoRepository.findById(id);
+    if (!queryDto.isPresent()) {
       throw new ScheduleNotFoundException();
     }
-    runnable.run();
+    consumer.accept(queryDto.get());
   }
 
 }

@@ -32,8 +32,8 @@ public class UserFacade {
     this.operationsService.addPermissions(id, permissions);
   }
 
-  public void nullifyPermissions(ObjectId id, ObjectId permissionId) {
-    this.operationsService.removePermissions(id, permissionId);
+  public void nullifyPermissions(ObjectId userId, ObjectId permissionId) {
+    this.operationsService.removePermissions(userId, permissionId);
   }
 
   public void resetPassword(String email, String newPassword) {
