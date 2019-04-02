@@ -4,7 +4,7 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
-import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
+import life.coachy.backend.schedule.day.ScheduleDayDto;
 
 public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
 

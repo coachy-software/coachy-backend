@@ -2,7 +2,7 @@ package life.coachy.backend.schedule.domain.dto;
 
 import java.util.Set;
 import life.coachy.backend.infrastructure.util.Buildable;
-import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
+import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
 
 public final class ScheduleCreateCommandDtoBuilder implements Buildable<ScheduleCreateCommandDto> {

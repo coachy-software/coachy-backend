@@ -3,7 +3,7 @@ package life.coachy.backend.schedule
 import com.google.common.collect.Sets
 import groovy.transform.CompileStatic
 import life.coachy.backend.exercise.domain.dto.ExerciseDtoBuilder
-import life.coachy.backend.schedule.day.dto.ScheduleDayDto
+import life.coachy.backend.schedule.day.ScheduleDayDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDtoBuilder
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto

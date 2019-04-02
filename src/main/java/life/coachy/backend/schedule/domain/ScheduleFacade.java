@@ -22,7 +22,7 @@ public class ScheduleFacade {
   }
 
   public void delete(ObjectId id) {
-    this.service.delete(id);
+    this.service.delete(this.userFacade, id);
   }
 
   public void update(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
-import life.coachy.backend.schedule.day.dto.ScheduleDayDto;
+import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
