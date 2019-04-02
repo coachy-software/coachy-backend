@@ -12,7 +12,7 @@ public class ScheduleCreateCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String name;
   @NotNull private ObjectId creator;
   @NotNull private ObjectId charge;
-  @NotNull private String note;
+  private String note;
   @NotNull private boolean active;
   @NotNull private Set<ScheduleDayDto> days;
 

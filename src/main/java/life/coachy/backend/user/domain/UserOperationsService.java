@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import life.coachy.backend.user.domain.exception.UserAlreadyExistsException;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
-import life.coachy.backend.user.query.UserQueryDtoRepository;
+import life.coachy.backend.user.query.UserQueryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 class UserOperationsService {
 
-  private final UserQueryDtoRepository queryDtoRepository;
+  private final UserQueryRepository queryDtoRepository;
   private final UserRepository repository;
 
   @Autowired
-  public UserOperationsService(UserQueryDtoRepository queryDtoRepository, UserRepository repository) {
+  public UserOperationsService(UserQueryRepository queryDtoRepository, UserRepository repository) {
     this.queryDtoRepository = queryDtoRepository;
     this.repository = repository;
   }

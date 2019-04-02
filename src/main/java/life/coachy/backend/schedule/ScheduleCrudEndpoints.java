@@ -1,5 +1,6 @@
 package life.coachy.backend.schedule;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -10,13 +11,12 @@ import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
-import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
 import life.coachy.backend.schedule.query.ScheduleQueryBinder;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
-import life.coachy.backend.schedule.query.ScheduleQueryDtoRepository;
+import life.coachy.backend.schedule.query.ScheduleQueryDto.View;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -34,14 +34,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ApiLayers.SCHEDULES)
 class ScheduleCrudEndpoints {
 
-  private final ScheduleQueryDtoRepository queryDtoRepository;
-  private final QueryOperationsFactory queryOperationsFactory;
   private final ScheduleFacade facade;
 
   @Autowired
-  public ScheduleCrudEndpoints(QueryOperationsFactory queryOperationsFactory, ScheduleQueryDtoRepository queryDtoRepository, ScheduleFacade facade) {
-    this.queryOperationsFactory = queryOperationsFactory;
-    this.queryDtoRepository = queryDtoRepository;
+  public ScheduleCrudEndpoints(ScheduleFacade facade) {
     this.facade = facade;
   }
 
@@ -56,11 +52,12 @@ class ScheduleCrudEndpoints {
     return ResponseEntity.created(this.facade.create(dto)).build();
   }
 
+  @JsonView(View.Global.class)
   @RequiresAuthenticated
   @ApiOperation("Displays schedules that matches criteria, only if criteria present, otherwise displays all schedules")
   @GetMapping
   public ResponseEntity<List<ScheduleQueryDto>> readAll(@QuerydslPredicate(bindings = ScheduleQueryBinder.class) Predicate predicate, Pageable pageable) {
-    return ResponseEntity.ok(this.queryOperationsFactory.obtainOperation(predicate, pageable, this.queryDtoRepository));
+    return ResponseEntity.ok(this.facade.fetchAll(predicate, pageable));
   }
 
   @RequiresPermissions("schedule.{id}.read")

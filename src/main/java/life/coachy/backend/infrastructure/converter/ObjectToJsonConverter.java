@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ObjectToJsonConverter {
+public class ObjectToJsonConverter implements Converter<String, Object> {
 
   private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+  @Override
   public String convert(Object value) {
     try {
       return OBJECT_MAPPER.writer().writeValueAsString(value);

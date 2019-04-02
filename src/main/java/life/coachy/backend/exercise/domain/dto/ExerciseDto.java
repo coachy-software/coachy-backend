@@ -14,6 +14,8 @@ public class ExerciseDto {
   private int miniSets;
   private ExerciseTemplateCommandDto template;
 
+  ExerciseDto() {}
+
   ExerciseDto(ExerciseDtoBuilder builder) {
     this.identifier = builder.identifier;
     this.name = builder.name;

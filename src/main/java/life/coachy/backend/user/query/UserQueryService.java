@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserQueryService {
 
-  private final UserQueryDtoRepository repository;
+  private final UserQueryRepository repository;
 
   @Autowired
-  public UserQueryService(UserQueryDtoRepository repository) {
+  public UserQueryService(UserQueryRepository repository) {
     this.repository = repository;
   }
 

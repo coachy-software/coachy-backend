@@ -4,7 +4,7 @@ import life.coachy.backend.infrastructure.query.QueryFetchOneRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.repository.Repository;
 
-public interface BoardQueryDtoRepository extends QueryFetchOneRepository<BoardQueryDto, ObjectId>, Repository<BoardQueryDto, ObjectId> {
+public interface BoardQueryRepository extends QueryFetchOneRepository<BoardQueryDto, ObjectId>, Repository<BoardQueryDto, ObjectId> {
 
   boolean existsByIdentifier(ObjectId id);
 

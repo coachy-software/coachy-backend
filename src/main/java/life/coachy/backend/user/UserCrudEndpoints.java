@@ -14,7 +14,7 @@ import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
 import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
-import life.coachy.backend.user.query.UserQueryDtoRepository;
+import life.coachy.backend.user.query.UserQueryRepository;
 import life.coachy.backend.user.query.UserQueryService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +36,11 @@ class UserCrudEndpoints {
 
   private final UserFacade facade;
   private final UserQueryService service;
-  private final UserQueryDtoRepository repository;
+  private final UserQueryRepository repository;
   private final QueryOperationsFactory queryOperationsFactory;
 
   @Autowired
-  public UserCrudEndpoints(UserFacade facade, UserQueryService service, UserQueryDtoRepository repository, QueryOperationsFactory queryOperationsFactory) {
+  public UserCrudEndpoints(UserFacade facade, UserQueryService service, UserQueryRepository repository, QueryOperationsFactory queryOperationsFactory) {
     this.facade = facade;
     this.service = service;
     this.repository = repository;

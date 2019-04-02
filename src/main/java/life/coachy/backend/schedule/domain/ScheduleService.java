@@ -6,7 +6,7 @@ import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
-import life.coachy.backend.schedule.query.ScheduleQueryDtoRepository;
+import life.coachy.backend.schedule.query.ScheduleQueryRepository;
 import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 @Service
 class ScheduleService {
 
-  private final ScheduleQueryDtoRepository queryDtoRepository;
+  private final ScheduleQueryRepository queryDtoRepository;
   private final PropertiesToMapConverter propertiesToMapConverter;
   private final ScheduleRepository scheduleRepository;
 
   @Autowired
-  public ScheduleService(ScheduleQueryDtoRepository queryDtoRepository, PropertiesToMapConverter propertiesConverter, ScheduleRepository scheduleRepository) {
+  public ScheduleService(ScheduleQueryRepository queryDtoRepository, PropertiesToMapConverter propertiesConverter, ScheduleRepository scheduleRepository) {
     this.queryDtoRepository = queryDtoRepository;
     this.propertiesToMapConverter = propertiesConverter;
     this.scheduleRepository = scheduleRepository;

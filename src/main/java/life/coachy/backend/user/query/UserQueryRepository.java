@@ -5,7 +5,7 @@ import life.coachy.backend.infrastructure.query.QueryFetchAllRepository;
 import life.coachy.backend.infrastructure.query.QueryFetchOneRepository;
 import org.bson.types.ObjectId;
 
-public interface UserQueryDtoRepository extends QueryFetchAllRepository<UserQueryDto, ObjectId>, QueryFetchOneRepository<UserQueryDto, ObjectId> {
+public interface UserQueryRepository extends QueryFetchAllRepository<UserQueryDto, ObjectId>, QueryFetchOneRepository<UserQueryDto, ObjectId> {
 
   Optional<UserQueryDto> findByUsername(String username);
 

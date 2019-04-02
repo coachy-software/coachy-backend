@@ -7,7 +7,7 @@ import life.coachy.backend.password.domain.exception.PasswordResetTokenNotExists
 import life.coachy.backend.password.query.PasswordResetQueryDto;
 import life.coachy.backend.password.query.PasswordResetQueryRepository;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
-import life.coachy.backend.user.query.UserQueryDtoRepository;
+import life.coachy.backend.user.query.UserQueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,8 @@ class PasswordResetService {
     this.repository = repository;
   }
 
-  void create(String email, UserQueryDtoRepository userQueryDtoRepository, String token) {
-    if (!userQueryDtoRepository.existsByEmail(email)) {
+  void create(String email, UserQueryRepository userQueryRepository, String token) {
+    if (!userQueryRepository.existsByEmail(email)) {
       throw new UserNotFoundException();
     }
 
