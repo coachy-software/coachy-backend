@@ -1,6 +1,5 @@
 package life.coachy.backend.schedule.domain;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
@@ -57,11 +56,8 @@ class ScheduleService {
   }
 
   private void checkIfExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {
-    Optional<ScheduleQueryDto> queryDto = this.queryDtoRepository.findById(id);
-    if (!queryDto.isPresent()) {
-      throw new ScheduleNotFoundException();
-    }
-    consumer.accept(queryDto.get());
+    ScheduleQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
+    consumer.accept(queryDto);
   }
 
 }
