@@ -1,4 +1,4 @@
-package life.coachy.backend.user.domain
+package life.coachy.backend.user
 
 import com.google.common.collect.Sets
 import groovy.transform.CompileStatic

@@ -1,10 +1,12 @@
 package life.coachy.backend.schedule.domain;
 
 import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
+import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
 import life.coachy.backend.schedule.query.ScheduleQueryDtoRepository;
+import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +26,8 @@ class ScheduleService {
     this.scheduleRepository = scheduleRepository;
   }
 
-  void save(Schedule schedule) {
-    this.scheduleRepository.save(schedule);
+  Schedule save(Schedule schedule) {
+    return this.scheduleRepository.save(schedule);
   }
 
   ScheduleQueryDto fetchOne(ObjectId id) {
@@ -34,6 +36,15 @@ class ScheduleService {
 
   void delete(ObjectId id) {
     this.checkIfExists(id, () -> this.scheduleRepository.deleteById(id));
+  }
+
+  void givePermissions(UserFacade userFacade, Schedule schedule, ScheduleCreateCommandDto dto) {
+    userFacade.givePermissions(dto.getCharge(), "schedule." + schedule.identifier + ".read");
+    userFacade.givePermissions(dto.getCreator(),
+        "schedule." + schedule.identifier + ".read",
+        "schedule." + schedule.identifier + ".update",
+        "schedule." + schedule.identifier + ".delete"
+    );
   }
 
   void convertPropertiesToMapAndSave(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {

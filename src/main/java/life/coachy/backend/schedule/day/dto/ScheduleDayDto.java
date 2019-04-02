@@ -10,6 +10,12 @@ public class ScheduleDayDto implements CommandDtoMarker {
   private Set<ExerciseDto> exercises;
   private boolean trainingDay;
 
+  public ScheduleDayDto(String name, Set<ExerciseDto> exercises, boolean trainingDay) {
+    this.name = name;
+    this.exercises = exercises;
+    this.trainingDay = trainingDay;
+  }
+
   public String getName() {
     return this.name;
   }

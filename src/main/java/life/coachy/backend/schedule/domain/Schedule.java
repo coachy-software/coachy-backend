@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(MongoCollections.SCHEDULES)
 class Schedule {
 
-  @Id private ObjectId identifier;
+  @Id ObjectId identifier;
   private String name;
   private ObjectId creator;
   private ObjectId charge;

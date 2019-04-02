@@ -1,6 +1,6 @@
 package life.coachy.backend.schedule.domain.dto;
 
-import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
@@ -11,7 +11,16 @@ public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String name;
   @NotNull private boolean active;
   @NotNull private String note;
-  @NotNull private List<ScheduleDayDto> days;
+  @NotNull private Set<ScheduleDayDto> days;
+
+  ScheduleUpdateEntireEntityCommandDto() {}
+
+  ScheduleUpdateEntireEntityCommandDto(ScheduleUpdateEntireEntityCommandDtoBuilder builder) {
+    this.name = builder.name;
+    this.active = builder.active;
+    this.note = builder.note;
+    this.days = builder.days;
+  }
 
   public String getName() {
     return this.name;
@@ -25,7 +34,7 @@ public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
     return this.note;
   }
 
-  public List<ScheduleDayDto> getDays() {
+  public Set<ScheduleDayDto> getDays() {
     return this.days;
   }
 

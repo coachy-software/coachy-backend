@@ -21,8 +21,8 @@ import spock.lang.Specification
 import java.util.stream.Collectors
 
 @TypeChecked
-@SpringBootTest
 @ActiveProfiles([Profiles.TEST])
+@SpringBootTest
 class IntegrationSpec extends Specification {
 
   @Autowired protected WebApplicationContext webApplicationContext
@@ -57,5 +57,17 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(userDetails), MongoCollections.USERS)
   }
 
+  def setUpSchedule(ObjectId id, String name, ObjectId creator, ObjectId charge) {
+    Map<String, Object> scheduleDetails = new HashMap<String, Object>() {
+      {
+        this.put("_id", id)
+        this.put("name", name)
+        this.put("creator", creator)
+        this.put("charge", charge)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(scheduleDetails), MongoCollections.SCHEDULES)
+  }
 
 }

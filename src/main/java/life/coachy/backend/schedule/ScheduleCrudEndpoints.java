@@ -53,8 +53,7 @@ class ScheduleCrudEndpoints {
   })
   @PostMapping
   public ResponseEntity<ScheduleQueryDto> create(@Valid @RequestBody ScheduleCreateCommandDto dto) {
-    this.facade.create(dto);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.created(this.facade.create(dto)).build();
   }
 
   @RequiresAuthenticated

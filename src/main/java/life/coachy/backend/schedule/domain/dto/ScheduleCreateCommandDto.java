@@ -16,6 +16,17 @@ public class ScheduleCreateCommandDto implements CommandDtoMarker {
   @NotNull private boolean active;
   @NotNull private Set<ScheduleDayDto> days;
 
+  ScheduleCreateCommandDto() {}
+
+  ScheduleCreateCommandDto(ScheduleCreateCommandDtoBuilder builder) {
+    this.name = builder.name;
+    this.creator = builder.creator;
+    this.charge = builder.charge;
+    this.note = builder.note;
+    this.active = builder.active;
+    this.days = builder.days;
+  }
+
   public String getName() {
     return this.name;
   }

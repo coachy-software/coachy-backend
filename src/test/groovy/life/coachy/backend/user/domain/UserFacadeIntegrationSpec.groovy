@@ -3,6 +3,7 @@ package life.coachy.backend.user.domain
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.user.SampleUsers
 import life.coachy.backend.user.domain.exception.UserAlreadyExistsException
 import life.coachy.backend.user.domain.exception.UserNotFoundException
 import org.bson.types.ObjectId

@@ -4,7 +4,6 @@ import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.infrastructure.constants.MongoCollections
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
-import life.coachy.backend.user.domain.SampleUsers
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
