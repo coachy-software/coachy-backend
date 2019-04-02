@@ -114,8 +114,4 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
 
   }
 
-  void cleanup() {
-    mongoTemplate.dropCollection(MongoCollections.USERS)
-  }
-
 }

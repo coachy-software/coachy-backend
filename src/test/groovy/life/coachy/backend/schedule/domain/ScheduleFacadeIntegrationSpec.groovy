@@ -59,10 +59,5 @@ class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSch
       thrown(ScheduleNotFoundException)
   }
 
-  void cleanup() {
-    mongoTemplate.dropCollection(Schedule)
-    mongoTemplate.dropCollection(MongoCollections.USERS)
-  }
-
 }
 

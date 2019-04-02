@@ -44,8 +44,4 @@ class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements S
       registerEndpoint.andExpect(status().isConflict())
   }
 
-  void cleanup() {
-    mongoTemplate.dropCollection(MongoCollections.USERS)
-  }
-
 }

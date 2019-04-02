@@ -70,4 +70,12 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(scheduleDetails), MongoCollections.SCHEDULES)
   }
 
+  void cleanup() {
+    mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
+    mongoTemplate.dropCollection(MongoCollections.USERS)
+    mongoTemplate.dropCollection(MongoCollections.BOARDS)
+    mongoTemplate.dropCollection(MongoCollections.EXERCISES)
+    mongoTemplate.dropCollection(MongoCollections.TOKENS)
+  }
+
 }

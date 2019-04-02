@@ -68,8 +68,4 @@ class UserCrudEndpointsIntegrationSpec extends IntegrationSpec implements Sample
       updateEndpoint.andExpect(status().isConflict())
   }
 
-  void cleanup() {
-    mongoTemplate.dropCollection(MongoCollections.USERS)
-  }
-
 }

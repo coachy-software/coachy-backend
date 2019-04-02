@@ -122,8 +122,4 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
       thrown(UserNotFoundException)
   }
 
-  void cleanup() {
-    this.mongoTemplate.dropCollection(User)
-  }
-
 }
