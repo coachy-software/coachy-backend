@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,7 +80,7 @@ class ScheduleCrudEndpoints {
       @ApiResponse(code = 404, message = "Schedule not found"),
       @ApiResponse(code = 204, message = "Successfully updated")
   })
-  @PostMapping("{id}")
+  @PutMapping("{id}")
   public ResponseEntity<ScheduleQueryDto> update(@PathVariable @ApiParam("User's id") ObjectId id, @RequestBody ScheduleUpdateEntireEntityCommandDto dto) {
     this.facade.update(id, dto);
     return ResponseEntity.noContent().build();
