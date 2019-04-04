@@ -44,10 +44,9 @@ class UploadEndpoints {
   })
   @RequiresAuthenticated
   @PostMapping(value = "/api/uploads", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<Map<String, String>> upload(
-      @RequestPart @ApiParam("File to upload") MultipartFile file,
-      @RequestParam @ApiParam("Directory path to store uploading file") String target
-  ) throws IOException, URISyntaxException {
+  public ResponseEntity<Map<String, String>> upload(@RequestPart @ApiParam("File to upload") MultipartFile file,
+      @RequestParam @ApiParam("Directory path to store uploading file") String target) throws IOException, URISyntaxException {
+
     if (!Arrays.asList("jpg", "png", "jpeg").contains(FilenameUtil.getExtension(file.getOriginalFilename()))) {
       return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
     }
@@ -65,11 +64,9 @@ class UploadEndpoints {
       @ApiResponse(code = 200, message = "File found and displayed")
   })
   @GetMapping("/resources/{layerName}/{fileName}")
-  public ResponseEntity<Resource> download(
-      @PathVariable @ApiParam("File to display") String fileName,
-      @PathVariable @ApiParam("Directory path where file is stored") String layerName,
-      HttpServletRequest request
-  ) throws IOException {
+  public ResponseEntity<Resource> download(@PathVariable @ApiParam("File to display") String fileName,
+      @PathVariable @ApiParam("Directory path where file is stored") String layerName, HttpServletRequest request) throws IOException {
+
     Resource resource = this.uploadService.loadAsResource(fileName, layerName);
     String contentType = this.getContentType(request, resource);
 
