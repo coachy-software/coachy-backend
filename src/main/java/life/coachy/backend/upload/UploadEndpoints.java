@@ -5,8 +5,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
@@ -38,14 +39,15 @@ class UploadEndpoints {
   @ApiOperation("Uploades and then stores files")
   @ApiResponses({
       @ApiResponse(code = 415, message = "Extension not allowed"),
-      @ApiResponse(code = 200, message = "File uploaded and stored")
+      @ApiResponse(code = 201, message = "File uploaded and stored"),
+      @ApiResponse(code = 400, message = "Path contains slash char")
   })
   @RequiresAuthenticated
   @PostMapping(value = "/api/uploads", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Map<String, String>> upload(
       @RequestPart @ApiParam("File to upload") MultipartFile file,
       @RequestParam @ApiParam("Directory path to store uploading file") String target
-  ) throws IOException {
+  ) throws IOException, URISyntaxException {
     if (!Arrays.asList("jpg", "png", "jpeg").contains(FilenameUtil.getExtension(file.getOriginalFilename()))) {
       return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
     }
@@ -54,7 +56,7 @@ class UploadEndpoints {
       return ResponseEntity.badRequest().build();
     }
 
-    return ResponseEntity.ok(Collections.singletonMap("fileUrl", this.uploadService.store(file, target)));
+    return ResponseEntity.created(new URI(this.uploadService.store(file, target))).build();
   }
 
   @ApiOperation("Displays specified file")

@@ -47,10 +47,6 @@ class UploadService {
     Path filePath = targetDirectoryPath.resolve(fileName).normalize();
     Resource resource = new UrlResource(filePath.toUri());
 
-    return this.orElseThrow(resource);
-  }
-
-  private Resource orElseThrow(Resource resource) {
     return Optional.of(resource).orElseThrow(UploadedFileNotFoundException::new);
   }
 
