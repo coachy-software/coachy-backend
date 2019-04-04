@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Optional;
-import life.coachy.backend.upload.exception.UploadedFileNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -45,9 +43,8 @@ class UploadService {
 
     Path targetDirectoryPath = Paths.get(this.uploadDirectoryPath + File.separator + targetDirectory);
     Path filePath = targetDirectoryPath.resolve(fileName).normalize();
-    Resource resource = new UrlResource(filePath.toUri());
 
-    return Optional.of(resource).orElseThrow(UploadedFileNotFoundException::new);
+    return new UrlResource(filePath.toUri());
   }
 
   private void copyTargetFile(MultipartFile file, Path targetDirectoryPath, String fileName) throws IOException {
