@@ -59,7 +59,7 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
     when: "I delete /api/users/{id}"
       ResultActions deleteEndpoint = mockMvc.perform(delete("/api/users/{id}", id)
           .with(httpBasic("yang160", "password123")))
-    then: "User have been deleted"
+    then: "User has been deleted"
       deleteEndpoint.andExpect(status().isNoContent())
     when: "I go to /api/users/{id}"
       ResultActions detailsEndpoint = mockMvc.perform(get("/api/users/{id}", id)
