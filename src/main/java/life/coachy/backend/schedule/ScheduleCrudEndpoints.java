@@ -81,7 +81,7 @@ class ScheduleCrudEndpoints {
       @ApiResponse(code = 204, message = "Successfully updated")
   })
   @PutMapping("{id}")
-  public ResponseEntity<ScheduleQueryDto> update(@PathVariable @ApiParam("User's id") ObjectId id, @RequestBody ScheduleUpdateEntireEntityCommandDto dto) {
+  public ResponseEntity<ScheduleQueryDto> update(@PathVariable @ApiParam("User's id") ObjectId id, @Valid @RequestBody ScheduleUpdateEntireEntityCommandDto dto) {
     this.facade.update(id, dto);
     return ResponseEntity.noContent().build();
   }

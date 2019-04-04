@@ -21,7 +21,7 @@ class ScheduleCrudEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
   def "positive schedule update scenario"() {
     given: "we have one schedule and one user in system"
       ObjectId scheduleId = ObjectId.get();
-      BasicDBObject schedule = setUpSchedule(scheduleId, "test schedule", id, id)
+      setUpSchedule(scheduleId, "test schedule", id, id)
       setUpUser(id, "yang160", "password123", Sets.newHashSet("schedule.${scheduleId}.read", "schedule.${scheduleId}.update", "schedule.${scheduleId}.delete"))
     when: "I put to /api/schedules/{id}"
       ResultActions updateEndpoint = mockMvc.perform(put("/api/schedules/{id}", scheduleId)
