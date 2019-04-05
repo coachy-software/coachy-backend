@@ -1,4 +1,4 @@
-package life.coachy.backend.exercise.domain.dto;
+package life.coachy.backend.exercise.dto;
 
 import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandDto;
 import life.coachy.backend.infrastructure.util.Buildable;

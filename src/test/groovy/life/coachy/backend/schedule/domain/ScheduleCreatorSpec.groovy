@@ -1,7 +1,7 @@
 package life.coachy.backend.schedule.domain
 
 import com.google.common.collect.Sets
-import life.coachy.backend.exercise.domain.dto.ExerciseDtoBuilder
+import life.coachy.backend.exercise.dto.ExerciseDtoBuilder
 import life.coachy.backend.schedule.day.ScheduleDayDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDtoBuilder

@@ -14,6 +14,16 @@ public class ExerciseTemplateCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String briefDescription;
   @NotNull @NotEmpty private String muscleGroup;
 
+  ExerciseTemplateCommandDto() {}
+
+  ExerciseTemplateCommandDto(ExerciseTemplateCommandDtoBuilder builder) {
+    this.identifier = builder.identifier;
+    this.name = builder.name;
+    this.exampleImages = builder.exampleImages;
+    this.briefDescription = builder.briefDescription;
+    this.muscleGroup = builder.muscleGroup;
+  }
+
   public ObjectId getIdentifier() {
     return this.identifier;
   }

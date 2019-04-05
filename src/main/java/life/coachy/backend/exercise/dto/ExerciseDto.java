@@ -1,4 +1,4 @@
-package life.coachy.backend.exercise.domain.dto;
+package life.coachy.backend.exercise.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ public class ExerciseDto {
   @NotNull private int sets;
   @NotNull private int reps;
   private int miniSets;
-  private ExerciseTemplateCommandDto template;
+  @NotNull private ExerciseTemplateCommandDto template;
 
   ExerciseDto() {}
 
