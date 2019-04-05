@@ -10,6 +10,13 @@ public class PasswordResetCommandDto {
   @NotNull @NotEmpty private String password;
   private String confirmPassword;
 
+  PasswordResetCommandDto() {}
+
+  public PasswordResetCommandDto(String password, String confirmPassword) {
+    this.password = password;
+    this.confirmPassword = confirmPassword;
+  }
+
   public String getPassword() {
     return this.password;
   }

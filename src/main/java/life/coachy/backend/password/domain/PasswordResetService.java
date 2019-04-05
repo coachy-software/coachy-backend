@@ -3,7 +3,7 @@ package life.coachy.backend.password.domain;
 import java.util.Optional;
 import java.util.function.Consumer;
 import life.coachy.backend.password.domain.exception.EmailAlreadyExistsException;
-import life.coachy.backend.password.domain.exception.PasswordResetTokenNotExistsException;
+import life.coachy.backend.password.domain.exception.PasswordResetTokenNotFoundException;
 import life.coachy.backend.password.query.PasswordResetQueryDto;
 import life.coachy.backend.password.query.PasswordResetQueryRepository;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
@@ -40,7 +40,7 @@ class PasswordResetService {
   }
 
   void reset(String token, Consumer<String> emailConsumer) {
-    PasswordResetQueryDto passwordReset = this.findByToken(token).orElseThrow(PasswordResetTokenNotExistsException::new);
+    PasswordResetQueryDto passwordReset = this.findByToken(token).orElseThrow(PasswordResetTokenNotFoundException::new);
     String email = passwordReset.getEmail();
 
     emailConsumer.accept(email);
