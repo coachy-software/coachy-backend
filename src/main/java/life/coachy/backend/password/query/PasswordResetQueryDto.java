@@ -15,8 +15,4 @@ public class PasswordResetQueryDto implements QueryDtoMarker {
     return this.email;
   }
 
-  public String getToken() {
-    return this.token;
-  }
-
 }
