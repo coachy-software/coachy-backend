@@ -27,14 +27,13 @@ class PasswordResetEndpoints {
 
   @ApiOperation("Creates reset token")
   @ApiResponses({
-      @ApiResponse(code = 400, message = "Email not found"),
+      @ApiResponse(code = 404, message = "Email not found"),
       @ApiResponse(code = 409, message = "Token already generated for that email"),
       @ApiResponse(code = 204, message = "Successfully created")
   })
   @PostMapping("/api/create-token/{email:.+}")
   public ResponseEntity<PasswordResetQueryDto> createToken(@PathVariable String email) {
-    this.facade.generateToken(email);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.created(this.facade.generateToken(email)).build();
   }
 
   @ApiOperation("Resets password")

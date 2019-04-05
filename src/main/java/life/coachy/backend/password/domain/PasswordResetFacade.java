@@ -1,10 +1,13 @@
 package life.coachy.backend.password.domain;
 
+import java.net.URI;
 import life.coachy.backend.email.EmailFacade;
+import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.password.domain.dto.PasswordResetCommandDto;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.query.UserQueryRepository;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 public class PasswordResetFacade {
 
@@ -20,10 +23,12 @@ public class PasswordResetFacade {
     this.userQueryRepository = userQueryRepository;
   }
 
-  public void generateToken(String email) {
+  public URI generateToken(String email) {
     String token = RandomString.make(32);
     this.service.create(email, this.userQueryRepository, token);
     this.emailFacade.sendResetPasswordEmail(email, token);
+
+    return ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/reset-password" + "/{token}").buildAndExpand(token).toUri();
   }
 
   public void resetPassword(String token, PasswordResetCommandDto dto) {
