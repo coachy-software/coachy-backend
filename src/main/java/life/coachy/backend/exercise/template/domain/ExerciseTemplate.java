@@ -18,18 +18,4 @@ class ExerciseTemplate {
   private String briefDescription;
   private String muscleGroup;
 
-  ExerciseTemplate() {}
-
-  ExerciseTemplate(ExerciseTemplateBuilder builder) {
-    this.identifier = builder.identifier;
-    this.name = builder.name;
-    this.exampleImages = builder.exampleImages;
-    this.briefDescription = builder.briefDescription;
-    this.muscleGroup = builder.muscleGroup;
-  }
-
-  public static ExerciseTemplateBuilder builder() {
-    return ExerciseTemplateBuilder.create();
-  }
-
 }
