@@ -22,7 +22,7 @@ class ExerciseTemplateFacadeIntegrationSpec extends IntegrationSpec {
   }
 
   def "method 'fetchOne' should throw 'ExerciseTemplateNotFoundException' when id does not match any template"() {
-    when: "I go to /api/exercises/{id}"
+    when: "use tries to get template details"
       facade.fetchOne(ObjectId.get())
     then:
       thrown(ExerciseTemplateNotFoundException)

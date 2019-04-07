@@ -13,6 +13,12 @@ public class BoardCreateCommandDto implements CommandDtoMarker {
   @NotNull private List<LabelDto> labels;
   @NotNull private ObjectId ownerId;
 
+  public BoardCreateCommandDto(String name, List<LabelDto> labels, ObjectId ownerId) {
+    this.name = name;
+    this.labels = labels;
+    this.ownerId = ownerId;
+  }
+
   public String getName() {
     return this.name;
   }

@@ -1,10 +1,12 @@
 package life.coachy.backend.board.domain;
 
+import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
 import life.coachy.backend.board.domain.dto.BoardUpdateEntireEntityCommandDto;
 import life.coachy.backend.board.domain.exception.BoardNotFoundException;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.board.query.BoardQueryRepository;
 import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
+import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,10 @@ class BoardService {
       throw new BoardNotFoundException();
     }
     runnable.run();
+  }
+
+  void givePermissions(UserFacade userFacade, Board board, BoardCreateCommandDto dto) {
+    userFacade.givePermissions(dto.getOwnerId(), "board." + board.identifier + ".read", "board." + board.identifier + ".update");
   }
 
 }

@@ -17,7 +17,7 @@ class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSch
 
   def "method 'create' should create a schedule"() {
     given: "we have one user in system"
-      BasicDBObject user = setUpUser(sampleCreateDto.getCreator(), "yang160", "password123", Collections.emptySet())
+      setUpUser(sampleCreateDto.getCreator(), "yang160", "password123", Collections.emptySet())
     when: "user tries to create the schedule"
       scheduleFacade.create(sampleCreateDto)
     then:

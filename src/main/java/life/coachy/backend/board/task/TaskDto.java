@@ -13,6 +13,13 @@ public class TaskDto {
   @Pattern(regexp = "(?i)^((0x)?|#?)([0-9A-F]{8}|[0-9A-F]{6})$") private String color;
   private String content;
 
+  public TaskDto(ObjectId identifier, String name, String color, String content) {
+    this.identifier = identifier;
+    this.name = name;
+    this.color = color;
+    this.content = content;
+  }
+
   public ObjectId getIdentifier() {
     return this.identifier;
   }

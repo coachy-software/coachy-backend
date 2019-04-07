@@ -13,6 +13,12 @@ public class LabelDto {
   @NotNull private String name;
   @NotNull private List<TaskDto> tasks;
 
+  public LabelDto(ObjectId identifier, String name, List<TaskDto> tasks) {
+    this.identifier = identifier;
+    this.name = name;
+    this.tasks = tasks;
+  }
+
   public ObjectId getIdentifier() {
     return this.identifier;
   }

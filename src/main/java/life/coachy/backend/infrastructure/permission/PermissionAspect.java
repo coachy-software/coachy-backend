@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 class PermissionAspect {
 
   @Around("@annotation(RequiresPermissions)")
-  public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+  public Object permission(ProceedingJoinPoint joinPoint) throws Throwable {
     List<Boolean> permissionsValues = Lists.newArrayList();
     this.addPermissionsValues(joinPoint, permissionsValues, this.getHexObjectId(joinPoint));
 
