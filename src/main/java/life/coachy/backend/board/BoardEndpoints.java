@@ -68,8 +68,7 @@ class BoardEndpoints {
   })
   @PostMapping
   public ResponseEntity<BoardQueryDto> create(@Valid @RequestBody BoardCreateCommandDto dto) {
-    this.boardFacade.create(dto);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.created(this.boardFacade.create(dto)).build();
   }
 
 }

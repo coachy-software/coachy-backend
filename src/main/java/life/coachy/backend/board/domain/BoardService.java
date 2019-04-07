@@ -23,8 +23,8 @@ class BoardService {
     this.propertiesToMapConverter = propertiesToMapConverter;
   }
 
-  void save(Board board) {
-    this.repository.save(board);
+  Board save(Board board) {
+    return this.repository.save(board);
   }
 
   void convertPropertiesToMapAndSave(ObjectId id, BoardUpdateEntireEntityCommandDto dto) {

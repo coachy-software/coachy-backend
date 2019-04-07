@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(MongoCollections.BOARDS)
 class Board {
 
-  @Id private ObjectId identifier;
+  @Id ObjectId identifier;
   private String name;
   private List<LabelDto> labels;
   private ObjectId ownerId;
