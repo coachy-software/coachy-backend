@@ -2,11 +2,14 @@ package life.coachy.backend.exercise.template;
 
 import com.querydsl.core.types.Predicate;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import life.coachy.backend.exercise.template.domain.ExerciseTemplateFacade;
 import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryBinder;
 import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryDto;
 import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryDtoRepository;
+import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import org.bson.types.ObjectId;
@@ -35,6 +38,7 @@ class ExerciseTemplateEndpoints {
     this.facade = facade;
   }
 
+  @RequiresAuthenticated
   @ApiOperation("Displays exercise templates that matches criteria, only if criteria present, otherwise displays all")
   @GetMapping
   public ResponseEntity<List<ExerciseTemplateQueryDto>> fetchAll(@QuerydslPredicate(bindings = ExerciseTemplateQueryBinder.class) Predicate predicate,
@@ -42,7 +46,12 @@ class ExerciseTemplateEndpoints {
     return ResponseEntity.ok(this.queryOperationsFactory.obtainOperation(predicate, pageable, this.repository));
   }
 
+  @RequiresAuthenticated
   @ApiOperation("Displays specified exercise template by identifier")
+  @ApiResponses({
+      @ApiResponse(code = 404, message = "Template not found"),
+      @ApiResponse(code = 200, message = "Successfully displayed")
+  })
   @GetMapping("{id}")
   public ResponseEntity<ExerciseTemplateQueryDto> fetchOne(@PathVariable ObjectId id) {
     return ResponseEntity.ok(this.facade.fetchOne(id));

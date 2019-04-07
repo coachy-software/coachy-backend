@@ -46,7 +46,7 @@ class ScheduleCrudEndpoints {
   @ApiOperation("Creates schedule")
   @ApiResponses({
       @ApiResponse(code = 400, message = "Validation error"),
-      @ApiResponse(code = 204, message = "Successfully created")
+      @ApiResponse(code = 201, message = "Successfully created")
   })
   @PostMapping
   public ResponseEntity<ScheduleQueryDto> create(@Valid @RequestBody ScheduleCreateCommandDto dto) {

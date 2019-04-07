@@ -70,6 +70,17 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(scheduleDetails), MongoCollections.SCHEDULES)
   }
 
+  def setUpExerciseTemplate(ObjectId id, String name) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", id)
+        this.put("name", name)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.EXERCISES)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)
