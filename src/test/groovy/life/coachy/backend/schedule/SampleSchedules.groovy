@@ -23,8 +23,8 @@ trait SampleSchedules {
       .withCharge(id)
       .withNote("brief note")
       .withActive(true)
-      .withDays(Sets.newHashSet(
-          new ScheduleDayDto("Monday", Sets.newHashSet(ExerciseDtoBuilder.create()
+      .withDays(Sets.newLinkedHashSet(Sets.newHashSet(
+          new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create()
               .withName("Flexing")
               .withIdentifier(ObjectId.get())
               .withMiniSets(0)
@@ -38,17 +38,17 @@ trait SampleSchedules {
                   .withMuscleGroup("Biceps")
                   .build())
               .build()
-          ), true)
-      ))
+          )), true)
+      )))
       .build()
 
   ScheduleUpdateEntireEntityCommandDto sampleUpdateDto = ScheduleUpdateEntireEntityCommandDtoBuilder.create()
       .withName("test schedule updated")
       .withNote("brief note")
       .withActive(true)
-      .withDays(Sets.newHashSet(
-          new ScheduleDayDto("Monday", Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build()), true)
-      ))
+      .withDays(Sets.newLinkedHashSet(Sets.newHashSet(
+          new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build())), true)
+      )))
       .build()
 
 }

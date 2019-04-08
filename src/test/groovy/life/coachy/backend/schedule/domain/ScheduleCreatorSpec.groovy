@@ -5,6 +5,8 @@ import life.coachy.backend.exercise.dto.ExerciseDtoBuilder
 import life.coachy.backend.schedule.day.ScheduleDayDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDtoBuilder
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDtoBuilder
 import org.bson.types.ObjectId
 import spock.lang.Specification
 
@@ -18,9 +20,25 @@ class ScheduleCreatorSpec extends Specification {
           .withCharge(ObjectId.get())
           .withNote("brief note")
           .withActive(true)
-          .withDays(Sets.newHashSet(
-              new ScheduleDayDto("Monday", Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build()), true)
-          ))
+          .withDays(Sets.newLinkedHashSet(Sets.newHashSet(
+              new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build())), true)
+          )))
+          .build()
+    when: "map schedule dto to schedule entity"
+      Schedule schedule = new ScheduleCreator().from(dto);
+    then:
+      schedule != null
+  }
+
+  def "'ScheduleUpdateEntireEntityCommandDto' to 'Schedule' test"() {
+    given: "schedule data transfer object"
+      ScheduleUpdateEntireEntityCommandDto dto = ScheduleUpdateEntireEntityCommandDtoBuilder.create()
+          .withName("test schedule")
+          .withNote("brief note")
+          .withActive(true)
+          .withDays(Sets.newLinkedHashSet(Sets.newHashSet(
+              new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build())), true)
+          )))
           .build()
     when: "map schedule dto to schedule entity"
       Schedule schedule = new ScheduleCreator().from(dto);
