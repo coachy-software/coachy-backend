@@ -1,7 +1,6 @@
 package life.coachy.backend.schedule.domain.dto;
 
 import java.util.LinkedHashSet;
-import java.util.SortedSet;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;

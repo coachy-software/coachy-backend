@@ -2,7 +2,6 @@ package life.coachy.backend.schedule.domain;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
-import java.util.SortedSet;
 import life.coachy.backend.infrastructure.util.Buildable;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;

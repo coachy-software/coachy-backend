@@ -2,7 +2,6 @@ package life.coachy.backend.schedule.domain;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
-import java.util.SortedSet;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
@@ -42,39 +41,39 @@ class Schedule {
     return ScheduleBuilder.create();
   }
 
-  public void setIdentifier(ObjectId identifier) {
+  void setIdentifier(ObjectId identifier) {
     this.identifier = identifier;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
-  public void setCreator(ObjectId creator) {
+  void setCreator(ObjectId creator) {
     this.creator = creator;
   }
 
-  public void setCharge(ObjectId charge) {
+  void setCharge(ObjectId charge) {
     this.charge = charge;
   }
 
-  public void setNote(String note) {
+  void setNote(String note) {
     this.note = note;
   }
 
-  public void setCreatedAt(LocalDateTime createdAt) {
+  void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public void setUpdatedAt(LocalDateTime updatedAt) {
+  void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 
-  public void setActive(boolean active) {
+  void setActive(boolean active) {
     this.active = active;
   }
 
-  public void setDays(LinkedHashSet<ScheduleDayDto> days) {
+  void setDays(LinkedHashSet<ScheduleDayDto> days) {
     this.days = days;
   }
 
