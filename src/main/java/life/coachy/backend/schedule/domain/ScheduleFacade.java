@@ -40,7 +40,7 @@ public class ScheduleFacade {
   }
 
   public void update(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
-    this.service.convertPropertiesToMapAndSave(id, dto);
+    this.service.update(id, this.creator.from(dto));
   }
 
   public ScheduleQueryDto fetchOne(ObjectId id) {

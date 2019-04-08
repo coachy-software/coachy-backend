@@ -1,5 +1,7 @@
 package life.coachy.backend.exercise.template.domain.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,7 +10,7 @@ import org.bson.types.ObjectId;
 
 public class ExerciseTemplateCommandDto implements CommandDtoMarker {
 
-  @NotNull private ObjectId identifier;
+  @NotNull @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @NotNull @NotEmpty private String name;
   @NotNull @NotEmpty private List<String> exampleImages;
   @NotNull @NotEmpty private String briefDescription;

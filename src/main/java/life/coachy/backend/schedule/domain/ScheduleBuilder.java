@@ -1,7 +1,8 @@
 package life.coachy.backend.schedule.domain;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.SortedSet;
 import life.coachy.backend.infrastructure.util.Buildable;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
@@ -16,7 +17,7 @@ final class ScheduleBuilder implements Buildable<Schedule> {
   LocalDateTime createdAt;
   LocalDateTime updatedAt;
   boolean active;
-  Set<ScheduleDayDto> days;
+  LinkedHashSet<ScheduleDayDto> days;
 
   private ScheduleBuilder() {}
 
@@ -64,7 +65,7 @@ final class ScheduleBuilder implements Buildable<Schedule> {
     return this;
   }
 
-  public ScheduleBuilder withDays(Set<ScheduleDayDto> days) {
+  public ScheduleBuilder withDays(LinkedHashSet<ScheduleDayDto> days) {
     this.days = days;
     return this;
   }

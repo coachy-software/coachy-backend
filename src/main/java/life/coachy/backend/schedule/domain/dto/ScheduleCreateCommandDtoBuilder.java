@@ -1,6 +1,7 @@
 package life.coachy.backend.schedule.domain.dto;
 
-import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.SortedSet;
 import life.coachy.backend.infrastructure.util.Buildable;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
@@ -12,7 +13,7 @@ public final class ScheduleCreateCommandDtoBuilder implements Buildable<Schedule
   ObjectId charge;
   String note;
   boolean active;
-  Set<ScheduleDayDto> days;
+  LinkedHashSet<ScheduleDayDto> days;
 
   private ScheduleCreateCommandDtoBuilder() {}
 
@@ -45,7 +46,7 @@ public final class ScheduleCreateCommandDtoBuilder implements Buildable<Schedule
     return this;
   }
 
-  public ScheduleCreateCommandDtoBuilder withDays(Set<ScheduleDayDto> days) {
+  public ScheduleCreateCommandDtoBuilder withDays(LinkedHashSet<ScheduleDayDto> days) {
     this.days = days;
     return this;
   }

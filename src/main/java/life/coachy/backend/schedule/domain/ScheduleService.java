@@ -1,9 +1,7 @@
 package life.coachy.backend.schedule.domain;
 
 import java.util.function.Consumer;
-import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
 import life.coachy.backend.schedule.query.ScheduleQueryRepository;
@@ -16,13 +14,11 @@ import org.springframework.stereotype.Service;
 class ScheduleService {
 
   private final ScheduleQueryRepository queryDtoRepository;
-  private final PropertiesToMapConverter propertiesToMapConverter;
   private final ScheduleRepository scheduleRepository;
 
   @Autowired
-  public ScheduleService(ScheduleQueryRepository queryDtoRepository, PropertiesToMapConverter propertiesConverter, ScheduleRepository scheduleRepository) {
+  public ScheduleService(ScheduleQueryRepository queryDtoRepository, ScheduleRepository scheduleRepository) {
     this.queryDtoRepository = queryDtoRepository;
-    this.propertiesToMapConverter = propertiesConverter;
     this.scheduleRepository = scheduleRepository;
   }
 
@@ -51,8 +47,16 @@ class ScheduleService {
     );
   }
 
-  void convertPropertiesToMapAndSave(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
-    this.checkIfExists(id, (queryDto) -> this.scheduleRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto)));
+  void update(ObjectId id, Schedule schedule) {
+    this.checkIfExists(id, queryDto -> {
+      schedule.setIdentifier(queryDto.getIdentifier());
+      schedule.setCharge(queryDto.getCharge());
+      schedule.setCreator(queryDto.getCreator());
+      schedule.setCreatedAt(queryDto.getCreatedAt());
+      schedule.setUpdatedAt(queryDto.getUpdatedAt());
+
+      this.scheduleRepository.save(schedule);
+    });
   }
 
   private void checkIfExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {

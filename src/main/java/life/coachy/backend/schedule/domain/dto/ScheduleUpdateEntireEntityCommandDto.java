@@ -1,6 +1,7 @@
 package life.coachy.backend.schedule.domain.dto;
 
-import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.SortedSet;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
@@ -11,7 +12,7 @@ public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
   @NotNull @NotEmpty private String name;
   @NotNull private boolean active;
   @NotNull private String note;
-  @NotNull private Set<ScheduleDayDto> days;
+  @NotNull private LinkedHashSet<ScheduleDayDto> days;
 
   ScheduleUpdateEntireEntityCommandDto() {}
 
@@ -34,7 +35,7 @@ public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
     return this.note;
   }
 
-  public Set<ScheduleDayDto> getDays() {
+  public LinkedHashSet<ScheduleDayDto> getDays() {
     return this.days;
   }
 

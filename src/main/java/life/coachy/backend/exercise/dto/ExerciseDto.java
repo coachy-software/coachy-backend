@@ -1,5 +1,7 @@
 package life.coachy.backend.exercise.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandDto;
@@ -7,7 +9,7 @@ import org.bson.types.ObjectId;
 
 public class ExerciseDto {
 
-  private ObjectId identifier;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @NotNull @NotEmpty private String name;
   @NotNull private int sets;
   @NotNull private int reps;
