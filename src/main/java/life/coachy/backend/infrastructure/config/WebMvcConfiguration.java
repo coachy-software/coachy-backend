@@ -12,7 +12,8 @@ class WebMvcConfiguration implements WebMvcConfigurer {
     registry.addMapping("/api/**")
         .allowedOrigins("http://localhost:8080")
         .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")
-        .allowedHeaders("Authorization", "Cache-Control", "Content-Type");
+        .allowedHeaders("Authorization", "Cache-Control", "Content-Type")
+        .exposedHeaders("Location");
   }
 
 }
