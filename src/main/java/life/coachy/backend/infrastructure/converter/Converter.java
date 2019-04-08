@@ -1,9 +1,8 @@
 package life.coachy.backend.infrastructure.converter;
 
+@FunctionalInterface
 interface Converter<R, T> {
 
-  default R convert(T value) {
-    throw new UnsupportedOperationException();
-  }
+  R convert(T value);
 
 }
