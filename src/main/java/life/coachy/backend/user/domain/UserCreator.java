@@ -29,7 +29,6 @@ class UserCreator {
     return User.builder()
         .withUsername(dto.getUsername())
         .withEmail(dto.getEmail())
-        .withBoardIdentifier(dto.getBoardIdentifier())
         .withAvatar(dto.getAvatar())
         .withDisplayName(dto.getDisplayName())
         .build();

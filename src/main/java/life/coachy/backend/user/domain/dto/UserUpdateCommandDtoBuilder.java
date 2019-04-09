@@ -8,7 +8,6 @@ public final class UserUpdateCommandDtoBuilder {
   String displayName;
   String email;
   String avatar;
-  ObjectId boardIdentifier;
 
   private UserUpdateCommandDtoBuilder() {}
 
@@ -33,11 +32,6 @@ public final class UserUpdateCommandDtoBuilder {
 
   public UserUpdateCommandDtoBuilder withAvatar(String avatar) {
     this.avatar = avatar;
-    return this;
-  }
-
-  public UserUpdateCommandDtoBuilder withBoardIdentifier(ObjectId boardIdentifier) {
-    this.boardIdentifier = boardIdentifier;
     return this;
   }
 

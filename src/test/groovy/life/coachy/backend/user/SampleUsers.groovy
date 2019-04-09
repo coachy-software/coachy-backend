@@ -20,7 +20,6 @@ trait SampleUsers {
       .withEmail("yang160@gmail.com")
       .withAvatar("http://www.google.com/avatars/yang160.png")
       .withDisplayName("yang160")
-      .withBoardIdentifier(ObjectId.get())
       .build()
 
 }
