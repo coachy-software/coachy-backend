@@ -59,4 +59,8 @@ class User {
     this.permissions = permissions;
   }
 
+  public void setBoardId(ObjectId boardId) {
+    this.boardId = boardId;
+  }
+
 }

@@ -29,6 +29,7 @@ class UserCrudService {
     user.setPermissions(queryDto.getPermissions());
     user.setRoles(queryDto.getRoles());
     user.setPassword(queryDto.getPassword());
+    user.setBoardId(queryDto.getBoardId());
 
     this.userRepository.save(user);
   }
