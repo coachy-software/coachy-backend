@@ -67,16 +67,20 @@ class UserOperationsService {
         .collect(Collectors.toSet()));
   }
 
-  private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
-    this.queryDtoRepository.findById(id).ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
-  }
-
   void resetPassword(String email, String newPassword) {
     if (!this.queryDtoRepository.existsByEmail(email)) {
       throw new UserNotFoundException();
     }
 
     this.repository.updatePasswordByEmail(email, newPassword);
+  }
+
+  void updateBoardId(ObjectId boardId, ObjectId userId) {
+    this.repository.updateBoardIdById(boardId, userId);
+  }
+
+  private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
+    this.queryDtoRepository.findById(id).ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
   }
 
 }

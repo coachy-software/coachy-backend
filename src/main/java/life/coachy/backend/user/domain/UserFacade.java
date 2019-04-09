@@ -40,4 +40,8 @@ public class UserFacade {
     this.operationsService.resetPassword(email, newPassword);
   }
 
+  public void updateBoardId(ObjectId boardId, ObjectId userId) {
+    this.operationsService.updateBoardId(boardId, userId);
+  }
+
 }

@@ -24,6 +24,7 @@ public class BoardFacade {
   public URI create(BoardCreateCommandDto dto) {
     Board board = this.boardService.save(this.boardCreator.from(dto));
     this.boardService.givePermissions(this.userFacade, board, dto);
+    this.userFacade.updateBoardId(board.identifier, dto.getOwnerId());
 
     return ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + ApiLayers.BOARDS + "/{id}").buildAndExpand(board.identifier).toUri();
   }

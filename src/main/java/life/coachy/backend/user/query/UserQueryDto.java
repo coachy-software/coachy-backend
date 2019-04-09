@@ -24,7 +24,7 @@ public class UserQueryDto implements QueryDtoMarker {
   private AccountTypeDto accountType;
   @JsonIgnore private Set<String> roles;
   @JsonIgnore private Set<String> permissions;
-  @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardIdentifier;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardId;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -62,8 +62,8 @@ public class UserQueryDto implements QueryDtoMarker {
     return ImmutableSet.copyOf(this.roles);
   }
 
-  public ObjectId getBoardIdentifier() {
-    return this.boardIdentifier;
+  public ObjectId getBoardId() {
+    return this.boardId;
   }
 
   @Override
@@ -78,7 +78,7 @@ public class UserQueryDto implements QueryDtoMarker {
         ", accountType=" + this.accountType +
         ", roles=" + this.roles +
         ", permissions=" + this.permissions +
-        ", boardIdentifier=" + this.boardIdentifier +
+        ", boardId=" + this.boardId +
         '}';
   }
 

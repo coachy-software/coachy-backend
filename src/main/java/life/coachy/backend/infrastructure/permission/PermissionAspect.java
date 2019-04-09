@@ -61,9 +61,9 @@ class PermissionAspect {
 
   private String getPermissionsString(String principalContent) {
     int lastIndexOfPermissions = principalContent.lastIndexOf("permissions");
-    int lastIndexOfBoardIdentifier = principalContent.indexOf("boardIdentifier");
+    int lastIndexOfBoardId = principalContent.indexOf("boardId");
 
-    String rawBracketedPermissions = this.removeLastTwoChars(principalContent.substring(lastIndexOfPermissions, lastIndexOfBoardIdentifier));
+    String rawBracketedPermissions = this.removeLastTwoChars(principalContent.substring(lastIndexOfPermissions, lastIndexOfBoardId));
     String unbracketedPermissions = this.removeBrackets(rawBracketedPermissions);
 
     return StringUtils.replace(unbracketedPermissions, "permissions=", "");

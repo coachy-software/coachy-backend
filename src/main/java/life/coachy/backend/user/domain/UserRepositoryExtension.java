@@ -12,6 +12,7 @@ interface UserRepositoryExtension {
 
   void updatePermissionsById(ObjectId id, Set<String> permissions);
   void updatePasswordByEmail(String email, String newPassword);
+  void updateBoardIdById(ObjectId boardId, ObjectId userId);
 
 }
 
@@ -43,5 +44,13 @@ class UserRepositoryExtensionImpl implements UserRepositoryExtension {
     this.mongoTemplate.updateFirst(query, update, User.class);
   }
 
+  @Override
+  public void updateBoardIdById(ObjectId boardId, ObjectId userId) {
+    Query query = new Query(Criteria.where("_id").is(userId));
+    Update update = new Update();
+
+    update.set("boardId", boardId);
+    this.mongoTemplate.updateFirst(query, update, User.class);
+  }
 
 }

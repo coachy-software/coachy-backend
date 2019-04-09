@@ -15,7 +15,7 @@ final class UserBuilder implements Buildable<User> {
   AccountType accountType;
   Set<String> roles;
   Set<String> permissions;
-  ObjectId boardIdentifier;
+  ObjectId boardId;
 
   private UserBuilder() {}
 
@@ -67,7 +67,7 @@ final class UserBuilder implements Buildable<User> {
   }
 
   public UserBuilder withBoardIdentifier(ObjectId boardIdentifier) {
-    this.boardIdentifier = boardIdentifier;
+    this.boardId = boardIdentifier;
     return this;
   }
 

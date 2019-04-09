@@ -18,7 +18,9 @@ class User {
   private AccountType accountType;
   private Set<String> roles;
   private Set<String> permissions;
-  private ObjectId boardIdentifier;
+  private ObjectId boardId;
+
+  User() {}
 
   User(UserBuilder builder) {
     this.identifier = builder.identifier;
@@ -30,10 +32,8 @@ class User {
     this.accountType = builder.accountType;
     this.roles = builder.roles;
     this.permissions = builder.permissions;
-    this.boardIdentifier = builder.boardIdentifier;
+    this.boardId = builder.boardId;
   }
-
-  User() {}
 
   public static UserBuilder builder() {
     return UserBuilder.create();
