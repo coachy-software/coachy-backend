@@ -6,7 +6,7 @@ import java.util.List;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
 import life.coachy.backend.schedule.query.ScheduleQueryRepository;
 import life.coachy.backend.user.domain.UserFacade;
@@ -39,7 +39,7 @@ public class ScheduleFacade {
     this.service.delete(this.userFacade, id);
   }
 
-  public void update(ObjectId id, ScheduleUpdateEntireEntityCommandDto dto) {
+  public void update(ObjectId id, ScheduleUpdateCommandDto dto) {
     this.service.update(id, this.creator.from(dto));
   }
 

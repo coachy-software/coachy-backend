@@ -2,7 +2,7 @@ package life.coachy.backend.board.query;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.util.List;
+import java.util.Set;
 import life.coachy.backend.board.label.LabelDto;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
@@ -15,7 +15,7 @@ public class BoardQueryDto implements QueryDtoMarker {
 
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId identifier;
   private String name;
-  private List<LabelDto> labels;
+  private Set<LabelDto> labels;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId ownerId;
 
   public ObjectId getIdentifier() {
@@ -26,7 +26,7 @@ public class BoardQueryDto implements QueryDtoMarker {
     return this.name;
   }
 
-  public List<LabelDto> getLabels() {
+  public Set<LabelDto> getLabels() {
     return this.labels;
   }
 

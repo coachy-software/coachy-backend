@@ -5,8 +5,8 @@ import life.coachy.backend.exercise.dto.ExerciseDtoBuilder
 import life.coachy.backend.schedule.day.ScheduleDayDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDtoBuilder
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDtoBuilder
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDtoBuilder
 import org.bson.types.ObjectId
 import spock.lang.Specification
 
@@ -32,7 +32,7 @@ class ScheduleCreatorSpec extends Specification {
 
   def "'ScheduleUpdateEntireEntityCommandDto' to 'Schedule' test"() {
     given: "schedule data transfer object"
-      ScheduleUpdateEntireEntityCommandDto dto = ScheduleUpdateEntireEntityCommandDtoBuilder.create()
+      ScheduleUpdateCommandDto dto = ScheduleUpdateCommandDtoBuilder.create()
           .withName("test schedule")
           .withNote("brief note")
           .withActive(true)

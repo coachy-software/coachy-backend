@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import life.coachy.backend.board.domain.BoardFacade;
 import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
-import life.coachy.backend.board.domain.dto.BoardUpdateEntireEntityCommandDto;
+import life.coachy.backend.board.domain.dto.BoardUpdateCommandDto;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
@@ -55,7 +55,7 @@ class BoardEndpoints {
       @ApiResponse(code = 204, message = "Successfully updated")
   })
   @PutMapping("{id}")
-  public ResponseEntity<BoardQueryDto> update(@PathVariable @ApiParam("Board's id") ObjectId id, @Valid @RequestBody BoardUpdateEntireEntityCommandDto dto) {
+  public ResponseEntity<BoardQueryDto> update(@PathVariable @ApiParam("Board's id") ObjectId id, @Valid @RequestBody BoardUpdateCommandDto dto) {
     this.boardFacade.update(id, dto);
     return ResponseEntity.noContent().build();
   }

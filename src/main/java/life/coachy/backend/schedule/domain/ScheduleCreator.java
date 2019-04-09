@@ -1,7 +1,7 @@
 package life.coachy.backend.schedule.domain;
 
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto;
 
 class ScheduleCreator {
 
@@ -16,7 +16,7 @@ class ScheduleCreator {
         .build();
   }
 
-  Schedule from(ScheduleUpdateEntireEntityCommandDto dto) {
+  Schedule from(ScheduleUpdateCommandDto dto) {
     return Schedule.builder()
         .withName(dto.getName())
         .withActive(dto.isActive())

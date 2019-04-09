@@ -13,7 +13,7 @@ import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto;
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto;
 import life.coachy.backend.schedule.query.ScheduleQueryBinder;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
 import life.coachy.backend.schedule.query.ScheduleQueryDto.View;
@@ -81,7 +81,7 @@ class ScheduleCrudEndpoints {
       @ApiResponse(code = 204, message = "Successfully updated")
   })
   @PutMapping("{id}")
-  public ResponseEntity<ScheduleQueryDto> update(@PathVariable @ApiParam("User's id") ObjectId id, @Valid @RequestBody ScheduleUpdateEntireEntityCommandDto dto) {
+  public ResponseEntity<ScheduleQueryDto> update(@PathVariable @ApiParam("User's id") ObjectId id, @Valid @RequestBody ScheduleUpdateCommandDto dto) {
     this.facade.update(id, dto);
     return ResponseEntity.noContent().build();
   }

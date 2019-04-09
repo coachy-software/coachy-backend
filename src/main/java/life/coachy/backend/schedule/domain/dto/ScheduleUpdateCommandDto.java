@@ -6,16 +6,16 @@ import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 
-public class ScheduleUpdateEntireEntityCommandDto implements CommandDtoMarker {
+public class ScheduleUpdateCommandDto implements CommandDtoMarker {
 
   @NotNull @NotEmpty private String name;
   @NotNull private boolean active;
   @NotNull private String note;
   @NotNull private LinkedHashSet<ScheduleDayDto> days;
 
-  ScheduleUpdateEntireEntityCommandDto() {}
+  ScheduleUpdateCommandDto() {}
 
-  ScheduleUpdateEntireEntityCommandDto(ScheduleUpdateEntireEntityCommandDtoBuilder builder) {
+  ScheduleUpdateCommandDto(ScheduleUpdateCommandDtoBuilder builder) {
     this.name = builder.name;
     this.active = builder.active;
     this.note = builder.note;

@@ -1,6 +1,6 @@
 package life.coachy.backend.board.domain;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 import life.coachy.backend.board.label.LabelDto;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
@@ -9,7 +9,7 @@ final class BoardBuilder implements Buildable<Board> {
 
   ObjectId identifier;
   String name;
-  List<LabelDto> labels;
+  LinkedHashSet<LabelDto> labels;
   ObjectId ownerId;
 
   private BoardBuilder() {}
@@ -28,7 +28,7 @@ final class BoardBuilder implements Buildable<Board> {
     return this;
   }
 
-  public BoardBuilder withLabels(List<LabelDto> labels) {
+  public BoardBuilder withLabels(LinkedHashSet<LabelDto> labels) {
     this.labels = labels;
     return this;
   }

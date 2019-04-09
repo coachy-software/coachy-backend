@@ -1,5 +1,6 @@
 package life.coachy.backend.board.domain;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import life.coachy.backend.board.label.LabelDto;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
@@ -12,7 +13,7 @@ class Board {
 
   @Id ObjectId identifier;
   private String name;
-  private List<LabelDto> labels;
+  private LinkedHashSet<LabelDto> labels;
   private ObjectId ownerId;
 
   Board() {}
@@ -26,6 +27,14 @@ class Board {
 
   public static BoardBuilder builder() {
     return BoardBuilder.create();
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
+  public void setOwnerId(ObjectId ownerId) {
+    this.ownerId = ownerId;
   }
 
 }

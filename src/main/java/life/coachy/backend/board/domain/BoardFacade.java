@@ -2,7 +2,7 @@ package life.coachy.backend.board.domain;
 
 import java.net.URI;
 import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
-import life.coachy.backend.board.domain.dto.BoardUpdateEntireEntityCommandDto;
+import life.coachy.backend.board.domain.dto.BoardUpdateCommandDto;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.user.domain.UserFacade;
@@ -28,8 +28,8 @@ public class BoardFacade {
     return ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + ApiLayers.BOARDS + "/{id}").buildAndExpand(board.identifier).toUri();
   }
 
-  public void update(ObjectId id, BoardUpdateEntireEntityCommandDto dto) {
-    this.boardService.convertPropertiesToMapAndSave(id, dto);
+  public void update(ObjectId id, BoardUpdateCommandDto dto) {
+    this.boardService.update(id, this.boardCreator.from(dto));
   }
 
   public BoardQueryDto fetchOne(ObjectId id) {

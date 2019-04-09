@@ -8,8 +8,8 @@ import life.coachy.backend.exercise.template.domain.dto.ExerciseTemplateCommandD
 import life.coachy.backend.schedule.day.ScheduleDayDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDtoBuilder
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDto
-import life.coachy.backend.schedule.domain.dto.ScheduleUpdateEntireEntityCommandDtoBuilder
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto
+import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDtoBuilder
 import org.bson.types.ObjectId
 
 @CompileStatic
@@ -42,7 +42,7 @@ trait SampleSchedules {
       )))
       .build()
 
-  ScheduleUpdateEntireEntityCommandDto sampleUpdateDto = ScheduleUpdateEntireEntityCommandDtoBuilder.create()
+  ScheduleUpdateCommandDto sampleUpdateDto = ScheduleUpdateCommandDtoBuilder.create()
       .withName("test schedule updated")
       .withNote("brief note")
       .withActive(true)
