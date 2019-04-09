@@ -45,10 +45,6 @@ class Schedule {
     this.identifier = identifier;
   }
 
-  void setName(String name) {
-    this.name = name;
-  }
-
   void setCreator(ObjectId creator) {
     this.creator = creator;
   }
@@ -57,24 +53,12 @@ class Schedule {
     this.charge = charge;
   }
 
-  void setNote(String note) {
-    this.note = note;
-  }
-
   void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
   void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  void setActive(boolean active) {
-    this.active = active;
-  }
-
-  void setDays(LinkedHashSet<ScheduleDayDto> days) {
-    this.days = days;
   }
 
 }
