@@ -1,8 +1,8 @@
 package life.coachy.backend.user
 
-import com.google.common.collect.Sets
 import groovy.transform.CompileStatic
 import life.coachy.backend.user.domain.dto.*
+import org.bson.types.ObjectId
 
 @CompileStatic
 trait SampleUsers {
@@ -15,13 +15,12 @@ trait SampleUsers {
       .withEmail("yang160@gmail.com")
       .build()
 
-  UserUpdateEntireEntityCommandDto sampleUpdateUser = UserUpdateEntireEntityCommandDtoBuilder.create()
+  UserUpdateCommandDto sampleUpdateUser = UserUpdateCommandDtoBuilder.create()
       .withUsername("yang160_UPDATED")
-      .withPassword("yang160")
       .withEmail("yang160@gmail.com")
       .withAvatar("http://www.google.com/avatars/yang160.png")
       .withDisplayName("yang160")
-      .withPermissions(Sets.newHashSet())
+      .withBoardIdentifier(ObjectId.get())
       .build()
 
 }

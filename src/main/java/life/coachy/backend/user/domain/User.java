@@ -39,4 +39,24 @@ class User {
     return UserBuilder.create();
   }
 
+  void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
+  void setPassword(String password) {
+    this.password = password;
+  }
+
+  void setAccountType(AccountType accountType) {
+    this.accountType = accountType;
+  }
+
+  void setRoles(Set<String> roles) {
+    this.roles = roles;
+  }
+
+  void setPermissions(Set<String> permissions) {
+    this.permissions = permissions;
+  }
+
 }

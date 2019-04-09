@@ -33,7 +33,7 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
       usersEndpoint.andExpect(status().isNoContent())
     when: "I go to /api/users/{id}"
       ResultActions detailsEndpoint = mockMvc.perform(get("/api/users/{id}", id)
-          .with(httpBasic("yang160_UPDATED", "yang160")))
+          .with(httpBasic("yang160_UPDATED", "password123")))
     then: "I see my account details"
       detailsEndpoint.andExpect(status().isOk()).andExpect(jsonPath('$.username', is("yang160_UPDATED")))
   }
@@ -88,8 +88,8 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
       usersEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${firstUser.get("_id")}", "username": "${firstUser.get("username")}", "password": "${firstUser.get("password")}"},
-              {"identifier": "${secondUser.get("_id")}", "username": "${secondUser.get("username")}", "password": "${secondUser.get("password")}"}
+              {"identifier": "${firstUser.get("_id")}", "username": "${firstUser.get("username")}"},
+              {"identifier": "${secondUser.get("_id")}", "username": "${secondUser.get("username")}"}
             ]
           """))
     when: "I go to /api/users?page=0&size=1"
@@ -98,7 +98,7 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
       paginationEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${firstUser.get("_id")}", "username": "${firstUser.get("username")}", "password": "${firstUser.get("password")}"}
+              {"identifier": "${firstUser.get("_id")}", "username": "${firstUser.get("username")}"}
             ]
           """))
     when: "I go to /api/users?username=yang161"
@@ -107,7 +107,7 @@ class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleU
       searchEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${secondUser.get("_id")}", "username": "${secondUser.get("username")}", "password": "${secondUser.get("password")}"}
+              {"identifier": "${secondUser.get("_id")}", "username": "${secondUser.get("username")}"}
             ]
           """))
 

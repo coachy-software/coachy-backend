@@ -3,6 +3,7 @@ package life.coachy.backend.user.domain;
 import com.google.common.collect.Sets;
 import java.util.Collections;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
+import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserCreator {
@@ -21,6 +22,16 @@ class UserCreator {
         .withAccountType(AccountType.valueOf(dto.getAccountType().name()))
         .withPermissions(Collections.emptySet())
         .withRoles(Sets.newHashSet("USER"))
+        .build();
+  }
+
+  User from(UserUpdateCommandDto dto) {
+    return User.builder()
+        .withUsername(dto.getUsername())
+        .withEmail(dto.getEmail())
+        .withBoardIdentifier(dto.getBoardIdentifier())
+        .withAvatar(dto.getAvatar())
+        .withDisplayName(dto.getDisplayName())
         .build();
   }
 

@@ -51,6 +51,7 @@ class IntegrationSpec extends Specification {
         this.put("email", email)
         this.put("roles", Sets.newHashSet("USER"))
         this.put("permissions", permissions.stream().map({ permission -> permission.toString() }).collect(Collectors.toSet()))
+        this.put("accountType", "CHARGE")
       }
     }
 

@@ -11,7 +11,7 @@ import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.user.domain.UserFacade;
-import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
+import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
 import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryRepository;
@@ -73,7 +73,7 @@ class UserCrudEndpoints {
       @ApiResponse(code = 204, message = "Successfully updated")
   })
   @PutMapping("{id}")
-  public ResponseEntity<UserQueryDto> update(@PathVariable ObjectId id, @RequestBody @Valid UserUpdateEntireEntityCommandDto dto) {
+  public ResponseEntity<UserQueryDto> update(@PathVariable ObjectId id, @RequestBody @Valid UserUpdateCommandDto dto) {
     this.facade.update(id, dto);
     return ResponseEntity.noContent().build();
   }

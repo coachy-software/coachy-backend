@@ -1,7 +1,7 @@
 package life.coachy.backend.user.domain;
 
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
-import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
+import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
 import org.bson.types.ObjectId;
 
 public class UserFacade {
@@ -20,8 +20,8 @@ public class UserFacade {
     this.operationsService.checkIfUsernameAndEmailAlreadyExists(dto.getUsername(), dto.getEmail(), () -> this.crudService.save(this.creator.from(dto)));
   }
 
-  public void update(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
-    this.operationsService.checkIfUsernameAlreadyExists(id, dto.getUsername(), () -> this.crudService.convertPropertiesToMapAndSave(id, dto));
+  public void update(ObjectId id, UserUpdateCommandDto dto) {
+    this.operationsService.checkIfUsernameAlreadyExists(id, dto.getUsername(), (queryDto) -> this.crudService.update(queryDto, this.creator.from(dto)));
   }
 
   public void delete(ObjectId id) {

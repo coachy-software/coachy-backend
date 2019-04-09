@@ -1,28 +1,27 @@
 package life.coachy.backend.user.domain.dto;
 
-import java.util.Set;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import life.coachy.backend.infrastructure.command.CommandDtoMarker;
+import org.bson.types.ObjectId;
 
-public class UserUpdateEntireEntityCommandDto implements CommandDtoMarker {
+public class UserUpdateCommandDto implements CommandDtoMarker {
 
   @NotNull @NotEmpty private String username;
   @NotNull @NotEmpty private String displayName;
-  @NotNull @NotEmpty private String password;
   @NotNull @NotEmpty private String email;
   @NotNull @NotEmpty private String avatar;
-  @NotNull private Set<String> permissions;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardIdentifier;
 
-  UserUpdateEntireEntityCommandDto() {}
+  UserUpdateCommandDto() {}
 
-  UserUpdateEntireEntityCommandDto(UserUpdateEntireEntityCommandDtoBuilder builder) {
+  UserUpdateCommandDto(UserUpdateCommandDtoBuilder builder) {
     this.username = builder.username;
     this.displayName = builder.displayName;
-    this.password = builder.password;
     this.email = builder.email;
     this.avatar = builder.avatar;
-    this.permissions = builder.permissions;
   }
 
   public String getUsername() {
@@ -33,10 +32,6 @@ public class UserUpdateEntireEntityCommandDto implements CommandDtoMarker {
     return this.displayName;
   }
 
-  public String getPassword() {
-    return this.password;
-  }
-
   public String getEmail() {
     return this.email;
   }
@@ -45,8 +40,8 @@ public class UserUpdateEntireEntityCommandDto implements CommandDtoMarker {
     return this.avatar;
   }
 
-  public Set<String> getPermissions() {
-    return this.permissions;
+  public ObjectId getBoardIdentifier() {
+    return this.boardIdentifier;
   }
 
 }

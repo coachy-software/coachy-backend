@@ -1,7 +1,6 @@
 package life.coachy.backend.user.domain;
 
-import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
-import life.coachy.backend.user.domain.dto.UserUpdateEntireEntityCommandDto;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,12 +9,10 @@ import org.springframework.stereotype.Service;
 class UserCrudService {
 
   private final UserRepository userRepository;
-  private final PropertiesToMapConverter propertiesToMapConverter;
 
   @Autowired
-  public UserCrudService(UserRepository userRepository, PropertiesToMapConverter propertiesToMapConverter) {
+  public UserCrudService(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.propertiesToMapConverter = propertiesToMapConverter;
   }
 
   void save(User user) {
@@ -26,8 +23,14 @@ class UserCrudService {
     this.userRepository.deleteById(id);
   }
 
-  void convertPropertiesToMapAndSave(ObjectId id, UserUpdateEntireEntityCommandDto dto) {
-    this.userRepository.updateEntireEntity(id, this.propertiesToMapConverter.convert(dto));
+  void update(UserQueryDto queryDto, User user) {
+    user.setIdentifier(queryDto.getIdentifier());
+    user.setAccountType(AccountType.valueOf(queryDto.getAccountType().name()));
+    user.setPermissions(queryDto.getPermissions());
+    user.setRoles(queryDto.getRoles());
+    user.setPassword(queryDto.getPassword());
+
+    this.userRepository.save(user);
   }
 
 }

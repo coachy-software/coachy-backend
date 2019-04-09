@@ -2,8 +2,8 @@ package life.coachy.backend.user.domain;
 
 import com.google.common.collect.Sets;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,19 +34,18 @@ class UserOperationsService {
     runnable.run();
   }
 
-  void checkIfUsernameAlreadyExists(ObjectId id, String username, Runnable runnable) {
-    this.checkIfExists(id, () -> {
-      Optional<UserQueryDto> queryDto = this.queryDtoRepository.findById(id);
+  void checkIfUsernameAlreadyExists(ObjectId id, String username, Consumer<UserQueryDto> queryDtoConsumer) {
+    UserQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
-      boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.get().getUsername());
-      boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
+    boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.getUsername());
+    boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
 
-      if (!isUsernameExists || isUsernameEqualToPrincipalUsername) {
-        runnable.run();
-        return;
-      }
-      throw new UserAlreadyExistsException();
-    });
+    if (!isUsernameExists || isUsernameEqualToPrincipalUsername) {
+      queryDtoConsumer.accept(queryDto);
+      return;
+    }
+
+    throw new UserAlreadyExistsException();
   }
 
   void checkIfExists(ObjectId id, Runnable runnable) {
@@ -76,6 +75,7 @@ class UserOperationsService {
     if (!this.queryDtoRepository.existsByEmail(email)) {
       throw new UserNotFoundException();
     }
+
     this.repository.updatePasswordByEmail(email, newPassword);
   }
 

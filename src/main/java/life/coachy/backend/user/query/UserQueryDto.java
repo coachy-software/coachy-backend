@@ -1,5 +1,6 @@
 package life.coachy.backend.user.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.ImmutableSet;
@@ -17,12 +18,12 @@ public class UserQueryDto implements QueryDtoMarker {
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   private String username;
   private String displayName;
-  private String password;
+  @JsonIgnore private String password;
   private String email;
   private String avatar;
   private AccountTypeDto accountType;
-  private Set<String> roles;
-  private Set<String> permissions;
+  @JsonIgnore private Set<String> roles;
+  @JsonIgnore private Set<String> permissions;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId boardIdentifier;
 
   public ObjectId getIdentifier() {

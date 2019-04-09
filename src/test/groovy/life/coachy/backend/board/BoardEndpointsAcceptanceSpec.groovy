@@ -4,7 +4,6 @@ import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
-import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
@@ -34,18 +33,6 @@ class BoardEndpointsAcceptanceSpec extends IntegrationSpec implements SampleBoar
     then:
       detailsEndpoint.andExpect(status().isOk())
           .andExpect(jsonPath('$.name', is("test name")))
-    when: "I go to /api/users/me"
-      ResultActions userDetailsEndpoint = mockMvc.perform(get("/api/users/me")
-          .with(httpBasic("yang160", "password123")))
-    then: "I see that permissions has changed"
-      Object boardId = new JSONObject(detailsEndpoint.andReturn().getResponse().getContentAsString()).get("identifier");
-      userDetailsEndpoint.andExpect(status().isOk())
-          .andExpect(content().json("""
-            {"identifier": "${user.get("_id")}", "username": "${user.get("username")}", "password": "${user.get("password")}", "permissions": [
-              "board.${boardId}.read", 
-              "board.${boardId}.update"
-            ]}
-          """))
   }
 
   def "board create negative scenario"() {
