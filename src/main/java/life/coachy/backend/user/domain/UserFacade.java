@@ -24,7 +24,8 @@ public class UserFacade {
   }
 
   public void update(ObjectId id, UserUpdateCommandDto dto) {
-    this.operationsService.checkIfUsernameAlreadyExists(id, dto.getUsername(), (queryDto) -> this.crudService.update(queryDto, this.creator.from(dto)));
+    this.operationsService.checkIfSameUsernameAndEmailExists(id, dto.getUsername(), dto.getEmail(),
+        (queryDto) -> this.crudService.update(queryDto, this.creator.from(dto)));
   }
 
   public void delete(ObjectId id) {

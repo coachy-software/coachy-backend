@@ -34,13 +34,16 @@ class UserOperationsService {
     runnable.run();
   }
 
-  void checkIfUsernameAlreadyExists(ObjectId id, String username, Consumer<UserQueryDto> queryDtoConsumer) {
+  void checkIfSameUsernameAndEmailExists(ObjectId id, String username, String email, Consumer<UserQueryDto> queryDtoConsumer) {
     UserQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
     boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.getUsername());
     boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
 
-    if (!isUsernameExists || isUsernameEqualToPrincipalUsername) {
+    boolean isEmailEqualToPrincipalEmail = email.equals(queryDto.getEmail());
+    boolean isEmailExists = this.queryDtoRepository.existsByEmail(email);
+
+    if ((!isUsernameExists || isUsernameEqualToPrincipalUsername) && (!isEmailExists || isEmailEqualToPrincipalEmail)) {
       queryDtoConsumer.accept(queryDto);
       return;
     }
