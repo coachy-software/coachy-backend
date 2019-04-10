@@ -27,23 +27,21 @@ class UserOperationsService {
     this.repository = repository;
   }
 
-  void checkIfUsernameAndEmailAlreadyExists(String username, String email, Runnable runnable) {
+  void checkIfUsernameOrEmailExists(String username, String email, Runnable runnable) {
     if (this.queryDtoRepository.existsByUsernameOrEmail(username, email)) {
       throw new UserAlreadyExistsException();
     }
+
     runnable.run();
   }
 
-  void checkIfSameUsernameAndEmailExists(ObjectId id, String username, String email, Consumer<UserQueryDto> queryDtoConsumer) {
+  void checkIfUsernameOrEmailCanBeUpdated(ObjectId id, String username, String email, Consumer<UserQueryDto> queryDtoConsumer) {
     UserQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
-    boolean isUsernameEqualToPrincipalUsername = username.equals(queryDto.getUsername());
-    boolean isUsernameExists = this.queryDtoRepository.existsByUsername(username);
+    boolean canUsernameBeUpdated = !this.queryDtoRepository.existsByUsername(username) || username.equals(queryDto.getUsername());
+    boolean canEmailBeUpdated = !this.queryDtoRepository.existsByEmail(email) || email.equals(queryDto.getEmail());
 
-    boolean isEmailEqualToPrincipalEmail = email.equals(queryDto.getEmail());
-    boolean isEmailExists = this.queryDtoRepository.existsByEmail(email);
-
-    if ((!isUsernameExists || isUsernameEqualToPrincipalUsername) && (!isEmailExists || isEmailEqualToPrincipalEmail)) {
+    if (canUsernameBeUpdated && canEmailBeUpdated) {
       queryDtoConsumer.accept(queryDto);
       return;
     }
@@ -55,6 +53,7 @@ class UserOperationsService {
     if (!this.queryDtoRepository.existsByIdentifier(id)) {
       throw new UserNotFoundException();
     }
+
     runnable.run();
   }
 
