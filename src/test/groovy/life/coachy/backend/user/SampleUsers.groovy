@@ -22,4 +22,9 @@ trait SampleUsers {
       .withDisplayName("yang160")
       .build()
 
+  UserUpdateCommandDto wrongSampleUpdateUser = UserUpdateCommandDtoBuilder.create()
+      .withAvatar("http://www.google.com/avatars/yang160.png")
+      .withDisplayName("yang160")
+      .build()
+
 }
