@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(MongoCollections.USERS)
 class User {
 
-  @Id private ObjectId identifier;
+  @Id ObjectId identifier;
   private String username;
   private String displayName;
   private String password;
@@ -59,7 +59,7 @@ class User {
     this.permissions = permissions;
   }
 
-  public void setBoardId(ObjectId boardId) {
+  void setBoardId(ObjectId boardId) {
     this.boardId = boardId;
   }
 

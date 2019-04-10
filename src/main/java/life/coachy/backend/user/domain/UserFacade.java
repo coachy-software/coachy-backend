@@ -17,7 +17,10 @@ public class UserFacade {
   }
 
   public void register(UserRegisterCommandDto dto) {
-    this.operationsService.checkIfUsernameAndEmailAlreadyExists(dto.getUsername(), dto.getEmail(), () -> this.crudService.save(this.creator.from(dto)));
+    this.operationsService.checkIfUsernameAndEmailAlreadyExists(dto.getUsername(), dto.getEmail(), () -> {
+      User user = this.crudService.save(this.creator.from(dto));
+      this.operationsService.addPermissions(user.identifier, "user." + user.identifier + ".update", "user." + user.identifier + ".delete");
+    });
   }
 
   public void update(ObjectId id, UserUpdateCommandDto dto) {

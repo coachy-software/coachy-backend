@@ -15,8 +15,8 @@ class UserCrudService {
     this.userRepository = userRepository;
   }
 
-  void save(User user) {
-    this.userRepository.save(user);
+  User save(User user) {
+    return this.userRepository.save(user);
   }
 
   void delete(ObjectId id) {
