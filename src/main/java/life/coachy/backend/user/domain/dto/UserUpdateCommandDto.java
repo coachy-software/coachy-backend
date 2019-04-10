@@ -7,9 +7,9 @@ import life.coachy.backend.infrastructure.command.CommandDtoMarker;
 public class UserUpdateCommandDto implements CommandDtoMarker {
 
   @NotNull @NotEmpty private String username;
-  @NotNull @NotEmpty private String displayName;
+  private String displayName;
   @NotNull @NotEmpty private String email;
-  @NotNull @NotEmpty private String avatar;
+  private String avatar;
 
   UserUpdateCommandDto() {}
 
