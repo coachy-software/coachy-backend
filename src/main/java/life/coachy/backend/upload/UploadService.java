@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Service
 class UploadService {
 
-  @Value("classpath:upload/")
+  @Value("upload")
   private Path uploadDirectoryPath;
 
   String store(MultipartFile file, String targetDirectory) throws IOException {
