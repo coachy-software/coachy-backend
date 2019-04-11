@@ -4,9 +4,12 @@ import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.user.SampleUsers
+import life.coachy.backend.user.domain.exception.IncorrectCredentialsException
 import life.coachy.backend.user.domain.exception.UserAlreadyExistsException
 import life.coachy.backend.user.domain.exception.UserNotFoundException
+import life.coachy.backend.user.query.UserQueryDto
 import org.bson.types.ObjectId
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
@@ -120,6 +123,19 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
       userFacade.resetPassword("yang160@gmail.com", "newPassword123")
     then:
       thrown(UserNotFoundException)
+  }
+
+  def "method 'changePassword' should throw 'IncorrectCredentialsException' if dto's old password doesnt match real old password"() {
+    given: "we have one user in system"
+      BasicDBObject user = setUpUser(ObjectId.get(), "yang160", "password1234", "yang160@gmail.com", Collections.emptySet())
+    when: "user tries to change it's password"
+      UserQueryDto userQueryDto = Mockito.mock(UserQueryDto)
+      Mockito.when(userQueryDto.getPassword()).thenReturn(user.get("password"));
+      Mockito.when(userQueryDto.getEmail()).thenReturn(user.get("email"));
+
+      userFacade.changePassword(userQueryDto, sampleChangePasswordDto)
+    then:
+      thrown(IncorrectCredentialsException)
   }
 
 }

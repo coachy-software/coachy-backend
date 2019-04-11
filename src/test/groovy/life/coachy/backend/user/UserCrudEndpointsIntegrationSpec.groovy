@@ -36,7 +36,7 @@ class UserCrudEndpointsIntegrationSpec extends IntegrationSpec implements Sample
     when: "user tries to update an account"
       ResultActions updateEndpoint = mockMvc.perform(put("/api/users/{id}", id)
           .with(httpBasic("yang160", "password123"))
-          .content(objectToJsonConverter.convert(wrongSampleUpdateUser).getBytes())
+          .content(objectToJsonConverter.convert(incorrectSampleUpdateUser).getBytes())
           .contentType(MediaType.APPLICATION_JSON))
     then:
       updateEndpoint.andExpect(status().isBadRequest())

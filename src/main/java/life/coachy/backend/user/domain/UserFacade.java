@@ -1,7 +1,9 @@
 package life.coachy.backend.user.domain;
 
+import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 
 public class UserFacade {
@@ -46,6 +48,10 @@ public class UserFacade {
 
   public void updateBoardId(ObjectId boardId, ObjectId userId) {
     this.operationsService.updateBoardId(boardId, userId);
+  }
+
+  public void changePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
+    this.operationsService.validateAndChangePassword(userQueryDto, dto);
   }
 
 }

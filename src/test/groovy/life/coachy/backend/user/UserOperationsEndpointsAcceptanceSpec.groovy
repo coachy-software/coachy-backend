@@ -1,9 +1,13 @@
 package life.coachy.backend.user
 
+import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.infrastructure.constants.MongoCollections
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
@@ -41,6 +45,32 @@ class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements S
           .contentType(MediaType.APPLICATION_JSON))
     then:
       registerEndpoint.andExpect(status().isConflict())
+  }
+
+  def "change password positive scenario"() {
+    given: "we have one user in system"
+      setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+    when: "I post to /api/users/change-password"
+      ResultActions changePasswordEndpoint = mockMvc.perform(post("/api/users/change-password")
+          .with(httpBasic("yang160", "password123"))
+          .content(objectToJsonConverter.convert(sampleChangePasswordDto))
+          .contentType(MediaType.APPLICATION_JSON))
+    then: "My password has changed"
+      changePasswordEndpoint.andExpect(status().isNoContent())
+      Map<String, Object> userProperties = mongoTemplate.findOne(Query.query(Criteria.where("username").is("yang160")), Map.class, MongoCollections.USERS)
+      passwordEncoder.matches("newPassword123", userProperties.get("password"))
+  }
+
+  def "change password negative scenario"() {
+    given: "we have one user in system"
+      setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+    when: "I post to /api/users/change-password"
+      ResultActions changePasswordEndpoint = mockMvc.perform(post("/api/users/change-password")
+          .with(httpBasic("yang160", "password123"))
+          .content(objectToJsonConverter.convert(incorrectChangePasswordDto))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      changePasswordEndpoint.andExpect(status().isBadRequest())
   }
 
 }

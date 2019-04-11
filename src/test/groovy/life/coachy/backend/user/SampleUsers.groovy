@@ -2,7 +2,6 @@ package life.coachy.backend.user
 
 import groovy.transform.CompileStatic
 import life.coachy.backend.user.domain.dto.*
-import org.bson.types.ObjectId
 
 @CompileStatic
 trait SampleUsers {
@@ -22,9 +21,21 @@ trait SampleUsers {
       .withDisplayName("yang160")
       .build()
 
-  UserUpdateCommandDto wrongSampleUpdateUser = UserUpdateCommandDtoBuilder.create()
+  UserUpdateCommandDto incorrectSampleUpdateUser = UserUpdateCommandDtoBuilder.create()
       .withAvatar("http://www.google.com/avatars/yang160.png")
       .withDisplayName("yang160")
       .build()
+
+  UserChangePasswordCommandDto sampleChangePasswordDto = new UserChangePasswordCommandDto(
+      "password123",
+      "newPassword123",
+      "newPassword123"
+  )
+
+  UserChangePasswordCommandDto incorrectChangePasswordDto = new UserChangePasswordCommandDto(
+      "password123",
+      "newPassword123",
+      "newPassword"
+  )
 
 }

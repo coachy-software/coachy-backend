@@ -7,12 +7,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
+import life.coachy.backend.user.domain.exception.IncorrectCredentialsException;
 import life.coachy.backend.user.domain.exception.UserAlreadyExistsException;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,11 +23,13 @@ class UserOperationsService {
 
   private final UserQueryRepository queryDtoRepository;
   private final UserRepository repository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserOperationsService(UserQueryRepository queryDtoRepository, UserRepository repository) {
+  public UserOperationsService(UserQueryRepository queryDtoRepository, UserRepository repository, PasswordEncoder passwordEncoder) {
     this.queryDtoRepository = queryDtoRepository;
     this.repository = repository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   void checkIfUsernameOrEmailExists(String username, String email, Runnable runnable) {
@@ -55,6 +60,14 @@ class UserOperationsService {
     }
 
     runnable.run();
+  }
+
+  void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
+    if (!this.passwordEncoder.matches(dto.getOldPassword(), userQueryDto.getPassword())) {
+      throw new IncorrectCredentialsException();
+    }
+
+    this.resetPassword(userQueryDto.getEmail(), dto.getNewPassword());
   }
 
   void addPermissions(ObjectId id, String... permissions) {

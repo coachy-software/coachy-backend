@@ -7,7 +7,9 @@ import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.user.domain.UserFacade;
+import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 import life.coachy.backend.user.query.UserQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,18 @@ class UserOperationsEndpoints {
   @GetMapping("me")
   public ResponseEntity<UserQueryDto> me(@AuthenticatedUser UserQueryDto userQueryDto) {
     return ResponseEntity.ok(userQueryDto);
+  }
+
+  @RequiresAuthenticated
+  @ApiOperation("Changes password")
+  @ApiResponses({
+      @ApiResponse(code = 204, message = "Successfully updated"),
+      @ApiResponse(code = 400, message = "Old password does not match, validation error or request payload incorrect")
+  })
+  @PostMapping("change-password")
+  public ResponseEntity<UserQueryDto> changePassword(@AuthenticatedUser UserQueryDto userQueryDto, @Valid @RequestBody UserChangePasswordCommandDto dto) {
+    this.facade.changePassword(userQueryDto, dto);
+    return ResponseEntity.noContent().build();
   }
 
 }

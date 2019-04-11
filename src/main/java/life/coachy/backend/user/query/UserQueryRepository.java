@@ -9,6 +9,8 @@ public interface UserQueryRepository extends QueryFetchAllRepository<UserQueryDt
 
   Optional<UserQueryDto> findByUsername(String username);
 
+  Optional<UserQueryDto> findByEmail(String email);
+
   boolean existsByUsernameOrEmail(String username, String email);
 
   boolean existsByIdentifier(ObjectId id);
