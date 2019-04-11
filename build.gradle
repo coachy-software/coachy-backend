@@ -79,3 +79,7 @@ querydsl {
   querydslSourcesDir = 'build/generated/sources/annotationProcessor/java/main/'
   springDataMongo = true
 }
+
+test {
+  workingDir = new File('resources')
+}
