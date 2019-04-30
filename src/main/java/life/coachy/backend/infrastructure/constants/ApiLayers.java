@@ -8,6 +8,7 @@ public final class ApiLayers {
   public static final String EXERCISE_TEMPLATES = API_ROOT + "exercises";
   public static final String SCHEDULES = API_ROOT + "schedules";
   public static final String BOARDS = API_ROOT + "boards";
+  public static final String PING = API_ROOT + "ping";
   private ApiLayers() {}
 
 }

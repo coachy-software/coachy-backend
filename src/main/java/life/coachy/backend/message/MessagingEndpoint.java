@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -17,11 +16,10 @@ class MessagingEndpoint {
     this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
-  @SendToUser("/queue/private")
   @MessageMapping("/chat.message.private")
-  public OutputMessage chatMessagePrivate(Message msg, Principal user) {
-    System.out.println("user: " + user);
-    return new OutputMessage(user.getName(), msg.getText(), new SimpleDateFormat("HH:mm").format(new Date()));
+  public void chatMessagePrivate(Message msg, Principal user) {
+    this.simpMessagingTemplate.convertAndSendToUser(msg.getTo(), "/queue/private",
+        new OutputMessage(user.getName(), msg.getText(), new SimpleDateFormat("HH:mm").format(new Date())));
   }
 
 }

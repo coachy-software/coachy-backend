@@ -4,7 +4,7 @@ class OutputMessage extends Message {
 
   private String time;
 
-  OutputMessage(final String from, final String text, final String time) {
+  OutputMessage(String from, String text, String time) {
     this.setFrom(from);
     this.setText(text);
     this.time = time;

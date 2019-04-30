@@ -37,7 +37,7 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/").permitAll()
         .and().httpBasic().realmName("Coachy")
         .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/users/logout")).invalidateHttpSession(true).deleteCookies("coachy-backend")
-        .logoutSuccessUrl("/api/users/me")
+        .logoutSuccessUrl("/api/ping")
         .and().csrf().disable()
         .cors();
   }

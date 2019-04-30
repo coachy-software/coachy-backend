@@ -1,5 +1,6 @@
 package life.coachy.backend.error;
 
+import java.util.Collections;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
@@ -28,6 +29,11 @@ class ErrorEndpoints implements org.springframework.boot.web.servlet.error.Error
   public ErrorDto error(WebRequest webRequest, HttpServletResponse response) {
     Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(webRequest, false);
     return new ErrorDto(response.getStatus(), errorAttributes.get("error").toString());
+  }
+
+  @RequestMapping(ApiLayers.PING)
+  public Map<String, String> ping() {
+    return Collections.singletonMap("message", "Pong!");
   }
 
 }
