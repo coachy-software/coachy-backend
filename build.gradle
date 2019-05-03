@@ -61,7 +61,10 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-thymeleaf')
   compile('org.springframework.boot:spring-boot-starter-aop')
   compile('org.springframework.boot:spring-boot-starter-websocket')
-  compile('org.springframework.security:spring-security-messaging:5.1.5.RELEASE')
+  compile('org.springframework.boot:spring-boot-starter-amqp')
+
+  compile('io.projectreactor.netty:reactor-netty')
+  compile('io.netty:netty-all')
 
   annotationProcessor('com.querydsl:querydsl-apt:4.1.4')
   compile('com.querydsl:querydsl-mongodb:4.1.4')

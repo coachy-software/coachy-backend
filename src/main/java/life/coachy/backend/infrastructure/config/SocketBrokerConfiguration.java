@@ -1,8 +1,7 @@
 package life.coachy.backend.infrastructure.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -11,6 +10,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
+
+  private final MessageBrokerCredentials messageBrokerCredentials;
+
+  @Autowired
+  SocketBrokerConfiguration(MessageBrokerCredentials messageBrokerCredentials) {
+    this.messageBrokerCredentials = messageBrokerCredentials;
+  }
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -21,7 +27,12 @@ class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
 
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
-    registry.enableSimpleBroker("/queue/", "/topic/");
+    registry.enableStompBrokerRelay("/queue/", "/topic/")
+        .setRelayHost(this.messageBrokerCredentials.getHost())
+        .setRelayPort(this.messageBrokerCredentials.getPort())
+        .setClientLogin(this.messageBrokerCredentials.getUsername())
+        .setClientPasscode(this.messageBrokerCredentials.getPassword());
+    ;
     registry.setUserDestinationPrefix("/user/");
     registry.setApplicationDestinationPrefixes("/app");
   }
