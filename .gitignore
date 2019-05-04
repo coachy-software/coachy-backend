@@ -102,4 +102,3 @@ local.properties
 hs_err_pid*
 
 /resources
-rabbitmq.properties
