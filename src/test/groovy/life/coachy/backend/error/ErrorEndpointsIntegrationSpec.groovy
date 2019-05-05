@@ -15,7 +15,7 @@ class ErrorEndpointsIntegrationSpec extends IntegrationSpec {
       errorEndpoint.andExpect(content().json("""
         {
             "code": 200,
-            "conversation": "None"
+            "message": "None"
         }  
       """))
   }
