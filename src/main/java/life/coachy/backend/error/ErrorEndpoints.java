@@ -33,7 +33,7 @@ class ErrorEndpoints implements org.springframework.boot.web.servlet.error.Error
 
   @RequestMapping(ApiLayers.PING)
   public Map<String, String> ping() {
-    return Collections.singletonMap("message", "Pong!");
+    return Collections.singletonMap("conversation", "Pong!");
   }
 
 }

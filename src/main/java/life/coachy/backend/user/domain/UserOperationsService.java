@@ -54,12 +54,18 @@ class UserOperationsService {
     throw new UserAlreadyExistsException();
   }
 
-  void checkIfExists(ObjectId id, Runnable runnable) {
+  void ifExists(ObjectId id, Runnable runnable) {
     if (!this.queryDtoRepository.existsByIdentifier(id)) {
       throw new UserNotFoundException();
     }
 
     runnable.run();
+  }
+
+  void checkIfExists(ObjectId id) {
+    if (!this.queryDtoRepository.existsByIdentifier(id)) {
+      throw new UserNotFoundException();
+    }
   }
 
   void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {

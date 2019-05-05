@@ -23,7 +23,7 @@ class EmailSender {
   public void sendMessage(String to, String subject, String text) throws MessagingException {
     Preconditions.checkNotNull(to, "Recipient email address cannot be null");
     Preconditions.checkNotNull(subject, "Subject cannot be null");
-    Preconditions.checkNotNull(text, "Email message content cannot be null!");
+    Preconditions.checkNotNull(text, "Email conversation content cannot be null!");
 
     MimeMessage mimeMessage = this.emailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);

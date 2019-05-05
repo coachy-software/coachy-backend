@@ -31,7 +31,7 @@ public class UserFacade {
   }
 
   public void delete(ObjectId id) {
-    this.operationsService.checkIfExists(id, () -> this.crudService.delete(id));
+    this.operationsService.ifExists(id, () -> this.crudService.delete(id));
   }
 
   public void givePermissions(ObjectId id, String... permissions) {
@@ -52,6 +52,14 @@ public class UserFacade {
 
   public void changePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
     this.operationsService.validateAndChangePassword(userQueryDto, dto);
+  }
+
+  public void ifExists(ObjectId id) {
+    this.operationsService.checkIfExists(id);
+  }
+
+  public void ifExists(ObjectId id, Runnable runnable) {
+    this.operationsService.ifExists(id, runnable);
   }
 
 }

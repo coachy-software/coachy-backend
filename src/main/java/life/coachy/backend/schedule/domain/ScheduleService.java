@@ -31,7 +31,7 @@ class ScheduleService {
   }
 
   void delete(UserFacade userFacade, ObjectId id) {
-    this.checkIfExists(id, (queryDto) -> {
+    this.ifExists(id, (queryDto) -> {
       this.scheduleRepository.deleteById(id);
       userFacade.nullifyPermissions(queryDto.getCharge(), id);
       userFacade.nullifyPermissions(queryDto.getCreator(), id);
@@ -48,7 +48,7 @@ class ScheduleService {
   }
 
   void update(ObjectId id, Schedule schedule) {
-    this.checkIfExists(id, queryDto -> {
+    this.ifExists(id, queryDto -> {
       schedule.setIdentifier(queryDto.getIdentifier());
       schedule.setCharge(queryDto.getCharge());
       schedule.setCreator(queryDto.getCreator());
@@ -59,7 +59,7 @@ class ScheduleService {
     });
   }
 
-  private void checkIfExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {
+  private void ifExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {
     ScheduleQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
     consumer.accept(queryDto);
   }
