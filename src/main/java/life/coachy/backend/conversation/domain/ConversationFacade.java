@@ -1,11 +1,12 @@
 package life.coachy.backend.conversation.domain;
 
-import java.util.Set;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.domain.dto.ConversationUpdateCommandDto;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class ConversationFacade {
 
@@ -19,9 +20,9 @@ public class ConversationFacade {
     this.userFacade = userFacade;
   }
 
-  public Set<ConversationQueryDto> fetchAllByRecipientOrSender(ObjectId id) {
+  public Page<ConversationQueryDto> fetchAllByRecipientOrSender(ObjectId id, Pageable pageable) {
     this.userFacade.ifExists(id);
-    return this.service.findAllByRecipientOrSender(id);
+    return this.service.findAllByRecipientOrSender(id, pageable);
   }
 
   public void create(ConversationDto dto) {

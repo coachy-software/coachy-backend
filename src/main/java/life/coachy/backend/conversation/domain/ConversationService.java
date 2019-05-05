@@ -1,11 +1,12 @@
 package life.coachy.backend.conversation.domain;
 
-import java.util.Set;
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.conversation.query.ConversationQueryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,8 +36,8 @@ class ConversationService {
     return this.queryRepository.findById(id).orElseThrow(ConversationNotFoundException::new);
   }
 
-  Set<ConversationQueryDto> findAllByRecipientOrSender(ObjectId id) {
-    return this.queryRepository.findAllByRecipientIdOrSenderIdOrderByLastMessageDateDesc(id, id);
+  Page<ConversationQueryDto> findAllByRecipientOrSender(ObjectId id, Pageable pageable) {
+    return this.queryRepository.findAllByRecipientIdOrSenderIdOrderByLastMessageDateDesc(id, id, pageable);
   }
 
 }
