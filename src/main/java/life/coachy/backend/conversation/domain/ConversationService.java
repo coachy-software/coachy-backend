@@ -46,8 +46,8 @@ class ConversationService {
     }
   }
 
-  Page<ConversationQueryDto> findAllByRecipientOrSender(ObjectId id, Pageable pageable) {
-    return this.queryRepository.findAllByRecipientIdOrSenderIdOrderByLastMessageDateDesc(id, id, pageable);
+  Page<ConversationQueryDto> findAllByRecipientOrSender(String username, Pageable pageable) {
+    return this.queryRepository.findAllByRecipientNameOrSenderNameOrderByLastMessageDateDesc(username, username, pageable);
   }
 
   private Optional<ConversationQueryDto> findOne(ObjectId id) {

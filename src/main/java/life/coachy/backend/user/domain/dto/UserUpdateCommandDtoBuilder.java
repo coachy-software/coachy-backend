@@ -1,7 +1,5 @@
 package life.coachy.backend.user.domain.dto;
 
-import org.bson.types.ObjectId;
-
 public final class UserUpdateCommandDtoBuilder {
 
   String username;

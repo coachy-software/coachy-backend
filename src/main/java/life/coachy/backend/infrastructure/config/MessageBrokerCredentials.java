@@ -18,28 +18,28 @@ class MessageBrokerCredentials {
     return this.host;
   }
 
-  public String getUsername() {
-    return this.username;
-  }
-
-  public String getPassword() {
-    return this.password;
-  }
-
-  public int getPort() {
-    return this.port;
-  }
-
   public void setHost(String host) {
     this.host = host;
+  }
+
+  public String getUsername() {
+    return this.username;
   }
 
   public void setUsername(String username) {
     this.username = username;
   }
 
+  public String getPassword() {
+    return this.password;
+  }
+
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public int getPort() {
+    return this.port;
   }
 
   public void setPort(int port) {

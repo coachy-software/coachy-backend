@@ -36,7 +36,6 @@ class MessageWebsocketEndpoint {
     OutputMessageDto outputMessage = this.createMessageDto(conversationId, dto);
 
     this.updateConversationLastMessage(conversationId, outputMessage, dto);
-
     this.simpMessagingTemplate.convertAndSendToUser(dto.getTo(), "/queue/private", outputMessage);
     this.messageFacade.save(outputMessage);
   }

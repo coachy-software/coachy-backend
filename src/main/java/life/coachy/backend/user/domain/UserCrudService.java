@@ -1,6 +1,8 @@
 package life.coachy.backend.user.domain;
 
+import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
+import life.coachy.backend.user.query.UserQueryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,10 +11,16 @@ import org.springframework.stereotype.Service;
 class UserCrudService {
 
   private final UserRepository userRepository;
+  private final UserQueryRepository userQueryRepository;
 
   @Autowired
-  public UserCrudService(UserRepository userRepository) {
+  UserCrudService(UserRepository userRepository, UserQueryRepository userQueryRepository) {
     this.userRepository = userRepository;
+    this.userQueryRepository = userQueryRepository;
+  }
+
+  UserQueryDto fetchOne(ObjectId id) {
+    return this.userQueryRepository.findById(id).orElseThrow(UserNotFoundException::new);
   }
 
   User save(User user) {

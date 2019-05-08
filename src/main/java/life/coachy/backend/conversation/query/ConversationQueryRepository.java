@@ -8,6 +8,6 @@ import org.springframework.data.repository.Repository;
 
 public interface ConversationQueryRepository extends QueryFetchOneRepository<ConversationQueryDto, ObjectId>, Repository<ConversationQueryDto, ObjectId> {
 
-  Page<ConversationQueryDto> findAllByRecipientIdOrSenderIdOrderByLastMessageDateDesc(ObjectId recipientId, ObjectId senderId, Pageable pageable);
+  Page<ConversationQueryDto> findAllByRecipientNameOrSenderNameOrderByLastMessageDateDesc(String recipientName, String senderName, Pageable pageable);
 
 }

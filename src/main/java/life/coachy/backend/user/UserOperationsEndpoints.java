@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;

@@ -11,8 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 interface UserRepositoryExtension {
 
   void updatePermissionsById(ObjectId id, Set<String> permissions);
+
   void updatePermissionsByUsername(String username, Set<String> permissions);
+
   void updatePasswordByEmail(String email, String newPassword);
+
   void updateBoardIdById(ObjectId boardId, ObjectId userId);
 
 }

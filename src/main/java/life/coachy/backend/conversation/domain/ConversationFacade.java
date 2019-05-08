@@ -22,7 +22,7 @@ public class ConversationFacade {
 
   public Page<ConversationQueryDto> fetchAllByRecipientOrSender(ObjectId id, Pageable pageable) {
     this.userFacade.ifExists(id);
-    return this.service.findAllByRecipientOrSender(id, pageable);
+    return this.service.findAllByRecipientOrSender(this.userFacade.fetchOne(id).getUsername(), pageable);
   }
 
   public void create(ConversationDto dto) {

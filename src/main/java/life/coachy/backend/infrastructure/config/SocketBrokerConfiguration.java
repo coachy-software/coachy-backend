@@ -32,7 +32,6 @@ class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
         .setRelayPort(this.messageBrokerCredentials.getPort())
         .setClientLogin(this.messageBrokerCredentials.getUsername())
         .setClientPasscode(this.messageBrokerCredentials.getPassword());
-    ;
     registry.setUserDestinationPrefix("/user/");
     registry.setApplicationDestinationPrefixes("/app");
   }

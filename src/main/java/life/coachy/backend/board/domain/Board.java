@@ -1,7 +1,6 @@
 package life.coachy.backend.board.domain;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import life.coachy.backend.board.label.LabelDto;
 import life.coachy.backend.infrastructure.constants.MongoCollections;
 import org.bson.types.ObjectId;

@@ -2,7 +2,6 @@ package life.coachy.backend.password.domain;
 
 import java.net.URI;
 import life.coachy.backend.email.EmailFacade;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
 import life.coachy.backend.password.domain.dto.PasswordResetCommandDto;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.query.UserQueryRepository;

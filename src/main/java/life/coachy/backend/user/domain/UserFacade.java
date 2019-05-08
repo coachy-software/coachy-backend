@@ -69,4 +69,8 @@ public class UserFacade {
     this.operationsService.ifExists(id, runnable);
   }
 
+  public UserQueryDto fetchOne(ObjectId id) {
+    return this.crudService.fetchOne(id);
+  }
+
 }

@@ -15,7 +15,6 @@ import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
 import life.coachy.backend.user.query.UserQueryBinder;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryRepository;
-import life.coachy.backend.user.query.UserQueryService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -35,14 +34,12 @@ import org.springframework.web.bind.annotation.RestController;
 class UserCrudEndpoints {
 
   private final UserFacade facade;
-  private final UserQueryService service;
   private final UserQueryRepository repository;
   private final QueryOperationsFactory queryOperationsFactory;
 
   @Autowired
-  public UserCrudEndpoints(UserFacade facade, UserQueryService service, UserQueryRepository repository, QueryOperationsFactory queryOperationsFactory) {
+  public UserCrudEndpoints(UserFacade facade, UserQueryRepository repository, QueryOperationsFactory queryOperationsFactory) {
     this.facade = facade;
-    this.service = service;
     this.repository = repository;
     this.queryOperationsFactory = queryOperationsFactory;
   }
@@ -61,7 +58,7 @@ class UserCrudEndpoints {
   })
   @GetMapping("{id}")
   public ResponseEntity<UserQueryDto> fetchOne(@PathVariable ObjectId id) {
-    return ResponseEntity.ok(this.service.fetchOne(id));
+    return ResponseEntity.ok(this.facade.fetchOne(id));
   }
 
   @RequiresAuthenticated
