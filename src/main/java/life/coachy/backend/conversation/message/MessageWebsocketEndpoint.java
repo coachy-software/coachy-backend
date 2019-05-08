@@ -42,7 +42,7 @@ class MessageWebsocketEndpoint {
 
   private void updateConversationLastMessage(ObjectId conversationId, OutputMessageDto outputMessage, InputMessageDto dto) {
     ConversationDto conversationDto = this.createConversationDto(conversationId, outputMessage, dto);
-    this.conversationFacade.findOneOrCreate(conversationDto);
+    this.conversationFacade.createIfAbsent(conversationDto);
 
     this.conversationFacade.updateLastMesasge(ConversationUpdateCommandDtoBuilder.create()
         .withIdentifier(conversationId)

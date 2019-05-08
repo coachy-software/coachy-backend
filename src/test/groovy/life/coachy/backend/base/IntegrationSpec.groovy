@@ -94,12 +94,26 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.BOARDS)
   }
 
+  def setUpConversation(ObjectId id, String senderName, String recipientName) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", id)
+        this.put("senderName", senderName)
+        this.put("recipientName", recipientName)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.CONVERSATIONS)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)
     mongoTemplate.dropCollection(MongoCollections.BOARDS)
     mongoTemplate.dropCollection(MongoCollections.EXERCISES)
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
+    mongoTemplate.dropCollection(MongoCollections.CONVERSATIONS)
+    mongoTemplate.dropCollection(MongoCollections.MESSAGES)
   }
 
 }

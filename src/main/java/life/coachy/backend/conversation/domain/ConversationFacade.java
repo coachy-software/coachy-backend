@@ -21,23 +21,18 @@ public class ConversationFacade {
   }
 
   public Page<ConversationQueryDto> fetchAllByRecipientOrSender(ObjectId id, Pageable pageable) {
-    this.userFacade.ifExists(id);
     return this.service.findAllByRecipientOrSender(this.userFacade.fetchOne(id).getUsername(), pageable);
-  }
-
-  public void create(ConversationDto dto) {
-    this.service.save(this.creator.from(dto));
   }
 
   public void updateLastMesasge(ConversationUpdateCommandDto dto) {
     ConversationQueryDto queryDto = this.service.findOneOrThrow(dto.getIdentifier());
-    this.userFacade.ifExists(dto.getIdentifier(), () -> this.service.update(queryDto, this.creator.from(dto)));
+    this.service.update(queryDto, this.creator.from(dto));
   }
 
-  public void findOneOrCreate(ConversationDto dto) {
-    this.service.findOneOrCreate(dto.getIdentifier(), this.creator.from(dto), () -> {
-      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + dto.getIdentifier() + ".read");
-      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + dto.getIdentifier() + ".read");
+  public void createIfAbsent(ConversationDto dto) {
+    this.service.createIfAbsent(dto.getIdentifier(), this.creator.from(dto), () -> {
+      this.userFacade.givePermissions(dto.getRecipientName(), "user." + dto.getIdentifier() + ".read");
+      this.userFacade.givePermissions(dto.getSenderName(), "user." + dto.getIdentifier() + ".read");
     });
   }
 

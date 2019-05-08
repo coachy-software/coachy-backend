@@ -10,4 +10,6 @@ public interface ConversationQueryRepository extends QueryFetchOneRepository<Con
 
   Page<ConversationQueryDto> findAllByRecipientNameOrSenderNameOrderByLastMessageDateDesc(String recipientName, String senderName, Pageable pageable);
 
+  boolean existsByIdentifier(ObjectId identifier);
+
 }

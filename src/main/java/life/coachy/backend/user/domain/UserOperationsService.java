@@ -123,7 +123,7 @@ class UserOperationsService {
       return;
     }
 
-    this.modifyPermissions(id, function);
+    this.modifyPermissions(username, function);
   }
 
 }

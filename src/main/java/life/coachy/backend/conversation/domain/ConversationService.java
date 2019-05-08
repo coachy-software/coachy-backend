@@ -37,10 +37,8 @@ class ConversationService {
     return this.findOne(id).orElseThrow(ConversationNotFoundException::new);
   }
 
-  void findOneOrCreate(ObjectId id, Conversation conversation, Runnable runnable) {
-    Optional<ConversationQueryDto> queryDto = this.findOne(id);
-
-    if (!queryDto.isPresent()) {
+  void createIfAbsent(ObjectId id, Conversation conversation, Runnable runnable) {
+    if (!this.queryRepository.existsByIdentifier(id)) {
       this.save(conversation);
       runnable.run();
     }
