@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ErrorEndpointsIntegrationSpec extends IntegrationSpec {
 
-  def "error endpoint tests"() {
+  def "error endpoint test"() {
     when: "I go to /error"
       ResultActions errorEndpoint = mockMvc.perform(get("/error"))
     then:
@@ -17,6 +17,15 @@ class ErrorEndpointsIntegrationSpec extends IntegrationSpec {
             "code": 200,
             "message": "None"
         }  
+      """))
+  }
+
+  def "ping endpoint test"() {
+    when: "I go to /api/ping"
+      ResultActions errorEndpoint = mockMvc.perform(get("/api/ping"))
+    then:
+      errorEndpoint.andExpect(content().json("""
+        {"message": "Pong!"}  
       """))
   }
 
