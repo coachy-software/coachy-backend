@@ -41,6 +41,10 @@ public class UserFacade {
     this.operationsService.addPermissions(id, permissions);
   }
 
+  public void givePermissions(String username, String... permissions) {
+    this.operationsService.addPermissions(username, permissions);
+  }
+
   public void nullifyPermissions(ObjectId userId, ObjectId permissionId) {
     this.operationsService.removePermissions(userId, permissionId);
   }

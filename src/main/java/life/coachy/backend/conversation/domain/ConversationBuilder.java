@@ -7,8 +7,8 @@ import org.bson.types.ObjectId;
 final class ConversationBuilder implements Buildable<Conversation> {
 
   ObjectId identifier;
-  ObjectId senderId;
-  ObjectId recipientId;
+  String senderName;
+  String recipientName;
   ObjectId lastMessageId;
   String lastMessageText;
   LocalDateTime lastMessageDate;
@@ -19,32 +19,32 @@ final class ConversationBuilder implements Buildable<Conversation> {
     return new ConversationBuilder();
   }
 
-  public ConversationBuilder withIdentifier(ObjectId identifier) {
+  ConversationBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;
   }
 
-  public ConversationBuilder withSenderId(ObjectId senderId) {
-    this.senderId = senderId;
+  ConversationBuilder withSenderName(String senderName) {
+    this.senderName = senderName;
     return this;
   }
 
-  public ConversationBuilder withRecipientId(ObjectId recipientId) {
-    this.recipientId = recipientId;
+  ConversationBuilder withRecipientName(String recipientName) {
+    this.recipientName = recipientName;
     return this;
   }
 
-  public ConversationBuilder withLastMessageId(ObjectId lastMessageId) {
+  ConversationBuilder withLastMessageId(ObjectId lastMessageId) {
     this.lastMessageId = lastMessageId;
     return this;
   }
 
-  public ConversationBuilder withLastMessageText(String lastMessageText) {
+  ConversationBuilder withLastMessageText(String lastMessageText) {
     this.lastMessageText = lastMessageText;
     return this;
   }
 
-  public ConversationBuilder withLastMessageDate(LocalDateTime lastMessageDate) {
+  ConversationBuilder withLastMessageDate(LocalDateTime lastMessageDate) {
     this.lastMessageDate = lastMessageDate;
     return this;
   }

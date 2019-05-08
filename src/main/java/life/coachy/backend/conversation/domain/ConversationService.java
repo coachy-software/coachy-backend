@@ -1,5 +1,6 @@
 package life.coachy.backend.conversation.domain;
 
+import java.util.Optional;
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.conversation.query.ConversationQueryRepository;
@@ -26,18 +27,31 @@ class ConversationService {
   }
 
   void update(ConversationQueryDto queryDto, Conversation conversation) {
-    conversation.setRecipientId(queryDto.getRecipientId());
-    conversation.setSenderId(queryDto.getSenderId());
+    conversation.setRecipientName(queryDto.getRecipientName());
+    conversation.setSenderName(queryDto.getSenderName());
 
     this.save(conversation);
   }
 
   ConversationQueryDto findOneOrThrow(ObjectId id) {
-    return this.queryRepository.findById(id).orElseThrow(ConversationNotFoundException::new);
+    return this.findOne(id).orElseThrow(ConversationNotFoundException::new);
+  }
+
+  void findOneOrCreate(ObjectId id, Conversation conversation, Runnable runnable) {
+    Optional<ConversationQueryDto> queryDto = this.findOne(id);
+
+    if (!queryDto.isPresent()) {
+      this.save(conversation);
+      runnable.run();
+    }
   }
 
   Page<ConversationQueryDto> findAllByRecipientOrSender(ObjectId id, Pageable pageable) {
     return this.queryRepository.findAllByRecipientIdOrSenderIdOrderByLastMessageDateDesc(id, id, pageable);
+  }
+
+  private Optional<ConversationQueryDto> findOne(ObjectId id) {
+    return this.queryRepository.findById(id);
   }
 
 }

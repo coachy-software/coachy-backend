@@ -10,6 +10,7 @@ public final class ApiLayers {
   public static final String BOARDS = API_ROOT + "boards";
   public static final String PING = API_ROOT + "ping";
   public static final String CONVERSATIONS = API_ROOT + "conversations";
+  public static final String MESSAGES = API_ROOT + "messages";
 
   private ApiLayers() {}
 

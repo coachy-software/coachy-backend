@@ -77,10 +77,13 @@ class UserOperationsService {
   }
 
   void addPermissions(ObjectId id, String... permissions) {
-    this.modifyPermissions(id, user -> Stream.of(user.getPermissions(), Sets.newHashSet(permissions))
-        .flatMap(Collection::stream)
-        .collect(Collectors.toSet()));
+    this.addPermissions(id, null, permissions);
   }
+
+  void addPermissions(String username, String... permissions) {
+    this.addPermissions(null, username, permissions);
+  }
+
 
   void removePermissions(ObjectId id, ObjectId permissionId) {
     this.modifyPermissions(id, userQueryDto -> userQueryDto.getPermissions().stream()
@@ -101,7 +104,26 @@ class UserOperationsService {
   }
 
   private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
-    this.queryDtoRepository.findById(id).ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
+    this.queryDtoRepository.findById(id)
+        .ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
+  }
+
+  private void modifyPermissions(String username, Function<UserQueryDto, Set<String>> function) {
+    this.queryDtoRepository.findByUsername(username)
+        .ifPresent(userQueryDto -> this.repository.updatePermissionsByUsername(username, function.apply(userQueryDto)));
+  }
+
+  private void addPermissions(ObjectId id, String username, String... permissions) {
+    Function<UserQueryDto, Set<String>> function = user -> Stream.of(user.getPermissions(), Sets.newHashSet(permissions))
+        .flatMap(Collection::stream)
+        .collect(Collectors.toSet());
+
+    if (username == null) {
+      this.modifyPermissions(id, function);
+      return;
+    }
+
+    this.modifyPermissions(id, function);
   }
 
 }

@@ -34,4 +34,11 @@ public class ConversationFacade {
     this.userFacade.ifExists(dto.getIdentifier(), () -> this.service.update(queryDto, this.creator.from(dto)));
   }
 
+  public void findOneOrCreate(ConversationDto dto) {
+    this.service.findOneOrCreate(dto.getIdentifier(), this.creator.from(dto), () -> {
+      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + dto.getIdentifier() + ".read");
+      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + dto.getIdentifier() + ".read");
+    });
+  }
+
 }

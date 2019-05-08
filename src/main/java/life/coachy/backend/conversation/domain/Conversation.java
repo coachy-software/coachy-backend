@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 class Conversation {
 
   @Id private ObjectId identifier;
-  private ObjectId senderId;
-  private ObjectId recipientId;
+  private String senderName;
+  private String recipientName;
   private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
@@ -20,19 +20,19 @@ class Conversation {
 
   Conversation(ConversationBuilder builder) {
     this.identifier = builder.identifier;
-    this.senderId = builder.senderId;
-    this.recipientId = builder.recipientId;
+    this.senderName = builder.senderName;
+    this.recipientName = builder.recipientName;
     this.lastMessageId = builder.lastMessageId;
     this.lastMessageText = builder.lastMessageText;
     this.lastMessageDate = builder.lastMessageDate;
   }
 
-  public void setSenderId(ObjectId senderId) {
-    this.senderId = senderId;
+  void setSenderName(String senderName) {
+    this.senderName = senderName;
   }
 
-  public void setRecipientId(ObjectId recipientId) {
-    this.recipientId = recipientId;
+  void setRecipientName(String recipientName) {
+    this.recipientName = recipientName;
   }
 
 }

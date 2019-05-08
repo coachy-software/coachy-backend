@@ -5,26 +5,32 @@ import org.bson.types.ObjectId;
 
 public class ConversationDto {
 
-  private ObjectId senderId;
-  private ObjectId recipientId;
+  private ObjectId identifier;
+  private String senderName;
+  private String recipientName;
   private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
 
   ConversationDto(ConversationDtoBuilder builder) {
-    this.senderId = builder.senderId;
-    this.recipientId = builder.recipientId;
+    this.identifier = builder.identifier;
+    this.senderName = builder.senderName;
+    this.recipientName = builder.recipientName;
     this.lastMessageId = builder.lastMessageId;
     this.lastMessageText = builder.lastMessageText;
     this.lastMessageDate = builder.lastMessageDate;
   }
 
-  public ObjectId getSenderId() {
-    return this.senderId;
+  public ObjectId getIdentifier() {
+    return this.identifier;
   }
 
-  public ObjectId getRecipientId() {
-    return this.recipientId;
+  public String getSenderName() {
+    return this.senderName;
+  }
+
+  public String getRecipientName() {
+    return this.recipientName;
   }
 
   public ObjectId getLastMessageId() {

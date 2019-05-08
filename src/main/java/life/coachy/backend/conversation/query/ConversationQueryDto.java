@@ -13,8 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ConversationQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
-  @JsonSerialize(using = ToStringSerializer.class) private ObjectId senderId;
-  @JsonSerialize(using = ToStringSerializer.class) private ObjectId recipientId;
+  private String senderName;
+  private String recipientName;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
@@ -23,12 +23,12 @@ public class ConversationQueryDto implements QueryDtoMarker {
     return this.identifier;
   }
 
-  public ObjectId getSenderId() {
-    return this.senderId;
+  public String getSenderName() {
+    return this.senderName;
   }
 
-  public ObjectId getRecipientId() {
-    return this.recipientId;
+  public String getRecipientName() {
+    return this.recipientName;
   }
 
   public ObjectId getLastMessageId() {

@@ -6,8 +6,9 @@ import org.bson.types.ObjectId;
 
 public final class ConversationDtoBuilder implements Buildable<ConversationDto> {
 
-  ObjectId senderId;
-  ObjectId recipientId;
+  ObjectId identifier;
+  String senderName;
+  String recipientName;
   ObjectId lastMessageId;
   String lastMessageText;
   LocalDateTime lastMessageDate;
@@ -18,13 +19,18 @@ public final class ConversationDtoBuilder implements Buildable<ConversationDto> 
     return new ConversationDtoBuilder();
   }
 
-  public ConversationDtoBuilder withSenderId(ObjectId senderId) {
-    this.senderId = senderId;
+  public ConversationDtoBuilder withIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
     return this;
   }
 
-  public ConversationDtoBuilder withRecipientId(ObjectId recipientId) {
-    this.recipientId = recipientId;
+  public ConversationDtoBuilder withSenderName(String senderName) {
+    this.senderName = senderName;
+    return this;
+  }
+
+  public ConversationDtoBuilder withRecipientName(String recipientName) {
+    this.recipientName = recipientName;
     return this;
   }
 
