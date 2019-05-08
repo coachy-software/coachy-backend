@@ -1,9 +1,11 @@
 package life.coachy.backend.conversation;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import life.coachy.backend.conversation.domain.ConversationFacade;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ class ConversationEndpoints {
     this.conversationFacade = conversationFacade;
   }
 
+  @ApiOperation("Displays all user's conversations by specified ID")
+  @RequiresPermissions("user.{id}.read")
   @GetMapping("{id}")
   public ResponseEntity<List<ConversationQueryDto>> fetchAll(@PathVariable ObjectId id, Pageable pageable) {
     return ResponseEntity.ok(this.conversationFacade.fetchAllByRecipientOrSender(id, pageable).getContent());
