@@ -19,7 +19,9 @@ final class UserBuilder implements Buildable<User> {
 
   private UserBuilder() {}
 
-  public static UserBuilder create() { return new UserBuilder(); }
+  public static UserBuilder create() {
+    return new UserBuilder();
+  }
 
   public UserBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;

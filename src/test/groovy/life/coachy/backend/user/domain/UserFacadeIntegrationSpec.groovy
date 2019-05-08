@@ -82,7 +82,7 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
       thrown(UserNotFoundException)
   }
 
-  def "method 'givePermissions' should give user specified permissions"() {
+  def "method 'givePermissions(id)' should give user specified permissions"() {
     given: "we have one user in system"
       ObjectId id = ObjectId.get()
       setUpUser(id, "yang160", "password123", Collections.emptySet())
@@ -90,6 +90,16 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
       userFacade.givePermissions(id, "user.${id}.read")
     then:
       Query query = Query.query(Criteria.where("username").is("yang160").and("permissions").regex("user.${id}.read"))
+      mongoTemplate.exists(query, User)
+  }
+
+  def "method 'givePermissions(username)' should give user specified permissions"() {
+    given: "we have one user in system"
+      BasicDBObject user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+    when: "user tries to add some permissions"
+      userFacade.givePermissions("yang160", "user.${user.get("_id")}.read")
+    then:
+      Query query = Query.query(Criteria.where("username").is("yang160").and("permissions").regex("user.${user.get("_id")}.read"))
       mongoTemplate.exists(query, User)
   }
 
@@ -136,6 +146,22 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
       userFacade.changePassword(userQueryDto, sampleChangePasswordDto)
     then:
       thrown(IncorrectCredentialsException)
+  }
+
+  def "method 'ifExists' should throw UserNotFoundException if doesn't exist"() {
+    when: "user checks if another user exists"
+      this.userFacade.ifExists(ObjectId.get())
+    then:
+      thrown(UserNotFoundException)
+  }
+
+  def "method 'ifExists' should do nothing if user exists"() {
+    given: "we have one user in system"
+    BasicDBObject user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+    when: "user checks if another user exists"
+      this.userFacade.ifExists(user.get("_id"))
+    then:
+      notThrown(UserNotFoundException)
   }
 
 }

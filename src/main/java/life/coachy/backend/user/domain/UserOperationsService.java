@@ -63,9 +63,7 @@ class UserOperationsService {
   }
 
   void checkIfExists(ObjectId id) {
-    if (!this.queryDtoRepository.existsByIdentifier(id)) {
-      throw new UserNotFoundException();
-    }
+    this.ifExists(id, () -> {});
   }
 
   void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
