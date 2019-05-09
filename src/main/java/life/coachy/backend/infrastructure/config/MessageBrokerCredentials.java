@@ -12,6 +12,7 @@ class MessageBrokerCredentials {
   private String host;
   private String username;
   private String password;
+  private String allowedOrigins;
   private int port;
 
   public String getHost() {
@@ -44,6 +45,14 @@ class MessageBrokerCredentials {
 
   public void setPort(int port) {
     this.port = port;
+  }
+
+  public String getAllowedOrigins() {
+    return this.allowedOrigins;
+  }
+
+  public void setAllowedOrigins(String allowedOrigins) {
+    this.allowedOrigins = allowedOrigins;
   }
 
 }

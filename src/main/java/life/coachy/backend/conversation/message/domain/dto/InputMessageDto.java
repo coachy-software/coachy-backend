@@ -9,6 +9,15 @@ public class InputMessageDto {
   private String body;
   private LocalDateTime date;
 
+  InputMessageDto() {}
+
+  public InputMessageDto(String from, String to, String body, LocalDateTime date) {
+    this.from = from;
+    this.to = to;
+    this.body = body;
+    this.date = date;
+  }
+
   public String getFrom() {
     return this.from;
   }

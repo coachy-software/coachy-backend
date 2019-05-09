@@ -1,6 +1,5 @@
 package life.coachy.backend.conversation.message;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import life.coachy.backend.conversation.domain.ConversationFacade;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
@@ -17,14 +16,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-class MessageWebsocketEndpoint {
+class MessageWebsocketEndpoints {
 
   private final SimpMessagingTemplate simpMessagingTemplate;
   private final ConversationFacade conversationFacade;
   private final MessageFacade messageFacade;
 
   @Autowired
-  public MessageWebsocketEndpoint(SimpMessagingTemplate simpMessagingTemplate, ConversationFacade conversationFacade, MessageFacade messageFacade) {
+  public MessageWebsocketEndpoints(SimpMessagingTemplate simpMessagingTemplate, ConversationFacade conversationFacade, MessageFacade messageFacade) {
     this.simpMessagingTemplate = simpMessagingTemplate;
     this.conversationFacade = conversationFacade;
     this.messageFacade = messageFacade;

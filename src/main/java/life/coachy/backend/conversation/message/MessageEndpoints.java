@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.MESSAGES)
-class MessageEndpoint {
+class MessageEndpoints {
 
   private final MessageFacade messageFacade;
 
   @Autowired
-  MessageEndpoint(MessageFacade messageFacade) {
+  MessageEndpoints(MessageFacade messageFacade) {
     this.messageFacade = messageFacade;
   }
 

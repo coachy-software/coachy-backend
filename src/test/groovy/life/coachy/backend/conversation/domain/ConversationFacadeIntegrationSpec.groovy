@@ -22,7 +22,7 @@ class ConversationFacadeIntegrationSpec extends IntegrationSpec implements Sampl
     then: "should store conversation in db"
       mongoTemplate.exists(Query.query(Criteria.where("_id").is(sampleConversationId)), MongoCollections.CONVERSATIONS)
     and: "add 'conversation.x.read' permission to both conversers"
-      String permissionName = "user.${sampleConversationId}.read"
+      String permissionName = "conversation.${sampleConversationId}.read"
       mongoTemplate.exists(Query.query(Criteria.where("_id").is(user.get("_id")).and("permissions").regex(permissionName)), MongoCollections.USERS)
   }
 
