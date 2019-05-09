@@ -25,7 +25,11 @@ class MessageService {
   }
 
   Set<MessageQueryDto> findAllByConversationId(ObjectId id) {
-    return this.messageQueryRepository.findAllByConversationId(id).orElseThrow(MessageNotFoundException::new);
+    if (!this.messageQueryRepository.existsByConversationId(id)) {
+      throw new MessageNotFoundException();
+    }
+
+    return this.messageQueryRepository.findAllByConversationId(id);
   }
 
 }

@@ -31,8 +31,8 @@ public class ConversationFacade {
 
   public void createIfAbsent(ConversationDto dto) {
     this.service.createIfAbsent(dto.getIdentifier(), this.creator.from(dto), () -> {
-      this.userFacade.givePermissions(dto.getRecipientName(), "user." + dto.getIdentifier() + ".read");
-      this.userFacade.givePermissions(dto.getSenderName(), "user." + dto.getIdentifier() + ".read");
+      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + dto.getIdentifier() + ".read");
+      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + dto.getIdentifier() + ".read");
     });
   }
 

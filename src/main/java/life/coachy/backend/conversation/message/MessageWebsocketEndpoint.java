@@ -31,7 +31,7 @@ class MessageWebsocketEndpoint {
   }
 
   @MessageMapping("/chat.message.private")
-  void chatMessagePrivate(InputMessageDto dto, Principal user) {
+  void chatMessagePrivate(InputMessageDto dto) {
     ObjectId conversationId = ObjectId.get();
     OutputMessageDto outputMessage = this.createMessageDto(conversationId, dto);
 

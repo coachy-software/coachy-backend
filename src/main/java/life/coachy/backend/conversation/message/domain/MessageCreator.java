@@ -6,6 +6,7 @@ class MessageCreator {
 
   Message from(OutputMessageDto dto) {
     return MessageBuilder.create()
+        .withIdentifier(dto.getIdentifier())
         .withBody(dto.getBody())
         .withConversationId(dto.getConversationId())
         .build();
