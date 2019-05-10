@@ -2,7 +2,7 @@ package life.coachy.backend.board.domain;
 
 import java.util.LinkedHashSet;
 import life.coachy.backend.board.label.LabelDto;
-import life.coachy.backend.infrastructure.constants.MongoCollections;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

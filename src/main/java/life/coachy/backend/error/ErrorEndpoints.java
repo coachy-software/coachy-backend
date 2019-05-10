@@ -3,7 +3,7 @@ package life.coachy.backend.error;
 import java.util.Collections;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.web.bind.annotation.RequestMapping;

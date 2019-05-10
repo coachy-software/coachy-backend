@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.google.common.collect.ImmutableSet;
 import java.util.Set;
-import life.coachy.backend.infrastructure.constants.MongoCollections;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import life.coachy.backend.user.domain.dto.AccountTypeDto;
 import org.bson.types.ObjectId;

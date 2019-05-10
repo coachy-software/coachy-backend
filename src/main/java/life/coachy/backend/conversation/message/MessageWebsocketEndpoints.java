@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import life.coachy.backend.conversation.domain.ConversationFacade;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.domain.dto.ConversationDtoBuilder;
+import life.coachy.backend.conversation.domain.dto.ConversationUpdateCommandDto;
 import life.coachy.backend.conversation.domain.dto.ConversationUpdateCommandDtoBuilder;
 import life.coachy.backend.conversation.message.domain.MessageFacade;
 import life.coachy.backend.conversation.message.domain.dto.InputMessageDto;
@@ -41,14 +42,18 @@ class MessageWebsocketEndpoints {
 
   private void updateConversationLastMessage(ObjectId conversationId, OutputMessageDto outputMessage, InputMessageDto dto) {
     ConversationDto conversationDto = this.createConversationDto(conversationId, outputMessage, dto);
-    this.conversationFacade.createIfAbsent(conversationDto);
 
-    this.conversationFacade.updateLastMesasge(ConversationUpdateCommandDtoBuilder.create()
+    this.conversationFacade.createIfAbsent(conversationDto);
+    this.conversationFacade.updateLastMesasge(conversationDto, this.createConversationUpdateDto(conversationId, outputMessage));
+  }
+
+  private ConversationUpdateCommandDto createConversationUpdateDto(ObjectId conversationId, OutputMessageDto outputMessage) {
+    return ConversationUpdateCommandDtoBuilder.create()
         .withIdentifier(conversationId)
         .withLastMessageDate(outputMessage.getDate())
         .withLastMessageText(outputMessage.getBody())
         .withLastMessageId(outputMessage.getIdentifier())
-        .build());
+        .build();
   }
 
   private OutputMessageDto createMessageDto(ObjectId conversationId, InputMessageDto dto) {

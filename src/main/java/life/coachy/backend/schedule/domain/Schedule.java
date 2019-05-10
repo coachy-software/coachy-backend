@@ -2,7 +2,7 @@ package life.coachy.backend.schedule.domain;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
-import life.coachy.backend.infrastructure.constants.MongoCollections;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.schedule.day.ScheduleDayDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;

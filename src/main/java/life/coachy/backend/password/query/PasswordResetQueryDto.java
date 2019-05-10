@@ -1,6 +1,6 @@
 package life.coachy.backend.password.query;
 
-import life.coachy.backend.infrastructure.constants.MongoCollections;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -30,4 +30,8 @@ public class InputMessageDto {
     return this.body;
   }
 
+  public LocalDateTime getDate() {
+    return this.date;
+  }
+
 }

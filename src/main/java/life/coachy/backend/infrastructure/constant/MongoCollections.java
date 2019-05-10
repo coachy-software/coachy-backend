@@ -1,4 +1,4 @@
-package life.coachy.backend.infrastructure.constants;
+package life.coachy.backend.infrastructure.constant;
 
 public final class MongoCollections {
 

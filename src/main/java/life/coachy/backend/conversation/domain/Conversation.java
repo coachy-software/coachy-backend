@@ -1,7 +1,7 @@
 package life.coachy.backend.conversation.domain;
 
 import java.time.LocalDateTime;
-import life.coachy.backend.infrastructure.constants.MongoCollections;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,6 +25,10 @@ class Conversation {
     this.lastMessageId = builder.lastMessageId;
     this.lastMessageText = builder.lastMessageText;
     this.lastMessageDate = builder.lastMessageDate;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
   }
 
   void setSenderName(String senderName) {

@@ -6,7 +6,7 @@ import java.util.List;
 import life.coachy.backend.conversation.domain.ConversationFacade;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Pageable;

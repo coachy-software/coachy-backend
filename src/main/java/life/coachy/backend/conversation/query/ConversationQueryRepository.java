@@ -1,5 +1,6 @@
 package life.coachy.backend.conversation.query;
 
+import java.util.Optional;
 import life.coachy.backend.infrastructure.query.QueryFetchOneRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,8 @@ public interface ConversationQueryRepository extends QueryFetchOneRepository<Con
 
   Page<ConversationQueryDto> findAllByRecipientNameOrSenderNameOrderByLastMessageDateDesc(String recipientName, String senderName, Pageable pageable);
 
-  boolean existsByIdentifier(ObjectId identifier);
+  Optional<ConversationQueryDto> findByRecipientNameAndSenderName(String recipientName, String senderName);
+
+  boolean existsByRecipientNameAndSenderName(String recipientName, String senderName);
 
 }

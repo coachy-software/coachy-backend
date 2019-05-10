@@ -3,7 +3,7 @@ package life.coachy.backend.schedule.domain;
 import com.querydsl.core.types.Predicate;
 import java.net.URI;
 import java.util.List;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto;

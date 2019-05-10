@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.user.domain.UserFacade;

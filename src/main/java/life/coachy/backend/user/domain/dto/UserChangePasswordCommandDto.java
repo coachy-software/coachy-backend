@@ -3,7 +3,7 @@ package life.coachy.backend.user.domain.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import life.coachy.backend.infrastructure.constants.RegexConstants;
+import life.coachy.backend.infrastructure.constant.RegexConstants;
 import life.coachy.backend.infrastructure.validation.Match;
 import org.hibernate.validator.constraints.Length;
 

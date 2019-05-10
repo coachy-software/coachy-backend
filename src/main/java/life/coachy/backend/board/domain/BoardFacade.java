@@ -4,7 +4,7 @@ import java.net.URI;
 import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
 import life.coachy.backend.board.domain.dto.BoardUpdateCommandDto;
 import life.coachy.backend.board.query.BoardQueryDto;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

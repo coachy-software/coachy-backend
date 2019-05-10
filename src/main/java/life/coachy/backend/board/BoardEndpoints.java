@@ -10,7 +10,7 @@ import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
 import life.coachy.backend.board.domain.dto.BoardUpdateCommandDto;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

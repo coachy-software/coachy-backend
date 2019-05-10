@@ -24,13 +24,13 @@ public class ConversationFacade {
     return this.service.findAllByRecipientOrSender(this.userFacade.fetchOne(id).getUsername(), pageable);
   }
 
-  public void updateLastMesasge(ConversationUpdateCommandDto dto) {
-    ConversationQueryDto queryDto = this.service.findOneOrThrow(dto.getIdentifier());
+  public void updateLastMesasge(ConversationDto conversationDto, ConversationUpdateCommandDto dto) {
+    ConversationQueryDto queryDto = this.service.findOneOrThrow(conversationDto.getRecipientName(), conversationDto.getSenderName());
     this.service.update(queryDto, this.creator.from(dto));
   }
 
   public void createIfAbsent(ConversationDto dto) {
-    this.service.createIfAbsent(dto.getIdentifier(), this.creator.from(dto), () -> {
+    this.service.createIfAbsent(dto, this.creator.from(dto), () -> {
       this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + dto.getIdentifier() + ".read");
       this.userFacade.givePermissions(dto.getSenderName(), "conversation." + dto.getIdentifier() + ".read");
     });

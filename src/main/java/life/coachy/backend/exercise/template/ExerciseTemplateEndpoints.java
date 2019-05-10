@@ -10,7 +10,7 @@ import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryBinder;
 import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryDto;
 import life.coachy.backend.exercise.template.query.ExerciseTemplateQueryDtoRepository;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
-import life.coachy.backend.infrastructure.constants.ApiLayers;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
