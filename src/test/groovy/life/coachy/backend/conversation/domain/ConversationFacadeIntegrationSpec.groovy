@@ -4,7 +4,7 @@ import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.conversation.SampleConversations
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException
-import life.coachy.backend.infrastructure.constants.MongoCollections
+import life.coachy.backend.infrastructure.constant.MongoCollections
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria

@@ -3,7 +3,7 @@ package life.coachy.backend.schedule.domain
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
-import life.coachy.backend.infrastructure.constants.MongoCollections
+import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.schedule.SampleSchedules
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException
 import org.bson.types.ObjectId

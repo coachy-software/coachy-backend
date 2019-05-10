@@ -3,8 +3,8 @@ package life.coachy.backend.base
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import groovy.transform.TypeChecked
-import life.coachy.backend.infrastructure.constants.MongoCollections
-import life.coachy.backend.infrastructure.constants.Profiles
+import life.coachy.backend.infrastructure.constant.MongoCollections
+import life.coachy.backend.infrastructure.constant.Profiles
 import org.bson.types.ObjectId
 import org.junit.Before
 import org.springframework.beans.factory.annotation.Autowired
