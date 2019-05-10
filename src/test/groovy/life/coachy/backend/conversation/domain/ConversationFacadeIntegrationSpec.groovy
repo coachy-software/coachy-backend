@@ -28,26 +28,26 @@ class ConversationFacadeIntegrationSpec extends IntegrationSpec implements Sampl
 
   def "method 'createIfAbsent' should do nothing when conversation exists"() {
     given: "we have one conversation in system"
-      setUpConversation(sampleConversationId, "yang161", "yang161")
+      setUpConversation(sampleConversationId, "yang160", "yang160")
     when: "user tries to create conversation"
       this.facade.createIfAbsent(sampleConversationDto)
     then: "conversation has not been created"
-      !mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang160")), MongoCollections.CONVERSATIONS)
-      mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang161")), MongoCollections.CONVERSATIONS)
+      mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang160")), MongoCollections.CONVERSATIONS)
+      !mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang161")), MongoCollections.CONVERSATIONS)
   }
 
   def "method 'updateLastMesasge' should update conversation's last message details"() {
     given: "we have one conversation in system"
       setUpConversation(sampleConversationId, "yang160", "yang160")
     when: "user tries to update last message"
-      this.facade.updateLastMesasge(sampleConversationUpdateCommandDto)
+      this.facade.updateLastMesasge(sampleConversationDto, sampleConversationUpdateCommandDto)
     then: "should change the message content"
       mongoTemplate.exists(Query.query(Criteria.where("_id").is(sampleConversationId).and("lastMessageText").is("edited")), MongoCollections.CONVERSATIONS)
   }
 
   def "method 'updateLastMessage' should throw 'ConversationNotFoundException' if doesn't exist"() {
     when: "user tries to update last message"
-      this.facade.updateLastMesasge(sampleConversationUpdateCommandDto)
+      this.facade.updateLastMesasge(sampleConversationDto, sampleConversationUpdateCommandDto)
     then:
       thrown(ConversationNotFoundException)
   }
