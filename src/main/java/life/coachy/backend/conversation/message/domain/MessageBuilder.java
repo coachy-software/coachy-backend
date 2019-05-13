@@ -7,6 +7,7 @@ final class MessageBuilder implements Buildable<Message> {
 
   ObjectId identifier;
   ObjectId conversationId;
+  String senderName;
   String body;
 
   private MessageBuilder() {}
@@ -15,17 +16,22 @@ final class MessageBuilder implements Buildable<Message> {
     return new MessageBuilder();
   }
 
-  public MessageBuilder withIdentifier(ObjectId identifier) {
+  MessageBuilder withIdentifier(ObjectId identifier) {
     this.identifier = identifier;
     return this;
   }
 
-  public MessageBuilder withConversationId(ObjectId conversationId) {
+  MessageBuilder withConversationId(ObjectId conversationId) {
     this.conversationId = conversationId;
     return this;
   }
 
-  public MessageBuilder withBody(String body) {
+  MessageBuilder withSenderName(String senderName) {
+    this.senderName = senderName;
+    return this;
+  }
+
+  MessageBuilder withBody(String body) {
     this.body = body;
     return this;
   }

@@ -13,6 +13,7 @@ public class MessageQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId conversationId;
+  private String senderName;
   private String body;
 
   MessageQueryDto() {}
@@ -23,6 +24,10 @@ public class MessageQueryDto implements QueryDtoMarker {
 
   public ObjectId getConversationId() {
     return this.conversationId;
+  }
+
+  public String getSenderName() {
+    return this.senderName;
   }
 
   public String getBody() {

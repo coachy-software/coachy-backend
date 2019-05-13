@@ -9,6 +9,7 @@ class MessageCreator {
         .withIdentifier(dto.getIdentifier())
         .withBody(dto.getBody())
         .withConversationId(dto.getConversationId())
+        .withSenderName(dto.getFrom())
         .build();
   }
 

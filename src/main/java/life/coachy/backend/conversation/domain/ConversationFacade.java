@@ -29,10 +29,10 @@ public class ConversationFacade {
     this.service.update(queryDto, this.creator.from(dto));
   }
 
-  public void createIfAbsent(ConversationDto dto) {
-    this.service.createIfAbsent(dto, this.creator.from(dto), () -> {
-      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + dto.getIdentifier() + ".read");
-      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + dto.getIdentifier() + ".read");
+  public ConversationQueryDto createIfAbsent(ConversationDto dto) {
+    return this.service.createIfAbsent(dto, this.creator.from(dto), (queryDto) -> {
+      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + queryDto.getIdentifier() + ".read");
+      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + queryDto.getIdentifier() + ".read");
     });
   }
 

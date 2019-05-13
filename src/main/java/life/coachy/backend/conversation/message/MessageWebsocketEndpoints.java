@@ -10,6 +10,7 @@ import life.coachy.backend.conversation.message.domain.MessageFacade;
 import life.coachy.backend.conversation.message.domain.dto.InputMessageDto;
 import life.coachy.backend.conversation.message.domain.dto.OutputMessageDto;
 import life.coachy.backend.conversation.message.domain.dto.OutputMessageDtoBuilder;
+import life.coachy.backend.conversation.query.ConversationQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -32,43 +33,42 @@ class MessageWebsocketEndpoints {
 
   @MessageMapping("/chat.message.private")
   void chatMessagePrivate(InputMessageDto dto) {
-    ObjectId conversationId = ObjectId.get();
-    OutputMessageDto outputMessage = this.createMessageDto(conversationId, dto);
+    OutputMessageDto outputMessage = this.createMessageDto(dto).build();
 
-    this.updateConversationLastMessage(conversationId, outputMessage, dto);
+    ConversationQueryDto queryDto = this.updateConversationLastMessage(outputMessage, dto);
+    outputMessage = this.createMessageDto(dto).withConversationId(queryDto.getIdentifier()).build();
+
     this.simpMessagingTemplate.convertAndSendToUser(dto.getTo(), "/queue/private", outputMessage);
     this.messageFacade.save(outputMessage);
   }
 
-  private void updateConversationLastMessage(ObjectId conversationId, OutputMessageDto outputMessage, InputMessageDto dto) {
-    ConversationDto conversationDto = this.createConversationDto(conversationId, outputMessage, dto);
+  private ConversationQueryDto updateConversationLastMessage(OutputMessageDto outputMessage, InputMessageDto dto) {
+    ConversationDto conversationDto = this.createConversationDto(outputMessage, dto);
 
-    this.conversationFacade.createIfAbsent(conversationDto);
-    this.conversationFacade.updateLastMesasge(conversationDto, this.createConversationUpdateDto(conversationId, outputMessage));
+    ConversationQueryDto queryDto = this.conversationFacade.createIfAbsent(conversationDto);
+    this.conversationFacade.updateLastMesasge(conversationDto, this.createConversationUpdateDto(outputMessage));
+
+    return queryDto;
   }
 
-  private ConversationUpdateCommandDto createConversationUpdateDto(ObjectId conversationId, OutputMessageDto outputMessage) {
+  private ConversationUpdateCommandDto createConversationUpdateDto(OutputMessageDto outputMessage) {
     return ConversationUpdateCommandDtoBuilder.create()
-        .withIdentifier(conversationId)
         .withLastMessageDate(outputMessage.getDate())
         .withLastMessageText(outputMessage.getBody())
         .withLastMessageId(outputMessage.getIdentifier())
         .build();
   }
 
-  private OutputMessageDto createMessageDto(ObjectId conversationId, InputMessageDto dto) {
+  private OutputMessageDtoBuilder createMessageDto(InputMessageDto dto) {
     return OutputMessageDtoBuilder.create()
         .withFrom(dto.getFrom())
         .withBody(dto.getBody())
-        .withConversationId(conversationId)
         .withDate(LocalDateTime.now())
-        .withIdentifier(ObjectId.get())
-        .build();
+        .withIdentifier(ObjectId.get());
   }
 
-  private ConversationDto createConversationDto(ObjectId conversationId, OutputMessageDto outputMessage, InputMessageDto inputMessageDto) {
+  private ConversationDto createConversationDto(OutputMessageDto outputMessage, InputMessageDto inputMessageDto) {
     return ConversationDtoBuilder.create()
-        .withIdentifier(conversationId)
         .withLastMessageDate(outputMessage.getDate())
         .withLastMessageId(outputMessage.getIdentifier())
         .withLastMessageText(outputMessage.getBody())

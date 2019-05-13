@@ -1,11 +1,12 @@
 package life.coachy.backend.conversation.domain;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.conversation.query.ConversationQueryRepository;
-import org.bson.types.ObjectId;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,11 +40,17 @@ class ConversationService {
     return this.findOne(recipientName, senderName).orElseThrow(ConversationNotFoundException::new);
   }
 
-  void createIfAbsent(ConversationDto dto, Conversation conversation, Runnable runnable) {
-    if (!this.queryRepository.existsByRecipientNameAndSenderName(dto.getRecipientName(), dto.getSenderName())) {
+  ConversationQueryDto createIfAbsent(ConversationDto dto, Conversation conversation, Consumer<ConversationQueryDto> consumer) {
+    Optional<ConversationQueryDto> queryDto = this.findOne(dto.getRecipientName(), dto.getSenderName());
+
+    if (!queryDto.isPresent()) {
       this.save(conversation);
-      runnable.run();
+      ConversationQueryDto newQueryDto = this.findOne(dto.getRecipientName(), dto.getSenderName()).get();
+      consumer.accept(newQueryDto);
+      return newQueryDto;
     }
+
+    return queryDto.get();
   }
 
   Page<ConversationQueryDto> findAllByRecipientOrSender(String username, Pageable pageable) {
