@@ -8,8 +8,7 @@ class ConversationCreator {
   Conversation from(ConversationDto dto) {
     return ConversationBuilder.create()
         .withIdentifier(dto.getIdentifier())
-        .withSenderName(dto.getSenderName())
-        .withRecipientName(dto.getRecipientName())
+        .withConversers(dto.getConversers())
         .withLastMessageId(dto.getLastMessageId())
         .withLastMessageText(dto.getLastMessageText())
         .withLastMessageDate(dto.getLastMessageDate())

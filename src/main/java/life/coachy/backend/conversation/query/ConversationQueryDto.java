@@ -3,6 +3,7 @@ package life.coachy.backend.conversation.query;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
+import java.util.List;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import org.bson.types.ObjectId;
@@ -13,8 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ConversationQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
-  private String senderName;
-  private String recipientName;
+  private List<String> conversers;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
@@ -23,12 +23,8 @@ public class ConversationQueryDto implements QueryDtoMarker {
     return this.identifier;
   }
 
-  public String getSenderName() {
-    return this.senderName;
-  }
-
-  public String getRecipientName() {
-    return this.recipientName;
+  public List<String> getConversers() {
+    return this.conversers;
   }
 
   public ObjectId getLastMessageId() {

@@ -32,8 +32,8 @@ class ConversationFacadeIntegrationSpec extends IntegrationSpec implements Sampl
     when: "user tries to create conversation"
       this.facade.createIfAbsent(sampleConversationDto)
     then: "conversation has not been created"
-      mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang160")), MongoCollections.CONVERSATIONS)
-      !mongoTemplate.exists(Query.query(Criteria.where("senderName").is("yang161")), MongoCollections.CONVERSATIONS)
+      mongoTemplate.exists(Query.query(Criteria.where("conversers").regex("yang160")), MongoCollections.CONVERSATIONS)
+      !mongoTemplate.exists(Query.query(Criteria.where("conversers").regex("yang161")), MongoCollections.CONVERSATIONS)
   }
 
   def "method 'updateLastMesasge' should update conversation's last message details"() {

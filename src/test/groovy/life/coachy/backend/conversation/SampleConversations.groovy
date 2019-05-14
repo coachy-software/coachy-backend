@@ -1,5 +1,6 @@
 package life.coachy.backend.conversation
 
+import com.google.common.collect.Lists
 import groovy.transform.CompileStatic
 import life.coachy.backend.conversation.domain.dto.ConversationDto
 import life.coachy.backend.conversation.domain.dto.ConversationDtoBuilder
@@ -16,8 +17,7 @@ trait SampleConversations {
 
   ConversationDto sampleConversationDto = ConversationDtoBuilder.create()
       .withIdentifier(sampleConversationId)
-      .withSenderName("yang160")
-      .withRecipientName("yang160")
+  .withConversers(Lists.newArrayList("yang160", "yang160"))
       .withLastMessageDate(LocalDateTime.now())
       .withLastMessageId(sampleConversationId)
       .withLastMessageText("test")

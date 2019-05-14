@@ -1,21 +1,20 @@
 package life.coachy.backend.conversation.domain.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import org.bson.types.ObjectId;
 
 public class ConversationDto {
 
   private ObjectId identifier;
-  private String senderName;
-  private String recipientName;
+  private List<String> conversers;
   private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
 
   ConversationDto(ConversationDtoBuilder builder) {
     this.identifier = builder.identifier;
-    this.senderName = builder.senderName;
-    this.recipientName = builder.recipientName;
+    this.conversers = builder.conversers;
     this.lastMessageId = builder.lastMessageId;
     this.lastMessageText = builder.lastMessageText;
     this.lastMessageDate = builder.lastMessageDate;
@@ -25,12 +24,8 @@ public class ConversationDto {
     return this.identifier;
   }
 
-  public String getSenderName() {
-    return this.senderName;
-  }
-
-  public String getRecipientName() {
-    return this.recipientName;
+  public List<String> getConversers() {
+    return this.conversers;
   }
 
   public ObjectId getLastMessageId() {

@@ -1,5 +1,7 @@
 package life.coachy.backend.conversation.domain;
 
+import com.google.common.collect.Lists;
+import java.util.List;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.domain.dto.ConversationUpdateCommandDto;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
@@ -20,19 +22,21 @@ public class ConversationFacade {
     this.userFacade = userFacade;
   }
 
-  public Page<ConversationQueryDto> fetchAllByRecipientOrSender(ObjectId id, Pageable pageable) {
-    return this.service.findAllByRecipientOrSender(this.userFacade.fetchOne(id).getUsername(), pageable);
+  public Page<ConversationQueryDto> fetchAll(ObjectId id, Pageable pageable) {
+    return this.service.findAll(pageable, Lists.newArrayList(this.userFacade.fetchOne(id).getUsername()));
   }
 
   public void updateLastMesasge(ConversationDto conversationDto, ConversationUpdateCommandDto dto) {
-    ConversationQueryDto queryDto = this.service.findOneOrThrow(conversationDto.getRecipientName(), conversationDto.getSenderName());
+    ConversationQueryDto queryDto = this.service.findOneOrThrow(conversationDto.getConversers());
     this.service.update(queryDto, this.creator.from(dto));
   }
 
   public ConversationQueryDto createIfAbsent(ConversationDto dto) {
     return this.service.createIfAbsent(dto, this.creator.from(dto), (queryDto) -> {
-      this.userFacade.givePermissions(dto.getRecipientName(), "conversation." + queryDto.getIdentifier() + ".read");
-      this.userFacade.givePermissions(dto.getSenderName(), "conversation." + queryDto.getIdentifier() + ".read");
+      dto.getConversers().forEach(converser -> {
+        this.userFacade.givePermissions(converser, "conversation." + queryDto.getIdentifier() + ".read");
+        this.userFacade.givePermissions(converser, "conversation." + queryDto.getIdentifier() + ".read");
+      });
     });
   }
 

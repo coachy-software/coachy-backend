@@ -31,7 +31,7 @@ class ConversationEndpoints {
   @RequiresPermissions("user.{id}.read")
   @GetMapping("{id}")
   public ResponseEntity<List<ConversationQueryDto>> fetchAll(@PathVariable @ApiParam("Recipient or sender id") ObjectId id, Pageable pageable) {
-    return ResponseEntity.ok(this.conversationFacade.fetchAllByRecipientOrSender(id, pageable).getContent());
+    return ResponseEntity.ok(this.conversationFacade.fetchAll(id, pageable).getContent());
   }
 
 }

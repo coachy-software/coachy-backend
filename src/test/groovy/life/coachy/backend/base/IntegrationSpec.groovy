@@ -1,5 +1,6 @@
 package life.coachy.backend.base
 
+import com.google.common.collect.Lists
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import groovy.transform.TypeChecked
@@ -98,8 +99,7 @@ class IntegrationSpec extends Specification {
     Map<String, Object> templateDetials = new HashMap<String, Object>() {
       {
         this.put("_id", id)
-        this.put("senderName", senderName)
-        this.put("recipientName", recipientName)
+        this.put("conversers", Lists.newArrayList(senderName, recipientName))
       }
     }
 

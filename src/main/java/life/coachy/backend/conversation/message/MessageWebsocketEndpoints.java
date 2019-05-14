@@ -1,5 +1,6 @@
 package life.coachy.backend.conversation.message;
 
+import com.google.common.collect.Lists;
 import java.time.LocalDateTime;
 import life.coachy.backend.conversation.domain.ConversationFacade;
 import life.coachy.backend.conversation.domain.dto.ConversationDto;
@@ -69,11 +70,11 @@ class MessageWebsocketEndpoints {
 
   private ConversationDto createConversationDto(OutputMessageDto outputMessage, InputMessageDto inputMessageDto) {
     return ConversationDtoBuilder.create()
+        .withIdentifier(inputMessageDto.getConversationId())
         .withLastMessageDate(outputMessage.getDate())
         .withLastMessageId(outputMessage.getIdentifier())
         .withLastMessageText(outputMessage.getBody())
-        .withSenderName(inputMessageDto.getFrom())
-        .withRecipientName(inputMessageDto.getTo())
+        .withConversers(Lists.newArrayList(inputMessageDto.getFrom(), inputMessageDto.getTo()))
         .build();
   }
 

@@ -27,8 +27,8 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
       fetchAllEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${firstConversation.get("_id")}", "senderName": "${firstConversation.get("senderName")}", "recipientName": "${firstConversation.get("recipientName")}"},
-              {"identifier": "${secondConversation.get("_id")}", "senderName": "${secondConversation.get("senderName")}", "recipientName": "${secondConversation.get("recipientName")}"}
+              {"identifier": "${firstConversation.get("_id")}", "conversers": ["yang160", "yang160"]},
+              {"identifier": "${secondConversation.get("_id")}", "conversers": ["yang160", "yang161"]}
             ]
           """))
     when: "I go to /api/conversations/{id}?size=1"
@@ -38,7 +38,7 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
       paginationEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${firstConversation.get("_id")}", "senderName": "${firstConversation.get("senderName")}", "recipientName": "${firstConversation.get("recipientName")}"}
+              {"identifier": "${firstConversation.get("_id")}", "conversers": ["yang160", "yang160"]}
             ]
           """))
   }
