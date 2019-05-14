@@ -47,8 +47,8 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
     given: "we have three conversations and one user in system in system"
       ObjectId userId = ObjectId.get();
       setUpUser(userId, "yang160", "password123", Collections.emptySet())
-      BasicDBObject firstConversation = setUpConversation(ObjectId.get(), "yang160", "yang160")
-      BasicDBObject secondConversation = setUpConversation(ObjectId.get(), "yang160", "yang161")
+      setUpConversation(ObjectId.get(), "yang160", "yang160")
+      setUpConversation(ObjectId.get(), "yang160", "yang161")
       setUpConversation(ObjectId.get(), "unknown", "unknown")
     when: "I go to /api/conversations/{id}"
       ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/conversations/{id}", userId)

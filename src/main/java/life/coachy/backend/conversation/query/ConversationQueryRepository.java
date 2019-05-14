@@ -41,10 +41,11 @@ class ConversationQueryRepositoryExtensionImpl implements ConversationQueryRepos
 
   @Override
   public Page<ConversationQueryDto> findAllByConversersContainsOrderByLastMessageDateDesc(List<String> conversers, Pageable pageable) {
-    Query query = Query.query(Criteria.where("conversers").all(conversers));
+    Query query = Query.query(Criteria.where("conversers").all(conversers)).with(pageable);
     List<ConversationQueryDto> queryDtos = this.mongoTemplate.find(query, ConversationQueryDto.class);
-
-    return new PageImpl<>(queryDtos, pageable, queryDtos.size());
+    
+    long count = this.mongoTemplate.count(query, ConversationQueryDto.class);
+    return new PageImpl<>(queryDtos, pageable, count);
   }
 
 }
