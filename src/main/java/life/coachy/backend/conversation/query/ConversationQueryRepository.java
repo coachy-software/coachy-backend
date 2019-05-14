@@ -13,6 +13,4 @@ public interface ConversationQueryRepository extends QueryFetchOneRepository<Con
 
   Optional<ConversationQueryDto> findByRecipientNameAndSenderName(String recipientName, String senderName);
 
-  boolean existsByRecipientNameAndSenderName(String recipientName, String senderName);
-
 }
