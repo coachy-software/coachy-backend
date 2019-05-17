@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class ExerciseTemplateEndpointsAcceptanceSpec extends IntegrationSpec {
+class ExerciseTemplateEndpointAcceptanceSpec extends IntegrationSpec {
 
   def "should display templates"() {
     given: "we have two templates and one user in system"

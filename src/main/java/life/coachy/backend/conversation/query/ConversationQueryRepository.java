@@ -23,7 +23,7 @@ interface ConversationQueryRepositoryExtension {
 
   Page<ConversationQueryDto> findAllByConversersContainsOrderByLastMessageDateDesc(List<String> conversers, Pageable pageable);
 
-  Optional<ConversationQueryDto> findByConversersContains(List<String> conversers); // todo custom impl ;/
+  Optional<ConversationQueryDto> findByConversersContains(List<String> conversers);
 
 }
 

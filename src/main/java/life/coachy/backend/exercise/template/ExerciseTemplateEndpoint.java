@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.EXERCISE_TEMPLATES)
-class ExerciseTemplateEndpoints {
+class ExerciseTemplateEndpoint {
 
   private final QueryOperationsFactory queryOperationsFactory;
   private final ExerciseTemplateQueryDtoRepository repository;
   private final ExerciseTemplateFacade facade;
 
   @Autowired
-  public ExerciseTemplateEndpoints(QueryOperationsFactory queryOperationsFactory, ExerciseTemplateQueryDtoRepository repository,
+  public ExerciseTemplateEndpoint(QueryOperationsFactory queryOperationsFactory, ExerciseTemplateQueryDtoRepository repository,
       ExerciseTemplateFacade facade) {
     this.queryOperationsFactory = queryOperationsFactory;
     this.repository = repository;

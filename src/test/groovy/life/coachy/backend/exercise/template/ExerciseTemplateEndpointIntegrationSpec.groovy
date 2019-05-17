@@ -8,7 +8,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class ExerciseTemplateEndpointsIntegrationSpec extends IntegrationSpec {
+class ExerciseTemplateEndpointIntegrationSpec extends IntegrationSpec {
 
   def "details endpoint should return 404 when template not found"() {
     given: "we have one user in system"
