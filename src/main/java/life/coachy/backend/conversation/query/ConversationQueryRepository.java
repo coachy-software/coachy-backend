@@ -1,7 +1,9 @@
 package life.coachy.backend.conversation.query;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import life.coachy.backend.infrastructure.query.QueryFetchOneRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -42,8 +44,10 @@ class ConversationQueryRepositoryExtensionImpl implements ConversationQueryRepos
   @Override
   public Page<ConversationQueryDto> findAllByConversersContainsOrderByLastMessageDateDesc(List<String> conversers, Pageable pageable) {
     Query query = Query.query(Criteria.where("conversers").all(conversers)).with(pageable);
-    List<ConversationQueryDto> queryDtos = this.mongoTemplate.find(query, ConversationQueryDto.class);
-    
+    List<ConversationQueryDto> queryDtos = this.mongoTemplate.find(query, ConversationQueryDto.class).stream()
+        .sorted(Comparator.comparing(ConversationQueryDto::getLastMessageDate).reversed())
+        .collect(Collectors.toList());
+
     long count = this.mongoTemplate.count(query, ConversationQueryDto.class);
     return new PageImpl<>(queryDtos, pageable, count);
   }
