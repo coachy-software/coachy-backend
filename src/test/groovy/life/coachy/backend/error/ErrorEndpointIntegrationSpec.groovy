@@ -6,7 +6,7 @@ import org.springframework.test.web.servlet.ResultActions
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 
-class ErrorEndpointsIntegrationSpec extends IntegrationSpec {
+class ErrorEndpointIntegrationSpec extends IntegrationSpec {
 
   def "error endpoint test"() {
     when: "I go to /error"

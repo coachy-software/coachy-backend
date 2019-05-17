@@ -14,7 +14,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-class ScheduleCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleSchedules {
+class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleSchedules {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 

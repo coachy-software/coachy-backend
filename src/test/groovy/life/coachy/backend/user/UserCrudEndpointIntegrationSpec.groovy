@@ -12,7 +12,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UserCrudEndpointsIntegrationSpec extends IntegrationSpec implements SampleUsers {
+class UserCrudEndpointIntegrationSpec extends IntegrationSpec implements SampleUsers {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter;
 

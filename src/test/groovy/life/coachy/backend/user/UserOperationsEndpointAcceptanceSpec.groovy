@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UserOperationsEndpointsAcceptanceSpec extends IntegrationSpec implements SampleUsers {
+class UserOperationsEndpointAcceptanceSpec extends IntegrationSpec implements SampleUsers {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter;
 

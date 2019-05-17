@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class MessageEndpointsAcceptanceSpec extends IntegrationSpec implements SampleConversations {
+class MessageEndpointAcceptanceSpec extends IntegrationSpec implements SampleConversations {
 
   def "fetch all endpoint positive scnario"() {
     given: "we have two messages, one conversation and one user in system"

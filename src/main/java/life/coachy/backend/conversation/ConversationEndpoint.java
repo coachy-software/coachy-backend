@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.CONVERSATIONS)
-class ConversationEndpoints {
+class ConversationEndpoint {
 
   private final ConversationFacade conversationFacade;
 
-  public ConversationEndpoints(ConversationFacade conversationFacade) {
+  public ConversationEndpoint(ConversationFacade conversationFacade) {
     this.conversationFacade = conversationFacade;
   }
 

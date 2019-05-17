@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.BOARDS)
-class BoardEndpoints {
+class BoardEndpoint {
 
   private final BoardFacade boardFacade;
 
   @Autowired
-  public BoardEndpoints(BoardFacade boardFacade) {
+  public BoardEndpoint(BoardFacade boardFacade) {
     this.boardFacade = boardFacade;
   }
 

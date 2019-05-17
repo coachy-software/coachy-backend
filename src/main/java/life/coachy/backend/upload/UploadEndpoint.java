@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-class UploadEndpoints {
+class UploadEndpoint {
 
   private UploadService uploadService;
 
   @Autowired
-  public UploadEndpoints(UploadService uploadService) {
+  public UploadEndpoint(UploadService uploadService) {
     this.uploadService = uploadService;
   }
 

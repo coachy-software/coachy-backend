@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiOperation("Unconventional POST operations")
 @RestController
 @RequestMapping(ApiLayers.USERS)
-class UserOperationsEndpoints {
+class UserOperationsEndpoint {
 
   private final UserFacade facade;
 
   @Autowired
-  public UserOperationsEndpoints(UserFacade facade) {
+  public UserOperationsEndpoint(UserFacade facade) {
     this.facade = facade;
   }
 

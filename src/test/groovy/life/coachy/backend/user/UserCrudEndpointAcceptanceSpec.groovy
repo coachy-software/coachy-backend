@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UserCrudEndpointsAcceptanceSpec extends IntegrationSpec implements SampleUsers {
+class UserCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleUsers {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 

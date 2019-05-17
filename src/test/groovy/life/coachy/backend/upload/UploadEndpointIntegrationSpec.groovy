@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UploadEndpointsIntegrationSpec extends IntegrationSpec {
+class UploadEndpointIntegrationSpec extends IntegrationSpec {
 
   def "upload endpoint should return 400 when slash character presents in target param"() {
     given: "we have one user and one file in system"

@@ -33,12 +33,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.SCHEDULES)
-class ScheduleCrudEndpoints {
+class ScheduleCrudEndpoint {
 
   private final ScheduleFacade facade;
 
   @Autowired
-  public ScheduleCrudEndpoints(ScheduleFacade facade) {
+  public ScheduleCrudEndpoint(ScheduleFacade facade) {
     this.facade = facade;
   }
 

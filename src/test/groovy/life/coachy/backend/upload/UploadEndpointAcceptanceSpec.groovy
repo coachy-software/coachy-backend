@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UploadEndpointsAcceptanceSpec extends IntegrationSpec {
+class UploadEndpointAcceptanceSpec extends IntegrationSpec {
 
   @Shared MockMultipartFile pngImageFile = new MockMultipartFile("file", "something.png", "image/png", (byte[]) null)
   @Shared MockMultipartFile mp4ImageFile = new MockMultipartFile("file", "something.mp4", "video/mp4", (byte[]) null)

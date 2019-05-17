@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class PasswordResetEndpoints {
+class PasswordResetEndpoint {
 
   private final PasswordResetFacade facade;
 
   @Autowired
-  public PasswordResetEndpoints(PasswordResetFacade facade) {
+  public PasswordResetEndpoint(PasswordResetFacade facade) {
     this.facade = facade;
   }
 

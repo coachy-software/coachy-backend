@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class UserOperationsEndpointsIntegrationSpec extends IntegrationSpec implements SampleUsers {
+class UserOperationsEndpointIntegrationSpec extends IntegrationSpec implements SampleUsers {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter;
 

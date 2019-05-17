@@ -31,14 +31,14 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiOperation("Basic crud operations")
 @RestController
 @RequestMapping(ApiLayers.USERS)
-class UserCrudEndpoints {
+class UserCrudEndpoint {
 
   private final UserFacade facade;
   private final UserQueryRepository repository;
   private final QueryOperationsFactory queryOperationsFactory;
 
   @Autowired
-  public UserCrudEndpoints(UserFacade facade, UserQueryRepository repository, QueryOperationsFactory queryOperationsFactory) {
+  public UserCrudEndpoint(UserFacade facade, UserQueryRepository repository, QueryOperationsFactory queryOperationsFactory) {
     this.facade = facade;
     this.repository = repository;
     this.queryOperationsFactory = queryOperationsFactory;

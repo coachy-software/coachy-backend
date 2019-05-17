@@ -19,14 +19,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
-class MessageWebsocketEndpoints {
+class MessageWebsocketEndpoint {
 
   private final SimpMessagingTemplate simpMessagingTemplate;
   private final ConversationFacade conversationFacade;
   private final MessageFacade messageFacade;
 
   @Autowired
-  public MessageWebsocketEndpoints(SimpMessagingTemplate simpMessagingTemplate, ConversationFacade conversationFacade, MessageFacade messageFacade) {
+  public MessageWebsocketEndpoint(SimpMessagingTemplate simpMessagingTemplate, ConversationFacade conversationFacade, MessageFacade messageFacade) {
     this.simpMessagingTemplate = simpMessagingTemplate;
     this.conversationFacade = conversationFacade;
     this.messageFacade = messageFacade;

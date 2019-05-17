@@ -10,7 +10,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class ScheduleCrudEndpointsIntegrationSpec extends IntegrationSpec implements SampleSchedules {
+class ScheduleCrudEndpointIntegrationSpec extends IntegrationSpec implements SampleSchedules {
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 
