@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
+import java.time.LocalDateTime
 import java.util.stream.Collectors
 
 @TypeChecked
@@ -100,6 +101,7 @@ class IntegrationSpec extends Specification {
       {
         this.put("_id", id)
         this.put("conversers", Lists.newArrayList(senderName, recipientName))
+        this.put("lastMessageDate", LocalDateTime.now())
       }
     }
 

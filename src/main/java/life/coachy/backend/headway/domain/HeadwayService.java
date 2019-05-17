@@ -28,7 +28,7 @@ class HeadwayService {
   }
 
   Set<HeadwayQueryDto> fetchAllByOwnerId(ObjectId id) {
-    return this.headwayQueryRepository.fetchAllByOwnerIdAndOrderByCreatedAtDesc(id);
+    return this.headwayQueryRepository.findAllByOwnerIdOrderByCreatedAtDesc(id);
   }
 
 }

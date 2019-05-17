@@ -7,6 +7,6 @@ import org.springframework.data.repository.Repository;
 
 public interface HeadwayQueryRepository extends QueryFetchOneRepository<HeadwayQueryDto, ObjectId>, Repository<HeadwayQueryDto, ObjectId> {
 
-  Set<HeadwayQueryDto> fetchAllByOwnerIdAndOrderByCreatedAtDesc(ObjectId ownerId);
+  Set<HeadwayQueryDto> findAllByOwnerIdOrderByCreatedAtDesc(ObjectId ownerId);
 
 }
