@@ -43,6 +43,16 @@ class MessageWebsocketEndpoints {
     this.messageFacade.save(outputMessage);
   }
 
+  @MessageMapping("/chat.message.typing")
+  void chatTyping(InputMessageDto dto) {
+    OutputMessageDto outputMessage = OutputMessageDtoBuilder.create()
+        .withFrom(dto.getFrom())
+        .withConversationId(dto.getConversationId())
+        .build();
+
+    this.simpMessagingTemplate.convertAndSendToUser(dto.getTo(), "/queue/typing", outputMessage);
+  }
+
   private ConversationQueryDto updateConversationLastMessage(OutputMessageDto outputMessage, InputMessageDto dto) {
     ConversationDto conversationDto = this.createConversationDto(outputMessage, dto);
 
