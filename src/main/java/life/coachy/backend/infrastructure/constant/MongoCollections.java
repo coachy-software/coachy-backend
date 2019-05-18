@@ -10,6 +10,7 @@ public final class MongoCollections {
   public static final String BOARDS = "boards";
   public static final String MESSAGES = "messages";
   public static final String CONVERSATIONS = "conversations";
+  public static final String HEADWAYS = "headways";
 
   private MongoCollections() {}
 

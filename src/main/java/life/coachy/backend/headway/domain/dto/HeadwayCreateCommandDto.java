@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 
 public class HeadwayCreateCommandDto {
 
+  private ObjectId identifier;
   private ObjectId ownerId;
   private double neckMeasurement;
   private double armMeasurement;
@@ -19,6 +20,7 @@ public class HeadwayCreateCommandDto {
   HeadwayCreateCommandDto() {}
 
   HeadwayCreateCommandDto(HeadwayCreateCommandDtoBuilder builder) {
+    this.identifier = builder.identifier;
     this.ownerId = builder.ownerId;
     this.neckMeasurement = builder.neckMeasurement;
     this.armMeasurement = builder.armMeasurement;
@@ -29,6 +31,10 @@ public class HeadwayCreateCommandDto {
     this.thighMeasurement = builder.thighMeasurement;
     this.calfMeasurement = builder.calfMeasurement;
     this.images = builder.images;
+  }
+
+  public ObjectId getIdentifier() {
+    return this.identifier;
   }
 
   public ObjectId getOwnerId() {

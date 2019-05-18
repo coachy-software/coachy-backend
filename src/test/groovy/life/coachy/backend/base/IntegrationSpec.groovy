@@ -120,6 +120,17 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.MESSAGES)
   }
 
+  def setUpHeadway(ObjectId id, ObjectId ownerId) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", id)
+        this.put("conversationId", ownerId)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.HEADWAYS)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)
@@ -128,6 +139,7 @@ class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.TOKENS)
     mongoTemplate.dropCollection(MongoCollections.CONVERSATIONS)
     mongoTemplate.dropCollection(MongoCollections.MESSAGES)
+    mongoTemplate.dropCollection(MongoCollections.HEADWAYS)
   }
 
 }

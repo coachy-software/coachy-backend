@@ -2,10 +2,13 @@ package life.coachy.backend.headway.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(MongoCollections.HEADWAYS)
 class Headway {
 
   @Id ObjectId identifier;

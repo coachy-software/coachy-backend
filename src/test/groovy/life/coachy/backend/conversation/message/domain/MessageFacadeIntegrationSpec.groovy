@@ -31,7 +31,7 @@ class MessageFacadeIntegrationSpec extends IntegrationSpec implements SampleMess
   }
 
   def "method 'save' should store message"() {
-    when: "user tries to save message"
+    when: "user tries to create message"
       this.messageFacade.save(sampleOutputMessageDto)
     then:
       mongoTemplate.exists(Query.query(Criteria.where("_id").is(sampleMessageId)), MongoCollections.MESSAGES)

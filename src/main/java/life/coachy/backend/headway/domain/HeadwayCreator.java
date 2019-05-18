@@ -6,6 +6,7 @@ class HeadwayCreator {
 
   Headway from(HeadwayCreateCommandDto dto) {
     return HeadwayBuilder.create()
+        .withIdentifier(dto.getIdentifier())
         .withOwnerId(dto.getOwnerId())
         .withNeckMeasurement(dto.getNeckMeasurement())
         .withArmMeasurement(dto.getArmMeasurement())

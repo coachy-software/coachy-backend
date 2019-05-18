@@ -11,6 +11,7 @@ import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,8 @@ class HeadwayEndpoint {
   @RequiresAuthenticated
   @PostMapping
   ResponseEntity<?> create(@RequestBody HeadwayCreateCommandDto dto) {
-    return ResponseEntity.created(this.headwayFacade.save(dto)).build();
+    this.headwayFacade.create(dto);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @RequiresAuthenticated
@@ -50,7 +52,7 @@ class HeadwayEndpoint {
   @RequiresPermissions("headway.{id}.delete")
   @RequiresAuthenticated
   @DeleteMapping("{id}")
-  ResponseEntity<?> delete(@ApiParam("Headway identifier") ObjectId id) {
+  ResponseEntity<?> delete(@ApiParam("Headway identifier") @PathVariable ObjectId id) {
     this.headwayFacade.delete(id);
     return ResponseEntity.ok().build();
   }

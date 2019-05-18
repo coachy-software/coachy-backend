@@ -1,13 +1,10 @@
 package life.coachy.backend.headway.domain;
 
-import java.net.URI;
 import java.util.Set;
 import life.coachy.backend.headway.domain.dto.HeadwayCreateCommandDto;
 import life.coachy.backend.headway.query.HeadwayQueryDto;
-import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.user.domain.UserFacade;
 import org.bson.types.ObjectId;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 public class HeadwayFacade {
 
@@ -21,10 +18,9 @@ public class HeadwayFacade {
     this.userFacade = userFacade;
   }
 
-  public URI save(HeadwayCreateCommandDto dto) {
+  public void create(HeadwayCreateCommandDto dto) {
     Headway headway = this.headwayService.save(this.headwayCreator.from(dto));
     this.userFacade.givePermissions(dto.getOwnerId(), "headway." + headway.identifier + ".delete");
-    return ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + ApiLayers.HEADWAYS + "/{id}").buildAndExpand(headway.identifier).toUri();
   }
 
   public void delete(ObjectId id) {

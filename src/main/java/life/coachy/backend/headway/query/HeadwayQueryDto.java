@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
+import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(MongoCollections.HEADWAYS)
 public class HeadwayQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;

@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 
 public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCreateCommandDto> {
 
+  ObjectId identifier;
   ObjectId ownerId;
   double neckMeasurement;
   double armMeasurement;
@@ -21,6 +22,11 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
 
   public static HeadwayCreateCommandDtoBuilder create() {
     return new HeadwayCreateCommandDtoBuilder();
+  }
+
+  public HeadwayCreateCommandDtoBuilder withIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+    return this;
   }
 
   public HeadwayCreateCommandDtoBuilder withOwnerId(ObjectId ownerId) {
