@@ -45,4 +45,12 @@ class HeadwayFacadeSpec extends IntegrationSpec implements SampleHeadways {
     then:
       thrown(UserNotFoundException)
   }
+
+  def "method 'fetchOne' should throw 'HeadwayNotFoundException' if does not exist"() {
+    when: "user tries to fetch a headway"
+      this.headwayFacade.fetchOne(ObjectId.get())
+    then:
+      thrown(HeadwayNotFoundException)
+  }
+
 }

@@ -15,7 +15,7 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
     given: "we have one user in system"
       setUpUser(sampleHeadwayId, "yang160", "password123", Collections.emptySet())
     when: "user tries to displays all headways belonging to it's id"
-      ResultActions fetchAllEndpoint = mockMvc.perform(get('/api/headways/{id}', sampleHeadwayId)
+      ResultActions fetchAllEndpoint = mockMvc.perform(get('/api/headways/by-owner/{id}', sampleHeadwayId)
           .with(httpBasic('yang160', 'password123')))
     then:
       fetchAllEndpoint.andExpect(status().isForbidden())
@@ -40,6 +40,26 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
           .with(httpBasic('yang160', 'password123')))
     then:
       deleteEndpoint.andExpect(status().isNotFound())
+  }
+
+  def "'fetchOne' endpoint should return 404 if id does not match any headway"() {
+    given: "we have one user in system"
+      setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+    when: "user tries to fetch headway"
+      ResultActions fetchEndpoint = mockMvc.perform(get('/api/headways/{id}', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123')))
+    then:
+      fetchEndpoint.andExpect(status().isNotFound())
+  }
+
+  def "'fetchOne' endpoint should return 403 when required permission is missing"() {
+    given: "we have one user in system"
+      setUpUser(sampleHeadwayId, "yang160", "password123", Collections.emptySet())
+    when: "user tries to fetch headway"
+      ResultActions fetchEndpoint = mockMvc.perform(get('/api/headways/{id}', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123')))
+    then:
+      fetchEndpoint.andExpect(status().isForbidden())
   }
 
 }

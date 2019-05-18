@@ -32,6 +32,10 @@ class HeadwayService {
     this.headwayRepository.deleteById(id);
   }
 
+  HeadwayQueryDto fetchOne(ObjectId id) {
+    return this.headwayQueryRepository.findById(id).orElseThrow(HeadwayNotFoundException::new);
+  }
+
   Set<HeadwayQueryDto> fetchAllByOwnerId(ObjectId id) {
     return this.headwayQueryRepository.findAllByOwnerIdOrderByCreatedAtDesc(id);
   }

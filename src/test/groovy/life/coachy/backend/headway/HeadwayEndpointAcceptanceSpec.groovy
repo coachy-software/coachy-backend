@@ -9,8 +9,7 @@ import org.springframework.test.web.servlet.ResultActions
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class HeadwayEndpointAcceptanceSpec extends IntegrationSpec implements SampleHeadways {
 
@@ -26,11 +25,20 @@ class HeadwayEndpointAcceptanceSpec extends IntegrationSpec implements SampleHea
           .contentType(MediaType.APPLICATION_JSON))
     then: "headway has been created"
       createEndpoint.andExpect(status().isCreated())
+          .andExpect(header().exists("Location"))
     when: "I go to /api/headways/{id}"
-      ResultActions detailsEndpoint = mockMvc.perform(get('/api/headways/{id}', sampleHeadwayId)
+      ResultActions detailsEndpoint = mockMvc.perform(get(createEndpoint.andReturn().getResponse().getRedirectedUrl())
+          .with(httpBasic('yang160', 'password123')))
+    then: "I see one headway"
+      detailsEndpoint.andExpect(status().isOk())
+          .andExpect(content().json("""
+              {"ownerId": "${sampleHeadwayId}"}
+           """))
+    when: "I go to /api/headways/by-owner/{id}"
+      ResultActions fetchAllDetailsEndpoint = mockMvc.perform(get('/api/headways/by-owner/{id}', sampleHeadwayId)
           .with(httpBasic('yang160', 'password123')))
     then: "I see headways, that belong to specified owner id"
-      detailsEndpoint.andExpect(status().isOk())
+      fetchAllDetailsEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
               {"ownerId": "${sampleHeadwayId}"}
