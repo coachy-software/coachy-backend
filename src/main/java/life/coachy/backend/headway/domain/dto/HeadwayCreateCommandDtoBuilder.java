@@ -4,7 +4,7 @@ import java.util.List;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
-final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCreateCommandDto> {
+public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCreateCommandDto> {
 
   ObjectId ownerId;
   double neckMeasurement;

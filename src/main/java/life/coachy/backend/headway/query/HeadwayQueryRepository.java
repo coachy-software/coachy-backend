@@ -9,4 +9,6 @@ public interface HeadwayQueryRepository extends QueryFetchOneRepository<HeadwayQ
 
   Set<HeadwayQueryDto> findAllByOwnerIdOrderByCreatedAtDesc(ObjectId ownerId);
 
+  boolean existsByIdentifier(ObjectId identifier);
+
 }

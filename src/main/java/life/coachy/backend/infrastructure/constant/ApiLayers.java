@@ -11,6 +11,7 @@ public final class ApiLayers {
   public static final String PING = API_ROOT + "ping";
   public static final String CONVERSATIONS = API_ROOT + "conversations";
   public static final String MESSAGES = API_ROOT + "messages";
+  public static final String HEADWAYS = API_ROOT + "headways";
 
   private ApiLayers() {}
 

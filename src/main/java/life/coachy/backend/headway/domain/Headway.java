@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 
 class Headway {
 
-  @Id private ObjectId identifier;
+  @Id ObjectId identifier;
   private ObjectId ownerId;
   private double neckMeasurement;
   private double armMeasurement;
