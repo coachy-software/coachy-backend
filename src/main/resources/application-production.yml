@@ -25,6 +25,7 @@ spring:
     password: ${MQ_PASSWORD}
     port: ${MQ_PORT}
     allowedOrigins: ${ALLOWED_ORIGINS}
+    virtual-host: ${MQ_VIRTUALHOST}
 logging:
   level:
     org:

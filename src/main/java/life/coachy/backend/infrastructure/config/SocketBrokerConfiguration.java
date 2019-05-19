@@ -28,6 +28,7 @@ class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
   @Override
   public void configureMessageBroker(MessageBrokerRegistry registry) {
     registry.enableStompBrokerRelay("/queue/", "/topic/")
+        .setVirtualHost(this.messageBrokerCredentials.getVirtualHost())
         .setRelayHost(this.messageBrokerCredentials.getHost())
         .setRelayPort(this.messageBrokerCredentials.getPort())
         .setClientLogin(this.messageBrokerCredentials.getUsername())

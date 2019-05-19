@@ -12,6 +12,7 @@ class MessageBrokerCredentials {
   private String username;
   private String password;
   private String allowedOrigins;
+  private String virtualHost;
   private int port;
 
   public String getHost() {
@@ -36,6 +37,14 @@ class MessageBrokerCredentials {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getVirtualHost() {
+    return this.virtualHost;
+  }
+
+  public void setVirtualHost(String virtualHost) {
+    this.virtualHost = virtualHost;
   }
 
   public int getPort() {
