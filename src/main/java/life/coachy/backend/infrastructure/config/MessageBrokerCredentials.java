@@ -5,7 +5,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:rabbitmq.properties")
 @ConfigurationProperties("spring.rabbitmq")
 class MessageBrokerCredentials {
 

@@ -6,8 +6,7 @@ springfox:
 spring:
   data:
     mongodb:
-      uri: mongodb://127.0.0.1:27017
-      database: coachy
+      uri: ${MONGODB_URI}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -21,11 +20,11 @@ spring:
       max-file-size: 3MB
       file-size-threshold: 3KB
   rabbitmq:
-    host: localhost
-    username: guest
-    password: guest
-    port: 61613
-    allowedOrigins: http://localhost:8080
+    host: ${MQ_HOST}
+    username: ${MQ_USERNAME}
+    password: ${MQ_PASSWORD}
+    port: ${MQ_PORT}
+    allowedOrigins: ${ALLOWED_ORIGINS}
 logging:
   level:
     org:
@@ -45,4 +44,4 @@ server:
       cookie:
         name: coachy-backend
 frontend:
-  uri: http://localhost:8080/#/
+  uri: ${FRONTEND_URI}
