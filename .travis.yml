@@ -15,3 +15,6 @@ script:
   - ./gradlew clean test jacocoTestReport coveralls
 after_success:
   - ./gradlew clean coveralls
+branches:
+  only:
+    - master
