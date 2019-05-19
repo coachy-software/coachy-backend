@@ -26,6 +26,8 @@ spring:
     password: guest
     port: 61613
     allowedOrigins: http://localhost:8080
+  profiles:
+    active: production
 logging:
   level:
     org:
