@@ -21,8 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Service
 class UploadService {
 
-  @Value("upload")
-  private Path uploadDirectoryPath;
+  @Value("upload") private Path uploadDirectoryPath;
 
   String store(MultipartFile file, String targetDirectory) throws IOException {
     Preconditions.checkNotNull(file, "Multipart file cannot be null!");
