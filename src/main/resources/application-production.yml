@@ -24,7 +24,6 @@ spring:
     username: ${MQ_USERNAME}
     password: ${MQ_PASSWORD}
     port: ${MQ_PORT}
-    allowedOrigins: ${ALLOWED_ORIGINS}
     virtual-host: ${MQ_VIRTUALHOST}
 logging:
   level:
@@ -44,5 +43,5 @@ server:
     session:
       cookie:
         name: coachy-backend
-frontend:
-  uri: ${FRONTEND_URI}
+frontend: http://www.coachy.life
+

@@ -14,7 +14,7 @@ public class EmailFacade {
   private final EmailSender emailSender;
   private final MessageSource messageSource;
 
-  @Value("${frontend.uri}")
+  @Value("${frontend}")
   private String frontendUri;
 
   @Autowired

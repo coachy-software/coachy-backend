@@ -1,6 +1,7 @@
 package life.coachy.backend.infrastructure.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -12,6 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
 
   private final MessageBrokerCredentials messageBrokerCredentials;
+  @Value("${frontend}") private String frontendUrl;
 
   @Autowired
   SocketBrokerConfiguration(MessageBrokerCredentials messageBrokerCredentials) {
@@ -21,7 +23,7 @@ class SocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
     registry.addEndpoint("/ws")
-        .setAllowedOrigins("http://www.coachy.life")
+        .setAllowedOrigins(this.frontendUrl)
         .withSockJS();
   }
 
