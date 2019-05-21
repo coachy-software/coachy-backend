@@ -70,6 +70,10 @@ class UploadEndpoint {
     Resource resource = this.uploadService.loadAsResource(fileName, layerName);
     String contentType = this.getContentType(request, resource);
 
+    if (!resource.exists()) {
+      return ResponseEntity.notFound().build();
+    }
+
     return ResponseEntity.ok()
         .contentType(MediaType.parseMediaType(contentType))
         .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
