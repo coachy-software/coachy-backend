@@ -1,6 +1,7 @@
 package life.coachy.backend.headway.domain.dto;
 
 import java.util.List;
+import java.util.Set;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -8,14 +9,7 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
 
   ObjectId identifier;
   ObjectId ownerId;
-  double neckMeasurement;
-  double armMeasurement;
-  double forearmMeasurement;
-  double wristMeasurement;
-  double chestMeasurement;
-  double waistMeasurement;
-  double thighMeasurement;
-  double calfMeasurement;
+  Set<Double> measurements;
   List<String> images;
 
   private HeadwayCreateCommandDtoBuilder() {}
@@ -34,43 +28,8 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
     return this;
   }
 
-  public HeadwayCreateCommandDtoBuilder withNeckMeasurement(double neckMeasurement) {
-    this.neckMeasurement = neckMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withArmMeasurement(double armMeasurement) {
-    this.armMeasurement = armMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withForearmMeasurement(double forearmMeasurement) {
-    this.forearmMeasurement = forearmMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withWristMeasurement(double wristMeasurement) {
-    this.wristMeasurement = wristMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withChestMeasurement(double chestMeasurement) {
-    this.chestMeasurement = chestMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withWaistMeasurement(double waistMeasurement) {
-    this.waistMeasurement = waistMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withThighMeasurement(double thighMeasurement) {
-    this.thighMeasurement = thighMeasurement;
-    return this;
-  }
-
-  public HeadwayCreateCommandDtoBuilder withCalfMeasurement(double calfMeasurement) {
-    this.calfMeasurement = calfMeasurement;
+  public HeadwayCreateCommandDtoBuilder withMeasurements(Set<Double> measurements) {
+    this.measurements = measurements;
     return this;
   }
 

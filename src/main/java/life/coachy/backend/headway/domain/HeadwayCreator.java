@@ -8,14 +8,7 @@ class HeadwayCreator {
     return HeadwayBuilder.create()
         .withIdentifier(dto.getIdentifier())
         .withOwnerId(dto.getOwnerId())
-        .withNeckMeasurement(dto.getNeckMeasurement())
-        .withArmMeasurement(dto.getArmMeasurement())
-        .withForearmMeasurement(dto.getForearmMeasurement())
-        .withWristMeasurement(dto.getWristMeasurement())
-        .withChestMeasurement(dto.getChestMeasurement())
-        .withWaistMeasurement(dto.getWaistMeasurement())
-        .withThighMeasurement(dto.getThighMeasurement())
-        .withCalfMeasurement(dto.getCalfMeasurement())
+        .withMeasurements(dto.getMeasurements())
         .withImages(dto.getImages())
         .build();
   }

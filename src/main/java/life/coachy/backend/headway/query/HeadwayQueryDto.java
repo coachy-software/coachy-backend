@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import org.bson.types.ObjectId;
@@ -16,14 +17,7 @@ public class HeadwayQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId ownerId;
-  private double neckMeasurement;
-  private double armMeasurement;
-  private double forearmMeasurement;
-  private double wristMeasurement;
-  private double chestMeasurement;
-  private double waistMeasurement;
-  private double thighMeasurement;
-  private double calfMeasurement;
+  private Set<Double> measurements;
   private List<String> images;
   @JsonSerialize(using = ToStringSerializer.class) @CreatedDate private LocalDateTime createdAt;
 
@@ -35,36 +29,8 @@ public class HeadwayQueryDto implements QueryDtoMarker {
     return this.ownerId;
   }
 
-  public double getNeckMeasurement() {
-    return this.neckMeasurement;
-  }
-
-  public double getArmMeasurement() {
-    return this.armMeasurement;
-  }
-
-  public double getForearmMeasurement() {
-    return this.forearmMeasurement;
-  }
-
-  public double getWristMeasurement() {
-    return this.wristMeasurement;
-  }
-
-  public double getChestMeasurement() {
-    return this.chestMeasurement;
-  }
-
-  public double getWaistMeasurement() {
-    return this.waistMeasurement;
-  }
-
-  public double getThighMeasurement() {
-    return this.thighMeasurement;
-  }
-
-  public double getCalfMeasurement() {
-    return this.calfMeasurement;
+  public Set<Double> getMeasurements() {
+    return this.measurements;
   }
 
   public List<String> getImages() {

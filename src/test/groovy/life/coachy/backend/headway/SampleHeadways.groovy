@@ -14,14 +14,7 @@ trait SampleHeadways {
   HeadwayCreateCommandDto sampleHeadwayCreateCommandDto = HeadwayCreateCommandDtoBuilder.create()
       .withIdentifier(sampleHeadwayId)
       .withOwnerId(sampleHeadwayId)
-      .withNeckMeasurement(30)
-      .withArmMeasurement(30)
-      .withForearmMeasurement(30)
-      .withWristMeasurement(30)
-      .withChestMeasurement(30)
-      .withWaistMeasurement(30)
-      .withThighMeasurement(30)
-      .withCalfMeasurement(30)
+      .withMeasurements(Collections.emptySet() as Set<Double>)
       .withImages(Lists.newArrayList("http://coachy.life/image1.png", "http://coachy.life/image2.png"))
       .build();
 
