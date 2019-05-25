@@ -18,7 +18,7 @@ trait SampleHeadways {
       .withOwnerId(sampleHeadwayId)
       .withType("BUILD")
       .withMeasurements(Sets.newHashSet(
-          MeasurementDtoBuilder.create().withId(ObjectId.get()).withName("test name").withValue(4).build()
+          MeasurementDtoBuilder.create().withId(ObjectId.get()).withName("test name").withValue("4").build()
       ))
       .withImages(Lists.newArrayList("http://coachy.life/image1.png", "http://coachy.life/image2.png"))
       .build();

@@ -7,7 +7,7 @@ public final class MeasurementDtoBuilder implements Buildable<MeasurementDto> {
 
   ObjectId id;
   String name;
-  double value;
+  String value;
 
   private MeasurementDtoBuilder() {}
 
@@ -25,7 +25,7 @@ public final class MeasurementDtoBuilder implements Buildable<MeasurementDto> {
     return this;
   }
 
-  public MeasurementDtoBuilder withValue(double value) {
+  public MeasurementDtoBuilder withValue(String value) {
     this.value = value;
     return this;
   }
