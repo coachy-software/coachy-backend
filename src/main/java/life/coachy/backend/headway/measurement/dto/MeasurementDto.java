@@ -10,6 +10,7 @@ public class MeasurementDto {
   @JsonSerialize(using = ToStringSerializer.class) @Id private ObjectId id;
   private String name;
   private String value;
+  private int reps;
 
   MeasurementDto() {}
 
@@ -17,6 +18,7 @@ public class MeasurementDto {
     this.id = builder.id;
     this.name = builder.name;
     this.value = builder.value;
+    this.reps = builder.reps;
   }
 
   public ObjectId getId() {
@@ -29,6 +31,10 @@ public class MeasurementDto {
 
   public String getValue() {
     return this.value;
+  }
+
+  public int getReps() {
+    return this.reps;
   }
 
 }
