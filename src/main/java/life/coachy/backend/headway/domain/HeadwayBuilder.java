@@ -12,6 +12,7 @@ final class HeadwayBuilder implements Buildable<Headway> {
   ObjectId identifier;
   ObjectId ownerId;
   Set<MeasurementDto> measurements;
+  HeadwayType type;
   List<String> images;
   LocalDateTime createdAt;
 
@@ -33,6 +34,11 @@ final class HeadwayBuilder implements Buildable<Headway> {
 
   HeadwayBuilder withMeasurements(Set<MeasurementDto> measurements) {
     this.measurements = measurements;
+    return this;
+  }
+
+  HeadwayBuilder withType(HeadwayType type) {
+    this.type = type;
     return this;
   }
 

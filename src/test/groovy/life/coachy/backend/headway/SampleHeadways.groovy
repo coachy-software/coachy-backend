@@ -16,6 +16,7 @@ trait SampleHeadways {
   HeadwayCreateCommandDto sampleHeadwayCreateCommandDto = HeadwayCreateCommandDtoBuilder.create()
       .withIdentifier(sampleHeadwayId)
       .withOwnerId(sampleHeadwayId)
+      .withType("BUILD")
       .withMeasurements(Sets.newHashSet(
           MeasurementDtoBuilder.create().withId(ObjectId.get()).withName("test name").withValue(4).build()
       ))

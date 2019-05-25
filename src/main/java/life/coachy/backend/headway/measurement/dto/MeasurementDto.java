@@ -11,6 +11,8 @@ public class MeasurementDto {
   private String name;
   private double value;
 
+  MeasurementDto() {}
+
   MeasurementDto(MeasurementDtoBuilder builder) {
     this.id = builder.id;
     this.name = builder.name;

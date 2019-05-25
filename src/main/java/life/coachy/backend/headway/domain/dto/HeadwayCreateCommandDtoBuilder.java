@@ -11,6 +11,7 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
   ObjectId identifier;
   ObjectId ownerId;
   Set<MeasurementDto> measurements;
+  String type;
   List<String> images;
 
   private HeadwayCreateCommandDtoBuilder() {}
@@ -31,6 +32,11 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
 
   public HeadwayCreateCommandDtoBuilder withMeasurements(Set<MeasurementDto> measurements) {
     this.measurements = measurements;
+    return this;
+  }
+
+  public HeadwayCreateCommandDtoBuilder withType(String type) {
+    this.type = type;
     return this;
   }
 

@@ -9,6 +9,7 @@ class HeadwayCreator {
         .withIdentifier(dto.getIdentifier())
         .withOwnerId(dto.getOwnerId())
         .withMeasurements(dto.getMeasurements())
+        .withType(HeadwayType.valueOf(dto.getType()))
         .withImages(dto.getImages())
         .build();
   }

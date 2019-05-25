@@ -17,6 +17,7 @@ class Headway {
   private ObjectId ownerId;
   private Set<MeasurementDto> measurements;
   private List<String> images;
+  private HeadwayType type;
   @CreatedDate private LocalDateTime createdAt;
 
   Headway() {}
@@ -26,6 +27,7 @@ class Headway {
     this.ownerId = builder.ownerId;
     this.measurements = builder.measurements;
     this.images = builder.images;
+    this.type = builder.type;
     this.createdAt = builder.createdAt;
   }
 

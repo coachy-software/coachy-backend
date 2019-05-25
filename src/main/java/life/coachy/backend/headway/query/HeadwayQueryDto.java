@@ -20,6 +20,7 @@ public class HeadwayQueryDto implements QueryDtoMarker {
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId ownerId;
   private Set<MeasurementDto> measurements;
   private List<String> images;
+  private String type;
   @JsonSerialize(using = ToStringSerializer.class) @CreatedDate private LocalDateTime createdAt;
 
   public ObjectId getIdentifier() {
@@ -36,6 +37,10 @@ public class HeadwayQueryDto implements QueryDtoMarker {
 
   public List<String> getImages() {
     return this.images;
+  }
+
+  public String getType() {
+    return this.type;
   }
 
   public LocalDateTime getCreatedAt() {

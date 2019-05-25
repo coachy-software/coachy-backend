@@ -10,6 +10,7 @@ public class HeadwayCreateCommandDto {
   private ObjectId identifier;
   private ObjectId ownerId;
   private Set<MeasurementDto> measurements;
+  private String type;
   private List<String> images;
 
   HeadwayCreateCommandDto() {}
@@ -18,6 +19,7 @@ public class HeadwayCreateCommandDto {
     this.identifier = builder.identifier;
     this.ownerId = builder.ownerId;
     this.measurements = builder.measurements;
+    this.type = builder.type;
     this.images = builder.images;
   }
 
@@ -31,6 +33,10 @@ public class HeadwayCreateCommandDto {
 
   public Set<MeasurementDto> getMeasurements() {
     return this.measurements;
+  }
+
+  public String getType() {
+    return this.type;
   }
 
   public List<String> getImages() {
