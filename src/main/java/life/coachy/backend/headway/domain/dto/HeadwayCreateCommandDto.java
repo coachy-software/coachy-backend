@@ -2,13 +2,14 @@ package life.coachy.backend.headway.domain.dto;
 
 import java.util.List;
 import java.util.Set;
+import life.coachy.backend.headway.measurement.dto.MeasurementDto;
 import org.bson.types.ObjectId;
 
 public class HeadwayCreateCommandDto {
 
   private ObjectId identifier;
   private ObjectId ownerId;
-  private Set<Double> measurements;
+  private Set<MeasurementDto> measurements;
   private List<String> images;
 
   HeadwayCreateCommandDto() {}
@@ -28,7 +29,7 @@ public class HeadwayCreateCommandDto {
     return this.ownerId;
   }
 
-  public Set<Double> getMeasurements() {
+  public Set<MeasurementDto> getMeasurements() {
     return this.measurements;
   }
 

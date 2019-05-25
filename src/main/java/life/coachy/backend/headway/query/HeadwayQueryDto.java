@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import life.coachy.backend.headway.measurement.dto.MeasurementDto;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import org.bson.types.ObjectId;
@@ -17,7 +18,7 @@ public class HeadwayQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId ownerId;
-  private Set<Double> measurements;
+  private Set<MeasurementDto> measurements;
   private List<String> images;
   @JsonSerialize(using = ToStringSerializer.class) @CreatedDate private LocalDateTime createdAt;
 
@@ -29,7 +30,7 @@ public class HeadwayQueryDto implements QueryDtoMarker {
     return this.ownerId;
   }
 
-  public Set<Double> getMeasurements() {
+  public Set<MeasurementDto> getMeasurements() {
     return this.measurements;
   }
 

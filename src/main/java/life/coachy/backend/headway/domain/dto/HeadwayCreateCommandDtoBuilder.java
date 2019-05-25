@@ -2,6 +2,7 @@ package life.coachy.backend.headway.domain.dto;
 
 import java.util.List;
 import java.util.Set;
+import life.coachy.backend.headway.measurement.dto.MeasurementDto;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -9,7 +10,7 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
 
   ObjectId identifier;
   ObjectId ownerId;
-  Set<Double> measurements;
+  Set<MeasurementDto> measurements;
   List<String> images;
 
   private HeadwayCreateCommandDtoBuilder() {}
@@ -28,7 +29,7 @@ public final class HeadwayCreateCommandDtoBuilder implements Buildable<HeadwayCr
     return this;
   }
 
-  public HeadwayCreateCommandDtoBuilder withMeasurements(Set<Double> measurements) {
+  public HeadwayCreateCommandDtoBuilder withMeasurements(Set<MeasurementDto> measurements) {
     this.measurements = measurements;
     return this;
   }

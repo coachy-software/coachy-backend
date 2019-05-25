@@ -3,6 +3,7 @@ package life.coachy.backend.headway.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import life.coachy.backend.headway.measurement.dto.MeasurementDto;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +15,7 @@ class Headway {
 
   @Id ObjectId identifier;
   private ObjectId ownerId;
-  private Set<Double> measurements;
+  private Set<MeasurementDto> measurements;
   private List<String> images;
   @CreatedDate private LocalDateTime createdAt;
 
