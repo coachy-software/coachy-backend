@@ -57,7 +57,7 @@ dependencies {
   compile('org.hibernate.validator:hibernate-validator:6.0.16.Final')
   compile('org.hibernate.validator:hibernate-validator-annotation-processor:6.0.16.Final')
   compile('commons-beanutils:commons-beanutils:1.9.3')
-  compile('org.springframework.boot:spring-boot-starter-mail:2.1.4.RELEASE')
+  compile('org.springframework.boot:spring-boot-starter-mail:2.1.5.RELEASE')
   compile('org.springframework.boot:spring-boot-starter-thymeleaf')
   compile('org.springframework.boot:spring-boot-starter-aop')
   compile('org.springframework.boot:spring-boot-starter-websocket')
