@@ -10,7 +10,7 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2')
+    classpath('org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3')
     classpath('gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10')
     classpath('net.ltgt.gradle:gradle-apt-plugin:0.21')
     classpath('com.google.guava:guava:18.0')
