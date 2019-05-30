@@ -1,5 +1,6 @@
 package life.coachy.backend.notification.domain;
 
+import life.coachy.backend.notification.query.NotificationQueryRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 class NotificationConfiguration {
 
   @Bean
-  NotificationFacade notificationFacade(NotificationService service) {
+NotificationFacade notificationFacade(NotificationQueryRepository queryRepository, NotificationRepository repository) {
     NotificationCreator notificationCreator = new NotificationCreator();
-    return new NotificationFacade(service, notificationCreator);
+    return new NotificationFacade(queryRepository, repository, notificationCreator);
   }
 
 }

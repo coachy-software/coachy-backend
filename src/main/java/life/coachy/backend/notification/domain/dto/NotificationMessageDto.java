@@ -2,7 +2,7 @@ package life.coachy.backend.notification.domain.dto;
 
 import org.bson.types.ObjectId;
 
-public class NotificationCreateCommandDto {
+public class NotificationMessageDto {
 
   private ObjectId senderId;
   private String senderName;
@@ -11,9 +11,9 @@ public class NotificationCreateCommandDto {
   private String content;
   private String type;
 
-  NotificationCreateCommandDto() {}
+  NotificationMessageDto() {}
 
-  NotificationCreateCommandDto(NotificationCreateCommandDtoBuilder builder) {
+  NotificationMessageDto(NotificationMessageDtoBuilder builder) {
     this.senderId = builder.senderId;
     this.senderName = builder.senderName;
     this.senderAvatar = builder.senderAvatar;

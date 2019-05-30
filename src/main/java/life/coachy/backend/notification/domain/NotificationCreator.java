@@ -1,10 +1,10 @@
 package life.coachy.backend.notification.domain;
 
-import life.coachy.backend.notification.domain.dto.NotificationCreateCommandDto;
+import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
 
 class NotificationCreator {
 
-  Notification from(NotificationCreateCommandDto dto) {
+  Notification from(NotificationMessageDto dto) {
     return NotificationBuilder.create()
         .withSenderId(dto.getSenderId())
         .withSenderName(dto.getSenderName())
