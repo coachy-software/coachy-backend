@@ -1,6 +1,7 @@
 package life.coachy.backend.notification.domain;
 
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
+import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder;
 import life.coachy.backend.notification.query.NotificationQueryDto;
 import life.coachy.backend.notification.query.NotificationQueryRepository;
 import life.coachy.backend.user.domain.UserFacade;
@@ -28,9 +29,16 @@ public class NotificationFacade {
     return this.queryRepository.findAllByRecipientIdOrderByCreatedAtDesc(id, pageable);
   }
 
-  public void sendNotification(NotificationMessageDto dto) {
+  public void sendNotificationToUser(NotificationMessageDto dto) {
     UserQueryDto userQueryDto = this.userFacade.fetchOne(dto.getRecipientId());
     this.sendingService.sendNotification(this.creator.from(dto), dto, userQueryDto);
+  }
+
+  public void sendNotificationToAllUsers(NotificationMessageDtoBuilder dtoBuilder) {
+    this.userFacade.fetchAll().forEach(userQueryDto -> {
+      dtoBuilder.withRecipientId(userQueryDto.getIdentifier());
+      this.sendNotificationToUser(dtoBuilder.build());
+    });
   }
 
 }

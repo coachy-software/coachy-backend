@@ -1,5 +1,6 @@
 package life.coachy.backend.user.domain;
 
+import java.util.List;
 import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
@@ -71,6 +72,10 @@ public class UserFacade {
 
   public UserQueryDto fetchOne(ObjectId id) {
     return this.crudService.fetchOne(id);
+  }
+
+  public List<UserQueryDto> fetchAll() {
+    return this.crudService.fetchAll();
   }
 
 }

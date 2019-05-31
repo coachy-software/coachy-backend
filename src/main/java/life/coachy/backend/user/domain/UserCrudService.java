@@ -1,5 +1,6 @@
 package life.coachy.backend.user.domain;
 
+import java.util.List;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryRepository;
@@ -17,6 +18,10 @@ class UserCrudService {
   UserCrudService(UserRepository userRepository, UserQueryRepository userQueryRepository) {
     this.userRepository = userRepository;
     this.userQueryRepository = userQueryRepository;
+  }
+
+  List<UserQueryDto> fetchAll() {
+    return this.userQueryRepository.findAll();
   }
 
   UserQueryDto fetchOne(ObjectId id) {
