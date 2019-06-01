@@ -41,5 +41,4 @@ class NotificationCommand {
     return "The message: " + dtoBuilder.build().getContent() + " has been sent to everyone.";
   }
 
-
 }
