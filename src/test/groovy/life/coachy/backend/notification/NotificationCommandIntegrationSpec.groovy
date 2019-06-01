@@ -17,7 +17,7 @@ class NotificationCommandIntegrationSpec extends IntegrationSpec {
     when: "user types command"
       Object result = this.shell.evaluate({ -> "send ${user.get("_id")} test".toString() })
     then:
-      result == "The message has been sent to: " + user.get("_id") + " with content: test"
+      "The message has been sent to: " + user.get("_id") + " with content: test" == result
   }
 
   def "'send' command should throw UserNotFoundException if user does not exist"() {
