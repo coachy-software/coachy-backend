@@ -13,11 +13,12 @@ class NotificationCommandIntegrationSpec extends IntegrationSpec {
 
   def "'send' command should send message if user exists"() {
     given: "we have one user in system"
-      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      ObjectId userId = ObjectId.get()
+      setUpUser(userId, "yang160", "password123", Collections.emptySet())
     when: "user types command"
-      Object result = this.shell.evaluate({ -> "send ${user.get("_id")} test".toString() })
+      Object result = this.shell.evaluate({ -> "send ${userId} test".toString() })
     then:
-      "The message has been sent to: ${user.get("_id")} with content: test".toString() == result
+      "The message has been sent to: ${userId} with content: test".toString() == result
   }
 
   def "'send' command should throw UserNotFoundException if user does not exist"() {
@@ -31,7 +32,7 @@ class NotificationCommandIntegrationSpec extends IntegrationSpec {
     when: "system sends a notification"
       def result = this.shell.evaluate({ -> "sendall test" })
     then:
-    "The message: test has been sent to everyone." == result
+      "The message: test has been sent to everyone." == result
   }
 
 }
