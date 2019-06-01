@@ -42,7 +42,7 @@ class NotificationEndpointIntegrationSpec extends IntegrationSpec {
     given: "we have one user and one notification in system "
       def userId = ObjectId.get();
       setUpUser(userId, "yang160", "password123", Collections.emptySet())
-      def notification = setUpNotification(userId)
+      setUpNotification(userId)
     when: "I go to /api/notifications/{recipiedId}"
       ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/notifications/{recipientId}", userId)
           .with(httpBasic("yang160", "password123")))
