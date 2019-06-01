@@ -131,6 +131,18 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.HEADWAYS)
   }
 
+  def setUpNotification(ObjectId recipientId) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", ObjectId.get())
+        this.put("content", "test content")
+        this.put("recipientId", recipientId)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.NOTIFICATIONS)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)

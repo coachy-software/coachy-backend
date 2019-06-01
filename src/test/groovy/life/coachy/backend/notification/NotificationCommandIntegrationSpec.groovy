@@ -7,7 +7,7 @@ import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.shell.Shell
 
-class NotificationCommandSpec extends IntegrationSpec {
+class NotificationCommandIntegrationSpec extends IntegrationSpec {
 
   @Autowired private Shell shell;
 
@@ -33,4 +33,5 @@ class NotificationCommandSpec extends IntegrationSpec {
     then:
     "The message: test has been sent to everyone." == result
   }
+
 }

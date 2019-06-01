@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(MongoCollections.NOTIFICATIONS)
 public class NotificationQueryDto implements QueryDtoMarker {
 
-  @Id private ObjectId identifier;
+  @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId senderId;
   private String senderName;
   private String senderAvatar;
