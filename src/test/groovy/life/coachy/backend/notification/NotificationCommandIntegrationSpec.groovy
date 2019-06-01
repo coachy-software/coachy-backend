@@ -11,16 +11,6 @@ class NotificationCommandIntegrationSpec extends IntegrationSpec {
 
   @Autowired private Shell shell;
 
-  def "'send' command should send message if user exists"() {
-    given: "we have one user in system"
-      ObjectId userId = ObjectId.get()
-      setUpUser(userId, "yang160", "password123", Collections.emptySet())
-    when: "user types command"
-      Object result = this.shell.evaluate({ -> "send ${userId} test".toString() })
-    then:
-      "The message has been sent to: ${userId} with content: test".toString() == result
-  }
-
   def "'send' command should throw UserNotFoundException if user does not exist"() {
     when: "user types command"
       def result = this.shell.evaluate({ -> "send ${ObjectId.get()} test".toString() })
