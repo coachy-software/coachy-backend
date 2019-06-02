@@ -1,5 +1,6 @@
 package life.coachy.backend.notification;
 
+import java.time.LocalDateTime;
 import life.coachy.backend.notification.domain.NotificationFacade;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder;
@@ -25,6 +26,7 @@ class NotificationCommand {
         .withSenderName("Coachy")
         .withContent(message)
         .withType("ALERT")
+        .withCreatedAt(LocalDateTime.now())
         .build();
 
     this.notificationFacade.sendNotificationToUser(dto);
@@ -36,7 +38,9 @@ class NotificationCommand {
     NotificationMessageDtoBuilder dtoBuilder = NotificationMessageDtoBuilder.create()
         .withSenderName("Coachy")
         .withContent(message)
+        .withCreatedAt(LocalDateTime.now())
         .withType("ALERT");
+
     this.notificationFacade.sendNotificationToAllUsers(dtoBuilder);
     return "The message: " + dtoBuilder.build().getContent() + " has been sent to everyone.";
   }

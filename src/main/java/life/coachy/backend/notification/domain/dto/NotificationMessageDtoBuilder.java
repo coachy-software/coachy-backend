@@ -1,5 +1,6 @@
 package life.coachy.backend.notification.domain.dto;
 
+import java.time.LocalDateTime;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -11,6 +12,7 @@ public final class NotificationMessageDtoBuilder implements Buildable<Notificati
   ObjectId recipientId;
   String content;
   String type;
+  LocalDateTime createdAt;
 
   private NotificationMessageDtoBuilder() {}
 
@@ -45,6 +47,11 @@ public final class NotificationMessageDtoBuilder implements Buildable<Notificati
 
   public NotificationMessageDtoBuilder withType(String type) {
     this.type = type;
+    return this;
+  }
+
+  public NotificationMessageDtoBuilder withCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
     return this;
   }
 

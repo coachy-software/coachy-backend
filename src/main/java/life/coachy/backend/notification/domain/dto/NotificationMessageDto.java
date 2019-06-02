@@ -1,15 +1,19 @@
 package life.coachy.backend.notification.domain.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.time.LocalDateTime;
 import org.bson.types.ObjectId;
 
 public class NotificationMessageDto {
 
-  private ObjectId senderId;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId senderId;
   private String senderName;
   private String senderAvatar;
-  private ObjectId recipientId;
+  @JsonSerialize(using = ToStringSerializer.class) private ObjectId recipientId;
   private String content;
   private String type;
+  @JsonSerialize(using = ToStringSerializer.class) private LocalDateTime createdAt;
 
   NotificationMessageDto() {}
 
@@ -20,6 +24,7 @@ public class NotificationMessageDto {
     this.recipientId = builder.recipientId;
     this.content = builder.content;
     this.type = builder.type;
+    this.createdAt = builder.createdAt;
   }
 
   public ObjectId getSenderId() {
@@ -44,6 +49,10 @@ public class NotificationMessageDto {
 
   public String getType() {
     return this.type;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
   }
 
 }
