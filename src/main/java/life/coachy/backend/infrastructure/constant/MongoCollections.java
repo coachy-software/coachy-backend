@@ -12,6 +12,7 @@ public final class MongoCollections {
   public static final String CONVERSATIONS = "conversations";
   public static final String HEADWAYS = "headways";
   public static final String NOTIFICATIONS = "notifications";
+  public static final String REQUESTS = "requests";
 
   private MongoCollections() {}
 
