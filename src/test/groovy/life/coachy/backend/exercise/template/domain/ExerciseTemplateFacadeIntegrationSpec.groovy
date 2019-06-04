@@ -16,7 +16,7 @@ class ExerciseTemplateFacadeIntegrationSpec extends IntegrationSpec {
       BasicDBObject exercise = setUpExerciseTemplate(ObjectId.get(), "test exercise template")
     when: "I go to /api/exercises/{id}"
       ExerciseTemplateQueryDto queryDto = facade.fetchOne(exercise.get("_id"))
-    then: "I see exercise template query dto"
+    then: "I see exercise template query exception"
       queryDto.name == "test exercise template"
       queryDto.identifier == exercise.get("_id")
   }

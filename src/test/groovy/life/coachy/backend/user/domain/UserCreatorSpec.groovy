@@ -19,7 +19,7 @@ class UserCreatorSpec extends Specification {
           .withAccountType(AccountTypeDto.CHARGE)
           .withMatchingPassword("password123")
           .build();
-    when: "map user dto to user entity"
+    when: "map user exception to user entity"
       User user = new UserCreator(passwordEncoder).from(dto);
     then:
       user != null

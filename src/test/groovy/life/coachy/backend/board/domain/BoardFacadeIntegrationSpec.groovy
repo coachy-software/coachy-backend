@@ -44,7 +44,7 @@ class BoardFacadeIntegrationSpec extends IntegrationSpec implements SampleBoards
       BasicDBObject board = setUpBoard(ObjectId.get(), "test name", ObjectId.get())
     when: "user tries to get board details"
       BoardQueryDto queryDto = facade.fetchOne(board.get("_id"))
-    then: "I see board query dto"
+    then: "I see board query exception"
       queryDto.name == "test name"
       queryDto.identifier == board.get("_id")
   }

@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 final class RequestBuilder implements Buildable<Request> {
 
   ObjectId identifier;
+  ObjectId requesterId;
   String token;
   long version;
   LocalDateTime createdAt;
@@ -24,6 +25,11 @@ final class RequestBuilder implements Buildable<Request> {
 
   public RequestBuilder withToken(String token) {
     this.token = token;
+    return this;
+  }
+
+  public RequestBuilder withRequesterId(ObjectId requesterId) {
+    this.requesterId = requesterId;
     return this;
   }
 

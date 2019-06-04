@@ -14,6 +14,7 @@ class Request {
 
   @Id private ObjectId identifier;
   private String token;
+  private ObjectId requesterId;
   @Version private long version;
   @Indexed(expireAfterSeconds = 10800) @CreatedDate private LocalDateTime createdAt;
 
@@ -22,6 +23,7 @@ class Request {
   Request(RequestBuilder builder) {
     this.identifier = builder.identifier;
     this.token = builder.token;
+    this.requesterId = builder.requesterId;
     this.version = builder.version;
     this.createdAt = builder.createdAt;
   }

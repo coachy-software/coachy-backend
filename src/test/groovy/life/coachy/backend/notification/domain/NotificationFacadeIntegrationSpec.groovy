@@ -12,7 +12,7 @@ class NotificationFacadeIntegrationSpec extends IntegrationSpec {
   @Autowired private NotificationFacade notificationFacade;
 
   def "'sendNotificationToUser' method should throw UserNotFoundException if specified recipientId does not belong to any user"() {
-    given: "notification dto"
+    given: "notification exception"
       NotificationMessageDto dto = NotificationMessageDtoBuilder.create()
           .withRecipientId(ObjectId.get())
           .build()

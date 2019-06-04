@@ -16,7 +16,7 @@ class BoardCreatorSpec extends Specification {
               new TaskDto(ObjectId.get(), "test name", "#2b2b2b", "test content"),
               new TaskDto(ObjectId.get(), "test name 2", "#2b2b2b", "test content")
           ))))), ObjectId.get())
-    when: "map schedule dto to schedule entity"
+    when: "map schedule exception to schedule entity"
       Board board = new BoardCreator().from(dto);
     then:
       board != null

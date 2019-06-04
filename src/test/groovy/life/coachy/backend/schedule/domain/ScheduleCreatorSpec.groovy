@@ -24,7 +24,7 @@ class ScheduleCreatorSpec extends Specification {
               new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build())), true)
           )))
           .build()
-    when: "map schedule dto to schedule entity"
+    when: "map schedule exception to schedule entity"
       Schedule schedule = new ScheduleCreator().from(dto);
     then:
       schedule != null
@@ -40,7 +40,7 @@ class ScheduleCreatorSpec extends Specification {
               new ScheduleDayDto("Monday", Sets.newLinkedHashSet(Sets.newHashSet(ExerciseDtoBuilder.create().withName("Flexing").build())), true)
           )))
           .build()
-    when: "map schedule dto to schedule entity"
+    when: "map schedule exception to schedule entity"
       Schedule schedule = new ScheduleCreator().from(dto);
     then:
       schedule != null
