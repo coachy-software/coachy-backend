@@ -91,7 +91,7 @@ test {
 }
 
 class ContinuousIntegrationTest extends Test {
-  MyTestType() {
+  ContinuousIntegrationTest() {
     systemProperty 'spring.profiles.active', 'ci'
   }
 }
