@@ -20,7 +20,6 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 
-  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
   def "positive schedule update scenario"() {
     given: "we have one schedule and one user in system"
       ObjectId scheduleId = ObjectId.get();
@@ -56,6 +55,7 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
       updateEndpoint.andExpect(status().isUnauthorized())
   }
 
+  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
   def "positive create scenario"() {
     given: "we have one user in system"
       setUpUser(id, "yang160", "password123", Collections.emptySet())
