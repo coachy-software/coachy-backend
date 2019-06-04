@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 
 final class UserBuilder implements Buildable<User> {
 
-  ObjectId identifier;
   String username;
   String displayName;
   String password;
@@ -15,7 +14,6 @@ final class UserBuilder implements Buildable<User> {
   AccountType accountType;
   Set<String> roles;
   Set<String> permissions;
-  ObjectId boardId;
 
   private UserBuilder() {}
 
@@ -23,53 +21,43 @@ final class UserBuilder implements Buildable<User> {
     return new UserBuilder();
   }
 
-  public UserBuilder withIdentifier(ObjectId identifier) {
-    this.identifier = identifier;
-    return this;
-  }
-
-  public UserBuilder withUsername(String username) {
+  UserBuilder withUsername(String username) {
     this.username = username;
     return this;
   }
 
-  public UserBuilder withDisplayName(String displayName) {
+  UserBuilder withDisplayName(String displayName) {
     this.displayName = displayName;
     return this;
   }
 
-  public UserBuilder withPassword(String password) {
+  UserBuilder withPassword(String password) {
     this.password = password;
     return this;
   }
 
-  public UserBuilder withEmail(String email) {
+  UserBuilder withEmail(String email) {
     this.email = email;
     return this;
   }
 
-  public UserBuilder withAvatar(String avatar) {
+  UserBuilder withAvatar(String avatar) {
     this.avatar = avatar;
     return this;
   }
 
-  public UserBuilder withAccountType(AccountType accountType) {
+  UserBuilder withAccountType(AccountType accountType) {
     this.accountType = accountType;
     return this;
   }
 
-  public UserBuilder withRoles(Set<String> roles) {
+  UserBuilder withRoles(Set<String> roles) {
     this.roles = roles;
     return this;
   }
 
-  public UserBuilder withPermissions(Set<String> permissions) {
+  UserBuilder withPermissions(Set<String> permissions) {
     this.permissions = permissions;
-    return this;
-  }
-
-  public UserBuilder withBoardIdentifier(ObjectId boardIdentifier) {
-    this.boardId = boardIdentifier;
     return this;
   }
 

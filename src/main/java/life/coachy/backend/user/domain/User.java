@@ -23,7 +23,6 @@ class User {
   User() {}
 
   User(UserBuilder builder) {
-    this.identifier = builder.identifier;
     this.username = builder.username;
     this.displayName = builder.displayName;
     this.password = builder.password;
@@ -32,7 +31,6 @@ class User {
     this.accountType = builder.accountType;
     this.roles = builder.roles;
     this.permissions = builder.permissions;
-    this.boardId = builder.boardId;
   }
 
   public static UserBuilder builder() {

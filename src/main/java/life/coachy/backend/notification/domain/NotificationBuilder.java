@@ -5,7 +5,6 @@ import org.bson.types.ObjectId;
 
 final class NotificationBuilder implements Buildable<Notification> {
 
-  ObjectId identifier;
   ObjectId senderId;
   String senderName;
   String senderAvatar;
@@ -19,37 +18,32 @@ final class NotificationBuilder implements Buildable<Notification> {
     return new NotificationBuilder();
   }
 
-  public NotificationBuilder withIdentifier(ObjectId identifier) {
-    this.identifier = identifier;
-    return this;
-  }
-
-  public NotificationBuilder withSenderId(ObjectId senderId) {
+  NotificationBuilder withSenderId(ObjectId senderId) {
     this.senderId = senderId;
     return this;
   }
 
-  public NotificationBuilder withSenderName(String senderName) {
+  NotificationBuilder withSenderName(String senderName) {
     this.senderName = senderName;
     return this;
   }
 
-  public NotificationBuilder withSenderAvatar(String senderAvatar) {
+  NotificationBuilder withSenderAvatar(String senderAvatar) {
     this.senderAvatar = senderAvatar;
     return this;
   }
 
-  public NotificationBuilder withRecipientId(ObjectId recipientId) {
+  NotificationBuilder withRecipientId(ObjectId recipientId) {
     this.recipientId = recipientId;
     return this;
   }
 
-  public NotificationBuilder withContent(String content) {
+  NotificationBuilder withContent(String content) {
     this.content = content;
     return this;
   }
 
-  public NotificationBuilder withType(NotificationType type) {
+  NotificationBuilder withType(NotificationType type) {
     this.type = type;
     return this;
   }

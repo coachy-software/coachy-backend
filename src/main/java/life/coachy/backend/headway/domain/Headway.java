@@ -28,7 +28,6 @@ class Headway {
     this.measurements = builder.measurements;
     this.images = builder.images;
     this.type = builder.type;
-    this.createdAt = builder.createdAt;
   }
 
 }

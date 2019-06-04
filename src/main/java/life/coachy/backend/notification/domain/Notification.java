@@ -22,7 +22,6 @@ class Notification {
   Notification() {}
 
   Notification(NotificationBuilder builder) {
-    this.identifier = builder.identifier;
     this.senderId = builder.senderId;
     this.senderName = builder.senderName;
     this.senderAvatar = builder.senderAvatar;

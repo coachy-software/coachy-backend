@@ -18,11 +18,6 @@ final class BoardBuilder implements Buildable<Board> {
     return new BoardBuilder();
   }
 
-  public BoardBuilder withIdentifier(ObjectId identifier) {
-    this.identifier = identifier;
-    return this;
-  }
-
   public BoardBuilder withName(String name) {
     this.name = name;
     return this;

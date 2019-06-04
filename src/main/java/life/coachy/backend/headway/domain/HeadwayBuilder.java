@@ -1,6 +1,5 @@
 package life.coachy.backend.headway.domain;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import life.coachy.backend.headway.measurement.dto.MeasurementDto;
@@ -14,7 +13,6 @@ final class HeadwayBuilder implements Buildable<Headway> {
   Set<MeasurementDto> measurements;
   HeadwayType type;
   List<String> images;
-  LocalDateTime createdAt;
 
   private HeadwayBuilder() {}
 
@@ -44,11 +42,6 @@ final class HeadwayBuilder implements Buildable<Headway> {
 
   HeadwayBuilder withImages(List<String> images) {
     this.images = images;
-    return this;
-  }
-
-  HeadwayBuilder withCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
     return this;
   }
 

@@ -21,11 +21,8 @@ class Request {
   Request() {}
 
   Request(RequestBuilder builder) {
-    this.identifier = builder.identifier;
     this.token = builder.token;
     this.requesterId = builder.requesterId;
-    this.version = builder.version;
-    this.createdAt = builder.createdAt;
   }
 
 }

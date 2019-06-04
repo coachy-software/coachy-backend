@@ -19,8 +19,6 @@ class PasswordReset {
   PasswordReset(PasswordResetBuilder builder) {
     this.email = builder.email;
     this.token = builder.token;
-    this.version = builder.version;
-    this.createdAt = builder.createdAt;
   }
 
   PasswordReset() {}
