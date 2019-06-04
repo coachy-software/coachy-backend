@@ -3,6 +3,7 @@ package life.coachy.backend.base
 import com.google.common.collect.Lists
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
+import com.mongodb.Mongo
 import groovy.transform.TypeChecked
 import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.infrastructure.constant.Profiles
@@ -143,6 +144,18 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.NOTIFICATIONS)
   }
 
+  def setUpRequest(ObjectId requesterId) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", ObjectId.get())
+        this.put("token", "1234567890")
+        this.put("requesterId", requesterId)
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.REQUESTS)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)
@@ -152,6 +165,8 @@ class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.CONVERSATIONS)
     mongoTemplate.dropCollection(MongoCollections.MESSAGES)
     mongoTemplate.dropCollection(MongoCollections.HEADWAYS)
+    mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
+    mongoTemplate.dropCollection(MongoCollections.REQUESTS)
   }
 
 }
