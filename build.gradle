@@ -84,6 +84,14 @@ querydsl {
   springDataMongo = true
 }
 
+task ciTest(type: ContinuousIntegrationTest) {}
+
 test {
   workingDir = new File("$buildDir/resources")
+}
+
+class ContinuousIntegrationTest extends Test {
+  MyTestType() {
+    systemProperty 'spring.profiles.active', 'ci'
+  }
 }
