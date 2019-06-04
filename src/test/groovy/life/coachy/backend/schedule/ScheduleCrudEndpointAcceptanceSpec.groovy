@@ -6,6 +6,7 @@ import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
@@ -18,6 +19,7 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 
+  @Profile("!ci")
   def "positive schedule update scenario"() {
     given: "we have one schedule and one user in system"
       ObjectId scheduleId = ObjectId.get();
