@@ -12,7 +12,7 @@ before_install:
 install:
   - ./gradlew clean compileJava
 script:
-  - ./gradlew clean ciTest jacocoTestReport coveralls
+  - ./gradlew clean ciTest jacocoTestReport coveralls -Dspring.profiles.active=ci
 after_success:
   - ./gradlew clean coveralls
 branches:
