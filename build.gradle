@@ -88,10 +88,11 @@ task ciTest(type: ContinuousIntegrationTest) {}
 
 test {
   workingDir = new File("$buildDir/resources")
+  systemProperty "spring.profiles.active", "nonCI"
 }
 
 class ContinuousIntegrationTest extends Test {
   ContinuousIntegrationTest() {
-    systemProperty 'spring.profiles.active', 'ci'
+    systemProperty "spring.profiles.active", "test"
   }
 }

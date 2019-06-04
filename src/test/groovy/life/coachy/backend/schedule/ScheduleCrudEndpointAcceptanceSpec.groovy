@@ -8,6 +8,7 @@ import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.http.MediaType
+import org.springframework.test.annotation.IfProfileValue
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.is
@@ -19,7 +20,7 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
 
   @Autowired ObjectToJsonConverter objectToJsonConverter
 
-  @Profile("!ci")
+  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
   def "positive schedule update scenario"() {
     given: "we have one schedule and one user in system"
       ObjectId scheduleId = ObjectId.get();

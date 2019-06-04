@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.test.annotation.IfProfileValue
 
 class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSchedules {
 
   @Autowired ScheduleFacade scheduleFacade;
 
-  @Profile("!ci")
+  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
   def "method 'create' should create a schedule"() {
     given: "we have one user in system"
       setUpUser(sampleCreateDto.getCreator(), "yang160", "password123", Collections.emptySet())
