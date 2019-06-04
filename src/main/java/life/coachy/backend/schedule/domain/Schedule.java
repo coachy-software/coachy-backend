@@ -22,19 +22,18 @@ class Schedule {
   @LastModifiedDate private LocalDateTime updatedAt;
   private boolean active;
   private LinkedHashSet<ScheduleDayDto> days;
+  private boolean accepted;
 
   Schedule() {}
 
   Schedule(ScheduleBuilder builder) {
-    this.identifier = builder.identifier;
     this.name = builder.name;
     this.creator = builder.creator;
     this.charge = builder.charge;
     this.note = builder.note;
-    this.createdAt = builder.createdAt;
-    this.updatedAt = builder.updatedAt;
     this.active = builder.active;
     this.days = builder.days;
+    this.accepted = builder.accepted;
   }
 
   public static ScheduleBuilder builder() {
@@ -59,6 +58,10 @@ class Schedule {
 
   void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public void setAccepted(boolean accepted) {
+    this.accepted = accepted;
   }
 
 }

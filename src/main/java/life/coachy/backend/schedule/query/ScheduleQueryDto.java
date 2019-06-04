@@ -28,6 +28,7 @@ public class ScheduleQueryDto implements QueryDtoMarker {
   @JsonSerialize(using = ToStringSerializer.class) @LastModifiedDate private LocalDateTime updatedAt;
   private boolean active;
   @JsonView(View.Default.class) private Set<ScheduleDayDto> days;
+  private boolean accepted;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -65,16 +66,13 @@ public class ScheduleQueryDto implements QueryDtoMarker {
     return this.days;
   }
 
+  public boolean isAccepted() {
+    return this.accepted;
+  }
+
   public static class View {
-
-    public interface Global {
-
-    }
-
-    public interface Default {
-
-    }
-
+    public interface Global {}
+    public interface Default {}
   }
 
 }

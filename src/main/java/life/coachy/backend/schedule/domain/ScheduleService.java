@@ -39,7 +39,9 @@ class ScheduleService {
   }
 
   void givePermissions(UserFacade userFacade, Schedule schedule, ScheduleCreateCommandDto dto) {
-    userFacade.givePermissions(dto.getCharge(), "schedule." + schedule.identifier + ".read");
+    userFacade.givePermissions(dto.getCharge(),
+        "schedule." + schedule.identifier + ".read",
+        "schedule." + schedule.identifier + ".accept");
     userFacade.givePermissions(dto.getCreator(),
         "schedule." + schedule.identifier + ".read",
         "schedule." + schedule.identifier + ".update",
@@ -57,6 +59,16 @@ class ScheduleService {
 
       this.scheduleRepository.save(schedule);
     });
+  }
+
+  void accept(ScheduleQueryDto dto, Schedule schedule) {
+    schedule.setIdentifier(dto.getIdentifier());
+    schedule.setCreatedAt(dto.getCreatedAt());
+
+    schedule.setUpdatedAt(dto.getUpdatedAt());
+    schedule.setAccepted(true);
+
+    this.scheduleRepository.save(schedule);
   }
 
   private void ifExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {
