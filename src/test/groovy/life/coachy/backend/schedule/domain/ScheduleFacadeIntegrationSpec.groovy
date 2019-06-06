@@ -3,12 +3,10 @@ package life.coachy.backend.schedule.domain
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
-import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.schedule.SampleSchedules
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.test.annotation.IfProfileValue

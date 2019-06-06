@@ -67,10 +67,10 @@ public class ScheduleFacade {
   }
 
   public void acceptSchedule(ObjectId id, String token) {
+    this.requestFacade.invalidateToken(token, () -> "");
+
     ScheduleQueryDto queryDto = this.service.fetchOne(id);
     this.service.accept(queryDto, this.creator.from(queryDto));
-
-    this.requestFacade.invalidateToken(token, () -> "");
   }
 
   private void sendAcknowledgeRequestNotification(ObjectId senderId, ObjectId recipientId, String requestToken) {
