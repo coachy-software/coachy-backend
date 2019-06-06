@@ -3,6 +3,7 @@ package life.coachy.backend.schedule.domain
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.schedule.SampleSchedules
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException
 import org.bson.types.ObjectId
@@ -15,7 +16,7 @@ class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSch
 
   @Autowired ScheduleFacade scheduleFacade;
 
-  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
+  @UncompilableByCI
   def "method 'create' should create a schedule"() {
     given: "we have one user in system"
       setUpUser(sampleCreateDto.getCreator(), "yang160", "password123", Collections.emptySet())

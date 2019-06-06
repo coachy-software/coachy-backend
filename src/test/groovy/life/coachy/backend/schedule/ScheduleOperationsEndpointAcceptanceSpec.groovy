@@ -2,6 +2,7 @@ package life.coachy.backend.schedule
 
 import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import org.json.JSONArray
 import org.json.JSONObject
@@ -20,7 +21,7 @@ class ScheduleOperationsEndpointAcceptanceSpec extends IntegrationSpec implement
 
   @Autowired ObjectToJsonConverter jsonConverter;
 
-  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
+  @UncompilableByCI
   def "'accept' endpoint positive scenario"() {
     given: "I have one user in system"
       setUpUser(sampleCreateDto.getCharge(), "yang160", "password123", Sets.newHashSet("user.${sampleCreateDto.getCharge()}.read"))
@@ -55,7 +56,7 @@ class ScheduleOperationsEndpointAcceptanceSpec extends IntegrationSpec implement
       acceptEndpoint.andExpect(status().isOk())
   }
 
-  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
+  @UncompilableByCI
   def "'accept' endpoint negative scenario"() {
     given: "I have one user in system"
       setUpUser(sampleCreateDto.getCharge(), "yang160", "password123", Sets.newHashSet("user.${sampleCreateDto.getCharge()}.read"))

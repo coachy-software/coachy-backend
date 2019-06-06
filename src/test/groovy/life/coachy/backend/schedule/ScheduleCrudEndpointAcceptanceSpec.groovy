@@ -3,12 +3,11 @@ package life.coachy.backend.schedule
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
 import org.springframework.http.MediaType
-import org.springframework.test.annotation.IfProfileValue
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.hamcrest.Matchers.is
@@ -55,7 +54,7 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
       updateEndpoint.andExpect(status().isUnauthorized())
   }
 
-  @IfProfileValue(name = "spring.profiles.active", value = "nonCI")
+  @UncompilableByCI
   def "positive create scenario"() {
     given: "we have one user in system"
       setUpUser(id, "yang160", "password123", Collections.emptySet())
@@ -92,13 +91,17 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
       setUpUser(id, "yang160", "password123", Sets.newHashSet("schedule.${schedule.get("_id")}.read"))
     when: "I go to /api/schedules"
       ResultActions schedulesEndpoint = mockMvc.perform(get("/api/schedules")
-      .with(httpBasic("yang160", "password123")))
+          .with(httpBasic("yang160", "password123")))
     then:
       schedulesEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${schedule.get("creator")}"},
-              {"identifier": "${secondSchedule.get("_id")}", "name": "${secondSchedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${secondSchedule.get("creator")}"}
+              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${
+            schedule.get("creator")
+          }"},
+              {"identifier": "${secondSchedule.get("_id")}", "name": "${secondSchedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${
+            secondSchedule.get("creator")
+          }"}
             ]
           """))
     when: "I go to /api/schedules/{id}"
@@ -107,7 +110,9 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
     then:
       scheduleEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
-            {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${schedule.get("creator")}"}
+            {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${
+            schedule.get("creator")
+          }"}
           """))
     when: "I go to /api/schedules?page=0&size=1"
       ResultActions paginationEndpoint = mockMvc.perform(get("/api/schedules?page=0&size=1")
@@ -116,7 +121,9 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
       paginationEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${schedule.get("creator")}"}
+              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${
+            schedule.get("creator")
+          }"}
             ]
           """))
     when: "I go to /api/schedules?name=test%20schedule"
@@ -127,9 +134,11 @@ class ScheduleCrudEndpointAcceptanceSpec extends IntegrationSpec implements Samp
       searchEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${schedule.get("creator")}"}
+              {"identifier": "${schedule.get("_id")}", "name": "${schedule.get("name")}", "charge": "${schedule.get("charge")}", "creator": "${
+            schedule.get("creator")
+          }"}
             ]
           """))
-    }
+  }
 
 }
