@@ -14,13 +14,14 @@ class RequestService {
     this.repository = repository;
   }
 
-  void createRequest(String token, ObjectId requesterId) {
+  String createRequest(String token, ObjectId requesterId) {
     Request request = RequestBuilder.create()
         .withToken(token)
         .withRequesterId(requesterId)
         .build();
 
     this.repository.save(request);
+    return token;
   }
 
   void deleteRequestByToken(String token) {

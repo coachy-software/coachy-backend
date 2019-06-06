@@ -31,8 +31,9 @@ public class RequestFacade {
     throw new RequestNotFoundException();
   }
 
-  public void createToken(ObjectId requesterId) {
-    this.userFacade.ifExists(requesterId, () -> this.requestService.createRequest(this.tokenGenerator.makeToken(), requesterId));
+  public String createToken(ObjectId requesterId) {
+    this.userFacade.ifExists(requesterId);
+    return this.requestService.createRequest(this.tokenGenerator.makeToken(), requesterId);
   }
 
   public RequestQueryDto fetchToken(String token) {
