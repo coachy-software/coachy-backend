@@ -13,4 +13,6 @@ public interface NotificationQueryRepository extends QueryFetchOneRepository<Not
 
   Set<NotificationQueryDto> findAllByRecipientId(ObjectId recipientId);
 
+  boolean existsAllByReadIsFalse();
+
 }

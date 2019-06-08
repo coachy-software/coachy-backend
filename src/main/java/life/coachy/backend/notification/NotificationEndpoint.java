@@ -2,6 +2,8 @@ package life.coachy.backend.notification;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.Collections;
+import java.util.Map;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
@@ -15,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,17 +36,26 @@ class NotificationEndpoint {
   @RequiresPermissions("user.{id}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}")
-  Page<NotificationQueryDto> fetchAllByRecipientId(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId, @PageableDefault(size = 5) Pageable pageable) {
+  Page<NotificationQueryDto> fetchAllByRecipientId(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId,
+      @PageableDefault(size = 5) Pageable pageable) {
     return this.notificationFacade.fetchAllByRecipientId(recipientId, pageable);
   }
 
   @ApiOperation("Marks all notifications belonging to specified user as read")
   @RequiresPermissions("user.{id}.read")
   @RequiresAuthenticated
-  @GetMapping("{recipientId}/mark-as-read")
+  @PostMapping("{recipientId}/mark-as-read")
   ResponseEntity<?> markAllAsRead(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
     this.notificationFacade.markAllAsRead(recipientId);
     return ResponseEntity.ok().build();
+  }
+
+  @ApiOperation("Returns true/false if user has or has not any unread notification")
+  @RequiresPermissions("user.{id}.read")
+  @RequiresAuthenticated
+  @GetMapping("{recipientId}/has-unread")
+  ResponseEntity<Map<String, Boolean>> hasAnyUnread(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
+    return ResponseEntity.ok(Collections.singletonMap("hasUnread", this.notificationFacade.hasAnyUnread(recipientId)));
   }
 
 }

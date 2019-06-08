@@ -46,4 +46,9 @@ public class NotificationFacade {
     this.queryRepository.findAllByRecipientId(recipientId).forEach((queryDto) -> this.sendingService.markAsRead(this.creator.from(queryDto), queryDto));
   }
 
+  public boolean hasAnyUnread(ObjectId recipientId) {
+    this.userFacade.ifExists(recipientId);
+    return this.queryRepository.existsAllByReadIsFalse();
+  }
+
 }
