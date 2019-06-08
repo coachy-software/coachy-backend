@@ -138,6 +138,8 @@ class IntegrationSpec extends Specification {
         this.put("_id", ObjectId.get())
         this.put("content", "test content")
         this.put("recipientId", recipientId)
+        this.put("type", "ALERT")
+        this.put("read", false)
       }
     }
 

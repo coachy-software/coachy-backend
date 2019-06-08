@@ -48,7 +48,7 @@ public class NotificationFacade {
 
   public boolean hasAnyUnread(ObjectId recipientId) {
     this.userFacade.ifExists(recipientId);
-    return this.queryRepository.existsAllByReadIsFalse();
+    return this.queryRepository.existsByRecipientIdAndReadIsFalse(recipientId);
   }
 
 }
