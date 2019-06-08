@@ -41,4 +41,9 @@ public class NotificationFacade {
     });
   }
 
+  public void markAllAsRead(ObjectId recipientId) {
+    this.userFacade.ifExists(recipientId);
+    this.queryRepository.findAllByRecipientId(recipientId).forEach((queryDto) -> this.sendingService.markAsRead(this.creator.from(queryDto), queryDto));
+  }
+
 }

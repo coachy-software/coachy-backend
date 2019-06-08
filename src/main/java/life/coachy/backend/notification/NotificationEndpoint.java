@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,15 @@ class NotificationEndpoint {
   @GetMapping("{recipientId}")
   Page<NotificationQueryDto> fetchAllByRecipientId(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId, @PageableDefault(size = 5) Pageable pageable) {
     return this.notificationFacade.fetchAllByRecipientId(recipientId, pageable);
+  }
+
+  @ApiOperation("Marks all notifications belonging to specified user as read")
+  @RequiresPermissions("user.{id}.read")
+  @RequiresAuthenticated
+  @GetMapping("{recipientId}/mark-as-read")
+  ResponseEntity<?> markAllAsRead(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
+    this.notificationFacade.markAllAsRead(recipientId);
+    return ResponseEntity.ok().build();
   }
 
 }

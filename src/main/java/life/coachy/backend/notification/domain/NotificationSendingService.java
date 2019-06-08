@@ -1,7 +1,9 @@
 package life.coachy.backend.notification.domain;
 
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
+import life.coachy.backend.notification.query.NotificationQueryDto;
 import life.coachy.backend.user.query.UserQueryDto;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,14 @@ class NotificationSendingService {
 
   void sendNotification(Notification notification, NotificationMessageDto dto, UserQueryDto recipientUserQueryDto) {
     this.simpMessagingTemplate.convertAndSendToUser(recipientUserQueryDto.getUsername(), "/queue/notifications", dto);
+    this.save(notification);
+  }
+
+  void markAsRead(Notification notification, NotificationQueryDto dto) {
+    notification.setRead(true);
+    notification.setCreatedAt(dto.getCreatedAt());
+
+    notification.setIdentifier(dto.getIdentifier());
     this.save(notification);
   }
 

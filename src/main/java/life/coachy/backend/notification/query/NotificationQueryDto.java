@@ -20,6 +20,7 @@ public class NotificationQueryDto implements QueryDtoMarker {
   private String content;
   private String type;
   @JsonSerialize(using = ToStringSerializer.class) private LocalDateTime createdAt;
+  private boolean read;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -47,6 +48,14 @@ public class NotificationQueryDto implements QueryDtoMarker {
 
   public String getType() {
     return this.type;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  public boolean isRead() {
+    return this.read;
   }
 
 }

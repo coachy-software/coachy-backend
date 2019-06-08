@@ -18,6 +18,7 @@ class Notification {
   private String content;
   private NotificationType type;
   @CreatedDate private LocalDateTime createdAt;
+  private boolean read;
 
   Notification() {}
 
@@ -28,6 +29,19 @@ class Notification {
     this.recipientId = builder.recipientId;
     this.content = builder.content;
     this.type = builder.type;
+    this.read = false;
+  }
+
+  public void setRead(boolean read) {
+    this.read = read;
+  }
+
+  public void setIdentifier(ObjectId identifier) {
+    this.identifier = identifier;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
 }
