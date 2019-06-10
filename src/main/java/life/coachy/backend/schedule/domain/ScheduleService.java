@@ -1,6 +1,10 @@
 package life.coachy.backend.schedule.domain;
 
+import com.google.common.collect.Maps;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
+import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException;
 import life.coachy.backend.schedule.query.ScheduleQueryDto;
@@ -15,11 +19,13 @@ class ScheduleService {
 
   private final ScheduleQueryRepository queryDtoRepository;
   private final ScheduleRepository scheduleRepository;
+  private final ObjectToJsonConverter toJsonConverter;
 
   @Autowired
-  public ScheduleService(ScheduleQueryRepository queryDtoRepository, ScheduleRepository scheduleRepository) {
+  ScheduleService(ScheduleQueryRepository queryDtoRepository, ScheduleRepository scheduleRepository, ObjectToJsonConverter toJsonConverter) {
     this.queryDtoRepository = queryDtoRepository;
     this.scheduleRepository = scheduleRepository;
+    this.toJsonConverter = toJsonConverter;
   }
 
   Schedule save(Schedule schedule) {
@@ -69,6 +75,15 @@ class ScheduleService {
     schedule.setAccepted(true);
 
     this.scheduleRepository.save(schedule);
+  }
+
+  String makeNotificationResponse(String token, ObjectId scheduleId) {
+    Map<String, String> responseContent = Maps.newHashMap(new HashMap<String, String>() {{
+      this.put("token", token);
+      this.put("scheduleId", scheduleId.toHexString());
+    }});
+
+    return this.toJsonConverter.convert(responseContent);
   }
 
   private void ifExists(ObjectId id, Consumer<ScheduleQueryDto> consumer) {

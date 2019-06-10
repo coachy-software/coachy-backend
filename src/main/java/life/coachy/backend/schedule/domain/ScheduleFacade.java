@@ -61,7 +61,7 @@ public class ScheduleFacade {
     this.service.givePermissions(this.userFacade, schedule, dto);
 
     String token = this.requestFacade.createToken(dto.getCharge());
-    this.sendAcknowledgeRequestNotification(dto.getCreator(), dto.getCharge(), token);
+    this.sendAcknowledgeRequestNotification(dto.getCreator(), dto.getCharge(), token, schedule.identifier);
 
     return ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + ApiLayers.SCHEDULES + "/{id}").buildAndExpand(schedule.identifier).toUri();
   }
@@ -73,14 +73,14 @@ public class ScheduleFacade {
     this.service.accept(queryDto, this.creator.from(queryDto));
   }
 
-  private void sendAcknowledgeRequestNotification(ObjectId senderId, ObjectId recipientId, String requestToken) {
+  private void sendAcknowledgeRequestNotification(ObjectId senderId, ObjectId recipientId, String requestToken, ObjectId scheduleId) {
     UserQueryDto senderQueryDto = this.userFacade.fetchOne(senderId);
     NotificationMessageDto dto = NotificationMessageDtoBuilder.create()
         .withSenderName(senderQueryDto.getUsername())
         .withSenderAvatar(senderQueryDto.getAvatar())
         .withSenderId(senderQueryDto.getIdentifier())
         .withType("SCHEDULE_REQUEST")
-        .withContent(requestToken)
+        .withContent(this.service.makeNotificationResponse(requestToken, scheduleId))
         .withRecipientId(recipientId)
         .build();
 
