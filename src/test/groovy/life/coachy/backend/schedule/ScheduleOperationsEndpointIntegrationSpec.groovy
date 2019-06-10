@@ -73,7 +73,7 @@ class ScheduleOperationsEndpointIntegrationSpec extends IntegrationSpec implemen
 
   def "'reject' endpoint should return 403 if user does not have required permission"() {
     given: "we have one schedule, one user and one request in system"
-      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("schedule.${id}.accept"))
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
       def schedule = setUpSchedule(id, "test", user.get("_id"), user.get("_id"))
       def request = setUpRequest(user.get("_id"))
     when: "I post to /api/schedules/{id}/reject"
