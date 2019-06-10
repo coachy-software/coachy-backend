@@ -40,4 +40,17 @@ class ScheduleOperationsEndpoint {
     return ResponseEntity.ok().build();
   }
 
+  @ApiOperation("Rejects the schedule")
+  @RequiresPermissions("schedule.{id}.accept")
+  @RequiresAuthenticated
+  @PostMapping("{id}/reject")
+  ResponseEntity<?> reject(@ApiParam("Schedule identifier") @PathVariable("id") ObjectId scheduleId, @RequestBody Map<String, String> payload) {
+    if (payload.get("token") == null) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    this.scheduleFacade.rejectScheduleRequest(scheduleId, payload.get("token"));
+    return ResponseEntity.ok().build();
+  }
+
 }

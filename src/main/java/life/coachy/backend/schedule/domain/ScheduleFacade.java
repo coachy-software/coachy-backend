@@ -73,6 +73,11 @@ public class ScheduleFacade {
     this.service.accept(queryDto, this.creator.from(queryDto));
   }
 
+  public void rejectScheduleRequest(ObjectId id, String token) {
+    this.service.throwIfAbsent(id);
+    this.requestFacade.invalidateToken(token, () -> "");
+  }
+
   private void sendAcknowledgeRequestNotification(ObjectId senderId, ObjectId recipientId, String requestToken, ObjectId scheduleId) {
     UserQueryDto senderQueryDto = this.userFacade.fetchOne(senderId);
     NotificationMessageDto dto = NotificationMessageDtoBuilder.create()

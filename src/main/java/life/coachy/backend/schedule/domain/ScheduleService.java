@@ -36,6 +36,12 @@ class ScheduleService {
     return this.queryDtoRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
   }
 
+  void throwIfAbsent(ObjectId id) {
+    if (!this.queryDtoRepository.existsByIdentifier(id)) {
+      throw new ScheduleNotFoundException();
+    }
+  }
+
   void delete(UserFacade userFacade, ObjectId id) {
     this.ifExists(id, (queryDto) -> {
       this.scheduleRepository.deleteById(id);
