@@ -4,13 +4,13 @@ import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.base.UncompilableByCI
+import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.schedule.SampleSchedules
 import life.coachy.backend.schedule.domain.exception.ScheduleNotFoundException
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
-import org.springframework.test.annotation.IfProfileValue
 
 class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSchedules {
 
@@ -59,6 +59,17 @@ class ScheduleFacadeIntegrationSpec extends IntegrationSpec implements SampleSch
       scheduleFacade.delete(ObjectId.get())
     then:
       thrown(ScheduleNotFoundException)
+  }
+
+  def "'rejectScheduleRequest' method should delete request from system"() {
+    given: "we have one schedule, one request and one user in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("schedule.${id}.accept"))
+      def schedule = setUpSchedule(id, "test", user.get("_id"), user.get("_id"))
+      def request = setUpRequest(user.get("_id"))
+    when: "user tries to reject the request"
+      scheduleFacade.rejectScheduleRequest(schedule.get("_id"), request.get("token"))
+    then:
+      !mongoTemplate.exists(Query.query(Criteria.where("_id").is(request.get("_id"))), MongoCollections.SCHEDULES)
   }
 
 }

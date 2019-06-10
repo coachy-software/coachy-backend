@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ScheduleOperationsEndpointIntegrationSpec extends IntegrationSpec implements SampleSchedules {
 
-  @Autowired ObjectToJsonConverter jsonConverter;
+  @Autowired ObjectToJsonConverter jsonConverter
 
   def "'accept' endpoint should return 403 if user does not have required permission"() {
     given: "we have one schedule and user in system"
@@ -43,4 +43,46 @@ class ScheduleOperationsEndpointIntegrationSpec extends IntegrationSpec implemen
     then:
       acceptEndpoint.andExpect(status().isBadRequest())
   }
+
+  def "'reject' endpoint should reject the request"() {
+    given: "we have one schedule, one user and one request in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("schedule.${id}.accept"))
+      def schedule = setUpSchedule(id, "test", user.get("_id"), user.get("_id"))
+      def request = setUpRequest(user.get("_id"))
+    when: "I post to /api/schedules/{id}/reject"
+      ResultActions rejectEndpoint = mockMvc.perform(post('/api/schedules/{id}/reject', schedule.get("_id"))
+          .with(httpBasic('yang160', 'password123'))
+          .content(jsonConverter.convert(Collections.singletonMap("token", request.get("token"))))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      rejectEndpoint.andExpect(status().isOk())
+  }
+
+  def "'reject' endpoint should return 401 when user is unauthorized"() {
+    given: "we have one schedule, one user and one request in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("schedule.${id}.accept"))
+      def schedule = setUpSchedule(id, "test", user.get("_id"), user.get("_id"))
+      def request = setUpRequest(user.get("_id"))
+    when: "I post to /api/schedules/{id}/reject"
+      ResultActions rejectEndpoint = mockMvc.perform(post('/api/schedules/{id}/reject', schedule.get("_id"))
+          .content(jsonConverter.convert(Collections.singletonMap("token", request.get("token"))))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      rejectEndpoint.andExpect(status().isUnauthorized())
+  }
+
+  def "'reject' endpoint should return 403 if user does not have required permission"() {
+    given: "we have one schedule, one user and one request in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("schedule.${id}.accept"))
+      def schedule = setUpSchedule(id, "test", user.get("_id"), user.get("_id"))
+      def request = setUpRequest(user.get("_id"))
+    when: "I post to /api/schedules/{id}/reject"
+      ResultActions rejectEndpoint = mockMvc.perform(post('/api/schedules/{id}/reject', schedule.get("_id"))
+          .with(httpBasic('yang160', 'password123'))
+          .content(jsonConverter.convert(Collections.singletonMap("token", request.get("token"))))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      rejectEndpoint.andExpect(status().isForbidden())
+  }
+
 }
