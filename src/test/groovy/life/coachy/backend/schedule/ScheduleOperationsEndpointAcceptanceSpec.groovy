@@ -46,7 +46,8 @@ class ScheduleOperationsEndpointAcceptanceSpec extends IntegrationSpec implement
     then: "I see all notifications belonging to the user"
       notificationEndpoint.andExpect(status().isOk())
       def notifications = new JSONObject(notificationEndpoint.andReturn().getResponse().getContentAsString()).get("content") as JSONArray
-      def token = ((JSONObject) (notifications.get(0))).get("content")
+      def content = ((JSONObject) (notifications.get(0))).get("content");
+      def token = new JSONObject(content).get("token")
     when: "I post to /api/schedules/{id}/accept"
       ResultActions acceptEndpoint = mockMvc.perform(post('/api/schedules/{scheduleId}/accept', scheduleId)
           .with(httpBasic("yang160", "password123"))
