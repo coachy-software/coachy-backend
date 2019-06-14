@@ -1,5 +1,6 @@
 package life.coachy.backend.notification.domain;
 
+import java.time.LocalDateTime;
 import life.coachy.backend.infrastructure.util.Buildable;
 import org.bson.types.ObjectId;
 
@@ -11,6 +12,7 @@ final class NotificationBuilder implements Buildable<Notification> {
   ObjectId recipientId;
   String content;
   NotificationType type;
+  LocalDateTime createdAt;
 
   private NotificationBuilder() {}
 
@@ -45,6 +47,11 @@ final class NotificationBuilder implements Buildable<Notification> {
 
   NotificationBuilder withType(NotificationType type) {
     this.type = type;
+    return this;
+  }
+
+  NotificationBuilder withCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
     return this;
   }
 

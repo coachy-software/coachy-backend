@@ -2,6 +2,7 @@ package life.coachy.backend.schedule.domain;
 
 import com.querydsl.core.types.Predicate;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
@@ -87,6 +88,7 @@ public class ScheduleFacade {
         .withType("SCHEDULE_REQUEST")
         .withContent(this.service.makeNotificationResponse(requestToken, scheduleId))
         .withRecipientId(recipientId)
+        .withCreatedAt(LocalDateTime.now())
         .build();
 
     this.notificationFacade.sendNotificationToUser(dto);

@@ -27,9 +27,8 @@ class NotificationSendingService {
 
   void markAsRead(Notification notification, NotificationQueryDto dto) {
     notification.setRead(true);
-    notification.setCreatedAt(dto.getCreatedAt());
-
     notification.setIdentifier(dto.getIdentifier());
+
     this.save(notification);
   }
 

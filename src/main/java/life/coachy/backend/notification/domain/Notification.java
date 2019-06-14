@@ -29,6 +29,7 @@ class Notification {
     this.recipientId = builder.recipientId;
     this.content = builder.content;
     this.type = builder.type;
+    this.createdAt = builder.createdAt;
     this.read = false;
   }
 
@@ -38,10 +39,6 @@ class Notification {
 
   public void setIdentifier(ObjectId identifier) {
     this.identifier = identifier;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
   }
 
 }

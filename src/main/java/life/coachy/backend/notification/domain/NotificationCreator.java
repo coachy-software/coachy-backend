@@ -13,6 +13,7 @@ class NotificationCreator {
         .withRecipientId(dto.getRecipientId())
         .withContent(dto.getContent())
         .withType(NotificationType.valueOf(dto.getType()))
+        .withCreatedAt(dto.getCreatedAt())
         .build();
   }
 
@@ -24,6 +25,7 @@ class NotificationCreator {
         .withRecipientId(dto.getRecipientId())
         .withContent(dto.getContent())
         .withType(NotificationType.valueOf(dto.getType()))
+        .withCreatedAt(dto.getCreatedAt())
         .build();
   }
 
