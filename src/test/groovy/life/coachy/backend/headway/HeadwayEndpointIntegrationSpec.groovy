@@ -2,14 +2,19 @@ package life.coachy.backend.headway
 
 import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
+import org.bson.types.ObjectId
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHeadways {
+
+  @Autowired ObjectToJsonConverter toJsonConverter;
 
   def "'fetchAll' endpoint should return 403 when required permission is missing"() {
     given: "we have one user in system"
@@ -60,6 +65,45 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
           .with(httpBasic('yang160', 'password123')))
     then:
       fetchEndpoint.andExpect(status().isForbidden())
+  }
+
+  def "'share' endpoint should return 403 when required permission is missing"() {
+    given: "we have one user in system"
+      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Collections.emptySet())
+      setUpHeadway(sampleHeadwayId, user.get("_id"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("shareTo", "notId")))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isForbidden())
+  }
+
+  def "'share' endpoint should return 404 if headway does not exist"() {
+    given: "we have one user in system"
+      def testId = ObjectId.get()
+      setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${testId}.read"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', testId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("shareTo", sampleHeadwayId.toHexString())))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isNotFound())
+  }
+
+  def "'share' endpoint should return 404 if shareTo (id) does not belong to any user"() {
+    given: "we have one user in system"
+      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+      setUpHeadway(sampleHeadwayId, user.get("_id"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("shareTo", ObjectId.get().toHexString())))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isNotFound())
   }
 
 }
