@@ -94,7 +94,7 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
   }
 
   def "'share' endpoint should return 404 if shareTo (id) does not belong to any user"() {
-    given: "we have one user in system"
+    given: "we have one user and one headway in system"
       def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
       setUpHeadway(sampleHeadwayId, user.get("_id"))
     when: "user tries to share the headway to other user"
@@ -104,6 +104,32 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
           .contentType(MediaType.APPLICATION_JSON))
     then:
       shareEndpoint.andExpect(status().isNotFound())
+  }
+
+  def "'share' endpoint should return 400 if payload is incorrect"() {
+    given: "we have one user and one headway in system"
+      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+      setUpHeadway(sampleHeadwayId, user.get("_id"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("test", "test")))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isBadRequest())
+  }
+
+  def "'share' endpoint should share the headway to specified user"() {
+    given: "we have one user and one headway in system"
+      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+      setUpHeadway(sampleHeadwayId, user.get("_id"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("shareTo", ((ObjectId) user.get("_id")).toHexString())))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isOk())
   }
 
 }
