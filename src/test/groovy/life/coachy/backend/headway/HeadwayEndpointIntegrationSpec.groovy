@@ -2,6 +2,7 @@ package life.coachy.backend.headway
 
 import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Autowired
@@ -119,6 +120,7 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
       shareEndpoint.andExpect(status().isBadRequest())
   }
 
+  @UncompilableByCI
   def "'share' endpoint should share the headway to specified user"() {
     given: "we have one user and one headway in system"
       def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
