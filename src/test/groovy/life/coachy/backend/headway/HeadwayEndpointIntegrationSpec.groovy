@@ -125,7 +125,8 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
   @UncompilableByCI
   def "'share' endpoint should share the headway to specified user"() {
     given: "we have one user and one headway in system"
-      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+      setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+      def user = setUpUser(ObjectId.get(), "yang161", "password123", Collections.emptySet())
       setUpHeadway(sampleHeadwayId, user.get("_id"))
     when: "user tries to share the headway to other user"
       ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
