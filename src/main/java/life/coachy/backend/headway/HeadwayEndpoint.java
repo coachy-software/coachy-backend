@@ -2,13 +2,16 @@ package life.coachy.backend.headway;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.Map;
 import java.util.Set;
 import life.coachy.backend.headway.domain.HeadwayFacade;
 import life.coachy.backend.headway.domain.dto.HeadwayCreateCommandDto;
 import life.coachy.backend.headway.query.HeadwayQueryDto;
+import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,11 +59,26 @@ class HeadwayEndpoint {
   }
 
   @RequiresPermissions("headway.{id}.read")
-  @ApiOperation("Displays one headway by it's id")
+  @ApiOperation("Displays one headway by its id")
   @RequiresAuthenticated
   @GetMapping("{id}")
   ResponseEntity<HeadwayQueryDto> fetchOne(@ApiParam("Headway's id") @PathVariable ObjectId id) {
     return ResponseEntity.ok(this.headwayFacade.fetchOne(id));
   }
+
+  @RequiresPermissions("headway.{id}.read")
+  @ApiOperation("Shares the headway with some other user")
+  @RequiresAuthenticated
+  @PostMapping("{id}/share")
+  ResponseEntity<?> share(@ApiParam("Headway's id") @PathVariable ObjectId id, @RequestBody Map<String, String> payload,
+      @AuthenticatedUser UserQueryDto sender) {
+    if (payload.get("shareTo") == null) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    this.headwayFacade.share(id, payload.get("shareTo"), sender);
+    return ResponseEntity.ok().build();
+  }
+
 
 }
