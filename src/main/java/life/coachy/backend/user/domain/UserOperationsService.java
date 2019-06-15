@@ -15,8 +15,10 @@ import life.coachy.backend.user.query.UserQueryDto;
 import life.coachy.backend.user.query.UserQueryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 class UserOperationsService {
@@ -63,7 +65,8 @@ class UserOperationsService {
   }
 
   void checkIfExists(ObjectId id) {
-    this.ifExists(id, () -> {});
+    this.ifExists(id, () -> {
+    });
   }
 
   void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
@@ -82,11 +85,18 @@ class UserOperationsService {
     this.addPermissions(null, username, permissions);
   }
 
-
   void removePermissions(ObjectId id, ObjectId permissionId) {
     this.modifyPermissions(id, userQueryDto -> userQueryDto.getPermissions().stream()
         .filter(permission -> !permission.contains(permissionId.toHexString()))
         .collect(Collectors.toSet()));
+  }
+
+  void throwIfHasPermission(ObjectId id, String permission) {
+    UserQueryDto queryDto = this.queryDtoRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+    if (queryDto.getPermissions().contains(permission)) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT);
+    }
   }
 
   void resetPassword(String email, String newPassword) {
@@ -113,6 +123,7 @@ class UserOperationsService {
 
   private void addPermissions(ObjectId id, String username, String... permissions) {
     Function<UserQueryDto, Set<String>> function = user -> Stream.of(user.getPermissions(), Sets.newHashSet(permissions))
+        .distinct()
         .flatMap(Collection::stream)
         .collect(Collectors.toSet());
 

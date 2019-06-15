@@ -50,6 +50,10 @@ public class UserFacade {
     this.operationsService.removePermissions(userId, permissionId);
   }
 
+  public void throwIfHasPermission(ObjectId id, String permission) {
+    this.operationsService.throwIfHasPermission(id, permission);
+  }
+
   public void resetPassword(String email, String newPassword) {
     this.operationsService.resetPassword(email, newPassword);
   }
@@ -64,10 +68,6 @@ public class UserFacade {
 
   public void ifExists(ObjectId id) {
     this.operationsService.checkIfExists(id);
-  }
-
-  public void ifExists(ObjectId id, Runnable runnable) {
-    this.operationsService.ifExists(id, runnable);
   }
 
   public UserQueryDto fetchOne(ObjectId id) {

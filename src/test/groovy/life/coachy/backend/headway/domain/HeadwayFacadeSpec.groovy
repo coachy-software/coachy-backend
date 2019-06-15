@@ -1,6 +1,6 @@
 package life.coachy.backend.headway.domain
 
-
+import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.headway.SampleHeadways
@@ -13,6 +13,7 @@ import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.web.server.ResponseStatusException
 
 class HeadwayFacadeSpec extends IntegrationSpec implements SampleHeadways {
 
@@ -98,4 +99,17 @@ class HeadwayFacadeSpec extends IntegrationSpec implements SampleHeadways {
       mongoTemplate.exists(Query.query(Criteria.where("username").is("yang160").and("permissions").regex("headway.${headway.get("_id")}.read")), MongoCollections.USERS)
   }
 
+  def "method 'share' should throw ResponseStatusException if user already has the headway shared"() {
+    given: "user query dto mock"
+      UserQueryDto userQueryDto = Mockito.mock(UserQueryDto)
+      Mockito.when(userQueryDto.getUsername()).thenReturn("yang160")
+      Mockito.when(userQueryDto.getIdentifier()).thenReturn(ObjectId.get())
+
+      def headway = setUpHeadway(ObjectId.get(), userQueryDto.getIdentifier())
+      def user = setUpUser(userQueryDto.getIdentifier(), "yang160", "password123", Sets.newHashSet("headway.${headway.get("_id")}.read"));
+    when: "user tries to share a headway to someone"
+      this.headwayFacade.share(headway.get("_id"), ((ObjectId) user.get("_id")).toHexString(), userQueryDto)
+    then:
+      thrown(ResponseStatusException)
+  }
 }

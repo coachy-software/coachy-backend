@@ -49,7 +49,10 @@ public class HeadwayFacade {
     HeadwayQueryDto queryDto = this.fetchOne(headwayId);
     UserQueryDto userQueryDto = this.userFacade.fetchOne(new ObjectId(userId));
 
-    this.userFacade.givePermissions(userQueryDto.getIdentifier(), "headway." + queryDto.getIdentifier() + ".read");
+    String permission = "headway." + queryDto.getIdentifier() + ".read";
+    this.userFacade.throwIfHasPermission(new ObjectId(userId), permission);
+
+    this.userFacade.givePermissions(userQueryDto.getIdentifier(), permission);
     this.notificationFacade.sendNotificationToUser(this.headwayService.makeNotificationMessage(sender, userQueryDto, headwayId));
   }
 

@@ -4,7 +4,9 @@ import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
+import life.coachy.backend.user.query.UserQueryDto
 import org.bson.types.ObjectId
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
@@ -132,6 +134,23 @@ class HeadwayEndpointIntegrationSpec extends IntegrationSpec implements SampleHe
           .contentType(MediaType.APPLICATION_JSON))
     then:
       shareEndpoint.andExpect(status().isOk())
+  }
+
+  def "'share' endpoint should return 409 if user already has the headway shared"() {
+    given: "we have one user and one headway in system"
+      UserQueryDto userQueryDto = Mockito.mock(UserQueryDto)
+      Mockito.when(userQueryDto.getUsername()).thenReturn("yang160")
+      Mockito.when(userQueryDto.getIdentifier()).thenReturn(ObjectId.get())
+
+      setUpHeadway(sampleHeadwayId, userQueryDto.getIdentifier())
+      def user = setUpUser(sampleHeadwayId, "yang160", "password123", Sets.newHashSet("headway.${sampleHeadwayId}.read"))
+    when: "user tries to share the headway to other user"
+      ResultActions shareEndpoint = mockMvc.perform(post('/api/headways/{id}/share', sampleHeadwayId)
+          .with(httpBasic('yang160', 'password123'))
+          .content(toJsonConverter.convert(Collections.singletonMap("shareTo", ((ObjectId) user.get("_id")).toHexString())))
+          .contentType(MediaType.APPLICATION_JSON))
+    then:
+      shareEndpoint.andExpect(status().isConflict())
   }
 
 }
