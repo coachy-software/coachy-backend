@@ -22,7 +22,7 @@ class NotificationCommandIntegrationSpec extends IntegrationSpec {
     when: "system sends a notification"
       def result = this.shell.evaluate({ -> "sendall test" })
     then:
-      "The message: test has been sent to everyone." == result
+      "The message: {\"link\":\"/notifications\",\"text\":\"test\"} has been sent to everyone." == result
   }
 
 }
