@@ -49,7 +49,11 @@ public class NotificationFacade {
 
   public boolean hasAnyUnread(ObjectId recipientId) {
     this.userFacade.ifExists(recipientId);
-    return this.queryRepository.existsByRecipientIdAndReadIsFalse(recipientId);
+    return this.queryRepository.countByRecipientIdAndReadIsFalse(recipientId) != 0;
+  }
+
+  public long countUnreadNotifications(ObjectId recipientId) {
+    return this.queryRepository.countByRecipientIdAndReadIsFalse(recipientId);
   }
 
   public Map<String, String> convertAlertContentToJson(String message, String link) {

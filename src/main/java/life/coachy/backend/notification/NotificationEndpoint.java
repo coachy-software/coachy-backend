@@ -2,7 +2,7 @@ package life.coachy.backend.notification;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
@@ -54,8 +54,11 @@ class NotificationEndpoint {
   @RequiresPermissions("user.{id}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}/has-unread")
-  ResponseEntity<Map<String, Boolean>> hasAnyUnread(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
-    return ResponseEntity.ok(Collections.singletonMap("hasUnread", this.notificationFacade.hasAnyUnread(recipientId)));
+  ResponseEntity<Map<String, Object>> hasAnyUnread(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
+    return ResponseEntity.ok(new HashMap<String, Object>() {{
+      this.put("hasUnread", NotificationEndpoint.this.notificationFacade.hasAnyUnread(recipientId));
+      this.put("count", NotificationEndpoint.this.notificationFacade.countUnreadNotifications(recipientId));
+    }});
   }
 
 }
