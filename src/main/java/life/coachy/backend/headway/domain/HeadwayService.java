@@ -56,7 +56,7 @@ class HeadwayService {
         .withSenderId(sender.getIdentifier())
         .withType("ALERT")
         .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
-          this.put("link", "/headways/" + headwayId);
+          this.put("link", "/headway-journals/" + headwayId);
           this.put("text", "headway_shared");
         }})))
         .withRecipientId(recipient.getIdentifier())
