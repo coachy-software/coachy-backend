@@ -1,6 +1,10 @@
 package life.coachy.backend.notification;
 
+import com.google.common.collect.Maps;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter;
 import life.coachy.backend.notification.domain.NotificationFacade;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder;
@@ -13,10 +17,12 @@ import org.springframework.shell.standard.ShellMethod;
 class NotificationCommand {
 
   private final NotificationFacade notificationFacade;
+  private final ObjectToJsonConverter toJsonConverter;
 
   @Autowired
-  NotificationCommand(NotificationFacade notificationFacade) {
+  NotificationCommand(NotificationFacade notificationFacade, ObjectToJsonConverter toJsonConverter) {
     this.notificationFacade = notificationFacade;
+    this.toJsonConverter = toJsonConverter;
   }
 
   @ShellMethod(value = "Sends a notification", key = "send")
@@ -24,7 +30,7 @@ class NotificationCommand {
     NotificationMessageDto dto = NotificationMessageDtoBuilder.create()
         .withRecipientId(recipientId)
         .withSenderName("Coachy")
-        .withContent(message)
+        .withContent(this.toJsonConverter.convert(this.notificationFacade.convertAlertContentToJson(message, "/notifications")))
         .withType("ALERT")
         .withCreatedAt(LocalDateTime.now())
         .build();

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 class NotificationConfiguration {
 
   @Bean
-  NotificationFacade notificationFacade(NotificationQueryRepository queryRepository, NotificationSendingService sendingService, UserFacade userFacade) {
+  NotificationFacade notificationFacade(NotificationQueryRepository queryRepository, NotificationService sendingService, UserFacade userFacade) {
     NotificationCreator notificationCreator = new NotificationCreator();
     return new NotificationFacade(queryRepository, sendingService, notificationCreator, userFacade);
   }

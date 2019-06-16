@@ -1,5 +1,8 @@
 package life.coachy.backend.notification.domain;
 
+import com.google.common.collect.Maps;
+import java.util.HashMap;
+import java.util.Map;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
 import life.coachy.backend.notification.query.NotificationQueryDto;
 import life.coachy.backend.user.query.UserQueryDto;
@@ -9,13 +12,13 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-class NotificationSendingService {
+class NotificationService {
 
   private final NotificationRepository repository;
   private final SimpMessagingTemplate simpMessagingTemplate;
 
   @Autowired
-  NotificationSendingService(NotificationRepository repository, SimpMessagingTemplate simpMessagingTemplate) {
+  NotificationService(NotificationRepository repository, SimpMessagingTemplate simpMessagingTemplate) {
     this.repository = repository;
     this.simpMessagingTemplate = simpMessagingTemplate;
   }
@@ -30,6 +33,13 @@ class NotificationSendingService {
     notification.setIdentifier(dto.getIdentifier());
 
     this.save(notification);
+  }
+
+  Map<String, String> convertAlertContentToJson(String message, String link) {
+    return Maps.newHashMap(new HashMap<String, String>() {{
+      this.put("link", link);
+      this.put("text", message);
+    }});
   }
 
   private void save(Notification notification) {

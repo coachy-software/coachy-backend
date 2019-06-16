@@ -1,7 +1,8 @@
 package life.coachy.backend.headway.domain;
 
+import com.google.common.collect.Maps;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Set;
 import life.coachy.backend.headway.domain.exception.HeadwayNotFoundException;
 import life.coachy.backend.headway.query.HeadwayQueryDto;
@@ -12,9 +13,7 @@ import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder
 import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 class HeadwayService {
@@ -56,7 +55,10 @@ class HeadwayService {
         .withSenderAvatar(sender.getAvatar())
         .withSenderId(sender.getIdentifier())
         .withType("ALERT")
-        .withContent(this.toJsonConverter.convert(Collections.singletonMap("link", "/headways/" + headwayId)))
+        .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
+          this.put("link", "/headways/" + headwayId);
+          this.put("text", "headway_shared");
+        }})))
         .withRecipientId(recipient.getIdentifier())
         .withCreatedAt(LocalDateTime.now())
         .build();
