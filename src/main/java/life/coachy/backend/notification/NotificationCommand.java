@@ -43,7 +43,7 @@ class NotificationCommand {
   public String sendNotification(String message) {
     NotificationMessageDtoBuilder dtoBuilder = NotificationMessageDtoBuilder.create()
         .withSenderName("Coachy")
-        .withContent(message)
+        .withContent(this.toJsonConverter.convert(this.notificationFacade.convertAlertContentToJson(message, "/notifications")))
         .withCreatedAt(LocalDateTime.now())
         .withType("ALERT");
 
