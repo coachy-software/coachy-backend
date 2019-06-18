@@ -41,7 +41,7 @@ public class HeadwayFacade {
   }
 
   public Set<HeadwayQueryDto> fetchAllByOwnerId(ObjectId ownerId) {
-    this.userFacade.ifExists(ownerId);
+    this.userFacade.checkIfExists(ownerId);
     return this.headwayService.fetchAllByOwnerId(ownerId);
   }
 

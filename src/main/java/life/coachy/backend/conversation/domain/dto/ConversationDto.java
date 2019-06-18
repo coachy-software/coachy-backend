@@ -6,22 +6,18 @@ import org.bson.types.ObjectId;
 
 public class ConversationDto {
 
-  private ObjectId identifier;
   private List<String> conversers;
   private ObjectId lastMessageId;
   private String lastMessageText;
   private LocalDateTime lastMessageDate;
 
+  ConversationDto() {}
+
   ConversationDto(ConversationDtoBuilder builder) {
-    this.identifier = builder.identifier;
     this.conversers = builder.conversers;
     this.lastMessageId = builder.lastMessageId;
     this.lastMessageText = builder.lastMessageText;
     this.lastMessageDate = builder.lastMessageDate;
-  }
-
-  public ObjectId getIdentifier() {
-    return this.identifier;
   }
 
   public List<String> getConversers() {

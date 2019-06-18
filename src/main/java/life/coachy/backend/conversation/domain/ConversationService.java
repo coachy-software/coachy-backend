@@ -1,6 +1,6 @@
 package life.coachy.backend.conversation.domain;
 
-import com.google.common.collect.Lists;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -8,10 +8,13 @@ import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.conversation.query.ConversationQueryRepository;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 class ConversationService {
@@ -25,10 +28,6 @@ class ConversationService {
     this.queryRepository = queryRepository;
   }
 
-  void save(Conversation conversation) {
-    this.repository.save(conversation);
-  }
-
   void update(ConversationQueryDto queryDto, Conversation conversation) {
     conversation.setIdentifier(queryDto.getIdentifier());
     conversation.setConversers(queryDto.getConversers());
@@ -40,25 +39,40 @@ class ConversationService {
     return this.findOne(conversers).orElseThrow(ConversationNotFoundException::new);
   }
 
-  ConversationQueryDto createIfAbsent(ConversationDto dto, Conversation conversation, Consumer<ConversationQueryDto> consumer) {
+  Optional<ConversationQueryDto> findOne(List<String> conversers) {
+    return this.queryRepository.findByConversersContains(conversers);
+  }
+
+  Optional<ConversationQueryDto> findOne(ObjectId id) {
+    return this.queryRepository.findById(id);
+  }
+
+  URI createIfAbsent(ConversationDto dto, Conversation conversation, Consumer<ConversationQueryDto> consumer) {
     Optional<ConversationQueryDto> queryDto = this.findOne(dto.getConversers());
 
     if (!queryDto.isPresent()) {
       this.save(conversation);
       ConversationQueryDto newQueryDto = this.findOne(dto.getConversers()).get();
+
       consumer.accept(newQueryDto);
-      return newQueryDto;
+      return this.makeLocationHeaderUri(newQueryDto.getIdentifier());
     }
 
-    return queryDto.get();
+    return this.makeLocationHeaderUri(queryDto.get().getIdentifier());
   }
 
   Page<ConversationQueryDto> findAll(Pageable pageable, List<String> conversers) {
     return this.queryRepository.findAllByConversersContainsOrderByLastMessageDateDesc(conversers, pageable);
   }
 
-  private Optional<ConversationQueryDto> findOne(List<String> conversers) {
-    return this.queryRepository.findByConversersContains(conversers);
+  private void save(Conversation conversation) {
+    this.repository.save(conversation);
+  }
+
+  private URI makeLocationHeaderUri(ObjectId identifier) {
+    return ServletUriComponentsBuilder.fromCurrentContextPath().path("/" + ApiLayers.CONVERSATIONS + "/{id}")
+        .buildAndExpand(identifier)
+        .toUri();
   }
 
 }

@@ -32,7 +32,7 @@ public class RequestFacade {
   }
 
   public String createToken(ObjectId requesterId) {
-    this.userFacade.ifExists(requesterId);
+    this.userFacade.checkIfExists(requesterId);
     return this.requestService.createRequest(this.tokenGenerator.makeToken(), requesterId);
   }
 
@@ -41,7 +41,7 @@ public class RequestFacade {
   }
 
   public Set<RequestQueryDto> fetchAllByRequesterId(ObjectId requesterId) {
-    this.userFacade.ifExists(requesterId);
+    this.userFacade.checkIfExists(requesterId);
     return this.queryRepository.findAllByRequesterId(requesterId);
   }
 

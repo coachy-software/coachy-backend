@@ -7,7 +7,6 @@ class ConversationCreator {
 
   Conversation from(ConversationDto dto) {
     return ConversationBuilder.create()
-        .withIdentifier(dto.getIdentifier())
         .withConversers(dto.getConversers())
         .withLastMessageId(dto.getLastMessageId())
         .withLastMessageText(dto.getLastMessageText())

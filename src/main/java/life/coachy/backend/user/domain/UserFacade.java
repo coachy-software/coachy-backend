@@ -66,8 +66,12 @@ public class UserFacade {
     this.operationsService.validateAndChangePassword(userQueryDto, dto);
   }
 
-  public void ifExists(ObjectId id) {
+  public void checkIfExists(ObjectId id) {
     this.operationsService.checkIfExists(id);
+  }
+
+  public void checkIfExists(String username) {
+    this.operationsService.checkIfExists(this.crudService.fetchOne(username).getIdentifier());
   }
 
   public UserQueryDto fetchOne(ObjectId id) {

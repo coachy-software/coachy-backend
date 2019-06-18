@@ -20,8 +20,8 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
       BasicDBObject firstConversation = setUpConversation(ObjectId.get(), "yang160", "yang160")
       BasicDBObject secondConversation = setUpConversation(ObjectId.get(), "yang160", "yang161")
       setUpConversation(ObjectId.get(), "unknown", "unknown")
-    when: "I go to /api/conversations/{id}"
-      ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/conversations/{id}", userId)
+    when: "I go to /api/conversations/by-converser/{id}"
+      ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/conversations/by-converser/{id}", userId)
           .with(httpBasic("yang160", "password123")))
     then:
       fetchAllEndpoint.andExpect(status().isOk())
@@ -31,8 +31,8 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
               {"identifier": "${secondConversation.get("_id")}", "conversers": ["yang160", "yang161"]}
             ]
           """))
-    when: "I go to /api/conversations/{id}?size=1"
-      ResultActions paginationEndpoint = mockMvc.perform(get("/api/conversations/{id}?size=1", userId)
+    when: "I go to /api/conversations/by-converser/{id}?size=1"
+      ResultActions paginationEndpoint = mockMvc.perform(get("/api/conversations/by-converser/{id}?size=1", userId)
           .with(httpBasic("yang160", "password123")))
     then: "I see only one result"
       paginationEndpoint.andExpect(status().isOk())
@@ -50,8 +50,8 @@ class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements Sam
       setUpConversation(ObjectId.get(), "yang160", "yang160")
       setUpConversation(ObjectId.get(), "yang160", "yang161")
       setUpConversation(ObjectId.get(), "unknown", "unknown")
-    when: "I go to /api/conversations/{id}"
-      ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/conversations/{id}", userId)
+    when: "I go to /api/conversations/by-converser/{id}"
+      ResultActions fetchAllEndpoint = mockMvc.perform(get("/api/conversations/by-converser/{id}", userId)
           .with(httpBasic("yang160", "password123")))
     then:
       fetchAllEndpoint.andExpect(status().isForbidden())

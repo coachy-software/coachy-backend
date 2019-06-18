@@ -43,12 +43,12 @@ public class NotificationFacade {
   }
 
   public void markAllAsRead(ObjectId recipientId) {
-    this.userFacade.ifExists(recipientId);
+    this.userFacade.checkIfExists(recipientId);
     this.queryRepository.findAllByRecipientId(recipientId).forEach((queryDto) -> this.service.markAsRead(this.creator.from(queryDto), queryDto));
   }
 
   public boolean hasAnyUnread(ObjectId recipientId) {
-    this.userFacade.ifExists(recipientId);
+    this.userFacade.checkIfExists(recipientId);
     return this.queryRepository.countByRecipientIdAndReadIsFalse(recipientId) != 0;
   }
 

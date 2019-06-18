@@ -28,6 +28,10 @@ class UserCrudService {
     return this.userQueryRepository.findById(id).orElseThrow(UserNotFoundException::new);
   }
 
+  UserQueryDto fetchOne(String username) {
+    return this.userQueryRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+  }
+
   User save(User user) {
     return this.userRepository.save(user);
   }

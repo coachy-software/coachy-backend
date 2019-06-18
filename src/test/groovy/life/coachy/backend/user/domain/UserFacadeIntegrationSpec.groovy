@@ -150,7 +150,7 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
 
   def "method 'ifExists' should throw UserNotFoundException if doesn't exist"() {
     when: "user checks if another user exists"
-      this.userFacade.ifExists(ObjectId.get())
+      this.userFacade.checkIfExists(ObjectId.get())
     then:
       thrown(UserNotFoundException)
   }
@@ -159,7 +159,7 @@ class UserFacadeIntegrationSpec extends IntegrationSpec implements SampleUsers {
     given: "we have one user in system"
     BasicDBObject user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
     when: "user checks if another user exists"
-      this.userFacade.ifExists(user.get("_id"))
+      this.userFacade.checkIfExists(user.get("_id"))
     then:
       notThrown(UserNotFoundException)
   }

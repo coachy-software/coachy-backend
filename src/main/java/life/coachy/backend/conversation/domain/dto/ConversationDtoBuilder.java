@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 
 public final class ConversationDtoBuilder implements Buildable<ConversationDto> {
 
-  ObjectId identifier;
   List<String> conversers;
   ObjectId lastMessageId;
   String lastMessageText;
@@ -17,11 +16,6 @@ public final class ConversationDtoBuilder implements Buildable<ConversationDto> 
 
   public static ConversationDtoBuilder create() {
     return new ConversationDtoBuilder();
-  }
-
-  public ConversationDtoBuilder withIdentifier(ObjectId identifier) {
-    this.identifier = identifier;
-    return this;
   }
 
   public ConversationDtoBuilder withConversers(List<String> conversers) {

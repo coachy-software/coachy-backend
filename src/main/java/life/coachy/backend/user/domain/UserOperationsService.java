@@ -65,8 +65,7 @@ class UserOperationsService {
   }
 
   void checkIfExists(ObjectId id) {
-    this.ifExists(id, () -> {
-    });
+    this.ifExists(id, () -> {});
   }
 
   void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {
@@ -112,13 +111,13 @@ class UserOperationsService {
   }
 
   private void modifyPermissions(ObjectId id, Function<UserQueryDto, Set<String>> function) {
-    this.queryDtoRepository.findById(id)
-        .ifPresent(userQueryDto -> this.repository.updatePermissionsById(id, function.apply(userQueryDto)));
+    UserQueryDto userQueryDto = this.queryDtoRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    this.repository.updatePermissionsById(id, function.apply(userQueryDto));
   }
 
   private void modifyPermissions(String username, Function<UserQueryDto, Set<String>> function) {
-    this.queryDtoRepository.findByUsername(username)
-        .ifPresent(userQueryDto -> this.repository.updatePermissionsByUsername(username, function.apply(userQueryDto)));
+    UserQueryDto userQueryDto = this.queryDtoRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    this.repository.updatePermissionsByUsername(username, function.apply(userQueryDto));
   }
 
   private void addPermissions(ObjectId id, String username, String... permissions) {

@@ -36,8 +36,8 @@ class MessageWebsocketEndpoint {
   void chatMessagePrivate(InputMessageDto dto) {
     OutputMessageDto outputMessage = this.createMessageDto(dto).build();
 
-    ConversationQueryDto queryDto = this.updateConversationLastMessage(outputMessage, dto);
-    outputMessage = this.createMessageDto(dto).withConversationId(queryDto.getIdentifier()).build();
+//    ConversationQueryDto queryDto = this.updateConversationLastMessage(outputMessage, dto);
+//    outputMessage = this.createMessageDto(dto).withConversationId(queryDto.getIdentifier()).build();
 
     this.simpMessagingTemplate.convertAndSendToUser(dto.getTo(), "/queue/private", outputMessage);
     this.messageFacade.save(outputMessage);
@@ -53,14 +53,11 @@ class MessageWebsocketEndpoint {
     this.simpMessagingTemplate.convertAndSendToUser(dto.getTo(), "/queue/typing", outputMessage);
   }
 
-  private ConversationQueryDto updateConversationLastMessage(OutputMessageDto outputMessage, InputMessageDto dto) {
-    ConversationDto conversationDto = this.createConversationDto(outputMessage, dto);
-
-    ConversationQueryDto queryDto = this.conversationFacade.createIfAbsent(conversationDto);
-    this.conversationFacade.updateLastMesasge(conversationDto, this.createConversationUpdateDto(outputMessage));
-
-    return queryDto;
-  }
+//  private ConversationQueryDto updateConversationLastMessage(OutputMessageDto outputMessage, InputMessageDto dto) {
+//    ConversationDto conversationDto = this.createConversationDto(outputMessage, dto);
+//
+//    this.conversationFacade.updateLastMesasge(conversationDto, this.createConversationUpdateDto(outputMessage));
+//  }
 
   private ConversationUpdateCommandDto createConversationUpdateDto(OutputMessageDto outputMessage) {
     return ConversationUpdateCommandDtoBuilder.create()
@@ -80,7 +77,6 @@ class MessageWebsocketEndpoint {
 
   private ConversationDto createConversationDto(OutputMessageDto outputMessage, InputMessageDto inputMessageDto) {
     return ConversationDtoBuilder.create()
-        .withIdentifier(inputMessageDto.getConversationId())
         .withLastMessageDate(outputMessage.getDate())
         .withLastMessageId(outputMessage.getIdentifier())
         .withLastMessageText(outputMessage.getBody())
