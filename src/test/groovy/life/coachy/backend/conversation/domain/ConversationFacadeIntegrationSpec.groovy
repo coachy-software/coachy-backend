@@ -1,6 +1,6 @@
 package life.coachy.backend.conversation.domain
 
-import com.mongodb.BasicDBObject
+
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.conversation.SampleConversations
 import life.coachy.backend.conversation.domain.exception.ConversationNotFoundException
@@ -16,18 +16,19 @@ class ConversationFacadeIntegrationSpec extends IntegrationSpec implements Sampl
 
   def "method 'createIfAbsent' should create a conversation"() {
     given: "we have one user in system named 'yang160'"
-      BasicDBObject user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
     when: "user tries to create conversation"
-      this.facade.createIfAbsent(sampleConversationDto)
+      def uri = this.facade.createIfAbsent(sampleConversationDto)
     then: "should store conversation in db"
-      mongoTemplate.exists(Query.query(Criteria.where("_id").is(sampleConversationId)), MongoCollections.CONVERSATIONS)
+      mongoTemplate.exists(Query.query(Criteria.where("lastMessageText").is(sampleConversationDto.getLastMessageText())), MongoCollections.CONVERSATIONS)
     and: "add 'conversation.x.read' permission to both conversers"
-      String permissionName = "conversation.${sampleConversationId}.read"
-      mongoTemplate.exists(Query.query(Criteria.where("_id").is(user.get("_id")).and("permissions").regex(permissionName)), MongoCollections.USERS)
+      String permissionName = "conversation.${uri.toString().substring(uri.toString().lastIndexOf("/") + 1)}.read"
+      mongoTemplate.exists(Query.query(Criteria.where("_id").is(user.get("_id")).and("permissions").in(permissionName)), MongoCollections.USERS)
   }
 
   def "method 'createIfAbsent' should do nothing when conversation exists"() {
-    given: "we have one conversation in system"
+    given: "we have one conversation and one user in system"
+      setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
       setUpConversation(sampleConversationId, "yang160", "yang160")
     when: "user tries to create conversation"
       this.facade.createIfAbsent(sampleConversationDto)

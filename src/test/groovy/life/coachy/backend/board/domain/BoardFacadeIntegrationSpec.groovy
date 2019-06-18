@@ -16,6 +16,8 @@ class BoardFacadeIntegrationSpec extends IntegrationSpec implements SampleBoards
   @Autowired BoardFacade facade;
 
   def "'create' method should store user"() {
+    given: "we have one user in system"
+      setUpUser(id, "yang160", "password123", Collections.emptySet())
     when: "user tries to create board"
       facade.create(sampleCreateDto)
     then:

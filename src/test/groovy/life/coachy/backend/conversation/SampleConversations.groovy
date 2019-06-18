@@ -16,8 +16,7 @@ trait SampleConversations {
   ObjectId sampleConversationId = ObjectId.get()
 
   ConversationDto sampleConversationDto = ConversationDtoBuilder.create()
-      .withIdentifier(sampleConversationId)
-  .withConversers(Lists.newArrayList("yang160", "yang160"))
+      .withConversers(Lists.newArrayList("yang160", "yang160"))
       .withLastMessageDate(LocalDateTime.now())
       .withLastMessageId(sampleConversationId)
       .withLastMessageText("test")

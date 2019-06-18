@@ -21,7 +21,7 @@ class HeadwayFacadeSpec extends IntegrationSpec implements SampleHeadways {
 
   def "method 'create' should store headway"() {
     given: "we have one user in system"
-      setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      setUpUser(sampleHeadwayId, "yang160", "password123", Collections.emptySet())
     when: "user tries to create a headway"
       this.headwayFacade.create(sampleHeadwayCreateCommandDto)
     then: "the headway should be available to fetch"
