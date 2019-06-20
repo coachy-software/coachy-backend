@@ -1,7 +1,6 @@
 package life.coachy.backend.conversation.message.domain;
 
 import java.util.Set;
-import life.coachy.backend.conversation.message.domain.exception.MessageNotFoundException;
 import life.coachy.backend.conversation.message.query.MessageQueryDto;
 import life.coachy.backend.conversation.message.query.MessageQueryRepository;
 import org.bson.types.ObjectId;
@@ -25,10 +24,6 @@ class MessageService {
   }
 
   Set<MessageQueryDto> findAllByConversationId(ObjectId id) {
-    if (!this.messageQueryRepository.existsByConversationId(id)) {
-      throw new MessageNotFoundException();
-    }
-
     return this.messageQueryRepository.findAllByConversationId(id);
   }
 

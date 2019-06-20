@@ -29,8 +29,8 @@ public class ConversationFacade {
     return this.service.findAll(pageable, Lists.newArrayList(this.userFacade.fetchOne(id).getUsername()));
   }
 
-  public void updateLastMesasge(ConversationDto conversationDto, ConversationUpdateCommandDto dto) {
-    ConversationQueryDto queryDto = this.service.findOneOrThrow(conversationDto.getConversers());
+  public void updateLastMesasge(ObjectId id, ConversationUpdateCommandDto dto) {
+    ConversationQueryDto queryDto = this.fetchOne(id);
     this.service.update(queryDto, this.creator.from(dto));
   }
 
