@@ -50,7 +50,7 @@ class ConversationEndpoint {
   @ApiOperation("Creates a conversation if absent, otherwise refers to existing one")
   @PostMapping
   ResponseEntity<?> create(@RequestBody ConversationDto dto) {
-    return this.conversationFacade.checkIfExists(dto,
+    return this.conversationFacade.create(dto,
         uri -> ResponseEntity.status(HttpStatus.SEE_OTHER).location(uri),
         uri -> ResponseEntity.status(HttpStatus.CREATED).location(uri)
     ).build();

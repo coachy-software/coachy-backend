@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class ConversationEndpointsAcceptanceSpec extends IntegrationSpec implements SampleConversations {
+class ConversationEndpointAcceptanceSpec extends IntegrationSpec implements SampleConversations {
 
   def "fetchAll positive scenario"() {
     given: "we have three conversations and one user in system in system"

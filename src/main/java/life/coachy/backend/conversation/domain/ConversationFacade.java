@@ -34,7 +34,7 @@ public class ConversationFacade {
     this.service.update(queryDto, this.creator.from(dto));
   }
 
-  public <T> T checkIfExists(ConversationDto conversationDto, Function<URI, T> existHandler, Function<URI, T> createHandler) {
+  public <T> T create(ConversationDto conversationDto, Function<URI, T> existHandler, Function<URI, T> createHandler) {
     boolean isPresent = this.service.findOne(conversationDto.getConversers()).isPresent();
     URI conversationUri = this.createIfAbsent(conversationDto);
 
