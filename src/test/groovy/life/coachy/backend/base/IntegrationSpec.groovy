@@ -3,8 +3,9 @@ package life.coachy.backend.base
 import com.google.common.collect.Lists
 import com.google.common.collect.Sets
 import com.mongodb.BasicDBObject
-import com.mongodb.Mongo
 import groovy.transform.TypeChecked
+import life.coachy.backend.board.label.LabelDto
+import life.coachy.backend.board.task.TaskDto
 import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.infrastructure.constant.Profiles
 import org.bson.types.ObjectId
@@ -91,6 +92,10 @@ class IntegrationSpec extends Specification {
         this.put("_id", id)
         this.put("name", name)
         this.put("creator", creatorId)
+        this.put("labels", Sets.newHashSet(new LabelDto(id, "test name", Sets.newLinkedHashSet(Sets.newHashSet(
+            new TaskDto(ObjectId.get(), "test name", "#2b2b2b", "test content"),
+            new TaskDto(ObjectId.get(), "test name 2", "#2b2b2b", "test content")
+        )))))
       }
     }
 

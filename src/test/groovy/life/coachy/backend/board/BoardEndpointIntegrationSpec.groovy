@@ -83,4 +83,45 @@ class BoardEndpointIntegrationSpec extends IntegrationSpec implements SampleBoar
       createEndpoint.andExpect(status().isBadRequest())
   }
 
+  def "delete label endpoint should delete the label"() {
+    given: "we have one board and one user in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("board.${id}.update"))
+      setUpBoard(id, "test", user.get("_id"))
+    when: "I do delete to /api/boards/{boardId}/labels/{labelId}"
+      ResultActions deleteEndpoint = mockMvc.perform(delete("/api/boards/{boardId}/labels/{labelId}", id, id)
+          .with(httpBasic("yang160", "password123")))
+    then:
+      deleteEndpoint.andExpect(status().isOk())
+  }
+
+  def "delete label endpoint should return 403 if user does not have required permission"() {
+    given: "we have one board and one user in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      setUpBoard(id, "test", user.get("_id"))
+    when: "I do delete to /api/boards/{boardId}/labels/{labelId}"
+      ResultActions deleteEndpoint = mockMvc.perform(delete("/api/boards/{boardId}/labels/{labelId}", id, id)
+          .with(httpBasic("yang160", "password123")))
+    then:
+      deleteEndpoint.andExpect(status().isForbidden())
+  }
+
+  def "delete label endpoint should return 401 if user is unauthorized"() {
+    given: "we have one board in system"
+      setUpBoard(id, "test", ObjectId.get())
+    when: "I do delete to /api/boards/{boardId}/labels/{labelId}"
+      ResultActions deleteEndpoint = mockMvc.perform(delete("/api/boards/{boardId}/labels/{labelId}", id, id))
+    then:
+      deleteEndpoint.andExpect(status().isUnauthorized())
+  }
+
+  def "delete label endpoint should return 404 if specified boardId does not belong to any existing board"() {
+    given: "we have one user in system"
+      setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("board.${id}.update"))
+    when: "I do delete to /api/boards/{boardId}/labels/{labelId}"
+      ResultActions deleteEndpoint = mockMvc.perform(delete("/api/boards/{boardId}/labels/{labelId}", id, id)
+          .with(httpBasic("yang160", "password123")))
+    then:
+      deleteEndpoint.andExpect(status().isNotFound())
+  }
+
 }
