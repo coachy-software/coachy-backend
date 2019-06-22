@@ -33,7 +33,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Displays all notifications belonging to specified user's id")
-  @RequiresPermissions("user.{id}.read")
+  @RequiresPermissions("user.{recipientId}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}")
   Page<NotificationQueryDto> fetchAllByRecipientId(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId,
@@ -42,7 +42,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Marks all notifications belonging to specified user as read")
-  @RequiresPermissions("user.{id}.read")
+  @RequiresPermissions("user.{recipientId}.read")
   @RequiresAuthenticated
   @PostMapping("{recipientId}/mark-as-read")
   ResponseEntity<?> markAllAsRead(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
@@ -51,7 +51,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Returns true/false if user has or has not any unread notification")
-  @RequiresPermissions("user.{id}.read")
+  @RequiresPermissions("user.{recipientId}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}/has-unread")
   ResponseEntity<Map<String, Object>> hasAnyUnread(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {

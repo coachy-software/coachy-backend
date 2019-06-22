@@ -28,10 +28,10 @@ class ScheduleOperationsEndpoint {
   }
 
   @ApiOperation("Accepts the schedule")
-  @RequiresPermissions("schedule.{id}.accept")
+  @RequiresPermissions("schedule.{scheduleId}.accept")
   @RequiresAuthenticated
-  @PostMapping("{id}/accept")
-  ResponseEntity<?> accept(@ApiParam("Schedule identifier") @PathVariable("id") ObjectId scheduleId, @RequestBody Map<String, String> payload) {
+  @PostMapping("{scheduleId}/accept")
+  ResponseEntity<?> accept(@ApiParam("Schedule identifier") @PathVariable ObjectId scheduleId, @RequestBody Map<String, String> payload) {
     if (payload.get("token") == null) {
       return ResponseEntity.badRequest().build();
     }
@@ -41,10 +41,10 @@ class ScheduleOperationsEndpoint {
   }
 
   @ApiOperation("Rejects the schedule")
-  @RequiresPermissions("schedule.{id}.accept")
+  @RequiresPermissions("schedule.{scheduleId}.accept")
   @RequiresAuthenticated
-  @PostMapping("{id}/reject")
-  ResponseEntity<?> reject(@ApiParam("Schedule identifier") @PathVariable("id") ObjectId scheduleId, @RequestBody Map<String, String> payload) {
+  @PostMapping("{scheduleId}/reject")
+  ResponseEntity<?> reject(@ApiParam("Schedule identifier") @PathVariable ObjectId scheduleId, @RequestBody Map<String, String> payload) {
     if (payload.get("token") == null) {
       return ResponseEntity.badRequest().build();
     }

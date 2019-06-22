@@ -1,6 +1,8 @@
 package life.coachy.backend.infrastructure.permission;
 
 import com.google.common.collect.Lists;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +20,8 @@ import org.springframework.util.StringUtils;
 @Component
 class PermissionAspect {
 
+  private String idPattern = "{id}";
+
   @Around("@annotation(RequiresPermissions)")
   public Object permission(ProceedingJoinPoint joinPoint) throws Throwable {
     List<Boolean> permissionsValues = Lists.newArrayList();
@@ -31,31 +35,46 @@ class PermissionAspect {
   }
 
   private String getHexObjectId(ProceedingJoinPoint joinPoint) {
-    for (Object arg : joinPoint.getArgs()) {
-      if (arg.getClass().equals(ObjectId.class)) {
-        return String.valueOf(arg);
+    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    Method method = signature.getMethod();
+
+    this.obtainIdPattern(signature.getMethod().getAnnotation(RequiresPermissions.class));
+
+    for (Parameter parameter : method.getParameters()) {
+      for (Object arg : joinPoint.getArgs()) {
+        if (arg.getClass().equals(ObjectId.class) && this.idPattern.equals(parameter.getName())) {
+          return String.valueOf(arg);
+        }
       }
     }
+
     return "";
   }
 
   private void addPermissionsValues(ProceedingJoinPoint joinPoint, List<Boolean> permissionsValues, String hexObjectId) {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-    RequiresPermissions myAnnotation = signature.getMethod().getAnnotation(RequiresPermissions.class);
+    RequiresPermissions annotation = signature.getMethod().getAnnotation(RequiresPermissions.class);
 
     String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     Set<String> permissions = this.mapPermissionsStringsToSet(principal, hexObjectId);
 
-    for (String permission : myAnnotation.value()) {
-      String formattedPermission = StringUtils.replace(permission, "{id}", hexObjectId);
-      permissionsValues.add(permissions.contains(formattedPermission));
-    }
+    String formattedPermission = StringUtils.replace(annotation.value(), "{" + this.idPattern + "}", hexObjectId);
+    permissionsValues.add(permissions.contains(formattedPermission));
+  }
+
+  private void obtainIdPattern(RequiresPermissions annotation) {
+    String permission = annotation.value();
+
+    int leftBracket = permission.indexOf("{");
+    int rightBracket = permission.indexOf("}");
+
+    this.idPattern = permission.substring(leftBracket + 1, rightBracket);
   }
 
   private Set<String> mapPermissionsStringsToSet(String principalContent, String hexObjectId) {
     return Stream.of(this.getPermissionsString(principalContent).split(","))
         .map(String::trim)
-        .map(permission -> permission.replace("{id}", hexObjectId))
+        .map(permission -> permission.replace(this.idPattern, hexObjectId))
         .collect(Collectors.toSet());
   }
 
