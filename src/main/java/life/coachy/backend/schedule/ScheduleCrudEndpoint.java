@@ -10,7 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
 import life.coachy.backend.schedule.domain.dto.ScheduleCreateCommandDto;
 import life.coachy.backend.schedule.domain.dto.ScheduleUpdateCommandDto;
@@ -61,7 +61,7 @@ class ScheduleCrudEndpoint {
     return ResponseEntity.ok(this.facade.fetchAll(predicate, pageable));
   }
 
-  @RequiresPermissions("schedule.{id}.read")
+  @RequiresPermission("schedule.{id}.read")
   @RequiresAuthenticated
   @ApiOperation("Displays specified schedule query data transfer object by identifier")
   @ApiResponses({
@@ -73,7 +73,7 @@ class ScheduleCrudEndpoint {
     return ResponseEntity.ok(this.facade.fetchOne(id));
   }
 
-  @RequiresPermissions("schedule.{id}.update")
+  @RequiresPermission("schedule.{id}.update")
   @RequiresAuthenticated
   @ApiOperation("Updates schedule by identifier")
   @ApiResponses({
@@ -86,7 +86,7 @@ class ScheduleCrudEndpoint {
     return ResponseEntity.noContent().build();
   }
 
-  @RequiresPermissions("schedule.{id}.delete")
+  @RequiresPermission("schedule.{id}.delete")
   @RequiresAuthenticated
   @ApiOperation("Deletes schedule by identifier")
   @ApiResponses({

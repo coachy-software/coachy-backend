@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiParam;
 import java.util.Map;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.schedule.domain.ScheduleFacade;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class ScheduleOperationsEndpoint {
   }
 
   @ApiOperation("Accepts the schedule")
-  @RequiresPermissions("schedule.{scheduleId}.accept")
+  @RequiresPermission("schedule.{scheduleId}.accept")
   @RequiresAuthenticated
   @PostMapping("{scheduleId}/accept")
   ResponseEntity<?> accept(@ApiParam("Schedule identifier") @PathVariable ObjectId scheduleId, @RequestBody Map<String, String> payload) {
@@ -41,7 +41,7 @@ class ScheduleOperationsEndpoint {
   }
 
   @ApiOperation("Rejects the schedule")
-  @RequiresPermissions("schedule.{scheduleId}.accept")
+  @RequiresPermission("schedule.{scheduleId}.accept")
   @RequiresAuthenticated
   @PostMapping("{scheduleId}/reject")
   ResponseEntity<?> reject(@ApiParam("Schedule identifier") @PathVariable ObjectId scheduleId, @RequestBody Map<String, String> payload) {

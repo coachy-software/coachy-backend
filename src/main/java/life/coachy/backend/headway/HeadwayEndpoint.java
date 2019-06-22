@@ -10,7 +10,7 @@ import life.coachy.backend.headway.query.HeadwayQueryDto;
 import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ class HeadwayEndpoint {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions("user.{id}.read")
+  @RequiresPermission("user.{id}.read")
   @ApiOperation("Displays all headways, that belong to specified owner id")
   @GetMapping("/by-owner/{id}")
   ResponseEntity<Set<HeadwayQueryDto>> fetchAll(@ApiParam("Headway's owner identifier") @PathVariable ObjectId id) {
@@ -50,7 +50,7 @@ class HeadwayEndpoint {
   }
 
   @ApiOperation("Deletes a headway")
-  @RequiresPermissions("headway.{id}.delete")
+  @RequiresPermission("headway.{id}.delete")
   @RequiresAuthenticated
   @DeleteMapping("{id}")
   ResponseEntity<?> delete(@ApiParam("Headway identifier") @PathVariable ObjectId id) {
@@ -58,7 +58,7 @@ class HeadwayEndpoint {
     return ResponseEntity.ok().build();
   }
 
-  @RequiresPermissions("headway.{id}.read")
+  @RequiresPermission("headway.{id}.read")
   @ApiOperation("Displays one headway by its id")
   @RequiresAuthenticated
   @GetMapping("{id}")
@@ -66,7 +66,7 @@ class HeadwayEndpoint {
     return ResponseEntity.ok(this.headwayFacade.fetchOne(id));
   }
 
-  @RequiresPermissions("headway.{id}.read")
+  @RequiresPermission("headway.{id}.read")
   @ApiOperation("Shares the headway with some other user")
   @RequiresAuthenticated
   @PostMapping("{id}/share")

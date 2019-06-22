@@ -7,7 +7,7 @@ import life.coachy.backend.conversation.message.domain.MessageFacade;
 import life.coachy.backend.conversation.message.query.MessageQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ class MessageEndpoint {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions("conversation.{id}.read")
+  @RequiresPermission("conversation.{id}.read")
   @ApiOperation("Displays all messages by conversation identifier")
   @GetMapping("{id}")
   ResponseEntity<Set<MessageQueryDto>> findAll(@ApiParam("Conversation identifier") @PathVariable ObjectId id) {

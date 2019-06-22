@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.notification.domain.NotificationFacade;
 import life.coachy.backend.notification.query.NotificationQueryDto;
 import org.bson.types.ObjectId;
@@ -33,7 +33,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Displays all notifications belonging to specified user's id")
-  @RequiresPermissions("user.{recipientId}.read")
+  @RequiresPermission("user.{recipientId}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}")
   Page<NotificationQueryDto> fetchAllByRecipientId(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId,
@@ -42,7 +42,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Marks all notifications belonging to specified user as read")
-  @RequiresPermissions("user.{recipientId}.read")
+  @RequiresPermission("user.{recipientId}.read")
   @RequiresAuthenticated
   @PostMapping("{recipientId}/mark-as-read")
   ResponseEntity<?> markAllAsRead(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {
@@ -51,7 +51,7 @@ class NotificationEndpoint {
   }
 
   @ApiOperation("Returns true/false if user has or has not any unread notification")
-  @RequiresPermissions("user.{recipientId}.read")
+  @RequiresPermission("user.{recipientId}.read")
   @RequiresAuthenticated
   @GetMapping("{recipientId}/has-unread")
   ResponseEntity<Map<String, Object>> hasAnyUnread(@PathVariable @ApiParam("Notification's recipient id") ObjectId recipientId) {

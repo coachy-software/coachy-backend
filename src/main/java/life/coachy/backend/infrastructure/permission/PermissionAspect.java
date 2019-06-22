@@ -22,7 +22,7 @@ class PermissionAspect {
 
   private String idPattern = "{id}";
 
-  @Around("@annotation(RequiresPermissions)")
+  @Around("@annotation(life.coachy.backend.infrastructure.permission.RequiresPermission)")
   public Object permission(ProceedingJoinPoint joinPoint) throws Throwable {
     List<Boolean> permissionsValues = Lists.newArrayList();
     this.addPermissionsValues(joinPoint, permissionsValues, this.getHexObjectId(joinPoint));
@@ -38,7 +38,7 @@ class PermissionAspect {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
     Method method = signature.getMethod();
 
-    this.obtainIdPattern(signature.getMethod().getAnnotation(RequiresPermissions.class));
+    this.obtainIdPattern(signature.getMethod().getAnnotation(RequiresPermission.class));
 
     for (Parameter parameter : method.getParameters()) {
       for (Object arg : joinPoint.getArgs()) {
@@ -53,7 +53,7 @@ class PermissionAspect {
 
   private void addPermissionsValues(ProceedingJoinPoint joinPoint, List<Boolean> permissionsValues, String hexObjectId) {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-    RequiresPermissions annotation = signature.getMethod().getAnnotation(RequiresPermissions.class);
+    RequiresPermission annotation = signature.getMethod().getAnnotation(RequiresPermission.class);
 
     String principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     Set<String> permissions = this.mapPermissionsStringsToSet(principal, hexObjectId);
@@ -62,7 +62,7 @@ class PermissionAspect {
     permissionsValues.add(permissions.contains(formattedPermission));
   }
 
-  private void obtainIdPattern(RequiresPermissions annotation) {
+  private void obtainIdPattern(RequiresPermission annotation) {
     String permission = annotation.value();
 
     int leftBracket = permission.indexOf("{");

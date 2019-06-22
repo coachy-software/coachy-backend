@@ -11,7 +11,7 @@ import life.coachy.backend.board.domain.dto.BoardUpdateCommandDto;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ class BoardEndpoint {
     this.boardFacade = boardFacade;
   }
 
-  @RequiresPermissions("board.{id}.read")
+  @RequiresPermission("board.{id}.read")
   @RequiresAuthenticated
   @ApiOperation("Displays specified board query data transfer object by identifier")
   @ApiResponses({
@@ -47,7 +47,7 @@ class BoardEndpoint {
     return ResponseEntity.ok(this.boardFacade.fetchOne(id));
   }
 
-  @RequiresPermissions("board.{id}.update")
+  @RequiresPermission("board.{id}.update")
   @RequiresAuthenticated
   @ApiOperation("Updates board by identifier")
   @ApiResponses({
@@ -74,7 +74,7 @@ class BoardEndpoint {
 
   @RequiresAuthenticated
   @ApiOperation("Deletes specified label for the board")
-  @RequiresPermissions("board.{boardId}.update")
+  @RequiresPermission("board.{boardId}.update")
   @DeleteMapping("{boardId}/labels/{labelId}")
   public ResponseEntity<BoardQueryDto> deleteLabel(@PathVariable ObjectId boardId, @PathVariable ObjectId labelId) {
     this.boardFacade.deleteLabel(boardId, labelId);

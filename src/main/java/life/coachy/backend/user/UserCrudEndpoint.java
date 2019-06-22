@@ -8,7 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
@@ -62,7 +62,7 @@ class UserCrudEndpoint {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions("user.{id}.update")
+  @RequiresPermission("user.{id}.update")
   @ApiOperation("Updates entire user entity by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),
@@ -76,7 +76,7 @@ class UserCrudEndpoint {
   }
 
   @RequiresAuthenticated
-  @RequiresPermissions("user.{id}.delete")
+  @RequiresPermission("user.{id}.delete")
   @ApiOperation("Deletes user by identifier")
   @ApiResponses({
       @ApiResponse(code = 404, message = "User not found"),

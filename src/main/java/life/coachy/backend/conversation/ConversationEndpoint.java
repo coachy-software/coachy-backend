@@ -8,7 +8,7 @@ import life.coachy.backend.conversation.domain.dto.ConversationDto;
 import life.coachy.backend.conversation.query.ConversationQueryDto;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermissions;
+import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ class ConversationEndpoint {
 
   @ApiOperation("Displays all user's conversations by recipient or sender identifier")
   @RequiresAuthenticated
-  @RequiresPermissions("user.{id}.read")
+  @RequiresPermission("user.{id}.read")
   @GetMapping("by-converser/{id}")
   ResponseEntity<List<ConversationQueryDto>> fetchAll(@PathVariable @ApiParam("Recipient or sender id") ObjectId id, Pageable pageable) {
     return ResponseEntity.ok(this.conversationFacade.fetchAll(id, pageable).getContent());
@@ -40,7 +40,7 @@ class ConversationEndpoint {
 
   @ApiOperation("Displays the conversation's details")
   @RequiresAuthenticated
-  @RequiresPermissions("conversation.{id}.read")
+  @RequiresPermission("conversation.{id}.read")
   @GetMapping("{id}")
   public ResponseEntity<ConversationQueryDto> fetchOne(@PathVariable @ApiParam("Conversation id") ObjectId id) {
     return ResponseEntity.ok(this.conversationFacade.fetchOne(id));
