@@ -1,7 +1,11 @@
 package life.coachy.backend.board.domain;
 
+import com.google.common.collect.Sets;
+import java.util.Set;
+import java.util.stream.Collectors;
 import life.coachy.backend.board.domain.dto.BoardCreateCommandDto;
 import life.coachy.backend.board.domain.exception.BoardNotFoundException;
+import life.coachy.backend.board.label.LabelDto;
 import life.coachy.backend.board.query.BoardQueryDto;
 import life.coachy.backend.board.query.BoardQueryRepository;
 import life.coachy.backend.user.domain.UserFacade;
@@ -31,6 +35,15 @@ class BoardService {
     board.setOwnerId(queryDto.getOwnerId());
 
     this.repository.save(board);
+  }
+
+  void deleteLabel(Board board, BoardQueryDto queryDto, ObjectId labelId) {
+    Set<LabelDto> labels = queryDto.getLabels().stream().filter(label -> !label.getIdentifier().equals(labelId)).collect(Collectors.toSet());
+
+    board.setIdentifier(queryDto.getIdentifier());
+    board.setLabels(Sets.newLinkedHashSet(labels));
+
+    this.save(board);
   }
 
   BoardQueryDto fetchOne(ObjectId id) {

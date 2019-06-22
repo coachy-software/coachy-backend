@@ -18,17 +18,17 @@ final class BoardBuilder implements Buildable<Board> {
     return new BoardBuilder();
   }
 
-  public BoardBuilder withName(String name) {
+  BoardBuilder withName(String name) {
     this.name = name;
     return this;
   }
 
-  public BoardBuilder withLabels(LinkedHashSet<LabelDto> labels) {
+  BoardBuilder withLabels(LinkedHashSet<LabelDto> labels) {
     this.labels = labels;
     return this;
   }
 
-  public BoardBuilder withOwnerId(ObjectId ownerId) {
+  BoardBuilder withOwnerId(ObjectId ownerId) {
     this.ownerId = ownerId;
     return this;
   }

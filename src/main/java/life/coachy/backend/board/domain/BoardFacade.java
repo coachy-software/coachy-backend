@@ -37,4 +37,9 @@ public class BoardFacade {
     return this.boardService.fetchOne(id);
   }
 
+  public void deleteLabel(ObjectId boardId, ObjectId labelId) {
+    BoardQueryDto queryDto = this.fetchOne(boardId);
+    this.boardService.deleteLabel(this.boardCreator.from(queryDto), queryDto, labelId);
+  }
+
 }

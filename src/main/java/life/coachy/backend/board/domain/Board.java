@@ -24,16 +24,20 @@ class Board {
     this.ownerId = builder.ownerId;
   }
 
-  public static BoardBuilder builder() {
+  static BoardBuilder builder() {
     return BoardBuilder.create();
   }
 
-  public void setIdentifier(ObjectId identifier) {
+  void setIdentifier(ObjectId identifier) {
     this.identifier = identifier;
   }
 
-  public void setOwnerId(ObjectId ownerId) {
+  void setOwnerId(ObjectId ownerId) {
     this.ownerId = ownerId;
+  }
+
+  void setLabels(LinkedHashSet<LabelDto> labels) {
+    this.labels = labels;
   }
 
 }

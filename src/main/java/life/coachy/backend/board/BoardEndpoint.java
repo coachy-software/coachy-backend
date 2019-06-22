@@ -15,6 +15,7 @@ import life.coachy.backend.infrastructure.permission.RequiresPermissions;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +70,15 @@ class BoardEndpoint {
   @PostMapping
   public ResponseEntity<BoardQueryDto> create(@Valid @RequestBody BoardCreateCommandDto dto) {
     return ResponseEntity.created(this.boardFacade.create(dto)).build();
+  }
+
+  @RequiresAuthenticated
+  @ApiOperation("Deletes specified label for the board")
+  @RequiresPermissions("board.{boardId}.update")
+  @DeleteMapping("{boardId}/labels/{labelId}")
+  public ResponseEntity<BoardQueryDto> deleteLabel(@PathVariable ObjectId boardId, @PathVariable ObjectId labelId) {
+    this.boardFacade.deleteLabel(boardId, labelId);
+    return ResponseEntity.ok().build();
   }
 
 }
