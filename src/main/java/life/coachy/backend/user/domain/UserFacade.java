@@ -1,6 +1,7 @@
 package life.coachy.backend.user.domain;
 
 import java.util.List;
+import life.coachy.backend.profile.domain.ProfileFacade;
 import life.coachy.backend.user.domain.dto.UserChangePasswordCommandDto;
 import life.coachy.backend.user.domain.dto.UserRegisterCommandDto;
 import life.coachy.backend.user.domain.dto.UserUpdateCommandDto;
@@ -11,17 +12,21 @@ public class UserFacade {
 
   private final UserOperationsService operationsService;
   private final UserCrudService crudService;
+  private final ProfileFacade profileFacade;
   private final UserCreator creator;
 
-  public UserFacade(UserOperationsService operationsService, UserCrudService crudService, UserCreator creator) {
+  public UserFacade(UserOperationsService operationsService, UserCrudService crudService, ProfileFacade profileFacade, UserCreator creator) {
     this.operationsService = operationsService;
     this.crudService = crudService;
+    this.profileFacade = profileFacade;
     this.creator = creator;
   }
 
   public void register(UserRegisterCommandDto dto) {
     this.operationsService.checkIfUsernameOrEmailExists(dto.getUsername(), dto.getEmail(), () -> {
       User user = this.crudService.save(this.creator.from(dto));
+
+      this.profileFacade.createProfile(user.identifier);
       this.operationsService.addPermissions(user.identifier,
           "user." + user.identifier + ".update",
           "user." + user.identifier + ".delete",

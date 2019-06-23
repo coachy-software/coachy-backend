@@ -13,6 +13,7 @@ public final class ApiLayers {
   public static final String MESSAGES = API_ROOT + "messages";
   public static final String HEADWAYS = API_ROOT + "headways";
   public static final String NOTIFICATIONS = API_ROOT + "notifications";
+  public static final String PROFILES = API_ROOT + "profiles";
 
   private ApiLayers() {}
 

@@ -44,6 +44,7 @@ class UserCrudEndpoint {
     this.queryOperationsFactory = queryOperationsFactory;
   }
 
+  @RequiresAuthenticated
   @ApiOperation("Displays users that matches criteria, only if criteria present, otherwise displays all users")
   @GetMapping
   public ResponseEntity<List<UserQueryDto>> fetchAll(@QuerydslPredicate(bindings = UserQueryBinder.class) Predicate predicate, Pageable pageable) {
