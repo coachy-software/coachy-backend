@@ -45,8 +45,8 @@ class ProfileCreator {
         .withLocation(dto.getLocation())
         .withServices(dto.getServices())
         .withSocialLinks(dto.getSocialLinks())
-        .withFollowers(Sets.newHashSet())
-        .withFollowing(Sets.newHashSet())
+        .withFollowers(dto.getFollowers())
+        .withFollowing(dto.getFollowing())
         .build();
   }
 

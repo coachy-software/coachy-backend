@@ -31,7 +31,7 @@ class ProfileOperationsEndpoint {
   @RequiresPermission("user.{userId}.update")
   @PostMapping("{id}/follow")
   ResponseEntity<?> follow(@PathVariable("id") ObjectId userId, @AuthenticatedUser UserQueryDto queryDto) {
-    this.profileFacade.follow(userId, queryDto.getIdentifier());
+    this.profileFacade.toggleFollow(true, userId, queryDto.getIdentifier());
     return ResponseEntity.ok().build();
   }
 
@@ -40,7 +40,7 @@ class ProfileOperationsEndpoint {
   @RequiresPermission("user.{userId}.update")
   @PostMapping("{id}/unfollow")
   ResponseEntity<?> unfollow(@PathVariable("id") ObjectId userId, @AuthenticatedUser UserQueryDto queryDto) {
-    this.profileFacade.unfollow(userId, queryDto.getIdentifier());
+    this.profileFacade.toggleFollow(false, userId, queryDto.getIdentifier());
     return ResponseEntity.ok().build();
   }
 
