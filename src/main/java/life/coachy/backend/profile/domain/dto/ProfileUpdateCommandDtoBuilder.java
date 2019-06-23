@@ -1,9 +1,9 @@
 package life.coachy.backend.profile.domain.dto;
 
 import java.util.Set;
-import javafx.util.Builder;
+import life.coachy.backend.infrastructure.util.Buildable;
 
-public final class ProfileUpdateCommandDtoBuilder implements Builder<ProfileUpdateCommandDto> {
+public final class ProfileUpdateCommandDtoBuilder implements Buildable<ProfileUpdateCommandDto> {
 
   String website;
   String title;
