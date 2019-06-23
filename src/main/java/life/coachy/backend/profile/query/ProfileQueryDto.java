@@ -21,6 +21,8 @@ public class ProfileQueryDto implements QueryDtoMarker {
   private String location;
   private Set<String> services;
   private Set<String> socialLinks;
+  private Set<ObjectId> followers;
+  private Set<ObjectId> following;
 
   public ObjectId getIdentifier() {
     return this.identifier;
@@ -56,6 +58,14 @@ public class ProfileQueryDto implements QueryDtoMarker {
 
   public Set<String> getSocialLinks() {
     return this.socialLinks;
+  }
+
+  public Set<ObjectId> getFollowers() {
+    return this.followers;
+  }
+
+  public Set<ObjectId> getFollowing() {
+    return this.following;
   }
 
 }

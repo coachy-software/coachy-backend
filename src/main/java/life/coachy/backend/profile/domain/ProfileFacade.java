@@ -43,6 +43,22 @@ public class ProfileFacade {
     return this.operationsFactory.obtainOperation(predicate, pageable, this.queryRepository);
   }
 
+  public void follow(ObjectId followingId, ObjectId followerId) {
+    ProfileQueryDto followingProfile = this.fetchOneOrThrow(followingId);
+    ProfileQueryDto followerProfile = this.fetchOneOrThrow(followerId);
+
+    this.profileService.toggleFollow(true, this.profileCreator.from(followingProfile), followingProfile, followerId);
+    this.profileService.toggleFollowing(true, this.profileCreator.from(followerProfile), followerProfile, followingId);
+  }
+
+  public void unfollow(ObjectId followingId, ObjectId followerId) {
+    ProfileQueryDto followingProfile = this.fetchOneOrThrow(followingId);
+    ProfileQueryDto followerProfile = this.fetchOneOrThrow(followerId);
+
+    this.profileService.toggleFollow(false, this.profileCreator.from(followingProfile), followingProfile, followerId);
+    this.profileService.toggleFollowing(false, this.profileCreator.from(followerProfile), followerProfile, followingId);
+  }
+
   private ProfileQueryDto fetchOneOrThrow(ObjectId userId) {
     return this.queryRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new);
   }

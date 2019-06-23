@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApiLayers.PROFILES)
-class ProfileEndpoint {
+class ProfileCrudEndpoint {
 
   private final ProfileFacade profileFacade;
 
   @Autowired
-  ProfileEndpoint(ProfileFacade profileFacade) {
+  ProfileCrudEndpoint(ProfileFacade profileFacade) {
     this.profileFacade = profileFacade;
   }
 
