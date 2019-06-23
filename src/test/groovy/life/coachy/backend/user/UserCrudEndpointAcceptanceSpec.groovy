@@ -12,9 +12,7 @@ import org.springframework.test.web.servlet.ResultActions
 import static org.hamcrest.Matchers.is
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class UserCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleUsers {
 
@@ -83,7 +81,8 @@ class UserCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleUs
       BasicDBObject firstUser = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
       BasicDBObject secondUser = setUpUser(ObjectId.get(), "yang161", "password123", Collections.emptySet())
     when: "I go to /api/users"
-      ResultActions usersEndpoint = mockMvc.perform(get("/api/users"))
+      ResultActions usersEndpoint = mockMvc.perform(get("/api/users")
+          .with(httpBasic("yang160", "password123")))
     then: "I see all users"
       usersEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
