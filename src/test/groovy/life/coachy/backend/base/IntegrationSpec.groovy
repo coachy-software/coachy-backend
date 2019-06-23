@@ -163,6 +163,20 @@ class IntegrationSpec extends Specification {
     return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.REQUESTS)
   }
 
+  def setUpProfile(ObjectId profileId, ObjectId userId) {
+    Map<String, Object> templateDetials = new HashMap<String, Object>() {
+      {
+        this.put("_id", profileId)
+        this.put("userId", userId)
+        this.put("website", "website")
+        this.put("followers", Sets.newHashSet())
+        this.put("following", Sets.newHashSet())
+      }
+    }
+
+    return this.mongoTemplate.insert(new BasicDBObject(templateDetials), MongoCollections.PROFILES)
+  }
+
   void cleanup() {
     mongoTemplate.dropCollection(MongoCollections.SCHEDULES)
     mongoTemplate.dropCollection(MongoCollections.USERS)
@@ -174,6 +188,7 @@ class IntegrationSpec extends Specification {
     mongoTemplate.dropCollection(MongoCollections.HEADWAYS)
     mongoTemplate.dropCollection(MongoCollections.NOTIFICATIONS)
     mongoTemplate.dropCollection(MongoCollections.REQUESTS)
+    mongoTemplate.dropCollection(MongoCollections.PROFILES)
   }
 
 }

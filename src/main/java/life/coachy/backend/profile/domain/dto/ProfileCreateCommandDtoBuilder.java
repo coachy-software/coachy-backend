@@ -2,6 +2,7 @@ package life.coachy.backend.profile.domain.dto;
 
 import java.util.Set;
 import life.coachy.backend.infrastructure.util.Buildable;
+import life.coachy.backend.profile.social.dto.SocialDto;
 import org.bson.types.ObjectId;
 
 public final class ProfileCreateCommandDtoBuilder implements Buildable<ProfileCreateCommandDto> {
@@ -13,7 +14,7 @@ public final class ProfileCreateCommandDtoBuilder implements Buildable<ProfileCr
   String bannerUrl;
   String location;
   Set<String> services;
-  Set<String> socialLinks;
+  Set<SocialDto> socialLinks;
 
   private ProfileCreateCommandDtoBuilder() {}
 
@@ -56,7 +57,7 @@ public final class ProfileCreateCommandDtoBuilder implements Buildable<ProfileCr
     return this;
   }
 
-  public ProfileCreateCommandDtoBuilder withSocialLinks(Set<String> socialLinks) {
+  public ProfileCreateCommandDtoBuilder withSocialLinks(Set<SocialDto> socialLinks) {
     this.socialLinks = socialLinks;
     return this;
   }

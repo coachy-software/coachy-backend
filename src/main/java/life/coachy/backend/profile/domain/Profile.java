@@ -2,6 +2,7 @@ package life.coachy.backend.profile.domain;
 
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
+import life.coachy.backend.profile.social.dto.SocialDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +18,7 @@ class Profile {
   private String bannerUrl;
   private String location;
   private Set<String> services;
-  private Set<String> socialLinks;
+  private Set<SocialDto> socialLinks;
   private Set<ObjectId> followers;
   private Set<ObjectId> following;
 

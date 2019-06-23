@@ -2,6 +2,7 @@ package life.coachy.backend.profile.domain.dto;
 
 import java.util.Set;
 import javax.validation.constraints.NotNull;
+import life.coachy.backend.profile.social.dto.SocialDto;
 
 public class ProfileUpdateCommandDto {
 
@@ -11,7 +12,7 @@ public class ProfileUpdateCommandDto {
   @NotNull private String bannerUrl;
   @NotNull private String location;
   @NotNull private Set<String> services;
-  @NotNull private Set<String> socialLinks;
+  @NotNull private Set<SocialDto> socialLinks;
 
   ProfileUpdateCommandDto() {}
 
@@ -49,7 +50,7 @@ public class ProfileUpdateCommandDto {
     return this.services;
   }
 
-  public Set<String> getSocialLinks() {
+  public Set<SocialDto> getSocialLinks() {
     return this.socialLinks;
   }
 
