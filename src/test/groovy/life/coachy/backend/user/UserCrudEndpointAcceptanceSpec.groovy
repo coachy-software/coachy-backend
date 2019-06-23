@@ -92,7 +92,8 @@ class UserCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleUs
             ]
           """))
     when: "I go to /api/users?page=0&size=1"
-      ResultActions paginationEndpoint = mockMvc.perform(get("/api/users?page=0&size=1"))
+      ResultActions paginationEndpoint = mockMvc.perform(get("/api/users?page=0&size=1")
+          .with(httpBasic("yang160", "password123")))
     then: "I see only one user"
       paginationEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
@@ -101,7 +102,8 @@ class UserCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleUs
             ]
           """))
     when: "I go to /api/users?username=yang161"
-      ResultActions searchEndpoint = mockMvc.perform(get("/api/users?username=yang161"))
+      ResultActions searchEndpoint = mockMvc.perform(get("/api/users?username=yang161")
+          .with(httpBasic("yang160", "password123")))
     then: "I see only one user named 'yang161'"
       searchEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
