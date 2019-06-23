@@ -1,7 +1,14 @@
 package life.coachy.backend.profile.domain;
 
+import com.google.common.collect.Maps;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Set;
+import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter;
+import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
+import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder;
 import life.coachy.backend.profile.query.ProfileQueryDto;
+import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +17,12 @@ import org.springframework.stereotype.Service;
 class ProfileService {
 
   private final ProfileRepository profileRepository;
+  private final ObjectToJsonConverter toJsonConverter;
 
   @Autowired
-  ProfileService(ProfileRepository profileRepository) {
+  ProfileService(ProfileRepository profileRepository, ObjectToJsonConverter toJsonConverter) {
     this.profileRepository = profileRepository;
+    this.toJsonConverter = toJsonConverter;
   }
 
   void save(Profile profile) {
@@ -27,6 +36,21 @@ class ProfileService {
     profile.setFollowing(queryDto.getFollowing());
 
     this.save(profile);
+  }
+
+  NotificationMessageDto makeNotificationMessage(UserQueryDto sender, UserQueryDto recipient) {
+    return NotificationMessageDtoBuilder.create()
+        .withSenderName(sender.getUsername())
+        .withSenderAvatar(sender.getAvatar())
+        .withSenderId(sender.getIdentifier())
+        .withType("ALERT")
+        .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
+          this.put("link", "/profiles/" + sender.getIdentifier());
+          this.put("text", "followed");
+        }})))
+        .withRecipientId(recipient.getIdentifier())
+        .withCreatedAt(LocalDateTime.now())
+        .build();
   }
 
   void toggleFollowing(boolean force, Profile followerProfile, ProfileQueryDto followerQueryDto, ObjectId followingId) {

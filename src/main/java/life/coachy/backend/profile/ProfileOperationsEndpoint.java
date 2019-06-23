@@ -32,6 +32,7 @@ class ProfileOperationsEndpoint {
   @PostMapping("{id}/follow")
   ResponseEntity<?> follow(@PathVariable("id") ObjectId userId, @AuthenticatedUser UserQueryDto queryDto) {
     this.profileFacade.toggleFollow(true, userId, queryDto.getIdentifier());
+    this.profileFacade.sendNotification(queryDto, userId);
     return ResponseEntity.ok().build();
   }
 
