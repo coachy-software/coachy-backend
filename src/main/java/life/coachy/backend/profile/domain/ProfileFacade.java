@@ -1,7 +1,9 @@
 package life.coachy.backend.profile.domain;
 
+import com.google.common.collect.Sets;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
+import java.util.Set;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.notification.domain.NotificationFacade;
 import life.coachy.backend.profile.domain.dto.ProfileCreateCommandDtoBuilder;
@@ -42,14 +44,6 @@ public class ProfileFacade {
     this.profileService.update(this.profileCreator.from(dto), queryDto);
   }
 
-  public ProfileQueryDto fetchByUserId(ObjectId userId) {
-    return this.fetchOneOrThrow(userId);
-  }
-
-  public List<ProfileQueryDto> fetchAll(Predicate predicate, Pageable pageable) {
-    return this.operationsFactory.obtainOperation(predicate, pageable, this.queryRepository);
-  }
-
   public void toggleFollow(boolean force, ObjectId followingId, ObjectId followerId) {
     ProfileQueryDto followingProfile = this.fetchOneOrThrow(followingId);
     ProfileQueryDto followerProfile = this.fetchOneOrThrow(followerId);
@@ -60,6 +54,30 @@ public class ProfileFacade {
 
   public void sendNotification(UserQueryDto sender, ObjectId recipientId) {
     this.notificationFacade.sendNotificationToUser(this.profileService.makeNotificationMessage(sender, this.userFacade.fetchOne(recipientId)));
+  }
+
+  public List<ProfileQueryDto> fetchAll(Predicate predicate, Pageable pageable) {
+    return this.operationsFactory.obtainOperation(predicate, pageable, this.queryRepository);
+  }
+
+  public Set<UserQueryDto> fetchFollowers(ObjectId id) {
+    ProfileQueryDto queryDto = this.fetchOneOrThrow(id);
+    Set<UserQueryDto> followers = Sets.newHashSet();
+
+    queryDto.getFollowers().forEach(followerId -> followers.add(this.userFacade.fetchOne(followerId)));
+    return followers;
+  }
+
+  public Set<UserQueryDto> fetchFollowing(ObjectId id) {
+    ProfileQueryDto queryDto = this.fetchOneOrThrow(id);
+    Set<UserQueryDto> following = Sets.newHashSet();
+
+    queryDto.getFollowing().forEach(followingUserId -> following.add(this.userFacade.fetchOne(followingUserId)));
+    return following;
+  }
+
+  public ProfileQueryDto fetchByUserId(ObjectId userId) {
+    return this.fetchOneOrThrow(userId);
   }
 
   private ProfileQueryDto fetchOneOrThrow(ObjectId userId) {
