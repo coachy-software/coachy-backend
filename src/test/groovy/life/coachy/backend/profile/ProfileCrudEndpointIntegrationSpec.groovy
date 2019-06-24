@@ -31,16 +31,6 @@ class ProfileCrudEndpointIntegrationSpec extends IntegrationSpec implements Samp
       fetchOneEndpoint.andExpect(status().isUnauthorized())
   }
 
-  def "fetch one endpoint should return 403 if user does not have required permission"() {
-    given: "we have one user in system"
-      setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
-    when: "I go to /api/profiles/{id}"
-      ResultActions fetchOneEndpoint = mockMvc.perform(get("/api/profiles/{id}", ObjectId.get())
-          .with(httpBasic("yang160", "password123")))
-    then:
-      fetchOneEndpoint.andExpect(status().isForbidden())
-  }
-
   def "update endpoint should return 403 if user does not have required permission"() {
     given: "we have one user in system"
       setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
@@ -74,6 +64,20 @@ class ProfileCrudEndpointIntegrationSpec extends IntegrationSpec implements Samp
           .contentType(MediaType.APPLICATION_JSON))
     then:
       updateEndpoint.andExpect(status().isNoContent())
+  }
+
+  def "fetch followers endpoint should return 401 when unauthorized"() {
+    when: "I go to /api/profiles/{id}/followers"
+      ResultActions fetchFollowersEndpoint = mockMvc.perform(get("/api/profiles/{id}/followers", ObjectId.get()))
+    then:
+      fetchFollowersEndpoint.andExpect(status().isUnauthorized())
+  }
+
+  def "fetch following endpoint should return 401 when unauthorized"() {
+    when: "I go to /api/profiles/{id}/following"
+      ResultActions fetchFollowingEndpoint = mockMvc.perform(get("/api/profiles/{id}/following", ObjectId.get()))
+    then:
+      fetchFollowingEndpoint.andExpect(status().isUnauthorized())
   }
 
 }

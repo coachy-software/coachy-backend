@@ -12,6 +12,9 @@ import org.bson.types.ObjectId
 @CompileStatic
 trait SampleProfiles {
 
+  ObjectId profileSampleId = ObjectId.get()
+  ObjectId secondProfileSampleId = ObjectId.get()
+
   ProfileCreateCommandDto profileCreateDtoSample = ProfileCreateCommandDtoBuilder.create()
       .withUserId(ObjectId.get())
       .withWebsite("website")

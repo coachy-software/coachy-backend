@@ -6,11 +6,44 @@ import org.bson.types.ObjectId
 import org.hamcrest.Matchers
 import org.springframework.test.web.servlet.ResultActions
 
+import static org.hamcrest.Matchers.is
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleProfiles {
+
+  def "following positive scenario"() {
+    given: "we have two profiles and two user in system"
+      def followed = setUpUser(profileSampleId, "yang161", "password123", Sets.newHashSet("user.${profileSampleId}.read", "user.${profileSampleId}.update"))
+      def follower = setUpUser(secondProfileSampleId, "yang160", "password123", Sets.newHashSet("user.${secondProfileSampleId}.read", "user.${secondProfileSampleId}.update"))
+
+      def followedProfile = setUpProfile(ObjectId.get(), followed.get("_id"))
+      setUpProfile(ObjectId.get(), follower.get("_id"))
+    when: "I do post to /api/profiles/{id}/follow"
+      ResultActions followEndpoint = mockMvc.perform(post("/api/profiles/{id}/follow", followedProfile.get("userId"))
+          .with(httpBasic("yang160", "password123")))
+    then: "user has been followed"
+      followEndpoint.andExpect(status().isOk())
+    when: "I go to /api/profiles/{id}/followers"
+      ResultActions followersEndpoint = mockMvc.perform(get("/api/profiles/{id}/followers", followedProfile.get("userId"))
+          .with(httpBasic("yang160", "password123")))
+    then: "I see one result with username 'yang160'"
+      followersEndpoint.andExpect(status().isOk())
+          .andExpect(jsonPath("\$.followers[0].username", is(follower.get("username"))))
+    when: "I post to /api/profiles/{id}/unfollow"
+      ResultActions unfollowEndpoint = mockMvc.perform(post("/api/profiles/{id}/unfollow", followedProfile.get("userId"))
+          .with(httpBasic("yang160", "password123")))
+    then: "user has been unfollowed"
+      unfollowEndpoint.andExpect(status().isOk())
+    when: "I go to /api/profiles/{id}/followers"
+      ResultActions emptyFollowersEndpoint = mockMvc.perform(get("/api/profiles/{id}/followers", followedProfile.get("userId"))
+          .with(httpBasic("yang160", "password123")))
+    then: "I see one result with username 'yang160'"
+      emptyFollowersEndpoint.andExpect(status().isOk())
+          .andExpect(jsonPath("\$.followers", Matchers.emptyCollectionOf(Set)))
+  }
 
   def "should display profiles"() {
     given: "we have two profiles and one user in system"

@@ -47,7 +47,6 @@ class ProfileCrudEndpoint {
 
   @ApiOperation("Displays profile's details")
   @RequiresAuthenticated
-  @RequiresPermission("user.{id}.read")
   @GetMapping("{id}")
   ResponseEntity<ProfileQueryDto> fetchOne(@PathVariable ObjectId id) {
     return ResponseEntity.ok(this.profileFacade.fetchByUserId(id));
@@ -55,7 +54,6 @@ class ProfileCrudEndpoint {
 
   @ApiOperation("Displays profile's followers")
   @RequiresAuthenticated
-  @RequiresPermission("user.{id}.read")
   @GetMapping("{id}/followers")
   ResponseEntity<Map<String, Set<UserQueryDto>>> fetchFollowers(@PathVariable ObjectId id) {
     return ResponseEntity.ok(Collections.singletonMap("followers", this.profileFacade.fetchFollowers(id)));
@@ -63,7 +61,6 @@ class ProfileCrudEndpoint {
 
   @ApiOperation("Displays following profiles by specified profile")
   @RequiresAuthenticated
-  @RequiresPermission("user.{id}.read")
   @GetMapping("{id}/following")
   ResponseEntity<Map<String, Set<UserQueryDto>>> fetchFollowing(@PathVariable ObjectId id) {
     return ResponseEntity.ok(Collections.singletonMap("following", this.profileFacade.fetchFollowing(id)));

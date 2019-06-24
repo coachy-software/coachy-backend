@@ -80,4 +80,32 @@ class ProfileFacadeIntegrationSpec extends IntegrationSpec implements SampleProf
       !mongoTemplate.exists(Query.query(Criteria.where("_id").is(followerProfile.get("_id")).and("following").in(followingProfile.get("userId"))), MongoCollections.PROFILES)
   }
 
+  def "method 'fetchFollowers' should return the followers details"() {
+    given: "we have one profile and two users"
+      def followingProfile = setUpProfile(ObjectId.get(), ObjectId.get())
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      setUpProfile(ObjectId.get(), user.get("_id"))
+    and: "user follows the profile"
+      this.profileFacade.toggleFollow(true, followingProfile.get("userId"), user.get("_id"))
+    when: "user tries to display all followers"
+      def followers = this.profileFacade.fetchFollowers(followingProfile.get("userId"))
+    then:
+      followers.size() == 1
+  }
+
+  def "method 'fetchFollowing' should return the following users' details"() {
+    given: "we have one profile and two users"
+      def followedUser = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def followingProfile = setUpProfile(ObjectId.get(), followedUser.get("_id"))
+
+      def follower = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def followerProfile = setUpProfile(ObjectId.get(), follower.get("_id"))
+    and: "user follows the profile"
+      this.profileFacade.toggleFollow(true, followingProfile.get("userId"), follower.get("_id"))
+    when: "user tries to display all following users"
+      def following = this.profileFacade.fetchFollowing(followerProfile.get("userId"))
+    then:
+      following.size() == 1
+  }
+
 }

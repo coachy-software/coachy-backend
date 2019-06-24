@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import life.coachy.backend.infrastructure.authentication.AuthenticatedUser;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
-import life.coachy.backend.infrastructure.permission.RequiresPermission;
 import life.coachy.backend.profile.domain.ProfileFacade;
 import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
@@ -28,7 +27,6 @@ class ProfileOperationsEndpoint {
 
   @ApiOperation("Follows specified profile")
   @RequiresAuthenticated
-  @RequiresPermission("user.{userId}.update")
   @PostMapping("{id}/follow")
   ResponseEntity<?> follow(@PathVariable("id") ObjectId userId, @AuthenticatedUser UserQueryDto queryDto) {
     this.profileFacade.toggleFollow(true, userId, queryDto.getIdentifier());
@@ -38,7 +36,6 @@ class ProfileOperationsEndpoint {
 
   @ApiOperation("Undoes the follow from specified profile")
   @RequiresAuthenticated
-  @RequiresPermission("user.{userId}.update")
   @PostMapping("{id}/unfollow")
   ResponseEntity<?> unfollow(@PathVariable("id") ObjectId userId, @AuthenticatedUser UserQueryDto queryDto) {
     this.profileFacade.toggleFollow(false, userId, queryDto.getIdentifier());

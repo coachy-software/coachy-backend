@@ -24,17 +24,6 @@ class ProfileOperationsEndpointIntegrationSpec extends IntegrationSpec implement
       followEndpoint.andExpect(status().isOk())
   }
 
-  def "follow endpoint should return 403 if user does not have required permission"() {
-    given: "we have one profile and one user in system"
-      setUpUser(profileCreateDtoSample.getUserId(), "yang160", "password123", Collections.emptySet())
-      setUpProfile(ObjectId.get(), profileCreateDtoSample.getUserId())
-    when: "I post to /api/profiles/{id}/follow"
-      ResultActions followEndpoint = mockMvc.perform(post("/api/profiles/{id}/follow", profileCreateDtoSample.getUserId())
-          .with(httpBasic("yang160", "password123")))
-    then:
-      followEndpoint.andExpect(status().isForbidden())
-  }
-
   def "follow endpoint should return 401 when user if unauthorized"() {
     given: "we have one profile and one user in system"
       setUpProfile(ObjectId.get(), profileCreateDtoSample.getUserId())
@@ -59,17 +48,6 @@ class ProfileOperationsEndpointIntegrationSpec extends IntegrationSpec implement
           .with(httpBasic("yang160", "password123")))
     then:
       unfollowEndpoint.andExpect(status().isOk())
-  }
-
-  def "unfollow endpoint should return 403 if user does not have required permission"() {
-    given: "we have one profile and one user in system"
-      setUpUser(profileCreateDtoSample.getUserId(), "yang160", "password123", Collections.emptySet())
-      setUpProfile(ObjectId.get(), profileCreateDtoSample.getUserId())
-    when: "I post to /api/profiles/{id}/unfollow"
-      ResultActions unfollowEndpoint = mockMvc.perform(post("/api/profiles/{id}/unfollow", profileCreateDtoSample.getUserId())
-          .with(httpBasic("yang160", "password123")))
-    then:
-      unfollowEndpoint.andExpect(status().isForbidden())
   }
 
   def "unfollow endpoint should return 401 when user if unauthorized"() {
