@@ -2,6 +2,7 @@ package life.coachy.backend.profile
 
 import com.google.common.collect.Sets
 import life.coachy.backend.base.IntegrationSpec
+import life.coachy.backend.base.UncompilableByCI
 import org.bson.types.ObjectId
 import org.hamcrest.Matchers
 import org.springframework.test.web.servlet.ResultActions
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements SampleProfiles {
 
+  @UncompilableByCI
   def "following positive scenario"() {
     given: "we have two profiles and two user in system"
       def followed = setUpUser(profileSampleId, "yang161", "password123", Sets.newHashSet("user.${profileSampleId}.read", "user.${profileSampleId}.update"))
