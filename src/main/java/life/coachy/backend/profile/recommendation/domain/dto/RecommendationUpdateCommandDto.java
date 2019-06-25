@@ -1,6 +1,5 @@
 package life.coachy.backend.profile.recommendation.domain.dto;
 
-import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 

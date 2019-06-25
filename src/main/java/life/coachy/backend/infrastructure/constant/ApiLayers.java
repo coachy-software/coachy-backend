@@ -2,7 +2,7 @@ package life.coachy.backend.infrastructure.constant;
 
 public final class ApiLayers {
 
-  private static final String API_ROOT = "api/";
+  public static final String API_ROOT = "api/";
   public static final String ERROR = "/error";
   public static final String USERS = API_ROOT + "users";
   public static final String EXERCISE_TEMPLATES = API_ROOT + "exercises";
@@ -14,6 +14,7 @@ public final class ApiLayers {
   public static final String HEADWAYS = API_ROOT + "headways";
   public static final String NOTIFICATIONS = API_ROOT + "notifications";
   public static final String PROFILES = API_ROOT + "profiles";
+  public static final String RECOMMENDATIONS = "/recommendations/";
 
   private ApiLayers() {}
 

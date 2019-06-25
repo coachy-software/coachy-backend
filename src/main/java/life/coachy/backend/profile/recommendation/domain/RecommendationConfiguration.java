@@ -15,7 +15,7 @@ class RecommendationConfiguration {
     RecommendationCreator recommendationCreator = new RecommendationCreator();
     RecommendationNotificationPublisher notificationPublisher = new RecommendationNotificationPublisher(notificationFacade, toJsonConverter);
 
-    return new RecommendationFacade(service, recommendationCreator, notificationPublisher, userFacade);
+    return new RecommendationFacade(service, recommendationCreator, notificationPublisher, profileFacade, userFacade);
   }
 
 }
