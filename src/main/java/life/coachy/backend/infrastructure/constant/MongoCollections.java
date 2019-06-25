@@ -14,6 +14,7 @@ public final class MongoCollections {
   public static final String NOTIFICATIONS = "notifications";
   public static final String REQUESTS = "requests";
   public static final String PROFILES = "profiles";
+  public static final String RECOMMENDATIONS = "recommendations";
 
   private MongoCollections() {}
 
