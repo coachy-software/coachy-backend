@@ -57,7 +57,7 @@ public class RecommendationFacade {
     this.userFacade.nullifyPermissions(queryDto.getFrom(), queryDto.getId());
   }
 
-  public void changeVisibleStatus(ObjectId recommendationId, boolean status) {
+  public void changeVisibilityStatus(ObjectId recommendationId, boolean status) {
     RecommendationQueryDto queryDto = this.recommendationService.fetchOneOrThrow(recommendationId);
     this.recommendationService.updateStatus(this.recommendationCreator.from(queryDto), status);
   }
