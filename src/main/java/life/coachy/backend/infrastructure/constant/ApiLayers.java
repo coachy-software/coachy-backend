@@ -14,7 +14,7 @@ public final class ApiLayers {
   public static final String HEADWAYS = API_ROOT + "headways";
   public static final String NOTIFICATIONS = API_ROOT + "notifications";
   public static final String PROFILES = API_ROOT + "profiles";
-  public static final String RECOMMENDATIONS = "/recommendations/";
+  public static final String RECOMMENDATIONS = "recommendations";
 
   private ApiLayers() {}
 

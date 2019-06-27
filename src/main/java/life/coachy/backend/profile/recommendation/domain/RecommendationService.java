@@ -1,9 +1,8 @@
 package life.coachy.backend.profile.recommendation.domain;
 
 import java.util.Set;
-import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter;
 import life.coachy.backend.profile.recommendation.domain.dto.RecommendationUpdateCommandDto;
-import life.coachy.backend.profile.recommendation.domain.exception.RecommendationNotFound;
+import life.coachy.backend.profile.recommendation.domain.exception.RecommendationNotFoundException;
 import life.coachy.backend.profile.recommendation.query.RecommendationQueryDto;
 import life.coachy.backend.profile.recommendation.query.RecommendationQueryRepository;
 import org.bson.types.ObjectId;
@@ -15,14 +14,11 @@ class RecommendationService {
 
   private final RecommendationRepository recommendationRepository;
   private final RecommendationQueryRepository recommendationQueryRepository;
-  private final ObjectToJsonConverter toJsonConverter;
 
   @Autowired
-  RecommendationService(RecommendationRepository recommendationRepository, RecommendationQueryRepository recommendationQueryRepository,
-      ObjectToJsonConverter toJsonConverter) {
+  RecommendationService(RecommendationRepository recommendationRepository, RecommendationQueryRepository recommendationQueryRepository) {
     this.recommendationRepository = recommendationRepository;
     this.recommendationQueryRepository = recommendationQueryRepository;
-    this.toJsonConverter = toJsonConverter;
   }
 
   void commitChange(Recommendation recommendation, RecommendationUpdateCommandDto dto) {
@@ -43,7 +39,7 @@ class RecommendationService {
   }
 
   RecommendationQueryDto fetchOneOrThrow(ObjectId recommendationId) {
-    return this.recommendationQueryRepository.findById(recommendationId).orElseThrow(RecommendationNotFound::new);
+    return this.recommendationQueryRepository.findById(recommendationId).orElseThrow(RecommendationNotFoundException::new);
   }
 
   Set<RecommendationQueryDto> fetchAllByProfileUserId(ObjectId profileUserId) {

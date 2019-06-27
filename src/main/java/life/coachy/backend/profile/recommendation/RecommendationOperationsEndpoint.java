@@ -2,6 +2,7 @@ package life.coachy.backend.profile.recommendation;
 
 import io.swagger.annotations.ApiOperation;
 import java.util.Map;
+import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.infrastructure.permission.RequiresPermission;
@@ -30,7 +31,7 @@ class RecommendationOperationsEndpoint {
   @ApiOperation("Requests for recommendation revision")
   @RequiresPermission("recommendation.{recommendationId}.owner")
   @RequiresAuthenticated
-  @PostMapping("{id}" + ApiLayers.RECOMMENDATIONS + "{recommendationId}/request-revision")
+  @PostMapping("{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}/request-revision")
   ResponseEntity<?> revisionRequest(@PathVariable ObjectId id, @PathVariable ObjectId recommendationId) {
     this.recommendationFacade.requestRevision(recommendationId);
     return ResponseEntity.noContent().build();
@@ -39,8 +40,8 @@ class RecommendationOperationsEndpoint {
   @ApiOperation("Commits changes made in revision")
   @RequiresPermission("recommendation.{recommendationId}.update")
   @RequiresAuthenticated
-  @PostMapping("{id}" + ApiLayers.RECOMMENDATIONS + "{recommendationId}/commit-revision")
-  ResponseEntity<?> commitRevision(@PathVariable ObjectId id, @PathVariable ObjectId recommendationId, @RequestBody RecommendationUpdateCommandDto dto) {
+  @PostMapping("{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}/commit-revision")
+  ResponseEntity<?> commitRevision(@PathVariable ObjectId id, @PathVariable ObjectId recommendationId, @RequestBody @Valid RecommendationUpdateCommandDto dto) {
     this.recommendationFacade.commitRevision(recommendationId, dto);
     return ResponseEntity.noContent().build();
   }
@@ -48,8 +49,8 @@ class RecommendationOperationsEndpoint {
   @ApiOperation("Changes recommendation visibility")
   @RequiresPermission("recommendation.{recommendationId}.owner")
   @RequiresAuthenticated
-  @PostMapping("{id}" + ApiLayers.RECOMMENDATIONS + "{recommendationId}/visibility")
-  ResponseEntity<?> changeVisibleStatus(@PathVariable ObjectId id, @PathVariable ObjectId recommendationId, @RequestBody Map<String, String> payload) {
+  @PostMapping("{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}/visibility")
+  ResponseEntity<?> changeVisibilityStatus(@PathVariable ObjectId id, @PathVariable ObjectId recommendationId, @RequestBody Map<String, String> payload) {
     if (payload.get("visible") == null) {
       return ResponseEntity.badRequest().build();
     }

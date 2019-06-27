@@ -1,8 +1,6 @@
 package life.coachy.backend.infrastructure.permission;
 
 import com.google.common.collect.Lists;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,7 +23,7 @@ class PermissionAspect {
   @Around("@annotation(life.coachy.backend.infrastructure.permission.RequiresPermission)")
   public Object permission(ProceedingJoinPoint joinPoint) throws Throwable {
     List<Boolean> permissionsValues = Lists.newArrayList();
-    this.addPermissionsValues(joinPoint, permissionsValues, this.getHexObjectId(joinPoint));
+    this.addPermissionsValues(joinPoint, permissionsValues, this.obtainProperHexObjectId(joinPoint));
 
     if (!permissionsValues.contains(false)) {
       return joinPoint.proceed();
@@ -34,17 +32,18 @@ class PermissionAspect {
     throw new InsufficientPermissionsException();
   }
 
-  private String getHexObjectId(ProceedingJoinPoint joinPoint) {
+  private String obtainProperHexObjectId(ProceedingJoinPoint joinPoint) {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-    Method method = signature.getMethod();
+    Object[] args = joinPoint.getArgs();
 
     this.obtainIdPattern(signature.getMethod().getAnnotation(RequiresPermission.class));
 
-    for (Parameter parameter : method.getParameters()) {
-      for (Object arg : joinPoint.getArgs()) {
-        if (arg.getClass().equals(ObjectId.class) && this.idPattern.equals(parameter.getName())) {
-          return String.valueOf(arg);
-        }
+    for (int i = 0; i < joinPoint.getArgs().length; i++) {
+      Object arg = args[i];
+      String name = signature.getParameterNames()[i];
+
+      if (arg.getClass().equals(ObjectId.class) && this.idPattern.equals(name)) {
+        return String.valueOf(arg);
       }
     }
 

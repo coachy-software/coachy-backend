@@ -1,14 +1,16 @@
 package life.coachy.backend.profile.recommendation.domain;
 
+import java.net.URI;
 import java.util.Set;
+import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.profile.domain.ProfileFacade;
-import life.coachy.backend.profile.query.ProfileQueryDto;
 import life.coachy.backend.profile.recommendation.domain.dto.RecommendationCreateCommandDto;
 import life.coachy.backend.profile.recommendation.domain.dto.RecommendationUpdateCommandDto;
 import life.coachy.backend.profile.recommendation.query.RecommendationQueryDto;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.query.UserQueryDto;
 import org.bson.types.ObjectId;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 public class RecommendationFacade {
 
@@ -27,7 +29,7 @@ public class RecommendationFacade {
     this.userFacade = userFacade;
   }
 
-  public void create(RecommendationCreateCommandDto dto) {
+  public URI create(RecommendationCreateCommandDto dto) {
     this.profileFacade.fetchByUserId(dto.getProfileUserId());
 
     Recommendation recommendation = this.recommendationService.save(this.recommendationCreator.from(dto));
@@ -36,8 +38,11 @@ public class RecommendationFacade {
     UserQueryDto sender = this.userFacade.fetchOne(queryDto.getFrom());
     UserQueryDto recipient = this.userFacade.fetchOne(queryDto.getProfileUserId());
 
-    this.userFacade.givePermissions(recipient.getIdentifier(), "recommendation." + queryDto.getId() + ".owner");
+    this.userFacade.givePermissions(recipient.getIdentifier(), "recommendation." + recommendation.id + ".owner");
     this.notificationPublisher.publishGotRecommendationNotification(sender, recipient, queryDto);
+
+    return ServletUriComponentsBuilder.fromCurrentContextPath().path(ApiLayers.PROFILES + "/{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}")
+        .buildAndExpand(recipient.getIdentifier(), recommendation.id).toUri();
   }
 
   public void requestRevision(ObjectId recommendationId) {
