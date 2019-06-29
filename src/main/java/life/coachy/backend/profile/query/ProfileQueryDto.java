@@ -1,6 +1,7 @@
 package life.coachy.backend.profile.query;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.impl.StringCollectionSerializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
@@ -22,8 +23,8 @@ public class ProfileQueryDto implements QueryDtoMarker {
   private String location;
   private Set<String> services;
   private Set<SocialDto> socialLinks;
-  private Set<ObjectId> followers;
-  private Set<ObjectId> following;
+  @JsonSerialize(contentUsing = ToStringSerializer.class) private Set<ObjectId> followers;
+  @JsonSerialize(contentUsing = ToStringSerializer.class) private Set<ObjectId> following;
 
   public ObjectId getIdentifier() {
     return this.identifier;
