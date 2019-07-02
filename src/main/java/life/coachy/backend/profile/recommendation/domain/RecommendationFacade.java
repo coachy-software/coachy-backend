@@ -1,6 +1,7 @@
 package life.coachy.backend.profile.recommendation.domain;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.profile.domain.ProfileFacade;
@@ -67,12 +68,14 @@ public class RecommendationFacade {
     this.recommendationService.updateStatus(this.recommendationCreator.from(queryDto), status);
   }
 
-  public RecommendationQueryDto fetchOne(ObjectId recommendationId) {
-    return this.recommendationService.fetchOneOrThrow(recommendationId);
+  public Map<String, Object> fetchOne(ObjectId recommendationId) {
+    RecommendationQueryDto recommendationQueryDto = this.recommendationService.fetchOneOrThrow(recommendationId);
+    return this.recommendationService.convertAndAppendCreatorDetails(recommendationQueryDto, this.userFacade.fetchOne(recommendationQueryDto.getFrom()));
   }
 
-  public Set<RecommendationQueryDto> fetchAll(ObjectId profileUserId) {
-    return this.recommendationService.fetchAllByProfileUserId(profileUserId);
+  public Set<Map<String, Object>> fetchAll(ObjectId profileUserId) {
+    Set<RecommendationQueryDto> recommendationQueryDtos = this.recommendationService.fetchAllByProfileUserId(profileUserId);
+    return this.recommendationService.convertAndAppendCreatorDetailsForEach(recommendationQueryDtos);
   }
 
 }

@@ -2,13 +2,13 @@ package life.coachy.backend.profile.recommendation;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.Map;
 import java.util.Set;
 import javax.validation.Valid;
 import life.coachy.backend.infrastructure.authentication.RequiresAuthenticated;
 import life.coachy.backend.infrastructure.constant.ApiLayers;
 import life.coachy.backend.profile.recommendation.domain.RecommendationFacade;
 import life.coachy.backend.profile.recommendation.domain.dto.RecommendationCreateCommandDto;
-import life.coachy.backend.profile.recommendation.query.RecommendationQueryDto;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,14 +38,14 @@ class RecommendationCrudEndpoint {
   @ApiOperation("Displays all recommendations belonging to specified profile")
   @RequiresAuthenticated
   @GetMapping(ApiLayers.PROFILES + "/{id}/" + ApiLayers.RECOMMENDATIONS)
-  ResponseEntity<Set<RecommendationQueryDto>> fetchAll(@PathVariable @ApiParam("Profile user's id") ObjectId id) {
+  ResponseEntity<Set<Map<String, Object>>> fetchAll(@PathVariable @ApiParam("Profile user's id") ObjectId id) {
     return ResponseEntity.ok(this.recommendationFacade.fetchAll(id));
   }
 
   @ApiOperation("Displays recommendation by its id")
   @RequiresAuthenticated
   @GetMapping(ApiLayers.PROFILES + "/{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}")
-  ResponseEntity<RecommendationQueryDto> fetchOne(@PathVariable ObjectId id, @PathVariable @ApiParam("Recommendation id") ObjectId recommendationId) {
+  ResponseEntity<Map<String, Object>> fetchOne(@PathVariable ObjectId id, @PathVariable @ApiParam("Recommendation id") ObjectId recommendationId) {
     return ResponseEntity.ok(this.recommendationFacade.fetchOne(recommendationId));
   }
 
