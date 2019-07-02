@@ -3,8 +3,8 @@ package life.coachy.backend.profile.domain;
 import com.google.common.collect.Sets;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.notification.domain.NotificationFacade;
 import life.coachy.backend.profile.domain.dto.ProfileCreateCommandDtoBuilder;
@@ -24,16 +24,18 @@ public class ProfileFacade {
   private final ProfileQueryRepository queryRepository;
   private final QueryOperationsFactory operationsFactory;
   private final NotificationFacade notificationFacade;
+  private final ProfileConverter profileConverter;
   private final UserFacade userFacade;
 
   ProfileFacade(ProfileCreator profileCreator, ProfileService profileService, ProfileQueryRepository queryRepository, QueryOperationsFactory operationsFactory,
-      NotificationFacade notificationFacade, UserFacade userFacade) {
+      NotificationFacade notificationFacade, UserFacade userFacade, ProfileConverter profileConverter) {
     this.profileCreator = profileCreator;
     this.profileService = profileService;
     this.queryRepository = queryRepository;
     this.operationsFactory = operationsFactory;
     this.notificationFacade = notificationFacade;
     this.userFacade = userFacade;
+    this.profileConverter = profileConverter;
   }
 
   public void createProfile(ObjectId userId) {
@@ -57,10 +59,6 @@ public class ProfileFacade {
     this.notificationFacade.sendNotificationToUser(this.profileService.makeNotificationMessage(sender, this.userFacade.fetchOne(recipientId)));
   }
 
-  public List<ProfileQueryDto> fetchAll(Predicate predicate, Pageable pageable) {
-    return this.operationsFactory.obtainOperation(predicate, pageable, this.queryRepository);
-  }
-
   public Set<UserQueryDto> fetchFollowers(ObjectId id) {
     ProfileQueryDto queryDto = this.fetchOneOrThrow(id);
     Set<UserQueryDto> followers = Sets.newHashSet();
@@ -77,8 +75,14 @@ public class ProfileFacade {
     return following;
   }
 
-  public Map<String, Object> fetchByUserId(ObjectId userId) {
-    return this.profileService.convertAndAppendUserDetails(this.fetchOneOrThrow(userId), this.userFacade.fetchOne(userId));
+  public ProfileQueryDto fetchByUserId(ObjectId userId) {
+    return this.profileConverter.convert(this.profileService.convertAndAppendUserDetails(this.fetchOneOrThrow(userId), this.userFacade.fetchOne(userId)));
+  }
+
+  public List<ProfileQueryDto> fetchAll(Predicate predicate, Pageable pageable) {
+    return this.operationsFactory.obtainOperation(predicate, pageable, this.queryRepository).stream()
+        .map(profile -> this.profileConverter.convert(this.profileService.convertAndAppendUserDetails(profile, this.userFacade.fetchOne(profile.getUserId()))))
+        .collect(Collectors.toList());
   }
 
   private ProfileQueryDto fetchOneOrThrow(ObjectId userId) {

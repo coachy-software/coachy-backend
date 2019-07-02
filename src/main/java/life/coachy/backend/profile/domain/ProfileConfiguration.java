@@ -14,7 +14,9 @@ class ProfileConfiguration {
   ProfileFacade profileFacade(ProfileService profileService, ProfileQueryRepository queryRepository, QueryOperationsFactory queryOperationsFactory,
       NotificationFacade notificationFacade, UserFacade userFacade) {
     ProfileCreator creator = new ProfileCreator();
-    return new ProfileFacade(creator, profileService, queryRepository, queryOperationsFactory, notificationFacade, userFacade);
+    ProfileConverter profileConverter = new ProfileConverter();
+
+    return new ProfileFacade(creator, profileService, queryRepository, queryOperationsFactory, notificationFacade, userFacade, profileConverter);
   }
 
 }

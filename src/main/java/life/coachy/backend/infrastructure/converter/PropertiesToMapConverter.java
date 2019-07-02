@@ -12,8 +12,7 @@ public class PropertiesToMapConverter implements Converter<Map<String, Object>, 
 
   @Override
   public Map<String, Object> convert(Object dto) {
-    return OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {
-    });
+    return OBJECT_MAPPER.convertValue(dto, new TypeReference<Map<String, Object>>() {});
   }
 
 }

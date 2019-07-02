@@ -8,6 +8,7 @@ import life.coachy.backend.infrastructure.query.QueryDtoMarker;
 import life.coachy.backend.profile.social.dto.SocialDto;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(MongoCollections.PROFILES)
@@ -15,6 +16,9 @@ public class ProfileQueryDto implements QueryDtoMarker {
 
   @Id @JsonSerialize(using = ToStringSerializer.class) private ObjectId identifier;
   @JsonSerialize(using = ToStringSerializer.class) private ObjectId userId;
+  @Transient private String username;
+  @Transient private String displayName;
+  @Transient private String avatar;
   private String website;
   private String title;
   private String bio;
@@ -31,6 +35,18 @@ public class ProfileQueryDto implements QueryDtoMarker {
 
   public ObjectId getUserId() {
     return this.userId;
+  }
+
+  public String getUsername() {
+    return this.username;
+  }
+
+  public String getDisplayName() {
+    return this.displayName;
+  }
+
+  public String getAvatar() {
+    return this.avatar;
   }
 
   public String getWebsite() {

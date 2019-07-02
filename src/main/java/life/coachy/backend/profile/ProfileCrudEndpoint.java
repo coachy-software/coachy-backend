@@ -48,7 +48,7 @@ class ProfileCrudEndpoint {
   @ApiOperation("Displays profile's details")
   @RequiresAuthenticated
   @GetMapping("{id}")
-  ResponseEntity<Map<String, Object>> fetchOne(@PathVariable ObjectId id) {
+  ResponseEntity<ProfileQueryDto> fetchOne(@PathVariable ObjectId id) {
     return ResponseEntity.ok(this.profileFacade.fetchByUserId(id));
   }
 
