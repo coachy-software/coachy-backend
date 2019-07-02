@@ -1,6 +1,6 @@
 package life.coachy.backend.profile.domain
 
-
+import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.infrastructure.constant.MongoCollections
 import life.coachy.backend.profile.SampleProfiles
@@ -46,11 +46,12 @@ class ProfileFacadeIntegrationSpec extends IntegrationSpec implements SampleProf
 
   def "method 'fetchByUserId' should display profile details"() {
     given: "we have one profile in system"
-      def profile = setUpProfile(ObjectId.get(), ObjectId.get())
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def profile = setUpProfile(ObjectId.get(), user.get("_id"))
     when: "user tries to display the profile"
       def fetchResult = this.profileFacade.fetchByUserId(profile.get("userId"))
     then:
-      fetchResult.getUserId() == profile.get("userId")
+      fetchResult.get("userId") == profile.get("userId").toHexString()
   }
 
   def "method 'toggleFollow(true)' should follow the profile"() {

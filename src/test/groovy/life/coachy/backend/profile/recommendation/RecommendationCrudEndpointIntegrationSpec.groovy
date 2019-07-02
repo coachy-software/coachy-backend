@@ -95,7 +95,7 @@ class RecommendationCrudEndpointIntegrationSpec extends IntegrationSpec implemen
       fetchAllEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"id": "${recommendation.get("_id")}", "profileUserId": "${recommendation.get("profileUserId")}", "from": "${recommendation.get("from")}"}
+              {"id": "${recommendation.get("_id")}", "profileUserId": "${recommendation.get("profileUserId")}", "from": {"identifier": "${recommendation.get("from")}"}}
             ]
           """))
   }

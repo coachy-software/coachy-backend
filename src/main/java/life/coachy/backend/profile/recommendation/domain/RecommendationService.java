@@ -62,6 +62,7 @@ class RecommendationService {
     Map<String, Object> convertedRecommendation = this.propertiesToMapConverter.convert(recommendationQueryDto);
     HashMap<Object, Object> fromSection = new HashMap<>();
 
+    fromSection.put("identifier", creator.getIdentifier().toHexString());
     fromSection.put("username", creator.getUsername());
     fromSection.put("avatar", creator.getAvatar());
     fromSection.put("displayName", creator.getDisplayName());

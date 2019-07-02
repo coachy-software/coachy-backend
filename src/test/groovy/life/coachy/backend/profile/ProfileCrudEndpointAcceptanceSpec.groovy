@@ -49,9 +49,10 @@ class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements Sampl
 
   def "should display profiles"() {
     given: "we have two profiles and one user in system"
-      setUpUser(ObjectId.get(), "yang160", "password123", Sets.newHashSet("user.${profileCreateDtoSample.getUserId()}.read"))
-      def profile1 = setUpProfile(ObjectId.get(), profileCreateDtoSample.getUserId())
-      def profile2 = setUpProfile(ObjectId.get(), ObjectId.get())
+      setUpUser(profileSampleId, "yang160", "password123", Sets.newHashSet("user.${profileSampleId}.read"))
+      setUpUser(secondProfileSampleId, "yang161", "password123", Sets.newHashSet("user.${secondProfileSampleId}.read"))
+      def profile1 = setUpProfile(ObjectId.get(), profileSampleId)
+      def profile2 = setUpProfile(ObjectId.get(), secondProfileSampleId)
     when: "I go to /api/profiles"
       ResultActions profilesEndpoint = mockMvc.perform(get("/api/profiles")
           .with(httpBasic("yang160", "password123")))
@@ -59,16 +60,16 @@ class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements Sampl
       profilesEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${profile1.get("_id")}", "userId": "${profile1.get("userId")}"},
-              {"identifier": "${profile2.get("_id")}", "userId": "${profile2.get("userId")}"}
+              {"identifier": "${profile2.get("_id")}", "userId": "${secondProfileSampleId}"},
+              {"identifier": "${profile1.get("_id")}", "userId": "${profileSampleId}"}
             ]
           """))
     when: "I go to /api/profiles/{id}"
-      ResultActions detailsEndpoint = mockMvc.perform(get("/api/profiles/{id}", profile1.get("userId"))
+      ResultActions detailsEndpoint = mockMvc.perform(get("/api/profiles/{id}", profile2.get("userId"))
           .with(httpBasic("yang160", "password123")))
     then: "I see profile's details"
       detailsEndpoint.andExpect(status().isOk())
-          .andExpect(jsonPath("\$.identifier", Matchers.is(profile1.get("_id").toString())))
+          .andExpect(jsonPath("\$.identifier", Matchers.is(secondProfileSampleId.toString())))
     when: "I go to /api/profiles?page=0&size=1"
       ResultActions paginationEndpoint = mockMvc.perform(get("/api/profiles?page=0&size=1")
           .with(httpBasic("yang160", "password123")))
@@ -80,13 +81,13 @@ class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements Sampl
             ]
           """))
     when: "I go to /api/profiles?userId={id}"
-      ResultActions searchEndpoint = mockMvc.perform(get("/api/profiles?userId=${profile2.get("userId")}")
+      ResultActions searchEndpoint = mockMvc.perform(get("/api/profiles?userId=${profile1.get("userId")}")
           .with(httpBasic("yang160", "password123")))
     then: "I see only one profile"
       searchEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${profile2.get("_id")}", "userId": "${profile2.get("userId")}"}
+              {"identifier": "${profile1.get("_id")}", "userId": "${profile1.get("userId")}"}
             ]
           """))
 
