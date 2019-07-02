@@ -42,4 +42,11 @@ class RecommendationCrudEndpoint {
     return ResponseEntity.ok(this.recommendationFacade.fetchAll(id));
   }
 
+  @ApiOperation("Displays recommendation by its id")
+  @RequiresAuthenticated
+  @GetMapping(ApiLayers.PROFILES + "/{id}/" + ApiLayers.RECOMMENDATIONS + "/{recommendationId}")
+  ResponseEntity<RecommendationQueryDto> fetchOne(@PathVariable ObjectId id, @PathVariable @ApiParam("Recommendation id") ObjectId recommendationId) {
+    return ResponseEntity.ok(this.recommendationFacade.fetchOne(recommendationId));
+  }
+
 }

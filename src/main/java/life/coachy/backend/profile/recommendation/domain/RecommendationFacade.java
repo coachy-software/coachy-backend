@@ -67,6 +67,10 @@ public class RecommendationFacade {
     this.recommendationService.updateStatus(this.recommendationCreator.from(queryDto), status);
   }
 
+  public RecommendationQueryDto fetchOne(ObjectId recommendationId) {
+    return this.recommendationService.fetchOneOrThrow(recommendationId);
+  }
+
   public Set<RecommendationQueryDto> fetchAll(ObjectId profileUserId) {
     return this.recommendationService.fetchAllByProfileUserId(profileUserId);
   }

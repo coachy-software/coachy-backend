@@ -1,7 +1,6 @@
 package life.coachy.backend.profile.query;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.impl.StringCollectionSerializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
