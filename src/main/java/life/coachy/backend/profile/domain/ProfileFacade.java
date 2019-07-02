@@ -3,6 +3,7 @@ package life.coachy.backend.profile.domain;
 import com.google.common.collect.Sets;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import life.coachy.backend.infrastructure.query.QueryOperationsFactory;
 import life.coachy.backend.notification.domain.NotificationFacade;
@@ -76,8 +77,8 @@ public class ProfileFacade {
     return following;
   }
 
-  public ProfileQueryDto fetchByUserId(ObjectId userId) {
-    return this.fetchOneOrThrow(userId);
+  public Map<String, Object> fetchByUserId(ObjectId userId) {
+    return this.profileService.convertAndAppendUserDetails(this.fetchOneOrThrow(userId), this.userFacade.fetchOne(userId));
   }
 
   private ProfileQueryDto fetchOneOrThrow(ObjectId userId) {

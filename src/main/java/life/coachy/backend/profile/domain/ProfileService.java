@@ -3,8 +3,10 @@ package life.coachy.backend.profile.domain;
 import com.google.common.collect.Maps;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter;
+import life.coachy.backend.infrastructure.converter.PropertiesToMapConverter;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDto;
 import life.coachy.backend.notification.domain.dto.NotificationMessageDtoBuilder;
 import life.coachy.backend.profile.query.ProfileQueryDto;
@@ -18,11 +20,23 @@ class ProfileService {
 
   private final ProfileRepository profileRepository;
   private final ObjectToJsonConverter toJsonConverter;
+  private final PropertiesToMapConverter propertiesToMapConverter;
 
   @Autowired
-  ProfileService(ProfileRepository profileRepository, ObjectToJsonConverter toJsonConverter) {
+  ProfileService(ProfileRepository profileRepository, ObjectToJsonConverter toJsonConverter, PropertiesToMapConverter propertiesToMapConverter) {
     this.profileRepository = profileRepository;
     this.toJsonConverter = toJsonConverter;
+    this.propertiesToMapConverter = propertiesToMapConverter;
+  }
+
+  Map<String, Object> convertAndAppendUserDetails(ProfileQueryDto profileQueryDto, UserQueryDto userQueryDto) {
+    Map<String, Object> convertedProfile = this.propertiesToMapConverter.convert(profileQueryDto);
+    convertedProfile.put("username", userQueryDto.getUsername());
+
+    convertedProfile.put("displayName", userQueryDto.getDisplayName());
+    convertedProfile.put("avatar", userQueryDto.getAvatar());
+
+    return convertedProfile;
   }
 
   void save(Profile profile) {
@@ -32,6 +46,7 @@ class ProfileService {
   void update(Profile profile, ProfileQueryDto queryDto) {
     profile.setIdentifier(queryDto.getIdentifier());
     profile.setUserId(queryDto.getUserId());
+
     profile.setFollowers(queryDto.getFollowers());
     profile.setFollowing(queryDto.getFollowing());
 
