@@ -1,5 +1,6 @@
 package life.coachy.backend.profile.recommendation.domain
 
+
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.constant.MongoCollections
@@ -121,6 +122,24 @@ class RecommendationFacadeIntegrationSpec extends IntegrationSpec implements Sam
       recommendationFacade.changeVisibilityStatus(ObjectId.get(), true)
     then:
       thrown(RecommendationNotFoundException);
+  }
+
+  def "'fetchOne' method should throw 'RecommendationNotFoundException' if specified id does not belong to any entity"() {
+    when: "user tries to fetch a recommendation"
+      recommendationFacade.fetchOne(ObjectId.get())
+    then:
+      thrown(RecommendationNotFoundException)
+  }
+
+  def "'fetchOne' method should return the recommendation if exists"() {
+    given: "we have one recommendation and one user in system"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def recommendation = setUpRecommendation(ObjectId.get(), user.get("_id"), user.get("_id"))
+    when: "user tries to fetch the recommendation"
+      def result = recommendationFacade.fetchOne(recommendation.get("_id"))
+    then:
+      result.get("id") == recommendation.get("_id").toString()
+      ((Map<String, Object>) result.get("from")).get("username") == "yang160"
   }
 
 }

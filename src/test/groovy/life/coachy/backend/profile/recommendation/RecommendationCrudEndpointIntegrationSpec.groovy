@@ -1,6 +1,6 @@
 package life.coachy.backend.profile.recommendation
 
-
+import com.mongodb.BasicDBObject
 import life.coachy.backend.base.IntegrationSpec
 import life.coachy.backend.base.UncompilableByCI
 import life.coachy.backend.infrastructure.converter.ObjectToJsonConverter
@@ -107,4 +107,24 @@ class RecommendationCrudEndpointIntegrationSpec extends IntegrationSpec implemen
       fetchAllEndpoint.andExpect(status().isUnauthorized())
   }
 
+  def "fetch one endpoint should return 401 when user is unauthorized"() {
+    when: "I go to /api/profiles/{id}/recommendations/{id}"
+      ResultActions fetchOneEndpoint = mockMvc.perform(get("/api/profiles/{id}/recommendations/{recommendationId}", ObjectId.get(), ObjectId.get()))
+    then:
+      fetchOneEndpoint.andExpect(status().isUnauthorized())
+  }
+
+  def "fetch one endpoint should return the recommendation"() {
+    given: "we have one user and one recommendation in profile"
+      def user = setUpUser(ObjectId.get(), "yang160", "password123", Collections.emptySet())
+      def recommendation = setUpRecommendation(ObjectId.get(), user.get("_id"), user.get("_id"))
+    when: "I go to /api/profiles/{id}/recommendations/{id}"
+      ResultActions fetchOneEndpoint = mockMvc.perform(get("/api/profiles/{id}/recommendations/{recommendationId}", ObjectId.get(), recommendation.get("_id"))
+      .with(httpBasic("yang160", "password123")))
+    then:
+      fetchOneEndpoint.andExpect(status().isOk())
+          .andExpect(content().json("""
+            {"id": "${recommendation.get("_id")}", "profileUserId": "${recommendation.get("profileUserId")}", "from": {"identifier": "${recommendation.get("from")}"}}
+          """))
+  }
 }
