@@ -31,8 +31,6 @@ class ProfileService {
 
   Map<String, Object> convertAndAppendUserDetails(ProfileQueryDto profileQueryDto, UserQueryDto userQueryDto) {
     Map<String, Object> convertedProfile = this.propertiesToMapConverter.convert(profileQueryDto);
-
-    convertedProfile.put("identifier", userQueryDto.getIdentifier().toHexString());
     convertedProfile.put("username", userQueryDto.getUsername());
 
     convertedProfile.put("displayName", userQueryDto.getDisplayName());

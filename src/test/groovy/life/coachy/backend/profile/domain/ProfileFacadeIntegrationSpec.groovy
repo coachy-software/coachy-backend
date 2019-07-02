@@ -51,7 +51,7 @@ class ProfileFacadeIntegrationSpec extends IntegrationSpec implements SampleProf
     when: "user tries to display the profile"
       def fetchResult = this.profileFacade.fetchByUserId(profile.get("userId"))
     then:
-      fetchResult.get("userId") == profile.get("userId").toHexString()
+      fetchResult.getUserId() == profile.get("userId")
   }
 
   def "method 'toggleFollow(true)' should follow the profile"() {

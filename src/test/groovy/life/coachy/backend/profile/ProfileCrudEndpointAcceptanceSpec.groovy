@@ -48,9 +48,10 @@ class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements Sampl
   }
 
   def "should display profiles"() {
-    given: "we have two profiles and one user in system"
-      setUpUser(profileSampleId, "yang160", "password123", Sets.newHashSet("user.${profileSampleId}.read"))
-      setUpUser(secondProfileSampleId, "yang161", "password123", Sets.newHashSet("user.${secondProfileSampleId}.read"))
+    given: "we have two profiles two one users in system"
+      setUpUser(profileSampleId, "yang160", "password123", Collections.emptySet())
+      setUpUser(secondProfileSampleId, "yang161", "password123", Collections.emptySet())
+
       def profile1 = setUpProfile(ObjectId.get(), profileSampleId)
       def profile2 = setUpProfile(ObjectId.get(), secondProfileSampleId)
     when: "I go to /api/profiles"
@@ -60,16 +61,16 @@ class ProfileCrudEndpointAcceptanceSpec extends IntegrationSpec implements Sampl
       profilesEndpoint.andExpect(status().isOk())
           .andExpect(content().json("""
             [
-              {"identifier": "${profile2.get("_id")}", "userId": "${secondProfileSampleId}"},
-              {"identifier": "${profile1.get("_id")}", "userId": "${profileSampleId}"}
+              {"identifier": "${profile1.get("_id")}", "userId": "${profileSampleId}", "username": "yang160"},
+              {"identifier": "${profile2.get("_id")}", "userId": "${secondProfileSampleId}", "username": "yang161"}
             ]
           """))
     when: "I go to /api/profiles/{id}"
-      ResultActions detailsEndpoint = mockMvc.perform(get("/api/profiles/{id}", profile2.get("userId"))
+      ResultActions detailsEndpoint = mockMvc.perform(get("/api/profiles/{id}", profile2.get("userId").toString())
           .with(httpBasic("yang160", "password123")))
     then: "I see profile's details"
       detailsEndpoint.andExpect(status().isOk())
-          .andExpect(jsonPath("\$.identifier", Matchers.is(secondProfileSampleId.toString())))
+          .andExpect(jsonPath("\$.identifier", Matchers.is(profile2.get("_id").toString())))
     when: "I go to /api/profiles?page=0&size=1"
       ResultActions paginationEndpoint = mockMvc.perform(get("/api/profiles?page=0&size=1")
           .with(httpBasic("yang160", "password123")))
