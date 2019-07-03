@@ -65,7 +65,8 @@ class UserOperationsService {
   }
 
   void checkIfExists(ObjectId id) {
-    this.ifExists(id, () -> {});
+    this.ifExists(id, () -> {
+    });
   }
 
   void validateAndChangePassword(UserQueryDto userQueryDto, UserChangePasswordCommandDto dto) {

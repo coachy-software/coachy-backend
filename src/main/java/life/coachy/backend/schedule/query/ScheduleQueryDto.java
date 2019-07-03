@@ -71,8 +71,15 @@ public class ScheduleQueryDto implements QueryDtoMarker {
   }
 
   public static class View {
-    public interface Global {}
-    public interface Default {}
+
+    public interface Global {
+
+    }
+
+    public interface Default {
+
+    }
+
   }
 
 }

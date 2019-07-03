@@ -48,6 +48,7 @@ public class RecommendationFacade {
 
   public void requestRevision(ObjectId recommendationId) {
     RecommendationQueryDto queryDto = this.recommendationService.fetchOneOrThrow(recommendationId);
+    this.recommendationService.throwIfRequestAlreadySent(queryDto.getFrom(), queryDto.getId());
 
     UserQueryDto sender = this.userFacade.fetchOne(queryDto.getProfileUserId());
     UserQueryDto recipient = this.userFacade.fetchOne(queryDto.getFrom());

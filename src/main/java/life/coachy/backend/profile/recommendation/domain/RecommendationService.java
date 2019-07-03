@@ -79,4 +79,8 @@ class RecommendationService {
         .collect(Collectors.toSet());
   }
 
+  void throwIfRequestAlreadySent(ObjectId userId, ObjectId recommendationId) {
+    this.userFacade.throwIfHasPermission(userId, "recommendation." + recommendationId + ".update");
+  }
+
 }
