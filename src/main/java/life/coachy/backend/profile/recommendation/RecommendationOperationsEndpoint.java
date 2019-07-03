@@ -55,7 +55,7 @@ class RecommendationOperationsEndpoint {
       return ResponseEntity.badRequest().build();
     }
 
-    this.recommendationFacade.changeVisibilityStatus(recommendationId, Boolean.valueOf(payload.get("visible")));
+    this.recommendationFacade.changeVisibilityStatus(recommendationId, Boolean.parseBoolean(payload.get("visible")));
     return ResponseEntity.noContent().build();
   }
 
