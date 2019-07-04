@@ -1,5 +1,6 @@
 package life.coachy.backend.profile.domain;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.profile.social.dto.SocialDto;
@@ -17,8 +18,8 @@ class Profile {
   private String bio;
   private String bannerUrl;
   private String location;
-  private Set<String> services;
-  private Set<SocialDto> socialLinks;
+  private LinkedHashSet<String> services;
+  private LinkedHashSet<SocialDto> socialLinks;
   private Set<ObjectId> followers;
   private Set<ObjectId> following;
 

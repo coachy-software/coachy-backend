@@ -1,5 +1,6 @@
 package life.coachy.backend.profile.domain.dto;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 import life.coachy.backend.infrastructure.util.Buildable;
 import life.coachy.backend.profile.social.dto.SocialDto;
@@ -11,8 +12,8 @@ public final class ProfileUpdateCommandDtoBuilder implements Buildable<ProfileUp
   String bio;
   String bannerUrl;
   String location;
-  Set<String> services;
-  Set<SocialDto> socialLinks;
+  LinkedHashSet<String> services;
+  LinkedHashSet<SocialDto> socialLinks;
 
   private ProfileUpdateCommandDtoBuilder() {}
 
@@ -45,12 +46,12 @@ public final class ProfileUpdateCommandDtoBuilder implements Buildable<ProfileUp
     return this;
   }
 
-  public ProfileUpdateCommandDtoBuilder withServices(Set<String> services) {
+  public ProfileUpdateCommandDtoBuilder withServices(LinkedHashSet<String> services) {
     this.services = services;
     return this;
   }
 
-  public ProfileUpdateCommandDtoBuilder withSocialLinks(Set<SocialDto> socialLinks) {
+  public ProfileUpdateCommandDtoBuilder withSocialLinks(LinkedHashSet<SocialDto> socialLinks) {
     this.socialLinks = socialLinks;
     return this;
   }

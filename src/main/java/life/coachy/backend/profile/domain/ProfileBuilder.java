@@ -1,5 +1,6 @@
 package life.coachy.backend.profile.domain;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 import life.coachy.backend.infrastructure.util.Buildable;
 import life.coachy.backend.profile.social.dto.SocialDto;
@@ -14,8 +15,8 @@ final class ProfileBuilder implements Buildable<Profile> {
   String bio;
   String bannerUrl;
   String location;
-  Set<String> services;
-  Set<SocialDto> socialLinks;
+  LinkedHashSet<String> services;
+  LinkedHashSet<SocialDto> socialLinks;
   Set<ObjectId> followers;
   Set<ObjectId> following;
 
@@ -55,12 +56,12 @@ final class ProfileBuilder implements Buildable<Profile> {
     return this;
   }
 
-  ProfileBuilder withServices(Set<String> services) {
+  ProfileBuilder withServices(LinkedHashSet<String> services) {
     this.services = services;
     return this;
   }
 
-  ProfileBuilder withSocialLinks(Set<SocialDto> socialLinks) {
+  ProfileBuilder withSocialLinks(LinkedHashSet<SocialDto> socialLinks) {
     this.socialLinks = socialLinks;
     return this;
   }

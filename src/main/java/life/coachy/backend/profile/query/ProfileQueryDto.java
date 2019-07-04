@@ -2,6 +2,7 @@ package life.coachy.backend.profile.query;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import life.coachy.backend.infrastructure.constant.MongoCollections;
 import life.coachy.backend.infrastructure.query.QueryDtoMarker;
@@ -24,8 +25,8 @@ public class ProfileQueryDto implements QueryDtoMarker {
   private String bio;
   private String bannerUrl;
   private String location;
-  private Set<String> services;
-  private Set<SocialDto> socialLinks;
+  private LinkedHashSet<String> services;
+  private LinkedHashSet<SocialDto> socialLinks;
   @JsonSerialize(contentUsing = ToStringSerializer.class) private Set<ObjectId> followers;
   @JsonSerialize(contentUsing = ToStringSerializer.class) private Set<ObjectId> following;
 
@@ -69,11 +70,11 @@ public class ProfileQueryDto implements QueryDtoMarker {
     return this.location;
   }
 
-  public Set<String> getServices() {
+  public LinkedHashSet<String> getServices() {
     return this.services;
   }
 
-  public Set<SocialDto> getSocialLinks() {
+  public LinkedHashSet<SocialDto> getSocialLinks() {
     return this.socialLinks;
   }
 

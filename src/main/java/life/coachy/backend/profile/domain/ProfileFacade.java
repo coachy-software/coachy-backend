@@ -1,5 +1,6 @@
 package life.coachy.backend.profile.domain;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.querydsl.core.types.Predicate;
 import java.util.List;
@@ -11,6 +12,7 @@ import life.coachy.backend.profile.domain.dto.ProfileCreateCommandDtoBuilder;
 import life.coachy.backend.profile.domain.dto.ProfileUpdateCommandDto;
 import life.coachy.backend.profile.query.ProfileQueryDto;
 import life.coachy.backend.profile.query.ProfileQueryRepository;
+import life.coachy.backend.profile.social.dto.SocialDto;
 import life.coachy.backend.user.domain.UserFacade;
 import life.coachy.backend.user.domain.exception.UserNotFoundException;
 import life.coachy.backend.user.query.UserQueryDto;
@@ -39,7 +41,16 @@ public class ProfileFacade {
   }
 
   public void createProfile(ObjectId userId) {
-    this.profileService.save(this.profileCreator.from(ProfileCreateCommandDtoBuilder.create().withUserId(userId).build()));
+    this.profileService.save(this.profileCreator.from(ProfileCreateCommandDtoBuilder.create()
+        .withUserId(userId)
+        .withServices(Sets.newLinkedHashSet())
+        .withSocialLinks(Sets.newLinkedHashSet(ImmutableSet.of(
+            new SocialDto("Instagram", "", "fe fe-instagram"),
+            new SocialDto("Twitter", "", "fe fe-twitter"),
+            new SocialDto("Facebook", "", "fe fe-facebook")
+        )))
+        .build()
+    ));
   }
 
   public void updateProfile(ProfileUpdateCommandDto dto, ObjectId userId) {

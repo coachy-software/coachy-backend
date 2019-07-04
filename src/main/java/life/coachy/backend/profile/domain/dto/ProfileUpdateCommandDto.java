@@ -1,6 +1,6 @@
 package life.coachy.backend.profile.domain.dto;
 
-import java.util.Set;
+import java.util.LinkedHashSet;
 import life.coachy.backend.profile.social.dto.SocialDto;
 
 public class ProfileUpdateCommandDto {
@@ -10,8 +10,8 @@ public class ProfileUpdateCommandDto {
   private String bio;
   private String bannerUrl;
   private String location;
-  private Set<String> services;
-  private Set<SocialDto> socialLinks;
+  private LinkedHashSet<String> services;
+  private LinkedHashSet<SocialDto> socialLinks;
 
   ProfileUpdateCommandDto() {}
 
@@ -45,11 +45,11 @@ public class ProfileUpdateCommandDto {
     return this.location;
   }
 
-  public Set<String> getServices() {
+  public LinkedHashSet<String> getServices() {
     return this.services;
   }
 
-  public Set<SocialDto> getSocialLinks() {
+  public LinkedHashSet<SocialDto> getSocialLinks() {
     return this.socialLinks;
   }
 
