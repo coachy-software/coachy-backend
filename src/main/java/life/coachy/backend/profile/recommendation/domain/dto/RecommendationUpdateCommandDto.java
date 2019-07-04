@@ -7,14 +7,12 @@ public class RecommendationUpdateCommandDto {
 
   @NotNull @NotEmpty private String content;
   @NotNull private int rating;
-  @NotNull private boolean visible;
 
   RecommendationUpdateCommandDto() {}
 
   RecommendationUpdateCommandDto(RecommendationUpdateCommandDtoBuilder builder) {
     this.content = builder.content;
     this.rating = builder.rating;
-    this.visible = builder.visible;
   }
 
   public String getContent() {
@@ -23,10 +21,6 @@ public class RecommendationUpdateCommandDto {
 
   public int getRating() {
     return this.rating;
-  }
-
-  public boolean isVisible() {
-    return this.visible;
   }
 
 }

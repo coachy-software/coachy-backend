@@ -13,7 +13,6 @@ trait SampleRecommendations {
   RecommendationUpdateCommandDto recommendationUpdateSample = RecommendationUpdateCommandDtoBuilder.create()
       .withContent("updated test content")
       .withRating(10)
-      .withVisible(true)
       .build();
 
   RecommendationCreateCommandDto recommendationCreateSample = RecommendationCreateCommandDtoBuilder.create()

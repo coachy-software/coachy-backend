@@ -36,7 +36,6 @@ class RecommendationService {
   void commitChange(Recommendation recommendation, RecommendationUpdateCommandDto dto) {
     recommendation.setContent(dto.getContent());
     recommendation.setRating(dto.getRating());
-    recommendation.setVisible(dto.isVisible());
 
     this.save(recommendation);
   }

@@ -34,7 +34,7 @@ class RecommendationNotificationPublisher {
   void publishChangeRequestNotification(UserQueryDto sender, UserQueryDto recipient, RecommendationQueryDto recommendation) {
     NotificationMessageDto notification = this.makeNotification(sender, recipient)
         .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
-              this.put("link", "/profiles/" + recommendation.getProfileUserId() + "/change-recommendation/" + recommendation.getId());
+              this.put("link", "/profiles/" + recommendation.getProfileUserId() + "/edit-recommendation/" + recommendation.getId());
               this.put("text", "requests_change");
             }})
         )).build();
