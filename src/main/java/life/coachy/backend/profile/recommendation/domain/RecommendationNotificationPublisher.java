@@ -21,26 +21,35 @@ class RecommendationNotificationPublisher {
   }
 
   void publishGotRecommendationNotification(UserQueryDto sender, UserQueryDto recipient, RecommendationQueryDto recommendation) {
-    this.notificationFacade.sendNotificationToUser(this.makeNotification(sender, recipient, recommendation, "got_recommendation"));
+    NotificationMessageDto notification = this.makeNotification(sender, recipient)
+        .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
+              this.put("link", "/profiles/" + recommendation.getProfileUserId());
+              this.put("text", "got_recommendation");
+            }})
+        )).build();
+
+    this.notificationFacade.sendNotificationToUser(notification);
   }
 
   void publishChangeRequestNotification(UserQueryDto sender, UserQueryDto recipient, RecommendationQueryDto recommendation) {
-    this.notificationFacade.sendNotificationToUser(this.makeNotification(sender, recipient, recommendation, "requests_change"));
+    NotificationMessageDto notification = this.makeNotification(sender, recipient)
+        .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
+              this.put("link", "/profiles/" + recommendation.getProfileUserId() + "/change-recommendation/" + recommendation.getId());
+              this.put("text", "requests_change");
+            }})
+        )).build();
+
+    this.notificationFacade.sendNotificationToUser(notification);
   }
 
-  private NotificationMessageDto makeNotification(UserQueryDto sender, UserQueryDto recipient, RecommendationQueryDto recommendation, String message) {
+  private NotificationMessageDtoBuilder makeNotification(UserQueryDto sender, UserQueryDto recipient) {
     return NotificationMessageDtoBuilder.create()
         .withSenderName(sender.getUsername())
         .withSenderAvatar(sender.getAvatar())
         .withSenderId(sender.getIdentifier())
         .withType("ALERT")
-        .withContent(this.toJsonConverter.convert(Maps.newHashMap(new HashMap<String, String>() {{
-          this.put("link", "/profiles/" + recommendation.getProfileUserId());
-          this.put("text", message);
-        }})))
         .withRecipientId(recipient.getIdentifier())
-        .withCreatedAt(LocalDateTime.now())
-        .build();
+        .withCreatedAt(LocalDateTime.now());
   }
 
 }
