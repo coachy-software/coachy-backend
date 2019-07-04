@@ -1,5 +1,6 @@
 package life.coachy.backend.profile
 
+import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Sets
 import groovy.transform.CompileStatic
 import life.coachy.backend.profile.domain.dto.ProfileCreateCommandDto
@@ -22,8 +23,8 @@ trait SampleProfiles {
       .withBio("bio")
       .withBannerUrl("banner-url")
       .withLocation("warsaw")
-      .withServices(Sets.newHashSet("bodybuilding", "powerbuilding"))
-      .withSocialLinks(Sets.newHashSet(new SocialDto("linkedin", "#", "fa fa-linkedin")))
+      .withServices(Sets.newLinkedHashSet(ImmutableSet.of("bodybuilding", "powerbuilding")))
+      .withSocialLinks(Sets.newLinkedHashSet(ImmutableSet.of(new SocialDto("linkedin", "#", "fa fa-linkedin"))))
       .build();
 
   ProfileUpdateCommandDto profileUpdateDtoSample = ProfileUpdateCommandDtoBuilder.create()
@@ -32,8 +33,8 @@ trait SampleProfiles {
       .withBio("bio")
       .withBannerUrl("banner-url")
       .withLocation("warsaw")
-      .withServices(Sets.newHashSet("bodybuilding", "powerbuilding"))
-      .withSocialLinks(Sets.newHashSet(new SocialDto("linkedin", "#", "fa fa-linkedin")))
+      .withServices(Sets.newLinkedHashSet(ImmutableSet.of("bodybuilding", "powerbuilding")))
+      .withSocialLinks(Sets.newLinkedHashSet(ImmutableSet.of(new SocialDto("linkedin", "#", "fa fa-linkedin"))))
       .build();
 
 }
