@@ -1,18 +1,17 @@
 package life.coachy.backend.profile.domain.dto;
 
 import java.util.Set;
-import javax.validation.constraints.NotNull;
 import life.coachy.backend.profile.social.dto.SocialDto;
 
 public class ProfileUpdateCommandDto {
 
-  @NotNull private String website;
-  @NotNull private String title;
-  @NotNull private String bio;
-  @NotNull private String bannerUrl;
-  @NotNull private String location;
-  @NotNull private Set<String> services;
-  @NotNull private Set<SocialDto> socialLinks;
+  private String website;
+  private String title;
+  private String bio;
+  private String bannerUrl;
+  private String location;
+  private Set<String> services;
+  private Set<SocialDto> socialLinks;
 
   ProfileUpdateCommandDto() {}
 
