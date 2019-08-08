@@ -73,7 +73,7 @@ dependencies {
 
   annotationProcessor('com.querydsl:querydsl-apt:4.1.4')
   compile('com.querydsl:querydsl-mongodb:4.1.4')
-  compile(group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.7', ext: 'pom')
+  compile(group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.8', ext: 'pom')
 
   testCompile('com.icegreen:greenmail:1.5.5')
   testCompile('org.springframework.boot:spring-boot-starter-test')
