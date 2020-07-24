@@ -46,5 +46,5 @@ server:
     session:
       cookie:
         name: coachy-backend
-frontend: http://www.coachy.life
+frontend: https://coachy-frontend.herokuapp.com
 
